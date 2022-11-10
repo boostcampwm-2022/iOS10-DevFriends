@@ -7,6 +7,11 @@ target 'DevFriends' do
 
   # Pods for DevFriends
   pod 'SwiftLint'
+  pod 'SnapKit', '~> 5.6.0'
+  pod 'Kingfisher', '~> 7.0'
+  pod 'FirebaseStorage'
+  pod 'FirebaseAuth'
+  pod 'FirebaseFirestore' 
 
   target 'DevFriendsTests' do
     inherit! :search_paths

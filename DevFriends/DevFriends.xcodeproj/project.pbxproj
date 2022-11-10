@@ -19,6 +19,7 @@
 		FCD8AEF8291CCE9600CCE5D3 /* DevFriendsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEF7291CCE9600CCE5D3 /* DevFriendsUITests.swift */; };
 		FCD8AEFA291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */; };
 		FCD8AF07291CD10300CCE5D3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */; };
+		FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		FCD8AEF7291CCE9600CCE5D3 /* DevFriendsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFriendsUITests.swift; sourceTree = "<group>"; };
 		FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFriendsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */,
 				FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */,
 				FCD8AEE4291CCE9600CCE5D3 /* Info.plist */,
+				FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */,
 			);
 			path = DevFriends;
 			sourceTree = "<group>";
@@ -174,11 +177,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FCD8AEFD291CCE9600CCE5D3 /* Build configuration list for PBXNativeTarget "DevFriends" */;
 			buildPhases = (
-				FCD8AF08291CD18200CCE5D3 /* SwiftLint Script */,
 				BB4F6BBF82DA5F1033B1D39D /* [CP] Check Pods Manifest.lock */,
+				FCD8AF08291CD18200CCE5D3 /* SwiftLint Script */,
 				FCD8AECF291CCE9300CCE5D3 /* Sources */,
 				FCD8AED0291CCE9300CCE5D3 /* Frameworks */,
 				FCD8AED1291CCE9300CCE5D3 /* Resources */,
+				0083F8AF805F0549B3CA7A36 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -216,6 +220,7 @@
 				FCD8AEEF291CCE9600CCE5D3 /* Sources */,
 				FCD8AEF0291CCE9600CCE5D3 /* Frameworks */,
 				FCD8AEF1291CCE9600CCE5D3 /* Resources */,
+				87ECE0F8F5AC20A848253DEF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -276,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCD8AF07291CD10300CCE5D3 /* .swiftlint.yml in Resources */,
+				FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */,
 				FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */,
 				FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */,
 			);
@@ -298,6 +304,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0083F8AF805F0549B3CA7A36 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevFriends/Pods-DevFriends-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevFriends/Pods-DevFriends-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DevFriends/Pods-DevFriends-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6DD42E51E5860D229197E880 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -340,6 +363,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		87ECE0F8F5AC20A848253DEF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB4F6BBF82DA5F1033B1D39D /* [CP] Check Pods Manifest.lock */ = {
@@ -572,7 +612,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.DevFriends;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tadpole.DevFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -599,7 +639,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.DevFriends;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tadpole.DevFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
