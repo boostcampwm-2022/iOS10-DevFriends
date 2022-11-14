@@ -13,33 +13,33 @@ class ChatViewController: ViewController {
     lazy var chatTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
-        view.addSubview(tableView)
+        self.view.addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
         return tableView
     }()
     
-    lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, String>(tableView: chatTableView) { tableView, indexPath, data -> UITableViewCell in
+    lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(tableView: chatTableView) { tableView, indexPath, data -> UITableViewCell in
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.reuseIdentifier, for: indexPath) as? ChatTableViewCell else {
             return UITableViewCell()
         }
-        cell.backgroundColor = .blue
+        cell.updateContent(data: data, lastContent: "", hasNewMessage: false)
         return cell
     }
     
-    lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, String>()
+    lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
     override func configureUI() {
-        setupTableView()
+        self.setupTableView()
     }
     
     func setupTableView() {
-        chatTableViewSnapShot.appendSections([.main])
+        self.chatTableViewSnapShot.appendSections([.main])
     }
     
-    func populateSnapshot(data: [String]) {
-        chatTableViewSnapShot.appendItems(data)
-        chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
+    func populateSnapshot(data: [Group]) {
+        self.chatTableViewSnapShot.appendItems(data)
+        self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
     }
 }

@@ -8,14 +8,6 @@
 import Foundation
 
 struct Group: Hashable {
-    let categories: [String]
-    let chatID: String
-    let currentNumberPeople: Int
-    let description: String
-    let like: Int
-    let limitedNumberPeople: Int
-    let managerID: String
     let participantIDs: [String]
     let title: String
-    let type: String
 }
