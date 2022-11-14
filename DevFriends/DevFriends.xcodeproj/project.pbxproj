@@ -10,6 +10,7 @@
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
 		D6CEFA459392B61254369D07 /* Pods_DevFriends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D508A33F60F395002118917 /* Pods_DevFriends.framework */; };
+		FC79AEC329223CC60077AE5C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC229223CC60077AE5C /* ChatViewController.swift */; };
 		FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */; };
 		FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */; };
 		FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEDA291CCE9300CCE5D3 /* ViewController.swift */; };
@@ -49,6 +50,7 @@
 		837D31618E31BF1C7C65D48C /* Pods-DevFriendsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriendsTests.release.xcconfig"; path = "Target Support Files/Pods-DevFriendsTests/Pods-DevFriendsTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A479E087E3E3E0E8DFBFF7B /* Pods-DevFriends-DevFriendsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C8D73A43F6124E9E2A99737 /* Pods-DevFriends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.release.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.release.xcconfig"; sourceTree = "<group>"; };
+		FC79AEC229223CC60077AE5C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		FC79AEAF29221FA50077AE5C /* ChatScene */ = {
 			isa = PBXGroup;
 			children = (
+				FC79AEC129223CB70077AE5C /* View */,
 			);
 			path = ChatScene;
 			sourceTree = "<group>";
@@ -291,6 +294,14 @@
 				FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FC79AEC129223CB70077AE5C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FC79AEC229223CC60077AE5C /* ChatViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FCD8AECA291CCE9300CCE5D3 = {
@@ -607,6 +618,7 @@
 			files = (
 				FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */,
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,
+				FC79AEC329223CC60077AE5C /* ChatViewController.swift in Sources */,
 				FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
