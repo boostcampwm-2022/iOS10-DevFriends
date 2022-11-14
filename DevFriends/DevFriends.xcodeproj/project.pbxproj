@@ -116,6 +116,183 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FC79AEAA29221F0D0077AE5C /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */,
+				FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */,
+				FC79AEAB29221F630077AE5C /* DIContainer */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		FC79AEAB29221F630077AE5C /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DIContainer;
+			sourceTree = "<group>";
+		};
+		FC79AEAC29221F730077AE5C /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				FC79AEB129221FBE0077AE5C /* PostDetailScene */,
+				FC79AEB029221FAB0077AE5C /* MyPageScene */,
+				FC79AEAF29221FA50077AE5C /* ChatScene */,
+				FC79AEAE29221F9F0077AE5C /* GroupScene */,
+				FC79AEAD29221F860077AE5C /* MogakcoScene */,
+				FC79AEB22922218C0077AE5C /* Utils */,
+				FC79AEB5292222A20077AE5C /* Components */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		FC79AEAD29221F860077AE5C /* MogakcoScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MogakcoScene;
+			sourceTree = "<group>";
+		};
+		FC79AEAE29221F9F0077AE5C /* GroupScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GroupScene;
+			sourceTree = "<group>";
+		};
+		FC79AEAF29221FA50077AE5C /* ChatScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChatScene;
+			sourceTree = "<group>";
+		};
+		FC79AEB029221FAB0077AE5C /* MyPageScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MyPageScene;
+			sourceTree = "<group>";
+		};
+		FC79AEB129221FBE0077AE5C /* PostDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PostDetailScene;
+			sourceTree = "<group>";
+		};
+		FC79AEB22922218C0077AE5C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FC79AEB4292221B90077AE5C /* Protocols */,
+				FC79AEB3292221940077AE5C /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		FC79AEB3292221940077AE5C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FC79AEB4292221B90077AE5C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		FC79AEB5292222A20077AE5C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FC79AEB72922239F0077AE5C /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				FC79AEBA292223B50077AE5C /* Repositories */,
+				FC79AEB9292223AF0077AE5C /* UseCases */,
+				FC79AEB8292223A70077AE5C /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		FC79AEB8292223A70077AE5C /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		FC79AEB9292223AF0077AE5C /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		FC79AEBA292223B50077AE5C /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		FC79AEBB292223D90077AE5C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FC79AEBF292225AF0077AE5C /* RealmStorage */,
+				FC79AEBD292224190077AE5C /* Network */,
+				FC79AEBC292223DF0077AE5C /* Repositories */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		FC79AEBC292223DF0077AE5C /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		FC79AEBD292224190077AE5C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FC79AEBE2922241F0077AE5C /* DataMapping */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		FC79AEBE2922241F0077AE5C /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		FC79AEBF292225AF0077AE5C /* RealmStorage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RealmStorage;
+			sourceTree = "<group>";
+		};
+		FC79AEC0292226C70077AE5C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */,
+				FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */,
+				FCD8AEE4291CCE9600CCE5D3 /* Info.plist */,
+				FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		FCD8AECA291CCE9300CCE5D3 = {
 			isa = PBXGroup;
 			children = (
@@ -142,13 +319,12 @@
 		FCD8AED5291CCE9300CCE5D3 /* DevFriends */ = {
 			isa = PBXGroup;
 			children = (
-				FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */,
-				FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */,
+				FC79AEAA29221F0D0077AE5C /* Application */,
+				FC79AEBB292223D90077AE5C /* Data */,
+				FC79AEB72922239F0077AE5C /* Domain */,
+				FC79AEAC29221F730077AE5C /* Presentation */,
+				FC79AEC0292226C70077AE5C /* Resources */,
 				FCD8AEDA291CCE9300CCE5D3 /* ViewController.swift */,
-				FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */,
-				FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */,
-				FCD8AEE4291CCE9600CCE5D3 /* Info.plist */,
-				FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */,
 			);
 			path = DevFriends;
 			sourceTree = "<group>";
