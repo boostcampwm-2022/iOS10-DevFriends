@@ -73,6 +73,13 @@ class MogakcoViewController: UIViewController {
         btn.addTarget(self, action: #selector(hideCollections), for: .touchUpInside)
         return btn
     }()
+    lazy var modalButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("modal", for: .normal)
+        btn.backgroundColor = .green
+        btn.addTarget(self, action: #selector(showModal), for: .touchUpInside)
+        return btn
+    }()
     @objc func showCollections() {
         // TODO: Test
         showMogakcoSubView()
@@ -80,6 +87,10 @@ class MogakcoViewController: UIViewController {
     @objc func hideCollections() {
         // TODO: Test
         hideMogakcoSubView()
+    }
+    @objc func showModal() {
+        // TODO: Test
+        showMogakcoModal()
     }
     
     // 현재 위치를 불러오는 작업은 뷰컨에서 하면 안될 것 같긴 한데
@@ -207,13 +218,17 @@ extension MogakcoViewController {
             make.leading.equalToSuperview().offset(50)
             make.top.equalToSuperview().offset(90)
         }
+        view.addSubview(modalButton)
+        modalButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(50)
+            make.top.equalToSuperview().offset(130)
+        }
     }
     
     func showMogakcoSubView() {
         // 현재위치버튼, 뷰모드 버튼 레이아웃 변경
         mogakcoSubView.isHidden = false
-        mogakcoSubView.snp.removeConstraints()
-        mogakcoSubView.snp.makeConstraints { make in
+        mogakcoSubView.snp.remakeConstraints { make in
             make.bottom.equalTo(mogakcoMapView).offset(-20)
             make.leading.equalTo(mogakcoMapView).offset(20)
             make.trailing.equalTo(-20)
@@ -223,8 +238,7 @@ extension MogakcoViewController {
     
     func hideMogakcoSubView() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.mogakcoSubView.snp.removeConstraints()
-            self.mogakcoSubView.snp.makeConstraints { make in
+            self.mogakcoSubView.snp.remakeConstraints { make in
                 make.top.equalTo(self.mogakcoMapView.snp.bottom)
                 make.leading.equalTo(self.mogakcoMapView).offset(20)
                 make.trailing.equalTo(-20)
@@ -233,5 +247,21 @@ extension MogakcoViewController {
             self.mogakcoSubView.superview?.layoutIfNeeded()
         }
         mogakcoSubView.isHidden = true
+    }
+    
+    func showMogakcoModal() {
+        let mogakcoModal = UIViewController()
+        mogakcoModal.view.backgroundColor = .systemYellow
+        mogakcoModal.modalPresentationStyle = .pageSheet
+        if let sheet = mogakcoModal.sheetPresentationController {
+            // 지원할 크기 지정
+            sheet.detents = [.medium()]
+            // 시트 상단에 그래버 표시 (기본 값은 false)
+            sheet.prefersGrabberVisible = true
+            // 뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
+            sheet.largestUndimmedDetentIdentifier = .medium
+        }
+        present(mogakcoModal, animated: true, completion: nil)
+        view.bringSubviewToFront(viewModeButton)
     }
 }
