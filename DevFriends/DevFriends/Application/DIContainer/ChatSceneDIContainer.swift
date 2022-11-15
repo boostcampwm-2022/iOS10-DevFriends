@@ -8,8 +8,8 @@
 import UIKit
 
 struct ChatSceneDIContainer {
-    func makeChatDetailFlowCoordinator(navigationController: UINavigationController) -> ChatDetailFlowCoordinator {
-        return ChatDetailFlowCoordinator(navigationController: navigationController, dependencies: self)
+    func makeChatDetailFlowCoordinator(navigationController: UINavigationController) -> ChatCoordinator {
+        return ChatCoordinator(navigationController: navigationController, dependencies: self)
     }
 }
 

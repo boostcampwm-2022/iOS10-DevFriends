@@ -8,7 +8,7 @@
 import UIKit
 
 class FriendMessageTableViewCell: UITableViewCell {
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         layout()

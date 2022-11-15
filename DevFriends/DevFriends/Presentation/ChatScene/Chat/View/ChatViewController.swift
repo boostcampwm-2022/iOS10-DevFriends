@@ -28,11 +28,10 @@ class ChatViewController: ViewController {
     
     lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
-    private weak var coordinator: ChatDetailFlowCoordinator?
+    weak var coordinator: ChatViewCoordinator?
     
-    init(coordinator: ChatDetailFlowCoordinator) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        self.coordinator = coordinator
     }
     
     required init?(coder: NSCoder) {

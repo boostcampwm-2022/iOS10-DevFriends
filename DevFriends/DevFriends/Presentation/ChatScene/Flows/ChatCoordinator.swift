@@ -11,10 +11,10 @@ protocol ChatDetailFlowCoordinatorDependencies  {
     func makeChatContentViewController(group: Group) -> ChatContentViewController
 }
 
-final class ChatDetailFlowCoordinator: Coordinator {
+final class ChatCoordinator: Coordinator {
     
     private weak var navigationController: UINavigationController?
-    private let dependencies: ChatDetailFlowCoordinatorDependencies
+    let dependencies: ChatDetailFlowCoordinatorDependencies
 
     var childCoordinators: [Coordinator] = []
     
@@ -25,10 +25,13 @@ final class ChatDetailFlowCoordinator: Coordinator {
     }
     
     func start() {
-        let chatViewController = ChatViewController(coordinator: self)
+        let chatViewController = ChatViewController()
+        chatViewController.coordinator = self
         navigationController?.pushViewController(chatViewController, animated: false)
     }
-    
+}
+
+extension ChatCoordinator: ChatViewCoordinator {
     func showChatContentViewController(group: Group) {
         let chatContentViewController = dependencies.makeChatContentViewController(group: group)
         navigationController?.pushViewController(chatContentViewController, animated: true)
