@@ -11,9 +11,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
+        self.layout()
         self.bind()
     }
     
     func configureUI() {}
+    func layout() {}
     func bind() {}
 }

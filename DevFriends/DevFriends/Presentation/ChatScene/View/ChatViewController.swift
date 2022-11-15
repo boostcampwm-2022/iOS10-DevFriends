@@ -10,7 +10,7 @@ import SnapKit
 
 class ChatViewController: ViewController {
     
-    lazy var chatTableView: UITableView = {
+    private lazy var chatTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
         self.view.addSubview(tableView)
@@ -20,11 +20,11 @@ class ChatViewController: ViewController {
         return tableView
     }()
     
-    lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(tableView: chatTableView) { tableView, indexPath, data -> UITableViewCell in
+    private lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(tableView: chatTableView) { tableView, indexPath, data -> UITableViewCell in
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.reuseIdentifier, for: indexPath) as? ChatTableViewCell else {
             return UITableViewCell()
         }
-        cell.updateContent(data: data, lastContent: "", hasNewMessage: false)
+        cell.updateContent(data: data, lastContent: "", hasNewMessage: true)
         return cell
     }
     
@@ -34,11 +34,11 @@ class ChatViewController: ViewController {
         self.setupTableView()
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         self.chatTableViewSnapShot.appendSections([.main])
     }
     
-    func populateSnapshot(data: [Group]) {
+    private func populateSnapshot(data: [Group]) {
         self.chatTableViewSnapShot.appendItems(data)
         self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
     }
