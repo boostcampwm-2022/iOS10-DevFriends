@@ -25,6 +25,8 @@ final class GroupListViewController: UIViewController {
         let item = UIBarButtonItem()
         item.image = UIImage(systemName: "plus")
         item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapGroupAddButton)
         return item
     }()
     
@@ -32,6 +34,8 @@ final class GroupListViewController: UIViewController {
         let item = UIBarButtonItem()
         item.image = UIImage(systemName: "bell")
         item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapNotificationButton)
         return item
     }()
     
@@ -121,7 +125,7 @@ final class GroupListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         buildHierarchy()
-        setUpConstraints()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -146,7 +150,7 @@ final class GroupListViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
-    private func setUpConstraints() {        
+    private func setupConstraints() {
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
@@ -161,6 +165,34 @@ extension GroupListViewController {
     @objc func didTapFilterButton(_ sender: UIButton) {
         let filterVC = GroupFilterViewController()
         present(filterVC, animated: true)
+    }
+    
+    @objc func didTapGroupAddButton(_ sender: UIButton) {
+        let actionSheet = UIAlertController(
+            title: "모임 종류 선택",
+            message: "어떤 모임을 추가하시겠습니까?",
+            preferredStyle: .actionSheet
+        )
+        
+        let actionProject = UIAlertAction(title: "프로젝트", style: .default) { _ in
+            print("프로젝트 모임 생성")
+        }
+        
+        let actionStudy = UIAlertAction(title: "스터디", style: .default) { _ in
+            print("스터디 모임 생성")
+        }
+        
+        let actionCancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        actionSheet.addAction(actionProject)
+        actionSheet.addAction(actionStudy)
+        actionSheet.addAction(actionCancel)
+        
+        present(actionSheet, animated: true)
+    }
+    
+    @objc func didTapNotificationButton(_ sender: UIButton) {
+        print("알림 버튼 클릭")
     }
 }
 
