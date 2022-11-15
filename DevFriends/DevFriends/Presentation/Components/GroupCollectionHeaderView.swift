@@ -36,6 +36,7 @@ final class GroupCollectionHeaderView: UICollectionReusableView {
     private lazy var filterButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
+        button.tintColor = .black
         return button
     }()
     
@@ -76,7 +77,7 @@ final class GroupCollectionHeaderView: UICollectionReusableView {
         }
         
         filterStackView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-10)
             make.centerY.equalTo(titleLabel)
         }
     }
