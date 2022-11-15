@@ -17,10 +17,15 @@ class MogakcoViewController: UIViewController {
     }()
     
     lazy var currentLocationButton: UIButton = {
-        let currentLocationButton = UIButton()og
-        currentLocationButton.setImage(UIImage(systemName: "scope"), for: .normal)
-        currentLocationButton.backgroundColor = .green
-        currentLocationButton.edgein
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "scope")
+        configuration.baseForegroundColor = .black
+        configuration.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        let currentLocationButton = UIButton(configuration: configuration, primaryAction: nil)
+        currentLocationButton.backgroundColor = .white
+        currentLocationButton.layer.cornerRadius = 25
+        currentLocationButton.layer.cornerCurve = .circular
+        currentLocationButton.addTarget(self, action: #selector(didTapCurrentButton), for: .touchUpInside)
         return currentLocationButton
     }()
     
@@ -47,6 +52,12 @@ class MogakcoViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Action Methods
+    
+    @objc func didTapCurrentButton() {
+        print("tap Current Button")
     }
     
     // MARK: Set Annotation Methods
