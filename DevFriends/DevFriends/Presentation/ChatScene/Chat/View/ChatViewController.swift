@@ -13,6 +13,7 @@ class ChatViewController: ViewController {
     private lazy var chatTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
+        tableView.delegate = self
         self.view.addSubview(tableView)
         return tableView
     }()
@@ -21,11 +22,22 @@ class ChatViewController: ViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.reuseIdentifier, for: indexPath) as? ChatTableViewCell else {
             return UITableViewCell()
         }
-        cell.updateContent(data: data, lastContent: "", hasNewMessage: true)
+        cell.updateContent(data: data, lastMessage: "", hasNewMessage: false)
         return cell
     }
     
     lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    
+    private weak var coordinator: ChatDetailFlowCoordinator?
+    
+    init(coordinator: ChatDetailFlowCoordinator) {
+        super.init(nibName: nil, bundle: nil)
+        self.coordinator = coordinator
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func configureUI() {
         self.setupTableView()
@@ -35,6 +47,7 @@ class ChatViewController: ViewController {
         chatTableView.snp.makeConstraints {
             $0.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
+        populateSnapshot(data: [Group(participantIDs: ["12"], title: "d"), Group(participantIDs: ["13"], title: "d"), Group(participantIDs: ["1"], title: "dd")])
     }
     
     private func setupTableView() {
@@ -44,5 +57,11 @@ class ChatViewController: ViewController {
     private func populateSnapshot(data: [Group]) {
         self.chatTableViewSnapShot.appendItems(data)
         self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
+    }
+}
+
+extension ChatViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        coordinator?.showChatContentViewController(group: Group(participantIDs: ["0"], title: "title"))
     }
 }

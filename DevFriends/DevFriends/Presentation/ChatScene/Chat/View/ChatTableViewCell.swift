@@ -34,7 +34,7 @@ final class ChatTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var lastChatContentLabel: UILabel = {
+    private lazy var lastMessgaeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textColor = .gray
@@ -63,13 +63,13 @@ final class ChatTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.titleLabel.text = ""
         self.participantCountLabel.text = ""
-        self.lastChatContentLabel.text = ""
+        self.lastMessgaeLabel.text = ""
     }
     
-    func updateContent(data: Group, lastContent: String?, hasNewMessage: Bool) {
+    func updateContent(data: Group, lastMessage: String?, hasNewMessage: Bool) {
         self.participantCountLabel.text = "\(data.participantIDs.count)"
         self.titleLabel.text = data.title
-        self.lastChatContentLabel.text = lastContent
+        self.lastMessgaeLabel.text = lastMessage
         self.newMessageView.isHidden = !hasNewMessage
     }
 }
@@ -96,7 +96,7 @@ extension ChatTableViewCell: CellType {
             $0.trailing.lessThanOrEqualTo(self.newMessageView.snp.leading).offset(-10)
         }
         
-        self.lastChatContentLabel.snp.makeConstraints {
+        self.lastMessgaeLabel.snp.makeConstraints {
             $0.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
             $0.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
             $0.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
