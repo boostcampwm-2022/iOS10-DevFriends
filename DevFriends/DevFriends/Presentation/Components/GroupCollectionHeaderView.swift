@@ -50,10 +50,12 @@ final class GroupCollectionHeaderView: UICollectionReusableView {
     }
     
     func configure(title: String?) {
-        self.titleLabel.text = title
+        titleLabel.text = title
     }
     
     func configure(title: String?, _ target: Any?, _ didTapFilterButton: Selector) {
+        titleLabel.text = title
+        
         filterStackView.isHidden = false
         filterButton.addTarget(target, action: didTapFilterButton, for: .touchUpInside)
     }
@@ -70,7 +72,7 @@ final class GroupCollectionHeaderView: UICollectionReusableView {
     
     private func setUpConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.bottom.leading.equalToSuperview()
+            make.bottom.leading.equalToSuperview()
         }
         
         filterStackView.snp.makeConstraints { make in

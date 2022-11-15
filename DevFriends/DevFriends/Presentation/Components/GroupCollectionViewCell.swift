@@ -75,7 +75,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     
     private func setUpConstraints() {
         imageView.snp.makeConstraints { make in
-            make.top.bottom.leading.equalToSuperview().inset(25)
+            make.top.bottom.leading.equalToSuperview().inset(20)
             make.width.equalTo(imageView.snp.height)
         }
         

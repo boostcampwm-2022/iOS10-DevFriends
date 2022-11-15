@@ -26,14 +26,61 @@ final class GroupListViewController: UIViewController {
         return item
     }()
     
+    private lazy var layout: UICollectionViewCompositionalLayout = {
+        let layout = UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            
+            let screenSize = UIScreen.main.bounds.size
+            let padding = screenSize.width * 0.05
+            
+            if sectionNumber == 0 {
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+                item.contentInsets.trailing = padding
+                
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.90), heightDimension: .absolute(140)), subitems: [item])
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                section.contentInsets.leading = padding
+                section.contentInsets.top = 10
+                section.contentInsets.bottom = 10
+                
+                // Header, Footer 레이아웃
+                section.boundarySupplementaryItems = [
+                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                ]
+                
+                return section
+            } else {
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+                item.contentInsets.bottom = 10
+                
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(140)), subitems: [item])
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets.leading = padding
+                section.contentInsets.trailing = padding
+                section.contentInsets.top = 10
+                section.contentInsets.bottom = 10
+                
+                // Header, Footer 레이아웃
+                section.boundarySupplementaryItems = [
+                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                ]
+                
+                return section
+            }
+        }
+        return layout
+    }()
+    
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
-        layout.scrollDirection = .vertical
-        layout.headerReferenceSize = .init(width: 130, height: 40)
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 40, height: 140.0)
+//        let layout = UICollectionViewFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
+//        layout.scrollDirection = .vertical
+//        layout.headerReferenceSize = .init(width: 130, height: 40)
+//        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 40, height: 140.0)
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.dataSource = self
@@ -80,9 +127,8 @@ final class GroupListViewController: UIViewController {
     
     private func setUpConstraints() {
         collectionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(80)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
 }
@@ -133,7 +179,11 @@ extension GroupListViewController: UICollectionViewDataSource {
     
     // 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        if section == 0 {
+            return 6
+        } else {
+            return 5
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

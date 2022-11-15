@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		051326342922595000151794 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051326332922595000151794 /* GroupListViewController.swift */; };
-		05132637292264E800151794 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 05132636292264E800151794 /* test.txt */; };
 		051326392922653600151794 /* GroupCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051326382922653600151794 /* GroupCollectionHeaderView.swift */; };
 		0513263B29226E5D00151794 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0513263A29226E5D00151794 /* GroupCollectionViewCell.swift */; };
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
@@ -45,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		051326332922595000151794 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
-		05132636292264E800151794 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 		051326382922653600151794 /* GroupCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionHeaderView.swift; sourceTree = "<group>"; };
 		0513263A29226E5D00151794 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		08AB74F8E8B5617454A9F712 /* Pods-DevFriends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.debug.xcconfig"; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 		FC79AEB5292222A20077AE5C /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				05132636292264E800151794 /* test.txt */,
 				051326382922653600151794 /* GroupCollectionHeaderView.swift */,
 				0513263A29226E5D00151794 /* GroupCollectionViewCell.swift */,
 			);
@@ -472,7 +469,6 @@
 				FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */,
 				FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */,
 				FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */,
-				05132637292264E800151794 /* test.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
