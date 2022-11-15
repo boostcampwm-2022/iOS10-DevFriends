@@ -14,9 +14,6 @@ class ChatViewController: ViewController {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
         self.view.addSubview(tableView)
-        tableView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-        }
         return tableView
     }()
     
@@ -32,6 +29,12 @@ class ChatViewController: ViewController {
     
     override func configureUI() {
         self.setupTableView()
+    }
+    
+    override func layout() {
+        chatTableView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     private func setupTableView() {
