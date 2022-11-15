@@ -36,16 +36,21 @@ final class GroupListViewController: UIViewController {
     }()
     
     private lazy var layout: UICollectionViewCompositionalLayout = {
-        let layout = UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             
             let screenSize = UIScreen.main.bounds.size
             let padding = screenSize.width * 0.05
             
             if sectionNumber == 0 {
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+                let item = NSCollectionLayoutItem(
+                    layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                )
                 item.contentInsets.trailing = padding
                 
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.90), heightDimension: .absolute(140)), subitems: [item])
+                let group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: .init(widthDimension: .fractionalWidth(0.90), heightDimension: .absolute(140)),
+                    subitems: [item]
+                )
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
@@ -55,15 +60,24 @@ final class GroupListViewController: UIViewController {
                 
                 // Header, Footer 레이아웃
                 section.boundarySupplementaryItems = [
-                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                    .init(
+                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)),
+                        elementKind: UICollectionView.elementKindSectionHeader,
+                        alignment: .top
+                    )
                 ]
                 
                 return section
             } else {
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+                let item = NSCollectionLayoutItem(
+                    layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                )
                 item.contentInsets.bottom = 10
                 
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(140)), subitems: [item])
+                let group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(140)),
+                    subitems: [item]
+                )
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets.leading = padding
@@ -73,7 +87,11 @@ final class GroupListViewController: UIViewController {
                 
                 // Header, Footer 레이아웃
                 section.boundarySupplementaryItems = [
-                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                    .init(
+                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)),
+                        elementKind: UICollectionView.elementKindSectionHeader,
+                        alignment: .top
+                    )
                 ]
                 
                 return section
@@ -83,12 +101,6 @@ final class GroupListViewController: UIViewController {
     }()
     
     private lazy var collectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
-//        layout.scrollDirection = .vertical
-//        layout.headerReferenceSize = .init(width: 130, height: 40)
-//        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 40, height: 140.0)
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
@@ -119,8 +131,8 @@ final class GroupListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        bindViewModel()
         self.view.backgroundColor = .systemGray6
+        //        bindViewModel()
     }
     // MARK: - Configure UI
     
