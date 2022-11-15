@@ -14,15 +14,24 @@ final class GroupListViewController: UIViewController {
 //    private let viewModel: GroupListViewModel!
     private var cancellabes = Set<AnyCancellable>()
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "모임"
+        label.font = .systemFont(ofSize: 25, weight: .bold)
+        return label
+    }()
+    
     private lazy var groupAddButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
         item.image = UIImage(systemName: "plus")
+        item.tintColor = .black
         return item
     }()
     
     private lazy var notificationButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
         item.image = UIImage(systemName: "bell")
+        item.tintColor = .black
         return item
     }()
     
@@ -121,7 +130,7 @@ final class GroupListViewController: UIViewController {
     }
     
     private func setupNavigation() {
-        self.title = "모임"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
