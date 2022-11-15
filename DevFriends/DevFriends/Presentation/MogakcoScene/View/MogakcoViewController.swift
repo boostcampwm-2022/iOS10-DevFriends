@@ -93,6 +93,8 @@ class MogakcoViewController: UIViewController {
         showMogakcoModal()
     }
     
+    var isSelectingPin = false
+    
     // 현재 위치를 불러오는 작업은 뷰컨에서 하면 안될 것 같긴 한데
     // 일단 테스트
     let locationManager = CLLocationManager()
@@ -117,6 +119,7 @@ class MogakcoViewController: UIViewController {
     
     @objc func didTapCurrentButton() {
         print("tap Current Button")
+        setUserLocation()
     }
     
     @objc func didTapViewModeButton() {
@@ -167,14 +170,35 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         mogakcoMapView.setRegion(region, animated: true)
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("Errors: " + error.localizedDescription)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("you tapped the pin!")
-        moveLocation(latitudeValue: 70.4, longtudeValue: 127.1, delta: 0.01)
-        setAnnotation(latitudeValue: 70.4, longitudeValue: 127.1, delta: 0.01, title: "여긴 어디", subtitle: "강남 에이비카페")
+        if let annotation = view.annotation {
+            let latitudeVal = annotation.coordinate.latitude
+            let longtitudeVal = annotation.coordinate.longitude
+            isSelectingPin = true
+            moveLocation(latitudeValue: latitudeVal, longtudeValue: longtitudeVal, delta: 0.01)
+            showMogakcoSubView()
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        hideMogakcoSubView()
+    }
+    
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        // pin을 선택할 때 아래에서 Deselect되는 것을 방지
+        if isSelectingPin {
+            isSelectingPin = false
+            return
+        }
+        for annotation in mapView.annotations {
+            mapView.deselectAnnotation(annotation, animated: true)
+        }
+        hideMogakcoSubView()
     }
 }
 
