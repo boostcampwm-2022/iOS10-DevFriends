@@ -39,6 +39,22 @@ final class GroupListViewController: UIViewController {
         return item
     }()
     
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(
+            GroupCollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: GroupCollectionHeaderView.id
+        )
+        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
+        
+        return collectionView
+    }()
+    
     private lazy var layout: UICollectionViewCompositionalLayout = {
         let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             
@@ -102,21 +118,6 @@ final class GroupListViewController: UIViewController {
             }
         }
         return layout
-    }()
-    
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.register(
-            GroupCollectionHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: GroupCollectionHeaderView.id
-        )
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
-        
-        return collectionView
     }()
     
     // MARK: - Initializer
@@ -247,5 +248,13 @@ extension GroupListViewController: UICollectionViewDataSource {
         ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         
         return cell
+    }
+}
+
+// MARK: - UICollectionView Delegate
+
+extension GroupListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Section \(indexPath.section) : \(indexPath.item)번째 아이템을 선택했습니다.")
     }
 }
