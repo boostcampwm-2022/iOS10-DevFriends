@@ -16,6 +16,7 @@ final class GroupFilterViewController: UIViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
         layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 50.0)
+        layout.sectionInset = .init(top: 0, left: 0, bottom: 40, right: 0)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
@@ -49,8 +50,8 @@ final class GroupFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = .systemGray6
+    
+        self.view.backgroundColor = .white
         //        bindViewModel()
     }
     // MARK: - Configure UI
@@ -61,8 +62,9 @@ final class GroupFilterViewController: UIViewController {
 
     private func setUpConstraints() {
         collectionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(70)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
 }
@@ -118,7 +120,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
             for: indexPath
         ) as? GroupFilterCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configure("태그태그")
+        indexPath.item % 2 == 0 ? cell.configure("태그태그") : cell.configure("태그")
         
         return cell
     }
@@ -133,6 +135,20 @@ extension GroupFilterViewController: UICollectionViewDelegate {
 
         collectionView.indexPathsForSelectedItems?
             .filter { $0.section == indexPath.section && $0 != indexPath }
-            .forEach { self.collectionView.deselectItem(at: $0, animated: false) }
+            .forEach { collectionView.deselectItem(at: $0, animated: false) }
+    }
+}
+
+extension GroupFilterViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupFilterCollectionViewCell.id, for: indexPath) as? GroupFilterCollectionViewCell else {
+            return .zero
+        }
+
+        indexPath.item % 2 == 0 ? cell.configure("태그태그") : cell.configure("태그")
+            
+        let cellWidth = cell.width + 20
+
+        return CGSize(width: cellWidth, height: 30)
     }
 }

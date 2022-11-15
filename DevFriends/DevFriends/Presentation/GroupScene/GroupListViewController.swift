@@ -146,7 +146,7 @@ final class GroupListViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
-    private func setUpConstraints() {
+    private func setUpConstraints() {        
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)

@@ -16,9 +16,15 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "태그"
         label.font = .systemFont(ofSize: 15, weight: .bold)
-//        label.backgroundColor = .clear
+        label.textAlignment = .center
         return label
     }()
+    
+    var width: CGFloat {
+        get {
+            return label.frame.width
+        }
+    }
     
     override var isSelected: Bool {
         didSet {
@@ -34,8 +40,9 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell {
     
     func configure(_ tag: String) {
         label.text = tag
+        label.sizeToFit()
     }
-
+    
     // MARK: - Configure UI
     
     override func didMoveToSuperview() {
