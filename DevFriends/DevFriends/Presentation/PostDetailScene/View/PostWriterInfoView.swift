@@ -14,7 +14,7 @@ struct PostWriterInfo {
     let image: UIImage?
 }
 
-class PostWriterInfoView: UIView {
+final class PostWriterInfoView: UIView {
     lazy var mainStackView: UIStackView = {
         let mainStackView = UIStackView()
         mainStackView.axis = .horizontal
@@ -87,5 +87,13 @@ class PostWriterInfoView: UIView {
         
         let image = (info.image ?? UIImage(named: "Image.png"))?.resize(newWidth: writerProfileImageView.frame.width)
         writerProfileImageView.image = image
+    }
+    
+    /// 뷰를 재사용할 때 원하는 사이즈에 맞게 변경할 수 있다.
+    func setViewSize(imageViewRadius: Double, nameTextSize: Double, jobTextSize: Double) {
+        writerProfileImageView.frame = CGRect(x: 0.0, y: 0.0, width: 2 * imageViewRadius, height: 2 * imageViewRadius)
+        writerProfileImageView.layer.cornerRadius = writerProfileImageView.frame.size.width / 2
+        writerNameLabel.font = .boldSystemFont(ofSize: nameTextSize)
+        writerJobLabel.font = .systemFont(ofSize: jobTextSize)
     }
 }
