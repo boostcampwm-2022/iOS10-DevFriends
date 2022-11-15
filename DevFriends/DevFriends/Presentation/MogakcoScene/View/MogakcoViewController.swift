@@ -53,11 +53,34 @@ class MogakcoViewController: UIViewController {
         return viewModeButton
     }()
     
-    lazy var mogakcoSubView: UIStackView = {
-        let mogakcoSubView = UIStackView()
+    lazy var mogakcoSubView: UIView = {
+        let mogakcoSubView = UIView()
         mogakcoSubView.backgroundColor = .green
+        mogakcoSubView.isHidden = true
         return mogakcoSubView
     }()
+    lazy var showButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("show", for: .normal)
+        btn.backgroundColor = .green
+        btn.addTarget(self, action: #selector(showCollections), for: .touchUpInside)
+        return btn
+    }()
+    lazy var hideButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("hide", for: .normal)
+        btn.backgroundColor = .green
+        btn.addTarget(self, action: #selector(hideCollections), for: .touchUpInside)
+        return btn
+    }()
+    @objc func showCollections() {
+        // TODO: Test
+        showMogakcoSubView()
+    }
+    @objc func hideCollections() {
+        // TODO: Test
+        hideMogakcoSubView()
+    }
     
     // 현재 위치를 불러오는 작업은 뷰컨에서 하면 안될 것 같긴 한데
     // 일단 테스트
@@ -152,27 +175,63 @@ extension MogakcoViewController {
             make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
+        view.addSubview(mogakcoSubView)
+        mogakcoSubView.snp.makeConstraints { make in
+            make.top.equalTo(mogakcoMapView.snp.bottom)
+            make.leading.equalTo(mogakcoMapView).offset(20)
+            make.trailing.equalTo(-20)
+            make.height.equalTo(100)
+        }
+        
         view.addSubview(currentLocationButton)
         currentLocationButton.snp.makeConstraints { make in
-            make.leading.equalTo(mogakcoMapView).offset(20)
-            make.bottom.equalTo(mogakcoMapView).offset(-30)
+            make.leading.equalTo(mogakcoSubView).offset(20)
+            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
             make.width.height.equalTo(50)
         }
         
         view.addSubview(viewModeButton)
         viewModeButton.snp.makeConstraints { make in
-            make.trailing.equalTo(mogakcoMapView).offset(-20)
-            make.bottom.equalTo(mogakcoMapView).offset(-30)
+            make.trailing.equalTo(mogakcoSubView).offset(-20)
+            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
             make.height.equalTo(50)
             make.width.equalTo(120)
         }
         
-//        view.addSubview(mogakcoSubView)
-//        mogakcoSubView.snp.makeConstraints { make in
-//            make.bottom.equalTo(mogakcoMapView).offset(-20)
-//            make.leading.equalTo(mogakcoMapView).offset(20)
-//            make.trailing.equalTo(-20)
-//            make.height.equalTo(100)
-//        }
+        view.addSubview(showButton)
+        showButton.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().offset(50)
+        }
+        view.addSubview(hideButton)
+        hideButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(50)
+            make.top.equalToSuperview().offset(90)
+        }
+    }
+    
+    func showMogakcoSubView() {
+        // 현재위치버튼, 뷰모드 버튼 레이아웃 변경
+        mogakcoSubView.isHidden = false
+        mogakcoSubView.snp.removeConstraints()
+        mogakcoSubView.snp.makeConstraints { make in
+            make.bottom.equalTo(mogakcoMapView).offset(-20)
+            make.leading.equalTo(mogakcoMapView).offset(20)
+            make.trailing.equalTo(-20)
+            make.height.equalTo(100)
+        }
+    }
+    
+    func hideMogakcoSubView() {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.mogakcoSubView.snp.removeConstraints()
+            self.mogakcoSubView.snp.makeConstraints { make in
+                make.top.equalTo(self.mogakcoMapView.snp.bottom)
+                make.leading.equalTo(self.mogakcoMapView).offset(20)
+                make.trailing.equalTo(-20)
+                make.height.equalTo(100)
+            }
+            self.mogakcoSubView.superview?.layoutIfNeeded()
+        }
+        mogakcoSubView.isHidden = true
     }
 }
