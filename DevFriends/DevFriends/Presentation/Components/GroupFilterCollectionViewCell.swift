@@ -10,21 +10,24 @@ import UIKit
 
 final class GroupFilterCollectionViewCell: UICollectionViewCell {
     
+    static let id = "GroupFilterCell"
+    
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "태그"
         label.font = .systemFont(ofSize: 15, weight: .bold)
+//        label.backgroundColor = .clear
         return label
     }()
     
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                self.backgroundColor = .systemOrange
-                self.layer.borderColor = UIColor.systemOrange.cgColor
+                self.contentView.backgroundColor = .systemOrange
+                self.contentView.layer.borderColor = UIColor.systemOrange.cgColor
             } else {
-                self.backgroundColor = .white
-                self.layer.borderColor = UIColor.black.cgColor
+                self.contentView.backgroundColor = .white
+                self.contentView.layer.borderColor = UIColor.black.cgColor
             }
         }
     }
@@ -44,7 +47,7 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell {
         self.contentView.backgroundColor = .white
         self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = true
-        self.layer.borderWidth = 1
+        self.contentView.layer.borderWidth = 1
         
         self.contentView.addSubview(label)
     }

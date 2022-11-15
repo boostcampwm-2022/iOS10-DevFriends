@@ -159,7 +159,8 @@ final class GroupListViewController: UIViewController {
 extension GroupListViewController {
     
     @objc func didTapFilterButton(_ sender: UIButton) {
-        print("tap filter button")
+        let filterVC = GroupFilterViewController()
+        present(filterVC, animated: true)
     }
 }
 
