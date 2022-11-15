@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051326342922595000151794 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051326332922595000151794 /* GroupListViewController.swift */; };
+		05132637292264E800151794 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 05132636292264E800151794 /* test.txt */; };
+		051326392922653600151794 /* GroupCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051326382922653600151794 /* GroupCollectionHeaderView.swift */; };
+		0513263B29226E5D00151794 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0513263A29226E5D00151794 /* GroupCollectionViewCell.swift */; };
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
 		D6CEFA459392B61254369D07 /* Pods_DevFriends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D508A33F60F395002118917 /* Pods_DevFriends.framework */; };
@@ -40,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		051326332922595000151794 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
+		05132636292264E800151794 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
+		051326382922653600151794 /* GroupCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionHeaderView.swift; sourceTree = "<group>"; };
+		0513263A29226E5D00151794 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		08AB74F8E8B5617454A9F712 /* Pods-DevFriends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.debug.xcconfig"; sourceTree = "<group>"; };
 		09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFriendsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFriends_DevFriendsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +165,7 @@
 		FC79AEAE29221F9F0077AE5C /* GroupScene */ = {
 			isa = PBXGroup;
 			children = (
+				051326332922595000151794 /* GroupListViewController.swift */,
 			);
 			path = GroupScene;
 			sourceTree = "<group>";
@@ -208,6 +217,9 @@
 		FC79AEB5292222A20077AE5C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				05132636292264E800151794 /* test.txt */,
+				051326382922653600151794 /* GroupCollectionHeaderView.swift */,
+				0513263A29226E5D00151794 /* GroupCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -460,6 +472,7 @@
 				FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */,
 				FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */,
 				FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */,
+				05132637292264E800151794 /* test.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,9 +618,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0513263B29226E5D00151794 /* GroupCollectionViewCell.swift in Sources */,
+				051326392922653600151794 /* GroupCollectionHeaderView.swift in Sources */,
 				FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */,
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,
 				FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */,
+				051326342922595000151794 /* GroupListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,7 +794,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DevFriends/Info.plist;
+				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -805,7 +821,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DevFriends/Info.plist;
+				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
