@@ -33,14 +33,12 @@ class MogakcoModalViewController: UIViewController {
     private func layout() {
         view.addSubview(mogakcoListCollectionView)
         mogakcoListCollectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(50)
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalToSuperview().offset(-20)
         }
     }
-    
-
 }
 
 // MARK: CollectionView DataSource Delegate Methods
