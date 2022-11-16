@@ -137,7 +137,10 @@ final class GroupListViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .systemGray6
-        //        bindViewModel()
+        
+//        bindViewModel()
+//        viewModel.fetchFilteredGroup()
+//        viewModel.fetchRecommendGroup()
     }
     // MARK: - Configure UI
     
@@ -201,7 +204,14 @@ extension GroupListViewController {
 
 extension GroupListViewController {
     
-    private func bindViewModel() { }
+    private func bindViewModel() {
+//        viewModel.$filterTrigger
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                self?.collectionView.reloadData()
+//            }
+//            .store(in: cancellabes)
+    }
 }
 
 // MARK: - UICollectionView DataSource
@@ -236,16 +246,25 @@ extension GroupListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return 6
+//            return viewModel.recommendGroups.count
         } else {
             return 5
+//            return viewModel.filteredGroups.count
         }
     }
     
+    // 셀 정보
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.id,
             for: indexPath
         ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        
+//        if indexPath.section == 0 {
+//            cell.configure(viewModel.recommendGroups[indexPath.item])
+//        } else {
+//            cell.configure(viewModel.filteredGroups[indexPath.item])
+//        }
         
         return cell
     }

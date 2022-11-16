@@ -56,7 +56,9 @@ final class GroupFilterViewController: UIViewController {
         super.viewDidLoad()
     
         self.view.backgroundColor = .white
+        
         bindViewModel()
+//        viewModel.fetchCategoryType()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,7 +67,7 @@ final class GroupFilterViewController: UIViewController {
 //        delegate?.selectFilter(self,
 //                               didSelectAlignType: viewModel.selectedAlignType,
 //                               didSelectGroupType: viewModel.selectedGroupType,
-//                               didSelectTagType: viewModel.selectedTagTypes)
+//                               didSelectCategoryType: viewModel.selectedCategoryTypes)
     }
     // MARK: - Configure UI
     
@@ -87,7 +89,7 @@ final class GroupFilterViewController: UIViewController {
 extension GroupFilterViewController {
     
     private func bindViewModel() {
-//        viewModel.$tagType
+//        viewModel.$categoryType
 //            .receive(on: DispatchQueue.main)
 //            .sink { [weak self] _ in
 //                self?.collectionView.reloadSections(IndexSet(integer: 2))
@@ -119,7 +121,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         } else if indexPath.section == 1 {
             header.configure("모임 종류")
         } else {
-            header.configure("태그")
+            header.configure("카테고리")
         }
         
         return header
@@ -165,7 +167,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
 //                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
 //            }
 //        case 2: // 태그 종류
-//            cell.configure(viewModel.tagType[indexPath.item])
+//            cell.configure(viewModel.categoryType[indexPath.item])
 //
 //            if viewModel.selectedTagTypes.contains(viewModel.alignType[indexPath.item]) {
 //                cell.isSelected = true
@@ -209,7 +211,7 @@ extension GroupFilterViewController: UICollectionViewDelegate {
 //        case 1: // 모임 종류
 //            viewModel.selectedGroupType = viewModel.groupType[indexPath.item]
 //        case 2: // 태그 종류
-//            viewModel.selectedTagTypes.append(viewModel.tagType[indexPath.item])
+//            viewModel.selectedTagTypes.append(viewModel.categoryType[indexPath.item])
 //        default:
 //            break
 //        }
@@ -223,7 +225,7 @@ extension GroupFilterViewController: UICollectionViewDelegate {
 //        case 1: // 모임 종류
 //            viewModel.selectedGroupType = nil
 //        case 2: // 태그 종류
-//            viewModel.selectedTagTypes.removeAll(where: $0 == viewModel.tagType[indexPath.item])
+//            viewModel.selectedTagTypes.removeAll(where: $0 == viewModel.categoryType[indexPath.item])
 //        default:
 //            break
 //        }
@@ -256,7 +258,7 @@ extension GroupFilterViewController: UICollectionViewDelegateFlowLayout {
 //        case 1:
 //            tagString = viewModel.groupType[indexPath.item]
 //        case 2:
-//            tagString = viewModel.tagType[indexPath.item]
+//            tagString = viewModel.categoryType[indexPath.item]
 //        default:
 //            tagString = ""
 //        }

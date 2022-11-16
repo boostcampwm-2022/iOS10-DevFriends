@@ -13,6 +13,6 @@ protocol GroupFilterViewControllerDelegate: AnyObject {
 //    func selectFilter(_ groupFilterViewController: GroupFilterViewController,
 //                      didSelectAlignType alignType: AlignType,
 //                      didSelectGroupType groupType: GroupType,
-//                      didSelectTagType tagTypes: [TapType])
+//                      didSelectTagType categoryTypes: [String])
 //    )
 }
