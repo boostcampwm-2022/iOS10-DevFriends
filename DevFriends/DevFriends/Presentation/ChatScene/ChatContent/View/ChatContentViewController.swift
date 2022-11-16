@@ -17,9 +17,10 @@ class ChatContentViewController: ViewController {
     }()
     
     private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyMessageTableViewCell.reuseIdentifier, for: indexPath) as? ChatTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendMessageTableViewCell.reuseIdentifier, for: indexPath) as? FriendMessageTableViewCell else {
             return UITableViewCell()
         }
+        cell.updateContent(data: data, messageContentType: .profileAndTime)
         return cell
     }
     
@@ -37,5 +38,18 @@ class ChatContentViewController: ViewController {
         self.messageTableView.snp.makeConstraints {
             $0.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    override func configureUI() {
+        self.setupTableView()
+    }
+    
+    private func setupTableView() {
+        self.messageTableViewSnapShot.appendSections([.main])
+    }
+    
+    private func populateSnapshot(data: [Message]) {
+        self.messageTableViewSnapShot.appendItems(data)
+        self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
     }
 }
