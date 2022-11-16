@@ -61,45 +61,13 @@ class MogakcoViewController: UIViewController {
         
         let mogakcoSubView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         mogakcoSubView.backgroundColor = .clear
+        mogakcoSubView.showsHorizontalScrollIndicator = false
         mogakcoSubView.dataSource = self
         mogakcoSubView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
         mogakcoSubView.isHidden = true
         return mogakcoSubView
     }()
-    lazy var showButton: UIButton = {
-        let btn = UIButton()
-        btn.setTitle("show", for: .normal)
-        btn.backgroundColor = .green
-        btn.addTarget(self, action: #selector(showCollections), for: .touchUpInside)
-        return btn
-    }()
-    lazy var hideButton: UIButton = {
-        let btn = UIButton()
-        btn.setTitle("hide", for: .normal)
-        btn.backgroundColor = .green
-        btn.addTarget(self, action: #selector(hideCollections), for: .touchUpInside)
-        return btn
-    }()
-    lazy var modalButton: UIButton = {
-        let btn = UIButton()
-        btn.setTitle("modal", for: .normal)
-        btn.backgroundColor = .green
-        btn.addTarget(self, action: #selector(showModal), for: .touchUpInside)
-        return btn
-    }()
-    @objc func showCollections() {
-        // TODO: Test
-        showMogakcoSubView()
-    }
-    @objc func hideCollections() {
-        // TODO: Test
-        hideMogakcoSubView()
-    }
-    @objc func showModal() {
-        // TODO: Test
-        showMogakcoModal()
-    }
-    
+   
     var isSelectingPin = false
     
     // 현재 위치를 불러오는 작업은 뷰컨에서 하면 안될 것 같긴 한데
@@ -205,8 +173,10 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         hideMogakcoSubView()
     }
     
+    // 맵이 이동할 때 호출
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        // pin을 선택할 때 아래에서 Deselect되는 것을 방지
+        // Pin을 터치해서 선택하는 과정에서 맵에 Pin을 중심으로 이동하게 되는데,
+        // 그 과정에서 아래에서 Pin이 Deselect되는 것을 방지
         if isSelectingPin {
             isSelectingPin = false
             return
@@ -227,8 +197,6 @@ extension MogakcoViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-    
 }
 
 // MARK: UI Layout Methods
@@ -261,25 +229,9 @@ extension MogakcoViewController {
             make.height.equalTo(50)
             make.width.equalTo(120)
         }
-        
-        view.addSubview(showButton)
-        showButton.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(50)
-        }
-        view.addSubview(hideButton)
-        hideButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(50)
-            make.top.equalToSuperview().offset(90)
-        }
-        view.addSubview(modalButton)
-        modalButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(50)
-            make.top.equalToSuperview().offset(130)
-        }
     }
     
     func showMogakcoSubView() {
-        // 현재위치버튼, 뷰모드 버튼 레이아웃 변경
         mogakcoSubView.isHidden = false
 //        mogakcoSubView.snp.updateConstraints { make in
 //            make.bottom.equalTo(mogakcoMapView).offset(-20)
@@ -306,8 +258,7 @@ extension MogakcoViewController {
     }
     
     func showMogakcoModal() {
-        let mogakcoModal = UIViewController()
-        mogakcoModal.view.backgroundColor = .systemYellow
+        let mogakcoModal = MogakcoModalViewController()
         mogakcoModal.modalPresentationStyle = .pageSheet
         if let sheet = mogakcoModal.sheetPresentationController {
             // 지원할 크기 지정
@@ -318,6 +269,5 @@ extension MogakcoViewController {
             sheet.largestUndimmedDetentIdentifier = .medium
         }
         present(mogakcoModal, animated: true, completion: nil)
-        view.bringSubviewToFront(viewModeButton)
     }
 }

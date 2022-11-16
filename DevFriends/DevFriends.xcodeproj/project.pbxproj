@@ -12,6 +12,7 @@
 		A6ED8B9D29228299003105E2 /* MogakcoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8B9C29228299003105E2 /* MogakcoViewController.swift */; };
 		A6ED8BA129239153003105E2 /* MogakcoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA029239153003105E2 /* MogakcoViewModel.swift */; };
 		A6ED8BA52924DF6C003105E2 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA42924DF6C003105E2 /* GroupCollectionViewCell.swift */; };
+		A6ED8BA72924E44A003105E2 /* MogakcoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA62924E44A003105E2 /* MogakcoModalViewController.swift */; };
 		D6CEFA459392B61254369D07 /* Pods_DevFriends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D508A33F60F395002118917 /* Pods_DevFriends.framework */; };
 		FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */; };
 		FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */; };
@@ -55,6 +56,7 @@
 		A6ED8B9C29228299003105E2 /* MogakcoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoViewController.swift; sourceTree = "<group>"; };
 		A6ED8BA029239153003105E2 /* MogakcoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoViewModel.swift; sourceTree = "<group>"; };
 		A6ED8BA42924DF6C003105E2 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
+		A6ED8BA62924E44A003105E2 /* MogakcoModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoModalViewController.swift; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				A6ED8B9C29228299003105E2 /* MogakcoViewController.swift */,
+				A6ED8BA62924E44A003105E2 /* MogakcoModalViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */,
 				A6ED8BA129239153003105E2 /* MogakcoViewModel.swift in Sources */,
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,
+				A6ED8BA72924E44A003105E2 /* MogakcoModalViewController.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* MogakcoViewController.swift in Sources */,
 				FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */,
 			);
