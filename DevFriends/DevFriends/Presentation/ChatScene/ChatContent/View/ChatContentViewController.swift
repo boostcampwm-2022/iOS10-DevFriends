@@ -5,6 +5,7 @@
 //  Created by 심주미 on 2022/11/15.
 //
 
+import Combine
 import UIKit
 
 class ChatContentViewController: ViewController {
@@ -24,6 +25,13 @@ class ChatContentViewController: ViewController {
         return cell
     }
     
+    private lazy var messageTextField: SendableTextView = {
+        let textField = SendableTextView(placeholder: "메시지를 작성해주세요")
+        textField.delegate = self
+        self.view.addSubview(textField)
+        return textField
+    }()
+    
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
     init(group: Group) {
@@ -35,9 +43,19 @@ class ChatContentViewController: ViewController {
     }
     
     override func layout() {
-        self.messageTableView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        self.messageTextField.snp.makeConstraints {
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top)
+            $0.size.height.equalTo(50)
         }
+        self.messageTableView.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(self.messageTextField.snp.top)
+        }
+    }
+    
+    override func bind() {
+        self.hideKeyboardWhenTappedAround()
     }
     
     override func configureUI() {
@@ -51,5 +69,11 @@ class ChatContentViewController: ViewController {
     private func populateSnapshot(data: [Message]) {
         self.messageTableViewSnapShot.appendItems(data)
         self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
+    }
+}
+
+extension ChatContentViewController: SendableTextViewDelegate {
+    func tapSendButton(text: String) {
+        print(text, "보냄")
     }
 }

@@ -31,6 +31,10 @@
 		FC79AECD292250F70077AE5C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AECC292250F70077AE5C /* ViewController.swift */; };
 		FCCA37D82924C3D7000E2A2A /* ContainsTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37D72924C3D7000E2A2A /* ContainsTime.swift */; };
 		FCCA37DA2924C430000E2A2A /* ContainsProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37D92924C430000E2A2A /* ContainsProfile.swift */; };
+		FCCA37DE2924E5FF000E2A2A /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37DD2924E5FF000E2A2A /* UIView+Combine.swift */; };
+		FCCA37E0292511CB000E2A2A /* SendableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37DF292511CB000E2A2A /* SendableTextView.swift */; };
+		FCCA37E22925181B000E2A2A /* UITextField+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37E12925181B000E2A2A /* UITextField+Combine.swift */; };
+		FCCA37E429251D6D000E2A2A /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37E329251D6D000E2A2A /* UIControl+Combine.swift */; };
 		FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */; };
 		FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
@@ -90,6 +94,10 @@
 		FC79AECC292250F70077AE5C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FCCA37D72924C3D7000E2A2A /* ContainsTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsTime.swift; sourceTree = "<group>"; };
 		FCCA37D92924C430000E2A2A /* ContainsProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsProfile.swift; sourceTree = "<group>"; };
+		FCCA37DD2924E5FF000E2A2A /* UIView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
+		FCCA37DF292511CB000E2A2A /* SendableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendableTextView.swift; sourceTree = "<group>"; };
+		FCCA37E12925181B000E2A2A /* UITextField+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Combine.swift"; sourceTree = "<group>"; };
+		FCCA37E329251D6D000E2A2A /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -283,6 +291,9 @@
 			children = (
 				FC15453329236E5600A40FD8 /* UIImage+Custom.swift */,
 				FC1545392923B35500A40FD8 /* Date+String.swift */,
+				FCCA37DD2924E5FF000E2A2A /* UIView+Combine.swift */,
+				FCCA37E12925181B000E2A2A /* UITextField+Combine.swift */,
+				FCCA37E329251D6D000E2A2A /* UIControl+Combine.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -298,6 +309,7 @@
 		FC79AEB5292222A20077AE5C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FCCA37DF292511CB000E2A2A /* SendableTextView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -710,17 +722,21 @@
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,
 				FC79AEC929224B550077AE5C /* CellType.swift in Sources */,
 				FC79AEC329223CC60077AE5C /* ChatViewController.swift in Sources */,
+				FCCA37DE2924E5FF000E2A2A /* UIView+Combine.swift in Sources */,
+				FCCA37E0292511CB000E2A2A /* SendableTextView.swift in Sources */,
 				FC1545252923464600A40FD8 /* ChatSceneDIContainer.swift in Sources */,
 				FCCA37DA2924C430000E2A2A /* ContainsProfile.swift in Sources */,
 				FC79AEC729224A820077AE5C /* ChatTableViewCell.swift in Sources */,
 				FC79AECB29224E280077AE5C /* SnapShotSection.swift in Sources */,
 				FC15452E2923581300A40FD8 /* AppFlowCoordinator.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
+				FCCA37E22925181B000E2A2A /* UITextField+Combine.swift in Sources */,
 				FC6CB3F129233D760025C125 /* FriendMessageTableViewCell.swift in Sources */,
 				FCCA37D82924C3D7000E2A2A /* ContainsTime.swift in Sources */,
 				FC154536292394B900A40FD8 /* MessageLabel.swift in Sources */,
 				FC15453429236E5600A40FD8 /* UIImage+Custom.swift in Sources */,
 				FC6CB3EF292338530025C125 /* ChatContentViewController.swift in Sources */,
+				FCCA37E429251D6D000E2A2A /* UIControl+Combine.swift in Sources */,
 				FC15453A2923B35500A40FD8 /* Date+String.swift in Sources */,
 				FC15452A292349BB00A40FD8 /* ChatCoordinator.swift in Sources */,
 				FC15453229236B9800A40FD8 /* ChatViewCoordinator.swift in Sources */,
