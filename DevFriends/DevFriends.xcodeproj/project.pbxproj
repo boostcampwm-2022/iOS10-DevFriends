@@ -11,6 +11,7 @@
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
 		A6ED8B9D29228299003105E2 /* MogakcoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8B9C29228299003105E2 /* MogakcoViewController.swift */; };
 		A6ED8BA129239153003105E2 /* MogakcoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA029239153003105E2 /* MogakcoViewModel.swift */; };
+		A6ED8BA52924DF6C003105E2 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA42924DF6C003105E2 /* GroupCollectionViewCell.swift */; };
 		D6CEFA459392B61254369D07 /* Pods_DevFriends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D508A33F60F395002118917 /* Pods_DevFriends.framework */; };
 		FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */; };
 		FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */; };
@@ -53,6 +54,7 @@
 		9C8D73A43F6124E9E2A99737 /* Pods-DevFriends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.release.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.release.xcconfig"; sourceTree = "<group>"; };
 		A6ED8B9C29228299003105E2 /* MogakcoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoViewController.swift; sourceTree = "<group>"; };
 		A6ED8BA029239153003105E2 /* MogakcoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoViewModel.swift; sourceTree = "<group>"; };
+		A6ED8BA42924DF6C003105E2 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AED6291CCE9300CCE5D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCD8AED8291CCE9300CCE5D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 		FC79AEB5292222A20077AE5C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A6ED8BA42924DF6C003105E2 /* GroupCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6ED8BA52924DF6C003105E2 /* GroupCollectionViewCell.swift in Sources */,
 				FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */,
 				A6ED8BA129239153003105E2 /* MogakcoViewModel.swift in Sources */,
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,

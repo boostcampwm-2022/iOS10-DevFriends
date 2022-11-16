@@ -53,9 +53,16 @@ class MogakcoViewController: UIViewController {
         return viewModeButton
     }()
     
-    lazy var mogakcoSubView: UIView = {
-        let mogakcoSubView = UIView()
-        mogakcoSubView.backgroundColor = .green
+    lazy var mogakcoSubView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width * 0.9, height: 140.0)
+        
+        let mogakcoSubView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        mogakcoSubView.backgroundColor = .clear
+        mogakcoSubView.dataSource = self
+        mogakcoSubView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
         mogakcoSubView.isHidden = true
         return mogakcoSubView
     }()
@@ -124,6 +131,9 @@ class MogakcoViewController: UIViewController {
     
     @objc func didTapViewModeButton() {
         print("tap ViewMode Button")
+        deselectAllAnnotations()
+        hideMogakcoSubView()
+        showMogakcoModal()
     }
     
     // MARK: Set Annotation Methods
@@ -140,6 +150,12 @@ class MogakcoViewController: UIViewController {
         annotation.title = strTitle
         annotation.subtitle = strSubTitle
         mogakcoMapView.addAnnotation(annotation)
+    }
+    
+    private func deselectAllAnnotations() {
+        for annotation in mogakcoMapView.annotations {
+            mogakcoMapView.deselectAnnotation(annotation, animated: true)
+        }
     }
 }
 
@@ -195,11 +211,24 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             isSelectingPin = false
             return
         }
-        for annotation in mapView.annotations {
-            mapView.deselectAnnotation(annotation, animated: true)
-        }
+        deselectAllAnnotations()
         hideMogakcoSubView()
     }
+}
+
+// MARK: CollectionView Delegate Methods
+extension MogakcoViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.id, for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+    
+    
 }
 
 // MARK: UI Layout Methods
@@ -252,11 +281,14 @@ extension MogakcoViewController {
     func showMogakcoSubView() {
         // 현재위치버튼, 뷰모드 버튼 레이아웃 변경
         mogakcoSubView.isHidden = false
+//        mogakcoSubView.snp.updateConstraints { make in
+//            make.bottom.equalTo(mogakcoMapView).offset(-20)
+//        }
         mogakcoSubView.snp.remakeConstraints { make in
             make.bottom.equalTo(mogakcoMapView).offset(-20)
-            make.leading.equalTo(mogakcoMapView).offset(20)
-            make.trailing.equalTo(-20)
-            make.height.equalTo(100)
+            make.leading.equalTo(mogakcoMapView)
+            make.trailing.equalTo(mogakcoMapView)
+            make.height.equalTo(150)
         }
     }
     
@@ -264,9 +296,9 @@ extension MogakcoViewController {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
             self.mogakcoSubView.snp.remakeConstraints { make in
                 make.top.equalTo(self.mogakcoMapView.snp.bottom)
-                make.leading.equalTo(self.mogakcoMapView).offset(20)
-                make.trailing.equalTo(-20)
-                make.height.equalTo(100)
+                make.leading.equalTo(self.mogakcoMapView)
+                make.trailing.equalTo(self.mogakcoMapView)
+                make.height.equalTo(180)
             }
             self.mogakcoSubView.superview?.layoutIfNeeded()
         }
