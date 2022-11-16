@@ -70,8 +70,6 @@ class MogakcoViewController: UIViewController {
    
     var isSelectingPin = false
     
-    // 현재 위치를 불러오는 작업은 뷰컨에서 하면 안될 것 같긴 한데
-    // 일단 테스트
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
