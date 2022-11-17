@@ -8,10 +8,7 @@
 import SnapKit
 import UIKit
 
-final class GroupFilterCollectionViewCell: UICollectionViewCell {
-    
-    static let id = "GroupFilterCell"
-    
+final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "태그"
@@ -46,23 +43,21 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell {
     // MARK: - Configure UI
     
     override func didMoveToSuperview() {
-        buildHierarchy()
-        setUpConstraints()
+        layout()
+        configureUI()
     }
     
-    private func buildHierarchy() {
-        self.contentView.backgroundColor = .white
-        self.contentView.layer.cornerRadius = 10
-        self.contentView.layer.masksToBounds = true
-        self.contentView.layer.borderWidth = 1
-        
+    func layout() {
         self.contentView.addSubview(label)
-    }
-    
-    private func setUpConstraints() {
         label.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
+    private func configureUI() {
+        self.contentView.backgroundColor = .white
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        self.contentView.layer.borderWidth = 1
+    }
 }

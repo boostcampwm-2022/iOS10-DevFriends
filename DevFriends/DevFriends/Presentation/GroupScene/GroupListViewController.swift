@@ -9,8 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class GroupListViewController: UIViewController {
-    
+final class GroupListViewController: DefaultViewController {
 //    private let viewModel: GroupListViewModel!
     private var cancellabes = Set<AnyCancellable>()
     
@@ -120,33 +119,20 @@ final class GroupListViewController: UIViewController {
         return layout
     }()
     
-    // MARK: - Initializer
+    // MARK: - Setting
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        
-        buildHierarchy()
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func configureUI() {
         self.view.backgroundColor = .systemGray6
-        
-//        bindViewModel()
-//        viewModel.fetchFilteredGroup()
-//        viewModel.fetchRecommendGroup()
     }
-    // MARK: - Configure UI
     
-    private func buildHierarchy() {
+    func layout() {
         setupNavigation()
+        
         self.view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     private func setupNavigation() {
@@ -154,18 +140,19 @@ final class GroupListViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
-    private func setupConstraints() {
-        collectionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
-        }
+    func bind() {
+//        viewModel.$filterTrigger
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                self?.collectionView.reloadData()
+//            }
+//            .store(in: cancellabes)
     }
 }
 
 // MARK: - Actions
 
 extension GroupListViewController {
-    
     @objc func didTapFilterButton(_ sender: UIButton) {
         let filterVC = GroupFilterViewController()
         present(filterVC, animated: true)
@@ -200,24 +187,9 @@ extension GroupListViewController {
     }
 }
 
-// MARK: - Bind ViewModel
-
-extension GroupListViewController {
-    
-    private func bindViewModel() {
-//        viewModel.$filterTrigger
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                self?.collectionView.reloadData()
-//            }
-//            .store(in: cancellabes)
-    }
-}
-
 // MARK: - UICollectionView DataSource
 
 extension GroupListViewController: UICollectionViewDataSource {
-    
     // 섹션 개수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         2
