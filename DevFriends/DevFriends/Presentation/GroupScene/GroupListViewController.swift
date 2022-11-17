@@ -47,7 +47,7 @@ final class GroupListViewController: DefaultViewController {
         collectionView.register(
             GroupCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: GroupCollectionHeaderView.id
+            withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier
         )
         collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
         
@@ -121,11 +121,11 @@ final class GroupListViewController: DefaultViewController {
     
     // MARK: - Setting
     
-    func configureUI() {
+    override func configureUI() {
         self.view.backgroundColor = .systemGray6
     }
     
-    func layout() {
+    override func layout() {
         setupNavigation()
         
         self.view.addSubview(collectionView)
@@ -140,7 +140,7 @@ final class GroupListViewController: DefaultViewController {
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
-    func bind() {
+    override func bind() {
 //        viewModel.$filterTrigger
 //            .receive(on: DispatchQueue.main)
 //            .sink { [weak self] _ in

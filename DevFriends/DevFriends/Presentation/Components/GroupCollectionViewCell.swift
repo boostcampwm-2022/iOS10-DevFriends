@@ -60,7 +60,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         configureUI()
     }
     
-    private func layout() {
+    func layout() {
         self.contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview().inset(20)

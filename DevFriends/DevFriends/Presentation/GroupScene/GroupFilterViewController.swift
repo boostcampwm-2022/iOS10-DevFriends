@@ -36,7 +36,7 @@ final class GroupFilterViewController: DefaultViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupFilterCollectionHeaderView.id
         )
-        collectionView.register(GroupFilterCollectionViewCell.self, forCellWithReuseIdentifier: GroupFilterCollectionViewCell.id)
+        collectionView.register(GroupFilterCollectionViewCell.self, forCellWithReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier)
         
         collectionView.allowsMultipleSelection = true
         
@@ -62,11 +62,11 @@ final class GroupFilterViewController: DefaultViewController {
     }
     // MARK: - Setting
     
-    private func configureUI() {
+    override func configureUI() {
         self.view.backgroundColor = .white
     }
     
-    private func layout() {
+    override func layout() {
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
@@ -75,7 +75,7 @@ final class GroupFilterViewController: DefaultViewController {
         }
     }
     
-    private func bind() {
+    override func bind() {
 //        viewModel.$categoryType
 //            .receive(on: DispatchQueue.main)
 //            .sink { [weak self] _ in
