@@ -43,11 +43,11 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
     }
     
     func layout() {
-        self.messageLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-10)
-            $0.leading.greaterThanOrEqualToSuperview().offset(50)
-            $0.trailing.equalToSuperview().offset(-20)
+        self.messageLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-10)
+            make.leading.greaterThanOrEqualToSuperview().offset(50)
+            make.trailing.equalToSuperview().offset(-20)
         }
         self.makeTimeLabel(messageLabel: self.messageLabel, type: .me)
     }

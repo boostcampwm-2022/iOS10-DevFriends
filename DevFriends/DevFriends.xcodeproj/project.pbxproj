@@ -37,7 +37,7 @@
 		FC79AEC729224A820077AE5C /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC629224A820077AE5C /* ChatTableViewCell.swift */; };
 		FC79AEC929224B550077AE5C /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC829224B550077AE5C /* CellType.swift */; };
 		FC79AECB29224E280077AE5C /* SnapShotSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AECA29224E280077AE5C /* SnapShotSection.swift */; };
-		FC79AECD292250F70077AE5C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AECC292250F70077AE5C /* ViewController.swift */; };
+		FC79AECD292250F70077AE5C /* DefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AECC292250F70077AE5C /* DefaultViewController.swift */; };
 		FCCA37D82924C3D7000E2A2A /* ContainsTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37D72924C3D7000E2A2A /* ContainsTime.swift */; };
 		FCCA37DA2924C430000E2A2A /* ContainsProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37D92924C430000E2A2A /* ContainsProfile.swift */; };
 		FCCA37DE2924E5FF000E2A2A /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCA37DD2924E5FF000E2A2A /* UIView+Combine.swift */; };
@@ -109,7 +109,7 @@
 		FC79AEC629224A820077AE5C /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		FC79AEC829224B550077AE5C /* CellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
 		FC79AECA29224E280077AE5C /* SnapShotSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapShotSection.swift; sourceTree = "<group>"; };
-		FC79AECC292250F70077AE5C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FC79AECC292250F70077AE5C /* DefaultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultViewController.swift; sourceTree = "<group>"; };
 		FCCA37D72924C3D7000E2A2A /* ContainsTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsTime.swift; sourceTree = "<group>"; };
 		FCCA37D92924C430000E2A2A /* ContainsProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsProfile.swift; sourceTree = "<group>"; };
 		FCCA37DD2924E5FF000E2A2A /* UIView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
@@ -304,7 +304,7 @@
 				FC79AEB4292221B90077AE5C /* Protocols */,
 				FC79AEB3292221940077AE5C /* Extensions */,
 				FC79AECA29224E280077AE5C /* SnapShotSection.swift */,
-				FC79AECC292250F70077AE5C /* ViewController.swift */,
+				FC79AECC292250F70077AE5C /* DefaultViewController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -767,14 +767,13 @@
 				FC15453A2923B35500A40FD8 /* Date+String.swift in Sources */,
 				FC15452A292349BB00A40FD8 /* ChatCoordinator.swift in Sources */,
 				FC15453229236B9800A40FD8 /* ChatViewCoordinator.swift in Sources */,
-				FC79AECD292250F70077AE5C /* ViewController.swift in Sources */,
+				FC79AECD292250F70077AE5C /* DefaultViewController.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				FC6CB3F329233D810025C125 /* MyMessageTableViewCell.swift in Sources */,
 				05A4B6D92923817200301ABB /* GroupFilterCollectionViewCell.swift in Sources */,
 				0513263B29226E5D00151794 /* GroupCollectionViewCell.swift in Sources */,
 				05D381A429253A1800613DB4 /* GroupListViewModelType.swift in Sources */,
 				051326392922653600151794 /* GroupCollectionHeaderView.swift in Sources */,
-				FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */,
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,
 				05A4B6DB292388B300301ABB /* GroupFilterCollectionHeaderView.swift in Sources */,
 				FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */,

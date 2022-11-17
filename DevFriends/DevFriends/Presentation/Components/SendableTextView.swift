@@ -65,29 +65,29 @@ final class SendableTextView: UIView {
     }
     
     func removeSendButtonWidthConstraintsOffset() {
-        self.sendButton.snp.updateConstraints {
-            $0.width.equalTo(0)
+        self.sendButton.snp.updateConstraints { make in
+            make.width.equalTo(0)
         }
     }
     
     func makeSendButtonWidthConstraintsOffset() {
-        self.sendButton.snp.updateConstraints {
-            $0.width.equalTo(60)
+        self.sendButton.snp.updateConstraints { make in
+            make.width.equalTo(60)
         }
     }
     
     func layout() {
-        self.sendButton.snp.makeConstraints {
-            $0.height.equalTo(60)
-            $0.width.equalTo(0)
-            $0.bottom.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-10)
+        self.sendButton.snp.makeConstraints { make in
+            make.height.equalTo(60)
+            make.width.equalTo(0)
+            make.bottom.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-10)
         }
         
-        self.textField.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.top.bottom.equalToSuperview()
-            $0.trailing.equalTo(sendButton.snp.leading).offset(-10)
+        self.textField.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(20)
+            make.top.bottom.equalToSuperview()
+            make.trailing.equalTo(sendButton.snp.leading).offset(-10)
         }
     }
 }

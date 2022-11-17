@@ -25,14 +25,14 @@ extension ContainsTime {
         }()
         
         self.addSubview(timeLabel)
-        timeLabel.snp.makeConstraints {
+        timeLabel.snp.makeConstraints { make in
             switch type {
             case .friend:
-                $0.leading.equalTo(messageLabel.snp.trailing).offset(10)
+                make.leading.equalTo(messageLabel.snp.trailing).offset(10)
             case .me:
-                $0.trailing.equalTo(messageLabel.snp.leading).offset(-10)
+                make.trailing.equalTo(messageLabel.snp.leading).offset(-10)
             }
-            $0.bottom.equalTo(messageLabel.snp.bottom)
+            make.bottom.equalTo(messageLabel.snp.bottom)
         }
         
         self.bind(timeLabel: timeLabel)

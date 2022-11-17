@@ -14,7 +14,6 @@ struct ChatSceneDIContainer {
 }
 
 extension ChatSceneDIContainer: ChatDetailFlowCoordinatorDependencies {
-    
     //MARK: Chat Content
     func makeChatContentViewController(group: Group) -> ChatContentViewController {
         return ChatContentViewController(group: group)

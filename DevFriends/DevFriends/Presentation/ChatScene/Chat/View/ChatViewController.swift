@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 
-class ChatViewController: ViewController {
-    
+final class ChatViewController: DefaultViewController {
     private lazy var chatTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
@@ -26,7 +25,7 @@ class ChatViewController: ViewController {
         return cell
     }
     
-    lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    private lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
     weak var coordinator: ChatViewCoordinator?
     
@@ -43,8 +42,8 @@ class ChatViewController: ViewController {
     }
     
     override func layout() {
-        chatTableView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+        chatTableView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
         populateSnapshot(data: [Group(participantIDs: ["12"], title: "d"), Group(participantIDs: ["13"], title: "d"), Group(participantIDs: ["1"], title: "dd")])
     }

@@ -34,15 +34,15 @@ extension ContainsProfile {
         }()
         self.addSubview(nameLabel)
 
-        profileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-            $0.size.height.width.equalTo(profileImageViewHeight)
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
+            make.size.height.width.equalTo(profileImageViewHeight)
         }
         
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.top).offset(10)
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(10)
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.top).offset(10)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(10)
         }
         
         self.bind(nameLabel: nameLabel, profileImageView: profileImageView)

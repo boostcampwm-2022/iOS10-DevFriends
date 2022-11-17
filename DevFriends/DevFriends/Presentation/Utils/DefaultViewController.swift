@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DefaultViewController.swift
 //  DevFriends
 //
 //  Created by 심주미 on 2022/11/14.
@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-class ViewController: UIViewController {
+class DefaultViewController: UIViewController {
     var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {

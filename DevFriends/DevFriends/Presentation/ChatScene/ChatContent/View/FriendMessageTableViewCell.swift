@@ -62,23 +62,23 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
     }
     
     func removeMessageTopConstraintsOffset() {
-        self.messageLabel.snp.updateConstraints {
-            $0.top.equalToSuperview()
+        self.messageLabel.snp.updateConstraints { make in
+            make.top.equalToSuperview()
         }
     }
     
     func makeMessageTopConstraintsOffset() {
-        self.messageLabel.snp.updateConstraints {
-            $0.top.equalToSuperview().offset(30)
+        self.messageLabel.snp.updateConstraints { make in
+            make.top.equalToSuperview().offset(30)
         }
     }
     
     func layout() {
-        self.messageLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(30)
-            $0.bottom.lessThanOrEqualToSuperview().offset(-10)
-            $0.leading.equalToSuperview().offset(80)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-50)
+        self.messageLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(30)
+            make.bottom.lessThanOrEqualToSuperview().offset(-10)
+            make.leading.equalToSuperview().offset(80)
+            make.trailing.lessThanOrEqualToSuperview().offset(-50)
         }
         self.makeTimeLabel(messageLabel: self.messageLabel, type: .friend)
         self.makeProfileView(messageLabel: self.messageLabel)

@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-class ChatContentViewController: ViewController {
+class ChatContentViewController: DefaultViewController {
     private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(FriendMessageTableViewCell.self, forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier)
@@ -43,14 +43,14 @@ class ChatContentViewController: ViewController {
     }
     
     override func layout() {
-        self.messageTextField.snp.makeConstraints {
-            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top)
-            $0.size.height.equalTo(50)
+        self.messageTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top)
+            make.size.height.equalTo(50)
         }
-        self.messageTableView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(self.messageTextField.snp.top)
+        self.messageTableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.messageTextField.snp.top)
         }
     }
     

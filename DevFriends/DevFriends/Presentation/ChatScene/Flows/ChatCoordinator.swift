@@ -12,7 +12,6 @@ protocol ChatDetailFlowCoordinatorDependencies  {
 }
 
 final class ChatCoordinator: Coordinator {
-    
     private weak var navigationController: UINavigationController?
     let dependencies: ChatDetailFlowCoordinatorDependencies
 

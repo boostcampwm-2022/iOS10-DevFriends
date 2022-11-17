@@ -8,7 +8,6 @@
 import Foundation
 
 final class AppDIContainer {
-    
     func makeChatSceneDIContainer() -> ChatSceneDIContainer {
         return ChatSceneDIContainer()
     }

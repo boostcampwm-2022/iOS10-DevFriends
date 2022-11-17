@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 final class ChatTableViewCell: UITableViewCell {
-    
     private let chatImageViewHegiht: CGFloat = 70
     private lazy var chatImageView: UIImageView = {
         let imageView = UIImageView()
@@ -78,34 +77,34 @@ extension ChatTableViewCell: CellType {
     static var reuseIdentifier = String(describing: ChatTableViewCell.self)
     
     func layout() {
-        self.chatImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(15)
-            $0.bottom.lessThanOrEqualToSuperview().offset(-15)
-            $0.leading.equalToSuperview().offset(20)
-            $0.size.height.width.equalTo(chatImageViewHegiht)
+        self.chatImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(15)
+            make.bottom.lessThanOrEqualToSuperview().offset(-15)
+            make.leading.equalToSuperview().offset(20)
+            make.size.height.width.equalTo(chatImageViewHegiht)
         }
         
-        self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.chatImageView.snp.top).offset(10)
-            $0.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
+        self.titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.chatImageView.snp.top).offset(10)
+            make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
         }
         
-        self.participantCountLabel.snp.makeConstraints {
-            $0.top.equalTo(self.titleLabel.snp.top)
-            $0.leading.equalTo(self.titleLabel.snp.trailing).offset(10)
-            $0.trailing.lessThanOrEqualTo(self.newMessageView.snp.leading).offset(-10)
+        self.participantCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.titleLabel.snp.top)
+            make.leading.equalTo(self.titleLabel.snp.trailing).offset(10)
+            make.trailing.lessThanOrEqualTo(self.newMessageView.snp.leading).offset(-10)
         }
         
-        self.lastMessgaeLabel.snp.makeConstraints {
-            $0.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
-            $0.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
-            $0.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
+        self.lastMessgaeLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
+            make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
+            make.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
         }
         
-        self.newMessageView.snp.makeConstraints {
-            $0.centerY.equalTo(self.chatImageView.snp.centerY)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.size.height.width.equalTo(20)
+        self.newMessageView.snp.makeConstraints { make in
+            make.centerY.equalTo(self.chatImageView.snp.centerY)
+            make.trailing.equalToSuperview().offset(-20)
+            make.size.height.width.equalTo(20)
         }
     }
 }
