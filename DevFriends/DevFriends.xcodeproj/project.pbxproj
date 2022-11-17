@@ -246,7 +246,9 @@
 			isa = PBXGroup;
 			children = (
 				E33A20212922899300887EC9 /* Protocols */,
-				E33A20202922898200887EC9 /* Extensions */,
+				E33A20202922898200887EC9 /* Extensions */
+            );
+        };
 		FC1545262923469400A40FD8 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
