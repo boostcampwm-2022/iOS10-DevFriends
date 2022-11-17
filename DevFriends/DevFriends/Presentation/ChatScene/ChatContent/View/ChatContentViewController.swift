@@ -13,7 +13,6 @@ class ChatContentViewController: DefaultViewController {
         let tableView = UITableView()
         tableView.register(FriendMessageTableViewCell.self, forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier)
         tableView.register(MyMessageTableViewCell.self, forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier)
-        self.view.addSubview(tableView)
         return tableView
     }()
     
@@ -28,7 +27,6 @@ class ChatContentViewController: DefaultViewController {
     private lazy var messageTextField: SendableTextView = {
         let textField = SendableTextView(placeholder: "메시지를 작성해주세요")
         textField.delegate = self
-        self.view.addSubview(textField)
         return textField
     }()
     
@@ -43,11 +41,14 @@ class ChatContentViewController: DefaultViewController {
     }
     
     override func layout() {
+        self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top)
             make.size.height.equalTo(50)
         }
+        
+        self.view.addSubview(messageTableView)
         self.messageTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.messageTextField.snp.top)

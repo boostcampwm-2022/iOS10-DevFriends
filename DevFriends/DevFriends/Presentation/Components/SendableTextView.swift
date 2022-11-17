@@ -47,9 +47,9 @@ final class SendableTextView: UIView {
         self.textField.textPublisher
             .sink { [weak self] text in
                 if let text = text, !text.isEmpty {
-                    self?.makeSendButtonWidthConstraintsOffset()
+                    self?.makeSendButton()
                 } else {
-                    self?.removeSendButtonWidthConstraintsOffset()
+                    self?.removeSendButton()
                 }
             }
             .store(in: &cancellables)
@@ -64,13 +64,13 @@ final class SendableTextView: UIView {
             .store(in: &cancellables)
     }
     
-    func removeSendButtonWidthConstraintsOffset() {
+    func removeSendButton() {
         self.sendButton.snp.updateConstraints { make in
             make.width.equalTo(0)
         }
     }
     
-    func makeSendButtonWidthConstraintsOffset() {
+    func makeSendButton() {
         self.sendButton.snp.updateConstraints { make in
             make.width.equalTo(60)
         }
