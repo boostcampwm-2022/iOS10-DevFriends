@@ -20,7 +20,7 @@ class MogakcoModalViewController: UIViewController {
         mogakcoListView.backgroundColor = .white
         mogakcoListView.showsVerticalScrollIndicator = false
         mogakcoListView.dataSource = self
-        mogakcoListView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
+        mogakcoListView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         return mogakcoListView
     }()
 
@@ -48,7 +48,10 @@ extension MogakcoModalViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.id, for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         
         return cell
     }

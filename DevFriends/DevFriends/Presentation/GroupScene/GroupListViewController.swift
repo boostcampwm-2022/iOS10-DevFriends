@@ -39,7 +39,7 @@ final class GroupListViewController: DefaultViewController {
     }()
     
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.compositionalLayout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.dataSource = self
@@ -49,12 +49,12 @@ final class GroupListViewController: DefaultViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
+        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         
         return collectionView
     }()
     
-    private lazy var layout: UICollectionViewCompositionalLayout = {
+    private lazy var compositionalLayout: UICollectionViewCompositionalLayout = {
         let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             
             let screenSize = UIScreen.main.bounds.size
@@ -201,14 +201,14 @@ extension GroupListViewController: UICollectionViewDataSource {
             kind == UICollectionView.elementKindSectionHeader,
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: GroupCollectionHeaderView.id,
+                withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier,
                 for: indexPath
             ) as? GroupCollectionHeaderView else { return UICollectionReusableView() }
         
         if indexPath.section == 0 {
-            header.configure(title: "추천 모임")
+            header.set(title: "추천 모임")
         } else if indexPath.section == 1 {
-            header.configure(title: "모집중인 모임", self, #selector(didTapFilterButton))
+            header.set(title: "모집중인 모임", self, #selector(didTapFilterButton))
         }
         
         return header
@@ -228,7 +228,7 @@ extension GroupListViewController: UICollectionViewDataSource {
     // 셀 정보
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupCollectionViewCell.id,
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath
         ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         

@@ -51,7 +51,7 @@ final class PostDetailViewController: UIViewController {
         configure()
         setupViews()
         
-        hideKeyboardWhenTappedAround()
+        hideKeyboardWhenTapped()
         
         setTableViewDelegate()
         registerTableView()

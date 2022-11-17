@@ -58,7 +58,7 @@ final class GroupCollectionHeaderView: UICollectionReusableView, ReusableType {
     }
     
     // MARK: - Setting
-    private func layout() {
+    func layout() {
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.bottom.leading.equalToSuperview()

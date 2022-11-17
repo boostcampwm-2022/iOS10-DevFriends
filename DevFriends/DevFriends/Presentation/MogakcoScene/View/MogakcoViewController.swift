@@ -63,7 +63,7 @@ class MogakcoViewController: UIViewController {
         mogakcoSubView.backgroundColor = .clear
         mogakcoSubView.showsHorizontalScrollIndicator = false
         mogakcoSubView.dataSource = self
-        mogakcoSubView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
+        mogakcoSubView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         mogakcoSubView.isHidden = true
         return mogakcoSubView
     }()
@@ -191,7 +191,10 @@ extension MogakcoViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.id, for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         
         return cell
     }

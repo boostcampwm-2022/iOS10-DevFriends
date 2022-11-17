@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 final class GroupFilterViewController: DefaultViewController {
-    enum SectionType: Int {
+    enum SectionType: Int, CaseIterable {
         case align = 0
         case group = 1
         case category = 2
@@ -48,7 +48,7 @@ final class GroupFilterViewController: DefaultViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        bindViewModel()
+        bind()
 //        viewModel.fetchCategoryType()
     }
     
@@ -125,7 +125,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
     // 셀 정보
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupFilterCollectionViewCell.id,
+            withReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier,
             for: indexPath
         ) as? GroupFilterCollectionViewCell else { return UICollectionViewCell() }
         
@@ -224,7 +224,7 @@ extension GroupFilterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         // 이 부분은 viewModel 구현 후에
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupFilterCollectionViewCell.id, for: indexPath) as? GroupFilterCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier, for: indexPath) as? GroupFilterCollectionViewCell else {
             return .zero
         }
 
