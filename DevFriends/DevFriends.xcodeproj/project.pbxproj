@@ -18,10 +18,12 @@
 		05D381A429253A1800613DB4 /* GroupListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D381A329253A1800613DB4 /* GroupListViewModelType.swift */; };
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
-		A6ED8B9D29228299003105E2 /* MogakcoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8B9C29228299003105E2 /* MogakcoViewController.swift */; };
-		A6ED8BA129239153003105E2 /* MogakcoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA029239153003105E2 /* MogakcoViewModel.swift */; };
-		A6ED8BA52924DF6C003105E2 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA42924DF6C003105E2 /* GroupCollectionViewCell.swift */; };
-		A6ED8BA72924E44A003105E2 /* MogakcoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BA62924E44A003105E2 /* MogakcoModalViewController.swift */; };
+		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A6ED8BB229262C2B003105E2 /* MogakcoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BB029262C2B003105E2 /* MogakcoViewController.swift */; };
+		A6ED8BB329262C2B003105E2 /* MogakcoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BB129262C2B003105E2 /* MogakcoModalViewController.swift */; };
+		A6ED8BB529262C4F003105E2 /* MogakcoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ED8BB429262C4F003105E2 /* MogakcoViewModel.swift */; };
 		D6CEFA459392B61254369D07 /* Pods_DevFriends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D508A33F60F395002118917 /* Pods_DevFriends.framework */; };
 		FC1545252923464600A40FD8 /* ChatSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1545242923464600A40FD8 /* ChatSceneDIContainer.swift */; };
 		FC15452A292349BB00A40FD8 /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC154529292349BB00A40FD8 /* ChatCoordinator.swift */; };
@@ -95,6 +97,9 @@
 		837D31618E31BF1C7C65D48C /* Pods-DevFriendsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriendsTests.release.xcconfig"; path = "Target Support Files/Pods-DevFriendsTests/Pods-DevFriendsTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A479E087E3E3E0E8DFBFF7B /* Pods-DevFriends-DevFriendsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C8D73A43F6124E9E2A99737 /* Pods-DevFriends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.release.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.release.xcconfig"; sourceTree = "<group>"; };
+		A6ED8BB029262C2B003105E2 /* MogakcoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MogakcoViewController.swift; sourceTree = "<group>"; };
+		A6ED8BB129262C2B003105E2 /* MogakcoModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MogakcoModalViewController.swift; sourceTree = "<group>"; };
+		A6ED8BB429262C4F003105E2 /* MogakcoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MogakcoViewModel.swift; sourceTree = "<group>"; };
 		FC1545242923464600A40FD8 /* ChatSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSceneDIContainer.swift; sourceTree = "<group>"; };
 		FC154529292349BB00A40FD8 /* ChatCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
 		FC15452B2923579E00A40FD8 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
@@ -176,8 +181,8 @@
 		A6ED8B9E29239052003105E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A6ED8B9C29228299003105E2 /* MogakcoViewController.swift */,
-				A6ED8BA62924E44A003105E2 /* MogakcoModalViewController.swift */,
+				A6ED8BB129262C2B003105E2 /* MogakcoModalViewController.swift */,
+				A6ED8BB029262C2B003105E2 /* MogakcoViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -185,7 +190,7 @@
 		A6ED8B9F2923905A003105E2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				A6ED8BA029239153003105E2 /* MogakcoViewModel.swift */,
+				A6ED8BB429262C4F003105E2 /* MogakcoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -779,6 +784,7 @@
 				FC79AEC729224A820077AE5C /* ChatTableViewCell.swift in Sources */,
 				FC79AECB29224E280077AE5C /* SnapShotSection.swift in Sources */,
 				FC15452E2923581300A40FD8 /* AppFlowCoordinator.swift in Sources */,
+				A6ED8BB229262C2B003105E2 /* MogakcoViewController.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				FCCA37E22925181B000E2A2A /* UITextField+Combine.swift in Sources */,
 				FC6CB3F129233D760025C125 /* FriendMessageTableViewCell.swift in Sources */,
@@ -797,11 +803,12 @@
 				0513263B29226E5D00151794 /* GroupCollectionViewCell.swift in Sources */,
 				05D381A429253A1800613DB4 /* GroupListViewModelType.swift in Sources */,
 				051326392922653600151794 /* GroupCollectionHeaderView.swift in Sources */,
-				FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */,
-				A6ED8BA129239153003105E2 /* MogakcoViewModel.swift in Sources */,
+				A6ED8BB529262C4F003105E2 /* MogakcoViewModel.swift in Sources */,
+				A6ED8BA129239153003105E2 /* (null) in Sources */,
+				A6ED8BB329262C2B003105E2 /* MogakcoModalViewController.swift in Sources */,
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,
-				A6ED8BA72924E44A003105E2 /* MogakcoModalViewController.swift in Sources */,
-				A6ED8B9D29228299003105E2 /* MogakcoViewController.swift in Sources */,
+				A6ED8BA72924E44A003105E2 /* (null) in Sources */,
+				A6ED8B9D29228299003105E2 /* (null) in Sources */,
 				05A4B6DB292388B300301ABB /* GroupFilterCollectionHeaderView.swift in Sources */,
 				FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */,
 				051326342922595000151794 /* GroupListViewController.swift in Sources */,
