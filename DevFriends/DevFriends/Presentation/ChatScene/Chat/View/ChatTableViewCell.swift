@@ -86,6 +86,13 @@ extension ChatTableViewCell: ReusableType {
             make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
         }
         
+        self.addSubview(newMessageView)
+        self.newMessageView.snp.makeConstraints { make in
+            make.centerY.equalTo(self.chatImageView.snp.centerY)
+            make.trailing.equalToSuperview().offset(-20)
+            make.size.height.width.equalTo(20)
+        }
+        
         self.addSubview(participantCountLabel)
         self.participantCountLabel.snp.makeConstraints { make in
             make.top.equalTo(self.titleLabel.snp.top)
@@ -98,13 +105,6 @@ extension ChatTableViewCell: ReusableType {
             make.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
             make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
             make.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
-        }
-        
-        self.addSubview(newMessageView)
-        self.newMessageView.snp.makeConstraints { make in
-            make.centerY.equalTo(self.chatImageView.snp.centerY)
-            make.trailing.equalToSuperview().offset(-20)
-            make.size.height.width.equalTo(20)
         }
     }
 }

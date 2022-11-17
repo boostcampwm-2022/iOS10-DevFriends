@@ -37,17 +37,17 @@ extension ContainsProfile {
     }
     
     func layout(nameLabel: UILabel, profileImageView: UIImageView, profileImageViewHeight: CGFloat) {
-        self.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.top).offset(10)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(10)
-        }
-        
         self.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.size.height.width.equalTo(profileImageViewHeight)
+        }
+        
+        self.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.top).offset(10)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(10)
         }
     }
     
