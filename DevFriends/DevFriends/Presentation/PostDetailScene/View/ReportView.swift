@@ -45,8 +45,12 @@ final class ReportView: UIView {
         return closeButton
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    required init?(coder: NSCoder) {
+        fatalError("Init Error")
+    }
+    
+    init() {
+        super.init(frame: .zero)
         
         configure()
     }

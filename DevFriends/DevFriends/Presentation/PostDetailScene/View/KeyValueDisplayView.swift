@@ -34,8 +34,13 @@ final class KeyValueDisplayView: UIView {
         return valueLabel
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    required init?(coder: NSCoder) {
+        fatalError("Init Error")
+    }
+    
+    init() {
+        super.init(frame: .zero)
+        
         configure()
     }
     

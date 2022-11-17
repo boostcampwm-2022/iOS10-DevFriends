@@ -69,8 +69,12 @@ final class PostDetailContentsView: UIView {
         return emptyView
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init() {
+        super.init(frame: .zero)
         
         configure()
     }
@@ -100,7 +104,7 @@ final class PostDetailContentsView: UIView {
         }
         
         snp.makeConstraints { make in
-            make.height.equalTo(mainStackView)
+            make.edges.equalTo(mainStackView)
         }
     }
     

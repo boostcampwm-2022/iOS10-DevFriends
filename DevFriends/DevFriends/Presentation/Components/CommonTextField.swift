@@ -12,10 +12,6 @@ final class CommonTextField: UITextField {
         fatalError("Init Error")
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     init(placeHolder: String?) {
         super.init(frame: .zero)
         

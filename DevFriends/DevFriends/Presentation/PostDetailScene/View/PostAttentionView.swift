@@ -7,6 +7,13 @@
 
 import UIKit
 
+struct PostAttentionInfo {
+    let likeOrNot: Bool
+    let commentsCount: Int
+    let maxParticipantCount: Int
+    let currentParticipantCount: Int
+}
+
 final class PostAttentionView: UIView {
     lazy var mainStackView: UIStackView = {
         let mainStackView = UIStackView()
@@ -53,8 +60,12 @@ final class PostAttentionView: UIView {
         return emptyView
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    required init?(coder: NSCoder) {
+        fatalError("Init Error")
+    }
+    
+    init() {
+        super.init(frame: .zero)
         
         configure()
     }
@@ -66,17 +77,33 @@ final class PostAttentionView: UIView {
         mainStackView.addArrangedSubview(participantsButton)
         mainStackView.addArrangedSubview(emptyView)
         
+        likeButton.snp.makeConstraints { make in
+            make.height.equalTo(40)
+        }
+        commentsButton.snp.makeConstraints { make in
+            make.height.equalTo(40)
+        }
+        participantsButton.snp.makeConstraints { make in
+            make.height.equalTo(40)
+        }
+        
         mainStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            // make.edges.equalToSuperview()
+            make.height.equalTo(40)
+        }
+        
+        snp.makeConstraints { make in
+            make.edges.equalTo(mainStackView)
+            make.size.equalTo(mainStackView)
         }
     }
     
-    func set(likeOrNot: Bool, commentsCount: Int, maxParticipantCount: Int, currentParticipantCount: Int) {
-        if likeOrNot {
+    func set(info: PostAttentionInfo) {
+        if info.likeOrNot {
             likeButton.isSelected = true
         }
         
-        commentsButton.setTitle(String(commentsCount), for: .normal)
-        participantsButton.setTitle("\(currentParticipantCount)/\(maxParticipantCount)명", for: .normal)
+        commentsButton.setTitle(String(info.commentsCount), for: .normal)
+        participantsButton.setTitle("\(info.currentParticipantCount)/\(info.maxParticipantCount)명", for: .normal)
     }
 }
