@@ -8,17 +8,17 @@
 import UIKit
 
 final class ReportView: UIView {
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         return stackView
     }()
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.font = .boldSystemFont(ofSize: 20)
         return titleLabel
     }()
-    lazy var textView: UITextView = {
+    private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.layer.cornerRadius = 5
         textView.layer.borderWidth = 1
@@ -26,7 +26,7 @@ final class ReportView: UIView {
         textView.isEditable = true
         return textView
     }()
-    lazy var submitButton: UIButton = {
+    private lazy var submitButton: UIButton = {
         let submitButton = UIButton()
         submitButton.backgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
         submitButton.setTitle("제출하기", for: .normal)
@@ -34,7 +34,7 @@ final class ReportView: UIView {
         submitButton.layer.cornerRadius = 5
         return submitButton
     }()
-    lazy var closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let closeButton = UIButton()
         closeButton.setTitle("취소", for: .normal)
         closeButton.titleLabel?.font = .systemFont(ofSize: 14)
@@ -80,5 +80,9 @@ final class ReportView: UIView {
         closeButton.snp.makeConstraints { make in
             make.height.equalTo(48)
         }
+    }
+    
+    func setTitleText(title: String) {
+        self.titleLabel.text = title
     }
 }

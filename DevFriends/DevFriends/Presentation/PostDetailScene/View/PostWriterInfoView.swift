@@ -15,14 +15,14 @@ struct PostWriterInfo {
 }
 
 final class PostWriterInfoView: UIView {
-    lazy var mainStackView: UIStackView = {
+    private lazy var mainStackView: UIStackView = {
         let mainStackView = UIStackView()
         mainStackView.axis = .horizontal
         mainStackView.spacing = 17
         mainStackView.distribution = .fill
         return mainStackView
     }()
-    lazy var subStackView: UIStackView = {
+    private lazy var subStackView: UIStackView = {
         let subStackView = UIStackView()
         subStackView.axis = .vertical
         subStackView.spacing = 0
@@ -30,19 +30,19 @@ final class PostWriterInfoView: UIView {
         subStackView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return subStackView
     }()
-    lazy var writerProfileImageView: UIImageView = {
+    private lazy var writerProfileImageView: UIImageView = {
         let writerProfileImageView = UIImageView()
         writerProfileImageView.contentMode = .scaleAspectFit
         writerProfileImageView.clipsToBounds = true
         return writerProfileImageView
     }()
-    lazy var writerNameLabel: UILabel = {
+    private lazy var writerNameLabel: UILabel = {
         let writerNameLabel = UILabel()
         writerNameLabel.numberOfLines = 0
         writerNameLabel.sizeToFit()
         return writerNameLabel
     }()
-    lazy var writerJobLabel: UILabel = {
+    private lazy var writerJobLabel: UILabel = {
         let writerJobLabel = UILabel()
         writerJobLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
         writerJobLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)

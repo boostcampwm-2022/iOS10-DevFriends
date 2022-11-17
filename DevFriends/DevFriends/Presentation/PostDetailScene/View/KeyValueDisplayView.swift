@@ -11,13 +11,13 @@ import SnapKit
 final class KeyValueDisplayView: UIView {
     private let fontSize = 12
     
-    lazy var mainStackView: UIStackView = {
+    private lazy var mainStackView: UIStackView = {
         let mainStackView = UIStackView()
         mainStackView.axis = .horizontal
         mainStackView.spacing = 5
         return mainStackView
     }()
-    lazy var keyTitleLabel: UILabel = {
+    private lazy var keyTitleLabel: UILabel = {
         let keyTitleLabel = UILabel()
         keyTitleLabel.font = .systemFont(ofSize: 12)
         keyTitleLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
@@ -25,7 +25,7 @@ final class KeyValueDisplayView: UIView {
         keyTitleLabel.sizeToFit()
         return keyTitleLabel
     }()
-    lazy var valueLabel: UILabel = {
+    private lazy var valueLabel: UILabel = {
         let valueLabel = UILabel()
         valueLabel.font = .systemFont(ofSize: 12)
         valueLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)

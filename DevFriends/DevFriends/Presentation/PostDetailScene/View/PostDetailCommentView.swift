@@ -14,20 +14,20 @@ struct CommentInfo {
 }
 
 final class PostDetailCommentView: UIView {
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.spacing = 20
         return stackView
     }()
-    lazy var commentWriterInfoView: PostWriterInfoView = {
+    private lazy var commentWriterInfoView: PostWriterInfoView = {
         let commentWriterInfoView = PostWriterInfoView(imageViewRadius: 22.0,
                                                        nameTextSize: 18.0,
                                                        jobTextSize: 14.0)
         return commentWriterInfoView
     }()
-    lazy var commentContentsLabel: UILabel = {
+    private lazy var commentContentsLabel: UILabel = {
         let commentContentsLabel = UILabel()
         commentContentsLabel.font = .systemFont(ofSize: 18)
         commentContentsLabel.numberOfLines = 0

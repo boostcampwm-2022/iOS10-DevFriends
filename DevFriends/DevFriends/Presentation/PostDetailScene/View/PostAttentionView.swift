@@ -15,12 +15,12 @@ struct PostAttentionInfo {
 }
 
 final class PostAttentionView: UIView {
-    lazy var mainStackView: UIStackView = {
+    private lazy var mainStackView: UIStackView = {
         let mainStackView = UIStackView()
         mainStackView.axis = .horizontal
         return mainStackView
     }()
-    lazy var likeButton: UIButton = {
+    private lazy var likeButton: UIButton = {
         let likeButton = UIButton()
         var config = UIButton.Configuration.plain()
         var titleAttr = AttributedString.init("좋아요")
@@ -35,7 +35,7 @@ final class PostAttentionView: UIView {
         likeButton.semanticContentAttribute = .forceLeftToRight
         return likeButton
     }()
-    lazy var commentsButton: UIButton = {
+    private lazy var commentsButton: UIButton = {
         let commentsButton = UIButton()
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "ellipsis.message")
@@ -45,7 +45,7 @@ final class PostAttentionView: UIView {
         commentsButton.configuration = config
         return commentsButton
     }()
-    lazy var participantsButton: UIButton = {
+    private lazy var participantsButton: UIButton = {
         let participantsButton = UIButton()
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "person.2")
@@ -55,7 +55,7 @@ final class PostAttentionView: UIView {
         participantsButton.configuration = config
         return participantsButton
     }()
-    lazy var emptyView: UIView = {
+    private lazy var emptyView: UIView = {
         let emptyView = UIView()
         return emptyView
     }()

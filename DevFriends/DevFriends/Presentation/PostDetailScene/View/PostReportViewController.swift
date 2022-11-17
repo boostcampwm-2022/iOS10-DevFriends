@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 
 final class PostReportViewController: UIViewController {
-    lazy var reportView: ReportView = {
+    private lazy var reportView: ReportView = {
         let reportView = ReportView()
-        reportView.titleLabel.text = "게시글을 신고하려는 이유가 무엇인가요?"
+        reportView.setTitleText(title: "게시글을 신고하려는 이유가 무엇인가요?")
         return reportView
     }()
     

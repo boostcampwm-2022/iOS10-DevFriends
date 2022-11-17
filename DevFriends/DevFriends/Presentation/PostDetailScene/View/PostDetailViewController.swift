@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class PostDetailViewController: UIViewController {
-    lazy var commentTableView: UITableView = {
+    private lazy var commentTableView: UITableView = {
         let commentTableView = UITableView(frame: .zero, style: .grouped)
         commentTableView.backgroundColor = .white
         commentTableView.rowHeight = UITableView.automaticDimension
@@ -17,19 +17,19 @@ final class PostDetailViewController: UIViewController {
         commentTableView.allowsSelection = false
         return commentTableView
     }()
-    lazy var commentTextField: CommonTextField = {
+    private lazy var commentTextField: CommonTextField = {
         let commentTextField = CommonTextField(placeHolder: "댓글을 입력해주세요")
         return commentTextField
     }()
-    lazy var postDetailInfoView: PostDetailInfoView = {
+    private lazy var postDetailInfoView: PostDetailInfoView = {
         let postDetailInfoView = PostDetailInfoView()
         return postDetailInfoView
     }()
-    lazy var postRequestButton: CommonButton = {
+    private lazy var postRequestButton: CommonButton = {
         let postRequestButton = CommonButton(text: "모임 신청")
         return postRequestButton
     }()
-    lazy var postAttentionView: PostAttentionView = {
+    private lazy var postAttentionView: PostAttentionView = {
         let postAttentionView = PostAttentionView()
         return postAttentionView
     }()
@@ -85,18 +85,18 @@ final class PostDetailViewController: UIViewController {
         }
     }
     
-    func setupViews() {
+    private func setupViews() {
         postDetailInfoView.set(postWriterInfo: viewModel.postWriterInfo,
                                postDetailContents: viewModel.postDetailContents)
         postAttentionView.set(info: viewModel.postAttentionInfo)
     }
     
-    func setTableViewDelegate() {
+    private func setTableViewDelegate() {
         commentTableView.delegate = self
         commentTableView.dataSource = self
     }
     
-    func createHeaderView() -> UIView {
+    private func createHeaderView() -> UIView {
         let contentsView = UIView()
         
         let contentsStackView = UIStackView()
@@ -188,7 +188,7 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func registerTableView() {
+    private func registerTableView() {
         commentTableView.register(CommentTableViewCell.classForCoder(), forCellReuseIdentifier: "commentTableViewCell")
     }
 }

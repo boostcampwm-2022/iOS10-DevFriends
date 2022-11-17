@@ -18,53 +18,53 @@ struct PostDetailContents {
 }
 
 final class PostDetailContentsView: UIView {
-    lazy var mainStackView: UIStackView = {
+    private lazy var mainStackView: UIStackView = {
         let mainStackView = UIStackView()
         mainStackView.axis = .vertical
         mainStackView.spacing = 0
         return mainStackView
     }()
-    lazy var postTitleLabel: UILabel = {
+    private lazy var postTitleLabel: UILabel = {
         let postTitleLabel = UILabel()
         postTitleLabel.textColor = .black
         postTitleLabel.font = .boldSystemFont(ofSize: 25)
         postTitleLabel.sizeToFit()
         return postTitleLabel
     }()
-    lazy var postDescriptionLabel: UILabel = {
+    private lazy var postDescriptionLabel: UILabel = {
         let postDescriptionLabel = UILabel()
         postDescriptionLabel.sizeToFit()
         postDescriptionLabel.font = .systemFont(ofSize: 20)
         postDescriptionLabel.numberOfLines = 0
         return postDescriptionLabel
     }()
-    lazy var postCreationTimeLabel: UILabel = {
+    private lazy var postCreationTimeLabel: UILabel = {
         let postCreationTimeLabel = UILabel()
         postCreationTimeLabel.sizeToFit()
         postCreationTimeLabel.font = .systemFont(ofSize: 12)
         postCreationTimeLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
         return postCreationTimeLabel
     }()
-    lazy var interestsStackView: UIStackView = {
+    private lazy var interestsStackView: UIStackView = {
         let interestsStackView = UIStackView()
         interestsStackView.axis = .horizontal
         interestsStackView.spacing = 9
         return interestsStackView
     }()
-    lazy var additionalInfoStackView: UIStackView = {
+    private lazy var additionalInfoStackView: UIStackView = {
         let additionalInfoStackView = UIStackView()
         additionalInfoStackView.axis = .horizontal
         return additionalInfoStackView
     }()
-    lazy var likeDisplayView: KeyValueDisplayView = {
+    private lazy var likeDisplayView: KeyValueDisplayView = {
         let likeDisplayView = KeyValueDisplayView()
         return likeDisplayView
     }()
-    lazy var hitsDisplayView: KeyValueDisplayView = {
+    private lazy var hitsDisplayView: KeyValueDisplayView = {
         let hitsDisplayView = KeyValueDisplayView()
         return hitsDisplayView
     }()
-    lazy var emptyView: UIView = {
+    private lazy var emptyView: UIView = {
         let emptyView = UIView()
         return emptyView
     }()
@@ -116,13 +116,13 @@ final class PostDetailContentsView: UIView {
         self.hitsDisplayView.set(title: "조회수", value: String(contents.hitsCount))
         
         for interest in contents.interests {
-            let interestLabel = interestLabel(interest)
+            let interestLabel = createInterestLabel(interest)
             self.interestsStackView.addArrangedSubview(interestLabel)
         }
         self.interestsStackView.addArrangedSubview(UIView())
     }
     
-    private func interestLabel(_ text: String) -> FilledRoundTextLabel {
+    private func createInterestLabel(_ text: String) -> FilledRoundTextLabel {
         let text = "# " + text
         let defaultColor = UIColor(red: 0.907, green: 0.947, blue: 0.876, alpha: 1)
         let interestLabel = FilledRoundTextLabel(text: text, backgroundColor: defaultColor, textColor: .black)
