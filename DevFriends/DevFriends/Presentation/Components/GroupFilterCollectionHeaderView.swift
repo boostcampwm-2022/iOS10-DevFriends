@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class GroupFilterCollectionHeaderView: UICollectionReusableView {
+final class GroupFilterCollectionHeaderView: UICollectionReusableView, ReusableType {
     
     static let id = "FilterHeaderView"
     

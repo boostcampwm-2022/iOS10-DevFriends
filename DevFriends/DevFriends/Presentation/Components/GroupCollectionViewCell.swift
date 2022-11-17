@@ -8,10 +8,7 @@
 import SnapKit
 import UIKit
 
-final class GroupCollectionViewCell: UICollectionViewCell {
-    
-    static let id = "GroupCell"
-    
+final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = UIColor(
@@ -49,7 +46,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-//    func configure(_ group: Group) {
+//    func set(_ group: Group) {
 //
 //    }
 //
@@ -57,46 +54,47 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     // MARK: - Configure UI
     
     override func didMoveToSuperview() {
-        buildHierarchy()
-        setUpConstraints()
-    }
-    
-    private func buildHierarchy() {
-        self.contentView.backgroundColor = .white
-        self.contentView.layer.cornerRadius = 10
-        self.contentView.layer.masksToBounds = true
+        super.didMoveToSuperview()
         
-        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(tagStackView)
-        self.contentView.addSubview(placeLabel)
-        self.contentView.addSubview(participantLabel)
+        layout()
+        configureUI()
     }
     
-    private func setUpConstraints() {
+    private func layout() {
+        self.contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview().inset(20)
             make.width.equalTo(imageView.snp.height)
         }
         
+        self.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.top).offset(8)
             make.leading.equalTo(imageView.snp.trailing).offset(20)
         }
         
+        self.contentView.addSubview(tagStackView)
         tagStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
             make.leading.equalTo(titleLabel.snp.leading)
         }
         
+        self.contentView.addSubview(placeLabel)
         placeLabel.snp.makeConstraints { make in
             make.bottom.equalTo(imageView.snp.bottom).offset(-8)
             make.leading.equalTo(titleLabel.snp.leading)
         }
         
+        self.contentView.addSubview(participantLabel)
         participantLabel.snp.makeConstraints { make in
             make.bottom.equalTo(placeLabel.snp.bottom)
             make.trailing.equalToSuperview().offset(-60)
         }
+    }
+    
+    private func configureUI() {
+        self.contentView.backgroundColor = .white
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
     }
 }
