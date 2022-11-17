@@ -20,8 +20,7 @@ final class MessageLabel: UILabel {
     
     init(type: MessageSenderType) {
         super.init(frame: .zero)
-        self.setup()
-        self.fillColor(type: type)
+        self.configureUI(type: type)
     }
     
     required init?(coder: NSCoder) {
@@ -32,11 +31,12 @@ final class MessageLabel: UILabel {
         super.drawText(in: rect.inset(by: self.padding))
     }
     
-    private func setup() {
+    private func configureUI(type: MessageSenderType) {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 15
         self.layer.masksToBounds = true
         self.numberOfLines = 0
+        self.fillColor(type: type)
     }
     
     private func fillColor(type: MessageSenderType) {
