@@ -8,20 +8,20 @@
 import UIKit
 import SnapKit
 
-class MogakcoModalViewController: UIViewController {
+final class MogakcoModalViewController: UIViewController {
     
-    lazy var mogakcoListCollectionView: UICollectionView = {
+    private lazy var mogakcoListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: 140.0)
 
-        let mogakcoListView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        mogakcoListView.backgroundColor = .white
-        mogakcoListView.showsVerticalScrollIndicator = false
-        mogakcoListView.dataSource = self
-        mogakcoListView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
-        return mogakcoListView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
+        return collectionView
     }()
 
     override func viewDidLoad() {
