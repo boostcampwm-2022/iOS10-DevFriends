@@ -14,13 +14,13 @@ protocol SendableTextViewDelegate: AnyObject {
 }
 
 final class SendableTextView: UIView {
-    lazy var textField: UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField()
         self.addSubview(textField)
         return textField
     }()
     
-    lazy var sendButton: UIButton = {
+    private lazy var sendButton: UIButton = {
         let button = UIButton()
         button.setImage(.sendable, for: .normal)
         button.imageView?.tintColor = .orange
@@ -30,7 +30,7 @@ final class SendableTextView: UIView {
     
     weak var delegate: SendableTextViewDelegate?
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     init(placeholder: String?) {
         super.init(frame: .zero)
@@ -58,6 +58,7 @@ final class SendableTextView: UIView {
             .sink { [weak self] _ in
                 if let text = self?.textField.text {
                     self?.delegate?.tapSendButton(text: text)
+                    self?.textField.text = nil
                 }
             }
             .store(in: &cancellables)

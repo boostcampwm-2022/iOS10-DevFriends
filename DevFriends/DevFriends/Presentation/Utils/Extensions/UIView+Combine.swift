@@ -33,9 +33,7 @@ extension UIView {
         }
         
         func receive<S>(subscriber: S) where S: Subscriber, Never == S.Failure, GestureType == S.Input {
-            let subscription = GestureSubscription(subscriber: subscriber,
-                                                   view: view,
-                                                   gestureType: gestureType)
+            let subscription = GestureSubscription(subscriber: subscriber, view: view, gestureType: gestureType)
             subscriber.receive(subscription: subscription)
         }
     }
@@ -50,7 +48,7 @@ extension UIView {
             self.subscriber = subscriber
             self.view = view
             self.gestureType = gestureType
-            configureGesture(gestureType)
+            self.configureGesture(gestureType)
         }
         
         private func configureGesture(_ gestureType: GestureType) {
