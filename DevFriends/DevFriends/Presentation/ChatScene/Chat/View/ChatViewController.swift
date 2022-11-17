@@ -13,7 +13,6 @@ final class ChatViewController: DefaultViewController {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
         tableView.delegate = self
-        self.view.addSubview(tableView)
         return tableView
     }()
     
@@ -21,7 +20,7 @@ final class ChatViewController: DefaultViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.reuseIdentifier, for: indexPath) as? ChatTableViewCell else {
             return UITableViewCell()
         }
-        cell.updateContent(data: data, lastMessage: "", hasNewMessage: false)
+        cell.set(data: data, lastMessage: "", hasNewMessage: false)
         return cell
     }
     
@@ -42,10 +41,10 @@ final class ChatViewController: DefaultViewController {
     }
     
     override func layout() {
+        self.view.addSubview(chatTableView)
         chatTableView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
-        populateSnapshot(data: [Group(participantIDs: ["12"], title: "d"), Group(participantIDs: ["13"], title: "d"), Group(participantIDs: ["1"], title: "dd")])
     }
     
     private func setupTableView() {

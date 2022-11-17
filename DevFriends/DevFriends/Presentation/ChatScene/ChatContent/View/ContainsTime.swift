@@ -24,6 +24,11 @@ extension ContainsTime {
             return label
         }()
         
+        self.layout(timeLabel: timeLabel, messageLabel: messageLabel, type: type)
+        self.bind(timeLabel: timeLabel)
+    }
+    
+    func layout(timeLabel: UILabel, messageLabel: MessageLabel, type: MessageSenderType) {
         self.addSubview(timeLabel)
         timeLabel.snp.makeConstraints { make in
             switch type {
@@ -34,8 +39,6 @@ extension ContainsTime {
             }
             make.bottom.equalTo(messageLabel.snp.bottom)
         }
-        
-        self.bind(timeLabel: timeLabel)
     }
     
     func bind(timeLabel: UILabel) {
