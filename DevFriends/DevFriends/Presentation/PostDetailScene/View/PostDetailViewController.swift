@@ -14,6 +14,7 @@ final class PostDetailViewController: UIViewController {
         commentTableView.backgroundColor = .white
         commentTableView.rowHeight = UITableView.automaticDimension
         commentTableView.estimatedRowHeight = 150
+        commentTableView.allowsSelection = false
         return commentTableView
     }()
     lazy var commentTextField: CommonTextField = {
