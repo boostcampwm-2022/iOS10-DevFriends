@@ -8,18 +8,23 @@
 import UIKit
 import SnapKit
 
+struct CommentInfo {
+    let writerInfo: PostWriterInfo
+    let contents: String
+}
+
 final class PostDetailCommentView: UIView {
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.spacing = 20
         return stackView
     }()
     lazy var commentWriterInfoView: PostWriterInfoView = {
-        let commentWriterInfoView = PostWriterInfoView()
-        commentWriterInfoView.setViewSize(imageViewRadius: 20.0,
-                                          nameTextSize: 18.0,
-                                          jobTextSize: 14.0)
+        let commentWriterInfoView = PostWriterInfoView(imageViewRadius: 22.0,
+                                                       nameTextSize: 18.0,
+                                                       jobTextSize: 14.0)
         return commentWriterInfoView
     }()
     lazy var commentContentsLabel: UILabel = {
@@ -29,8 +34,12 @@ final class PostDetailCommentView: UIView {
         return commentContentsLabel
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    required init?(coder: NSCoder) {
+        fatalError("Init Error")
+    }
+    
+    init() {
+        super.init(frame: .zero)
         
         configure()
     }
@@ -39,14 +48,14 @@ final class PostDetailCommentView: UIView {
         addSubview(stackView)
         stackView.addArrangedSubview(commentWriterInfoView)
         stackView.addArrangedSubview(commentContentsLabel)
-        
+
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
-    func set(commentWriterInfo: PostWriterInfo, commentContents: String) {
-        commentWriterInfoView.set(info: commentWriterInfo)
-        commentContentsLabel.text = commentContents
+    func set(commentInfo: CommentInfo) {
+        commentWriterInfoView.set(info: commentInfo.writerInfo)
+        commentContentsLabel.text = commentInfo.contents
     }
 }

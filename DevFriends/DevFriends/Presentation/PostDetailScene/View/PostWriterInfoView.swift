@@ -19,81 +19,92 @@ final class PostWriterInfoView: UIView {
         let mainStackView = UIStackView()
         mainStackView.axis = .horizontal
         mainStackView.spacing = 17
-        
+        mainStackView.distribution = .fill
         return mainStackView
-    }()
-    lazy var subUIView: UIView = {
-        let subUIView = UIView()
-        return subUIView
     }()
     lazy var subStackView: UIStackView = {
         let subStackView = UIStackView()
         subStackView.axis = .vertical
         subStackView.spacing = 0
+        subStackView.distribution = .fillEqually
+        subStackView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return subStackView
-    }()
-    lazy var emptyView: UIView = {
-        let emptyView = UIView()
-        return emptyView
     }()
     lazy var writerProfileImageView: UIImageView = {
         let writerProfileImageView = UIImageView()
-        writerProfileImageView.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
         writerProfileImageView.contentMode = .scaleAspectFit
-        writerProfileImageView.layer.cornerRadius = writerProfileImageView.frame.size.width / 2
         writerProfileImageView.clipsToBounds = true
         return writerProfileImageView
     }()
     lazy var writerNameLabel: UILabel = {
         let writerNameLabel = UILabel()
-        writerNameLabel.font = .boldSystemFont(ofSize: 25)
+        writerNameLabel.numberOfLines = 0
+        writerNameLabel.sizeToFit()
         return writerNameLabel
     }()
     lazy var writerJobLabel: UILabel = {
         let writerJobLabel = UILabel()
-        writerJobLabel.font = .systemFont(ofSize: 14)
         writerJobLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        writerJobLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        writerJobLabel.numberOfLines = 0
+        writerJobLabel.sizeToFit()
         return writerJobLabel
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init() {
+        super.init(frame: .zero)
         
+        style(imageViewRadius: 35, nameTextSize: 25, jobTextSize: 14)
+        configure()
+    }
+    
+    init(imageViewRadius: Double, nameTextSize: Double, jobTextSize: Double) {
+        super.init(frame: .zero)
+        
+        style(imageViewRadius: imageViewRadius, nameTextSize: nameTextSize, jobTextSize: jobTextSize)
         configure()
     }
     
     private func configure() {
         addSubview(mainStackView)
         mainStackView.addArrangedSubview(writerProfileImageView)
-        mainStackView.addArrangedSubview(subUIView)
         
-        mainStackView.addArrangedSubview(emptyView)
-        subUIView.addSubview(subStackView)
+        mainStackView.addArrangedSubview(subStackView)
         subStackView.addArrangedSubview(writerNameLabel)
         subStackView.addArrangedSubview(writerJobLabel)
         
         mainStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.left.equalToSuperview()
         }
         
         subStackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
         }
+        
+        snp.makeConstraints { make in
+            make.top.bottom.left.equalTo(mainStackView)
+        }
+    }
+    
+    private func style(imageViewRadius: Double, nameTextSize: Double, jobTextSize: Double) {
+        writerProfileImageView.frame = CGRect(x: 0.0, y: 0.0, width: 2 * imageViewRadius, height: 2 * imageViewRadius)
+        writerProfileImageView.layer.cornerRadius = writerProfileImageView.frame.size.width / 2
+        writerNameLabel.font = .boldSystemFont(ofSize: nameTextSize)
+        writerJobLabel.font = .systemFont(ofSize: jobTextSize)
     }
     
     func set(info: PostWriterInfo) {
         writerNameLabel.text = info.name
         writerJobLabel.text = info.job
         
+        writerNameLabel.sizeToFit()
+        writerJobLabel.sizeToFit()
+        
         let image = (info.image ?? UIImage(named: "Image.png"))?.resize(newWidth: writerProfileImageView.frame.width)
         writerProfileImageView.image = image
-    }
-    
-    /// 뷰를 재사용할 때 원하는 사이즈에 맞게 변경할 수 있다.
-    func setViewSize(imageViewRadius: Double, nameTextSize: Double, jobTextSize: Double) {
-        writerProfileImageView.frame = CGRect(x: 0.0, y: 0.0, width: 2 * imageViewRadius, height: 2 * imageViewRadius)
-        writerProfileImageView.layer.cornerRadius = writerProfileImageView.frame.size.width / 2
-        writerNameLabel.font = .boldSystemFont(ofSize: nameTextSize)
-        writerJobLabel.font = .systemFont(ofSize: jobTextSize)
     }
 }

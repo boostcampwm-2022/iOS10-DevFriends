@@ -13,6 +13,13 @@
 		E33A2023292289AC00887EC9 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A2022292289AC00887EC9 /* UIImage+Resize.swift */; };
 		E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A2024292319C700887EC9 /* PostDetailCommentView.swift */; };
 		E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202729235A3D00887EC9 /* PostAttentionView.swift */; };
+		E33A202A29239AB900887EC9 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202929239AB900887EC9 /* UIViewController+HideKeyboard.swift */; };
+		E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */; };
+		E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202D2923DADD00887EC9 /* ReportView.swift */; };
+		E33A203029249BB900887EC9 /* CommonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202F29249BB900887EC9 /* CommonButton.swift */; };
+		E33A203229249DB100887EC9 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A203129249DB100887EC9 /* CommonTextField.swift */; };
+		E33A20342924E0A500887EC9 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20332924E0A500887EC9 /* DividerView.swift */; };
+		E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -62,6 +69,13 @@
 		E33A2022292289AC00887EC9 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
+		E33A202929239AB900887EC9 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
+		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
+		E33A202D2923DADD00887EC9 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		E33A202F29249BB900887EC9 /* CommonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButton.swift; sourceTree = "<group>"; };
+		E33A203129249DB100887EC9 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
+		E33A20332924E0A500887EC9 /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
+		E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -149,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				E33A2022292289AC00887EC9 /* UIImage+Resize.swift */,
+				E33A202929239AB900887EC9 /* UIViewController+HideKeyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -163,7 +178,10 @@
 		E33A202629232F0900887EC9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E33A20332924E0A500887EC9 /* DividerView.swift */,
 				E394C4AA2922535A0064ADA7 /* FilledRoundTextLabel.swift */,
+				E33A202F29249BB900887EC9 /* CommonButton.swift */,
+				E33A203129249DB100887EC9 /* CommonTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -187,6 +205,9 @@
 				E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */,
 				E33A2024292319C700887EC9 /* PostDetailCommentView.swift */,
 				E33A202729235A3D00887EC9 /* PostAttentionView.swift */,
+				E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */,
+				E33A202D2923DADD00887EC9 /* ReportView.swift */,
+				E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -653,14 +674,21 @@
 			files = (
 				FCD8AEDB291CCE9300CCE5D3 /* ViewController.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
+				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
+				E33A20342924E0A500887EC9 /* DividerView.swift in Sources */,
+				E33A202A29239AB900887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				FCD8AED7291CCE9300CCE5D3 /* AppDelegate.swift in Sources */,
+				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
+				E33A203229249DB100887EC9 /* CommonTextField.swift in Sources */,
 				E33A2023292289AC00887EC9 /* UIImage+Resize.swift in Sources */,
 				E394C4AB2922535A0064ADA7 /* FilledRoundTextLabel.swift in Sources */,
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
+				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
+				E33A203029249BB900887EC9 /* CommonButton.swift in Sources */,
 				FCD8AED9291CCE9300CCE5D3 /* SceneDelegate.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
