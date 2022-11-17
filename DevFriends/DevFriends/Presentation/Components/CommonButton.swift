@@ -15,13 +15,13 @@ final class CommonButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
         
-        setTitle(text, for: .normal)
-        style()
+        self.setTitle(text, for: .normal)
+        self.style()
     }
     
     private func style() {
-        backgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
-        titleLabel?.font = .systemFont(ofSize: 25)
-        layer.cornerRadius = 15
+        self.backgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
+        self.titleLabel?.font = .systemFont(ofSize: 25)
+        self.layer.cornerRadius = 15
     }
 }

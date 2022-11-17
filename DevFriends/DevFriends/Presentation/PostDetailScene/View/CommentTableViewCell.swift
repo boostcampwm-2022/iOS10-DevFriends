@@ -21,13 +21,13 @@ final class CommentTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        configure()
+        self.layout()
     }
     
-    private func configure() {
-        contentView.addSubview(commentView)
+    private func layout() {
+        self.contentView.addSubview(commentView)
         
-        commentView.snp.makeConstraints { make in
+        self.commentView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.bottom.equalToSuperview().offset(-20)
             make.left.equalToSuperview().offset(30)
@@ -36,6 +36,6 @@ final class CommentTableViewCell: UITableViewCell {
     }
     
     func set(info: CommentInfo) {
-        commentView.set(commentInfo: info)
+        self.commentView.set(commentInfo: info)
     }
 }

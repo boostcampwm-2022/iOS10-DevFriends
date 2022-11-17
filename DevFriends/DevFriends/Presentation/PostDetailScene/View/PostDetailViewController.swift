@@ -10,24 +10,24 @@ import SnapKit
 
 final class PostDetailViewController: UIViewController {
     private lazy var commentTableView: UITableView = {
-        let commentTableView = UITableView(frame: .zero, style: .grouped)
-        commentTableView.backgroundColor = .white
-        commentTableView.rowHeight = UITableView.automaticDimension
-        commentTableView.estimatedRowHeight = 150
-        commentTableView.allowsSelection = false
-        return commentTableView
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.backgroundColor = .white
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 150
+        tableView.allowsSelection = false
+        return tableView
     }()
     private lazy var commentTextField: CommonTextField = {
-        let commentTextField = CommonTextField(placeHolder: "댓글을 입력해주세요")
-        return commentTextField
+        let textField = CommonTextField(placeHolder: "댓글을 입력해주세요")
+        return textField
     }()
     private lazy var postDetailInfoView: PostDetailInfoView = {
         let postDetailInfoView = PostDetailInfoView()
         return postDetailInfoView
     }()
     private lazy var postRequestButton: CommonButton = {
-        let postRequestButton = CommonButton(text: "모임 신청")
-        return postRequestButton
+        let commonButton = CommonButton(text: "모임 신청")
+        return commonButton
     }()
     private lazy var postAttentionView: PostAttentionView = {
         let postAttentionView = PostAttentionView()
@@ -86,8 +86,10 @@ final class PostDetailViewController: UIViewController {
     }
     
     private func setupViews() {
-        postDetailInfoView.set(postWriterInfo: viewModel.postWriterInfo,
-                               postDetailContents: viewModel.postDetailContents)
+        postDetailInfoView.set(
+            postWriterInfo: viewModel.postWriterInfo,
+            postDetailContents: viewModel.postDetailContents
+        )
         postAttentionView.set(info: viewModel.postAttentionInfo)
     }
     
@@ -138,10 +140,18 @@ final class PostDetailViewController: UIViewController {
 // MARK: Keyboard Methods
 extension PostDetailViewController {
     private func addKeyboardObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(doKeyboardUp),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(doKeyboardDown),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(doKeyboardUp),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(doKeyboardDown),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     private func removeKeyboardObserver() {
@@ -153,9 +163,9 @@ extension PostDetailViewController {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.3) {
                 self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
-            })
+            }
         }
     }
     
@@ -168,7 +178,6 @@ extension PostDetailViewController {
 extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = createHeaderView()
-        
         return headerView
     }
     
@@ -177,8 +186,10 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = commentTableView.dequeueReusableCell(withIdentifier: "commentTableViewCell",
-                                                              for: indexPath) as? CommentTableViewCell
+        guard let cell = commentTableView.dequeueReusableCell(
+            withIdentifier: "commentTableViewCell",
+            for: indexPath
+        ) as? CommentTableViewCell
         else {
             return UITableViewCell()
         }
@@ -189,6 +200,9 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func registerTableView() {
-        commentTableView.register(CommentTableViewCell.classForCoder(), forCellReuseIdentifier: "commentTableViewCell")
+        self.commentTableView.register(
+            CommentTableViewCell.classForCoder(),
+            forCellReuseIdentifier: "commentTableViewCell"
+        )
     }
 }

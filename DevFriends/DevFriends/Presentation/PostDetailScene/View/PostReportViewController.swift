@@ -18,10 +18,10 @@ final class PostReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
+        self.layout()
     }
     
-    private func configure() {
+    private func layout() {
         view.addSubview(reportView)
         reportView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)

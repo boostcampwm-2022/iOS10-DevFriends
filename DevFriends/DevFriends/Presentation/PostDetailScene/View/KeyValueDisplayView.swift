@@ -12,26 +12,26 @@ final class KeyValueDisplayView: UIView {
     private let fontSize = 12
     
     private lazy var mainStackView: UIStackView = {
-        let mainStackView = UIStackView()
-        mainStackView.axis = .horizontal
-        mainStackView.spacing = 5
-        return mainStackView
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        return stackView
     }()
     private lazy var keyTitleLabel: UILabel = {
-        let keyTitleLabel = UILabel()
-        keyTitleLabel.font = .systemFont(ofSize: 12)
-        keyTitleLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
-        keyTitleLabel.text = "타이틀"
-        keyTitleLabel.sizeToFit()
-        return keyTitleLabel
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        label.text = "타이틀"
+        label.sizeToFit()
+        return label
     }()
     private lazy var valueLabel: UILabel = {
-        let valueLabel = UILabel()
-        valueLabel.font = .systemFont(ofSize: 12)
-        valueLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
-        valueLabel.text = "개수"
-        valueLabel.sizeToFit()
-        return valueLabel
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        label.text = "개수"
+        label.sizeToFit()
+        return label
     }()
     
     required init?(coder: NSCoder) {
@@ -41,21 +41,21 @@ final class KeyValueDisplayView: UIView {
     init() {
         super.init(frame: .zero)
         
-        configure()
+        self.layout()
     }
     
-    private func configure() {
-        addSubview(mainStackView)
-        mainStackView.addArrangedSubview(keyTitleLabel)
-        mainStackView.addArrangedSubview(valueLabel)
-        mainStackView.snp.makeConstraints { make in
+    private func layout() {
+        self.addSubview(mainStackView)
+        self.mainStackView.addArrangedSubview(keyTitleLabel)
+        self.mainStackView.addArrangedSubview(valueLabel)
+        self.mainStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.height.equalTo(keyTitleLabel)
         }
     }
     
     func set(title: String, value: String) {
-        keyTitleLabel.text = title
-        valueLabel.text = value
+        self.keyTitleLabel.text = title
+        self.valueLabel.text = value
     }
 }

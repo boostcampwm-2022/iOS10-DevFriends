@@ -16,12 +16,12 @@ struct PostAttentionInfo {
 
 final class PostAttentionView: UIView {
     private lazy var mainStackView: UIStackView = {
-        let mainStackView = UIStackView()
-        mainStackView.axis = .horizontal
-        return mainStackView
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        return stackView
     }()
     private lazy var likeButton: UIButton = {
-        let likeButton = UIButton()
+        let button = UIButton()
         var config = UIButton.Configuration.plain()
         var titleAttr = AttributedString.init("좋아요")
         titleAttr.font = .systemFont(ofSize: 16)
@@ -31,33 +31,33 @@ final class PostAttentionView: UIView {
         config.baseForegroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
         config.imagePadding = 5.0
         config.attributedTitle = titleAttr
-        likeButton.configuration = config
-        likeButton.semanticContentAttribute = .forceLeftToRight
-        return likeButton
+        button.configuration = config
+        button.semanticContentAttribute = .forceLeftToRight
+        return button
     }()
     private lazy var commentsButton: UIButton = {
-        let commentsButton = UIButton()
+        let button = UIButton()
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "ellipsis.message")
         config.imagePlacement = .leading
         config.baseForegroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
         config.imagePadding = 5.0
-        commentsButton.configuration = config
-        return commentsButton
+        button.configuration = config
+        return button
     }()
     private lazy var participantsButton: UIButton = {
-        let participantsButton = UIButton()
+        let button = UIButton()
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "person.2")
         config.imagePlacement = .leading
         config.baseForegroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
         config.imagePadding = 5.0
-        participantsButton.configuration = config
-        return participantsButton
+        button.configuration = config
+        return button
     }()
     private lazy var emptyView: UIView = {
-        let emptyView = UIView()
-        return emptyView
+        let view = UIView()
+        return view
     }()
     
     required init?(coder: NSCoder) {
@@ -67,10 +67,10 @@ final class PostAttentionView: UIView {
     init() {
         super.init(frame: .zero)
         
-        configure()
+        layout()
     }
     
-    private func configure() {
+    private func layout() {
         addSubview(mainStackView)
         mainStackView.addArrangedSubview(likeButton)
         mainStackView.addArrangedSubview(commentsButton)

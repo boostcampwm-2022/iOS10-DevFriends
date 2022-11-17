@@ -21,7 +21,7 @@ final class FilledRoundTextLabel: UILabel {
     init(text: String, backgroundColor: UIColor, textColor: UIColor) {
         super.init(frame: .zero)
         
-        style(text: text, backgroundColor: backgroundColor, textColor: textColor)
+        self.style(text: text, backgroundColor: backgroundColor, textColor: textColor)
     }
     
     override func drawText(in rect: CGRect) {

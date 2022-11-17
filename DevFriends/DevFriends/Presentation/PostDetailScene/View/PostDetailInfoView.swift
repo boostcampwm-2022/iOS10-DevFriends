@@ -10,9 +10,9 @@ import SnapKit
 
 final class PostDetailInfoView: UIView {
     private lazy var mainStackView: UIStackView = {
-        let mainStackView = UIStackView()
-        mainStackView.axis = .vertical
-        return mainStackView
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
     }()
     private lazy var postWriterInfoView: PostWriterInfoView = {
         let postWriterInfoView = PostWriterInfoView()
@@ -30,23 +30,23 @@ final class PostDetailInfoView: UIView {
     init() {
         super.init(frame: .zero)
         
-        configure()
+        self.layout()
     }
     
-    private func configure() {
-        addSubview(mainStackView)
-        mainStackView.addArrangedSubview(postWriterInfoView)
-        mainStackView.addArrangedSubview(postDetailContentsView)
+    private func layout() {
+        self.addSubview(mainStackView)
+        self.mainStackView.addArrangedSubview(postWriterInfoView)
+        self.mainStackView.addArrangedSubview(postDetailContentsView)
         
-        mainStackView.snp.makeConstraints { make in
+        self.mainStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        mainStackView.setCustomSpacing(20, after: postWriterInfoView)
+        self.mainStackView.setCustomSpacing(20, after: postWriterInfoView)
     }
     
     func set(postWriterInfo: PostWriterInfo, postDetailContents: PostDetailContents) {
-        postWriterInfoView.set(info: postWriterInfo)
-        postDetailContentsView.set(contents: postDetailContents)
+        self.postWriterInfoView.set(info: postWriterInfo)
+        self.postDetailContentsView.set(contents: postDetailContents)
     }
 }

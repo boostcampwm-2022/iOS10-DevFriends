@@ -22,16 +22,18 @@ final class PostDetailCommentView: UIView {
         return stackView
     }()
     private lazy var commentWriterInfoView: PostWriterInfoView = {
-        let commentWriterInfoView = PostWriterInfoView(imageViewRadius: 22.0,
-                                                       nameTextSize: 18.0,
-                                                       jobTextSize: 14.0)
+        let commentWriterInfoView = PostWriterInfoView(
+            imageViewRadius: 22.0,
+            nameTextSize: 18.0,
+            jobTextSize: 14.0
+        )
         return commentWriterInfoView
     }()
     private lazy var commentContentsLabel: UILabel = {
-        let commentContentsLabel = UILabel()
-        commentContentsLabel.font = .systemFont(ofSize: 18)
-        commentContentsLabel.numberOfLines = 0
-        return commentContentsLabel
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18)
+        label.numberOfLines = 0
+        return label
     }()
     
     required init?(coder: NSCoder) {
@@ -41,10 +43,10 @@ final class PostDetailCommentView: UIView {
     init() {
         super.init(frame: .zero)
         
-        configure()
+        layout()
     }
     
-    private func configure() {
+    private func layout() {
         addSubview(stackView)
         stackView.addArrangedSubview(commentWriterInfoView)
         stackView.addArrangedSubview(commentContentsLabel)

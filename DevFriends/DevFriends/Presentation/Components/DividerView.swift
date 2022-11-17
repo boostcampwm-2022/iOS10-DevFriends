@@ -20,8 +20,8 @@ final class DividerView: UIView {
     }
     
     private func style() {
-        backgroundColor = UIColor(red: 0.921, green: 0.898, blue: 0.898, alpha: 1)
-        snp.makeConstraints { make in
+        self.backgroundColor = UIColor(red: 0.921, green: 0.898, blue: 0.898, alpha: 1)
+        self.snp.makeConstraints { make in
             make.height.equalTo(1)
         }
     }

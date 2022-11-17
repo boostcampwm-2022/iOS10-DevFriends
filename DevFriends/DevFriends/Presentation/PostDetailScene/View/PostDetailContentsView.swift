@@ -19,42 +19,42 @@ struct PostDetailContents {
 
 final class PostDetailContentsView: UIView {
     private lazy var mainStackView: UIStackView = {
-        let mainStackView = UIStackView()
-        mainStackView.axis = .vertical
-        mainStackView.spacing = 0
-        return mainStackView
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 0
+        return stackView
     }()
     private lazy var postTitleLabel: UILabel = {
-        let postTitleLabel = UILabel()
-        postTitleLabel.textColor = .black
-        postTitleLabel.font = .boldSystemFont(ofSize: 25)
-        postTitleLabel.sizeToFit()
-        return postTitleLabel
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 25)
+        label.sizeToFit()
+        return label
     }()
     private lazy var postDescriptionLabel: UILabel = {
-        let postDescriptionLabel = UILabel()
-        postDescriptionLabel.sizeToFit()
-        postDescriptionLabel.font = .systemFont(ofSize: 20)
-        postDescriptionLabel.numberOfLines = 0
-        return postDescriptionLabel
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = .systemFont(ofSize: 20)
+        label.numberOfLines = 0
+        return label
     }()
     private lazy var postCreationTimeLabel: UILabel = {
-        let postCreationTimeLabel = UILabel()
-        postCreationTimeLabel.sizeToFit()
-        postCreationTimeLabel.font = .systemFont(ofSize: 12)
-        postCreationTimeLabel.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
-        return postCreationTimeLabel
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        return label
     }()
     private lazy var interestsStackView: UIStackView = {
-        let interestsStackView = UIStackView()
-        interestsStackView.axis = .horizontal
-        interestsStackView.spacing = 9
-        return interestsStackView
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 9
+        return stackView
     }()
     private lazy var additionalInfoStackView: UIStackView = {
-        let additionalInfoStackView = UIStackView()
-        additionalInfoStackView.axis = .horizontal
-        return additionalInfoStackView
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        return stackView
     }()
     private lazy var likeDisplayView: KeyValueDisplayView = {
         let likeDisplayView = KeyValueDisplayView()
@@ -65,8 +65,8 @@ final class PostDetailContentsView: UIView {
         return hitsDisplayView
     }()
     private lazy var emptyView: UIView = {
-        let emptyView = UIView()
-        return emptyView
+        let view = UIView()
+        return view
     }()
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,34 +76,34 @@ final class PostDetailContentsView: UIView {
     init() {
         super.init(frame: .zero)
         
-        configure()
+        self.layout()
     }
     
-    private func configure() {
-        addSubview(mainStackView)
-        mainStackView.snp.makeConstraints { make in
+    private func layout() {
+        self.addSubview(mainStackView)
+        self.mainStackView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
         }
-        mainStackView.addArrangedSubview(postTitleLabel)
-        mainStackView.addArrangedSubview(postDescriptionLabel)
-        mainStackView.addArrangedSubview(interestsStackView)
-        mainStackView.addArrangedSubview(postCreationTimeLabel)
-        mainStackView.addArrangedSubview(additionalInfoStackView)
+        self.mainStackView.addArrangedSubview(postTitleLabel)
+        self.mainStackView.addArrangedSubview(postDescriptionLabel)
+        self.mainStackView.addArrangedSubview(interestsStackView)
+        self.mainStackView.addArrangedSubview(postCreationTimeLabel)
+        self.mainStackView.addArrangedSubview(additionalInfoStackView)
 
-        mainStackView.setCustomSpacing(30, after: postTitleLabel)
-        mainStackView.setCustomSpacing(25, after: postDescriptionLabel)
-        mainStackView.setCustomSpacing(20, after: interestsStackView)
+        self.mainStackView.setCustomSpacing(30, after: postTitleLabel)
+        self.mainStackView.setCustomSpacing(25, after: postDescriptionLabel)
+        self.mainStackView.setCustomSpacing(20, after: interestsStackView)
         
-        additionalInfoStackView.addArrangedSubview(likeDisplayView)
-        additionalInfoStackView.addArrangedSubview(emptyView)
-        additionalInfoStackView.addArrangedSubview(hitsDisplayView)
-        mainStackView.setCustomSpacing(10, after: postCreationTimeLabel)
+        self.additionalInfoStackView.addArrangedSubview(likeDisplayView)
+        self.additionalInfoStackView.addArrangedSubview(emptyView)
+        self.additionalInfoStackView.addArrangedSubview(hitsDisplayView)
+        self.mainStackView.setCustomSpacing(10, after: postCreationTimeLabel)
         
-        additionalInfoStackView.snp.makeConstraints { make in
+        self.additionalInfoStackView.snp.makeConstraints { make in
             make.height.equalTo(12)
         }
         
-        snp.makeConstraints { make in
+        self.snp.makeConstraints { make in
             make.edges.equalTo(mainStackView)
         }
     }

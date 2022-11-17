@@ -17,12 +17,12 @@ final class CommonTextField: UITextField {
         
         self.placeholder = placeHolder
         
-        style()
+        self.style()
     }
     
     private func style() {
-        font = .systemFont(ofSize: 20)
-        leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: frame.height))
-        leftViewMode = .always
+        self.font = .systemFont(ofSize: 20)
+        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: frame.height))
+        self.leftViewMode = .always
     }
 }
