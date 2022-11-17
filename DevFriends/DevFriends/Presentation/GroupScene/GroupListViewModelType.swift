@@ -7,8 +7,6 @@
 
 import Foundation
 
-struct Group { }
-
 protocol GroupListViewModelType {
     
     var userCategories: [String] { get }

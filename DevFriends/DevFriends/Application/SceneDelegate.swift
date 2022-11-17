@@ -10,14 +10,21 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let appDIContainer = AppDIContainer()
+    var appFlowCoordinator: AppFlowCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let viewModel = DefaultPostDetailViewModel()
-        window?.rootViewController = PostDetailViewController(postDetailViewModel: viewModel)
+        window?.backgroundColor = .white
+        
+        let navigationController = UINavigationController()
+        window?.rootViewController = navigationController
+        appFlowCoordinator = AppFlowCoordinator(navigationController: navigationController,
+                                                appDIContainer: appDIContainer)
+        appFlowCoordinator?.start()
+        
         window?.makeKeyAndVisible()
-        window?.backgroundColor = .systemBackground
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
