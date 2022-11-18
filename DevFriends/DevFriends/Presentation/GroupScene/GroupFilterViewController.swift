@@ -9,8 +9,12 @@ import Combine
 import SnapKit
 import UIKit
 
-final class GroupFilterViewController: UIViewController {
-    
+final class GroupFilterViewController: DefaultViewController {
+    enum SectionType: Int, CaseIterable {
+        case align = 0
+        case group = 1
+        case category = 2
+    }
     //    private let viewModel: GroupListViewModel!
     private var cancellabes = Set<AnyCancellable>()
     weak var delegate: GroupFilterViewControllerDelegate?
@@ -32,7 +36,7 @@ final class GroupFilterViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupFilterCollectionHeaderView.id
         )
-        collectionView.register(GroupFilterCollectionViewCell.self, forCellWithReuseIdentifier: GroupFilterCollectionViewCell.id)
+        collectionView.register(GroupFilterCollectionViewCell.self, forCellWithReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier)
         
         collectionView.allowsMultipleSelection = true
         
@@ -41,23 +45,10 @@ final class GroupFilterViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        
-        buildHierarchy()
-        setUpConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.view.backgroundColor = .white
-        
-        bindViewModel()
+        bind()
 //        viewModel.fetchCategoryType()
     }
     
@@ -69,26 +60,22 @@ final class GroupFilterViewController: UIViewController {
 //                               didSelectGroupType: viewModel.selectedGroupType,
 //                               didSelectCategoryType: viewModel.selectedCategoryTypes)
     }
-    // MARK: - Configure UI
+    // MARK: - Setting
     
-    private func buildHierarchy() {
-        self.view.addSubview(collectionView)
+    override func configureUI() {
+        self.view.backgroundColor = .white
     }
-
-    private func setUpConstraints() {
+    
+    override func layout() {
+        self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(70)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
-}
-
-// MARK: - Bind ViewModel
-
-extension GroupFilterViewController {
     
-    private func bindViewModel() {
+    override func bind() {
 //        viewModel.$categoryType
 //            .receive(on: DispatchQueue.main)
 //            .sink { [weak self] _ in
@@ -101,10 +88,9 @@ extension GroupFilterViewController {
 // MARK: - UICollectionView DataSource
 
 extension GroupFilterViewController: UICollectionViewDataSource {
-    
     // 섹션 개수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        return SectionType.allCases.count
     }
     
     // 헤더 정보
@@ -139,7 +125,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
     // 셀 정보
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupFilterCollectionViewCell.id,
+            withReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier,
             for: indexPath
         ) as? GroupFilterCollectionViewCell else { return UICollectionViewCell() }
         
@@ -184,7 +170,6 @@ extension GroupFilterViewController: UICollectionViewDataSource {
 // MARK: - UICollectionView Delegate
 
 extension GroupFilterViewController: UICollectionViewDelegate {
-        
     // 셀이 선택되기 전
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 2 { return true }
@@ -235,12 +220,11 @@ extension GroupFilterViewController: UICollectionViewDelegate {
 // MARK: - UICollectionView DelegateFlowLayout
 
 extension GroupFilterViewController: UICollectionViewDelegateFlowLayout {
-    
     // 셀 동적 레이아웃
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         // 이 부분은 viewModel 구현 후에
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupFilterCollectionViewCell.id, for: indexPath) as? GroupFilterCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier, for: indexPath) as? GroupFilterCollectionViewCell else {
             return .zero
         }
 

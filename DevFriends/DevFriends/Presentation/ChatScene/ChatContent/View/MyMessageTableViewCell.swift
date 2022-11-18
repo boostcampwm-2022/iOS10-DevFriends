@@ -16,7 +16,6 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
     
     lazy var messageLabel: MessageLabel = {
         let label = MessageLabel(type: .me)
-        self.addSubview(label)
         return label
     }()
     
@@ -29,7 +28,7 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateContent(data: Message, messageContentType: MessageContentType) {
+    func set(data: Message, messageContentType: MessageContentType) {
         self.messageLabel.text = data.content
         
         switch messageContentType {
@@ -43,6 +42,7 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
     }
     
     func layout() {
+        self.addSubview(messageLabel)
         self.messageLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalToSuperview().offset(-10)

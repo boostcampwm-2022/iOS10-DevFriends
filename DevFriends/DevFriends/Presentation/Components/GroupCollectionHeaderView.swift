@@ -8,10 +8,7 @@
 import UIKit
 import SnapKit
 
-final class GroupCollectionHeaderView: UICollectionReusableView {
-    
-    static let id = "HeaderView"
-    
+final class GroupCollectionHeaderView: UICollectionReusableView, ReusableType {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모임 이름"
@@ -42,40 +39,34 @@ final class GroupCollectionHeaderView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        buildHierarchy()
-        setUpConstraints()
+        layout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(title: String?) {
+    func set(title: String?) {
         titleLabel.text = title
     }
     
-    func configure(title: String?, _ target: Any?, _ didTapFilterButton: Selector) {
+    func set(title: String?, _ target: Any?, _ didTapFilterButton: Selector) {
         titleLabel.text = title
         
         filterStackView.isHidden = false
         filterButton.addTarget(target, action: didTapFilterButton, for: .touchUpInside)
     }
-        
-    // MARK: - Configure UI
     
-    private func buildHierarchy() {
+    // MARK: - Setting
+    func layout() {
         self.addSubview(titleLabel)
-        self.addSubview(filterStackView)
-        
-        filterStackView.addArrangedSubview(filterLabel)
-        filterStackView.addArrangedSubview(filterButton)
-    }
-    
-    private func setUpConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.bottom.leading.equalToSuperview()
         }
         
+        self.addSubview(filterStackView)
+        filterStackView.addArrangedSubview(filterLabel)
+        filterStackView.addArrangedSubview(filterButton)
         filterStackView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-10)
             make.centerY.equalTo(titleLabel)

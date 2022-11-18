@@ -25,27 +25,30 @@ extension ContainsProfile {
             imageView.tintColor = .orange
             return imageView
         }()
-        self.addSubview(profileImageView)
         
         let nameLabel: UILabel = {
             let label = UILabel()
             label.font = .systemFont(ofSize: 13, weight: .bold)
             return label
         }()
-        self.addSubview(nameLabel)
-
+        
+        self.layout(nameLabel: nameLabel, profileImageView: profileImageView, profileImageViewHeight: profileImageViewHeight)
+        self.bind(nameLabel: nameLabel, profileImageView: profileImageView)
+    }
+    
+    func layout(nameLabel: UILabel, profileImageView: UIImageView, profileImageViewHeight: CGFloat) {
+        self.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.size.height.width.equalTo(profileImageViewHeight)
         }
         
+        self.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.top).offset(10)
             make.leading.equalTo(profileImageView.snp.trailing).offset(10)
         }
-        
-        self.bind(nameLabel: nameLabel, profileImageView: profileImageView)
     }
     
     func bind(nameLabel: UILabel, profileImageView: UIImageView) {

@@ -16,7 +16,6 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
     
     lazy var messageLabel: MessageLabel = {
         let label = MessageLabel(type: .friend)
-        self.addSubview(label)
         return label
     }()
 
@@ -34,7 +33,7 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         self.messageLabel.text = ""
     }
     
-    func updateContent(data: Message, messageContentType: MessageContentType) {
+    func set(data: Message, messageContentType: MessageContentType) {
         self.messageLabel.text = data.content
         
         switch messageContentType {
@@ -74,6 +73,7 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
     }
     
     func layout() {
+        self.addSubview(messageLabel)
         self.messageLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(30)
             make.bottom.lessThanOrEqualToSuperview().offset(-10)

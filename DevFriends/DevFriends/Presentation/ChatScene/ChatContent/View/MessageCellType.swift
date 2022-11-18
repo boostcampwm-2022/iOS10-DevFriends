@@ -21,6 +21,6 @@ enum MessageContentType {
     case none
 }
 
-protocol MessageCellType: CellType {
+protocol MessageCellType: ReusableType {
     var messageLabel: MessageLabel {get set}
 }

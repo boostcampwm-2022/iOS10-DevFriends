@@ -13,24 +13,23 @@ class ChatContentViewController: DefaultViewController {
         let tableView = UITableView()
         tableView.register(FriendMessageTableViewCell.self, forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier)
         tableView.register(MyMessageTableViewCell.self, forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier)
-        self.view.addSubview(tableView)
+        tableView.separatorStyle = .none
         return tableView
     }()
-    
-    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendMessageTableViewCell.reuseIdentifier, for: indexPath) as? FriendMessageTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.updateContent(data: data, messageContentType: .profileAndTime)
-        return cell
-    }
     
     private lazy var messageTextField: SendableTextView = {
         let textField = SendableTextView(placeholder: "메시지를 작성해주세요")
         textField.delegate = self
-        self.view.addSubview(textField)
         return textField
     }()
+    
+    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { [weak self] tableView, indexPath, data -> UITableViewCell in
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyMessageTableViewCell.reuseIdentifier, for: indexPath) as? MyMessageTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.set(data: data, messageContentType: .time)
+        return cell
+    }
     
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
@@ -43,11 +42,14 @@ class ChatContentViewController: DefaultViewController {
     }
     
     override func layout() {
+        self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top)
             make.size.height.equalTo(50)
         }
+        
+        self.view.addSubview(messageTableView)
         self.messageTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.messageTextField.snp.top)

@@ -9,8 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class GroupListViewController: UIViewController {
-    
+final class GroupListViewController: DefaultViewController {
 //    private let viewModel: GroupListViewModel!
     private var cancellabes = Set<AnyCancellable>()
     
@@ -40,7 +39,7 @@ final class GroupListViewController: UIViewController {
     }()
     
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.compositionalLayout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.dataSource = self
@@ -48,14 +47,14 @@ final class GroupListViewController: UIViewController {
         collectionView.register(
             GroupCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: GroupCollectionHeaderView.id
+            withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
+        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         
         return collectionView
     }()
     
-    private lazy var layout: UICollectionViewCompositionalLayout = {
+    private lazy var compositionalLayout: UICollectionViewCompositionalLayout = {
         let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             
             let screenSize = UIScreen.main.bounds.size
@@ -120,33 +119,20 @@ final class GroupListViewController: UIViewController {
         return layout
     }()
     
-    // MARK: - Initializer
+    // MARK: - Setting
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        
-        buildHierarchy()
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func configureUI() {
         self.view.backgroundColor = .systemGray6
-        
-//        bindViewModel()
-//        viewModel.fetchFilteredGroup()
-//        viewModel.fetchRecommendGroup()
     }
-    // MARK: - Configure UI
     
-    private func buildHierarchy() {
+    override func layout() {
         setupNavigation()
+        
         self.view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     private func setupNavigation() {
@@ -154,18 +140,19 @@ final class GroupListViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
-    private func setupConstraints() {
-        collectionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
-        }
+    override func bind() {
+//        viewModel.$filterTrigger
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                self?.collectionView.reloadData()
+//            }
+//            .store(in: cancellabes)
     }
 }
 
 // MARK: - Actions
 
 extension GroupListViewController {
-    
     @objc func didTapFilterButton(_ sender: UIButton) {
         let filterVC = GroupFilterViewController()
         present(filterVC, animated: true)
@@ -200,24 +187,9 @@ extension GroupListViewController {
     }
 }
 
-// MARK: - Bind ViewModel
-
-extension GroupListViewController {
-    
-    private func bindViewModel() {
-//        viewModel.$filterTrigger
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                self?.collectionView.reloadData()
-//            }
-//            .store(in: cancellabes)
-    }
-}
-
 // MARK: - UICollectionView DataSource
 
 extension GroupListViewController: UICollectionViewDataSource {
-    
     // 섹션 개수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         2
@@ -229,14 +201,14 @@ extension GroupListViewController: UICollectionViewDataSource {
             kind == UICollectionView.elementKindSectionHeader,
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: GroupCollectionHeaderView.id,
+                withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier,
                 for: indexPath
             ) as? GroupCollectionHeaderView else { return UICollectionReusableView() }
         
         if indexPath.section == 0 {
-            header.configure(title: "추천 모임")
+            header.set(title: "추천 모임")
         } else if indexPath.section == 1 {
-            header.configure(title: "모집중인 모임", self, #selector(didTapFilterButton))
+            header.set(title: "모집중인 모임", self, #selector(didTapFilterButton))
         }
         
         return header
@@ -256,7 +228,7 @@ extension GroupListViewController: UICollectionViewDataSource {
     // 셀 정보
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupCollectionViewCell.id,
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath
         ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         
