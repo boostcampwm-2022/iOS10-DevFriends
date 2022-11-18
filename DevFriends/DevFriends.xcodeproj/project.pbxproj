@@ -63,6 +63,10 @@
 		E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */; };
 		E33A20DE2927658700887EC9 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20DD2927658700887EC9 /* ChatViewModel.swift */; };
 		E33A20E02927659D00887EC9 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20DF2927659D00887EC9 /* ChatContentViewModel.swift */; };
+		E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E229277A5100887EC9 /* LoadChatGroupsUseCase.swift */; };
+		E33A20E629277B3900887EC9 /* ChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E529277B3900887EC9 /* ChatGroupsRepository.swift */; };
+		E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E72927BADE00887EC9 /* UserRepository.swift */; };
+		E33A20EA2927BB1000887EC9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E92927BB1000887EC9 /* User.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -157,6 +161,10 @@
 		E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
 		E33A20DD2927658700887EC9 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		E33A20DF2927659D00887EC9 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
+		E33A20E229277A5100887EC9 /* LoadChatGroupsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadChatGroupsUseCase.swift; sourceTree = "<group>"; };
+		E33A20E529277B3900887EC9 /* ChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupsRepository.swift; sourceTree = "<group>"; };
+		E33A20E72927BADE00887EC9 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		E33A20E92927BB1000887EC9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -279,12 +287,12 @@
 			isa = PBXGroup;
 			children = (
 				E33A20772926621F00887EC9 /* FriendMessageTableViewCell.swift */,
+				E33A207D2926621F00887EC9 /* MyMessageTableViewCell.swift */,
 				E33A20782926621F00887EC9 /* MessageLabel.swift */,
 				E33A20792926621F00887EC9 /* ContainsProfile.swift */,
 				E33A207A2926621F00887EC9 /* MessageCellType.swift */,
 				E33A207B2926621F00887EC9 /* ChatContentViewController.swift */,
 				E33A207C2926621F00887EC9 /* ContainsTime.swift */,
-				E33A207D2926621F00887EC9 /* MyMessageTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -409,6 +417,23 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		E33A20E129277A4100887EC9 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				E33A20E229277A5100887EC9 /* LoadChatGroupsUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		E33A20E429277B2A00887EC9 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				E33A20E529277B3900887EC9 /* ChatGroupsRepository.swift */,
+				E33A20E72927BADE00887EC9 /* UserRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 		E394C49D292231D80064ADA7 /* PostDetailScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,8 +496,8 @@
 		FC79AEB72922239F0077AE5C /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				FC79AEBA292223B50077AE5C /* Repositories */,
-				FC79AEB9292223AF0077AE5C /* UseCases */,
+				E33A20E429277B2A00887EC9 /* Repositories */,
+				E33A20E129277A4100887EC9 /* UseCases */,
 				FC79AEB8292223A70077AE5C /* Entities */,
 			);
 			path = Domain;
@@ -481,24 +506,11 @@
 		FC79AEB8292223A70077AE5C /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				E33A20E92927BB1000887EC9 /* User.swift */,
 				FC79AEC42922494F0077AE5C /* Group.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
 			);
 			path = Entities;
-			sourceTree = "<group>";
-		};
-		FC79AEB9292223AF0077AE5C /* UseCases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UseCases;
-			sourceTree = "<group>";
-		};
-		FC79AEBA292223B50077AE5C /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repositories;
 			sourceTree = "<group>";
 		};
 		FC79AEBB292223D90077AE5C /* Data */ = {
@@ -869,13 +881,16 @@
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
+				E33A20E629277B3900887EC9 /* ChatGroupsRepository.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
+				E33A20EA2927BB1000887EC9 /* User.swift in Sources */,
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
+				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
@@ -894,6 +909,7 @@
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
+				E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
