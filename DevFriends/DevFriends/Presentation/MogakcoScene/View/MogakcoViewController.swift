@@ -214,7 +214,7 @@ extension MogakcoViewController {
             make.bottom.equalTo(mogakcoMapView)
             make.leading.equalTo(mogakcoMapView).offset(20)
             make.trailing.equalTo(-20)
-            make.height.equalTo(0)
+            make.height.equalTo(0) // 처음에 높이 0으로 설정, 나중에 SubView를 띄울 때 설정
         }
         
         view.addSubview(currentLocationButton)
