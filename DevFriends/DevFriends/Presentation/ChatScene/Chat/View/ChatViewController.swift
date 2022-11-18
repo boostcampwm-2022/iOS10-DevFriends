@@ -5,6 +5,7 @@
 //  Created by 심주미 on 2022/11/14.
 //
 
+import Combine
 import UIKit
 import SnapKit
 
@@ -30,10 +31,11 @@ final class ChatViewController: DefaultViewController {
     }
     
     private lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    private let viewModel: ChatViewModel
     
-    weak var coordinator: ChatViewCoordinator?
-    
-    init() {
+    init(chatViewModel: ChatViewModel) {
+        self.viewModel = chatViewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,10 +54,19 @@ final class ChatViewController: DefaultViewController {
         }
     }
     
-    override func bind() {}
+    override func bind() {
+        viewModel.groups
+            .receive(on: RunLoop.main)
+            .sink {
+                self.populateSnapshot(data: $0) // MARK: 얘는 메인 스레드에서 안 돌려도 되는데 어떻게 깔끔하게 분리할까?
+                self.chatTableView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
     
     private func setupTableView() {
         self.chatTableViewSnapShot.appendSections([.main])
+        viewModel.didLoadGroups()
     }
     
     private func populateSnapshot(data: [Group]) {
@@ -66,6 +77,6 @@ final class ChatViewController: DefaultViewController {
 
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.showChatContentViewController(group: Group(participantIDs: ["0"], title: "title"))
+        viewModel.didSelectGroup(at: indexPath.row)
     }
 }
