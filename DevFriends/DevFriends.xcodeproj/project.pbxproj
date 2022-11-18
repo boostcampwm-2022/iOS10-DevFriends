@@ -61,6 +61,8 @@
 		E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20CB2926665E00887EC9 /* UIView+Combine.swift */; };
 		E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20CD2926665E00887EC9 /* ReusableType.swift */; };
 		E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */; };
+		E33A20DE2927658700887EC9 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20DD2927658700887EC9 /* ChatViewModel.swift */; };
+		E33A20E02927659D00887EC9 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20DF2927659D00887EC9 /* ChatContentViewModel.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -153,6 +155,8 @@
 		E33A20CB2926665E00887EC9 /* UIView+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
 		E33A20CD2926665E00887EC9 /* ReusableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableType.swift; sourceTree = "<group>"; };
 		E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
+		E33A20DD2927658700887EC9 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		E33A20DF2927659D00887EC9 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 		E33A20712926621F00887EC9 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				E33A20DB2927656C00887EC9 /* ViewModel */,
 				E33A20722926621F00887EC9 /* View */,
 			);
 			path = Chat;
@@ -264,6 +269,7 @@
 		E33A20752926621F00887EC9 /* ChatContent */ = {
 			isa = PBXGroup;
 			children = (
+				E33A20DC2927657600887EC9 /* ViewModel */,
 				E33A20762926621F00887EC9 /* View */,
 			);
 			path = ChatContent;
@@ -385,6 +391,22 @@
 				E33A20CD2926665E00887EC9 /* ReusableType.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E33A20DB2927656C00887EC9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E33A20DD2927658700887EC9 /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E33A20DC2927657600887EC9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E33A20DF2927659D00887EC9 /* ChatContentViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E394C49D292231D80064ADA7 /* PostDetailScene */ = {
@@ -889,6 +911,7 @@
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
+				E33A20E02927659D00887EC9 /* ChatContentViewModel.swift in Sources */,
 				E33A20842926622000887EC9 /* MessageLabel.swift in Sources */,
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
@@ -899,6 +922,7 @@
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
+				E33A20DE2927658700887EC9 /* ChatViewModel.swift in Sources */,
 				E33A20942926623200887EC9 /* MogakcoModalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

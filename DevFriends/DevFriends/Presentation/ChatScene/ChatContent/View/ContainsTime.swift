@@ -10,8 +10,8 @@ import SnapKit
 import UIKit
 
 protocol ContainsTime: UIView {
-    var timeSubject: PassthroughSubject<String?, Error> {get set}
-    var cancellables: Set<AnyCancellable> {get set}
+    var timeSubject: PassthroughSubject<String?, Error> { get set }
+    var cancellables: Set<AnyCancellable> { get set }
 }
 
 extension ContainsTime {

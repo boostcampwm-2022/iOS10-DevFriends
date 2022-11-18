@@ -46,7 +46,7 @@ final class ChatTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
+        self.layout()
     }
     
     required init?(coder: NSCoder) {

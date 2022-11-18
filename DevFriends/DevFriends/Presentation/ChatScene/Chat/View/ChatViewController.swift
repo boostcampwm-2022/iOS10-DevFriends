@@ -16,8 +16,13 @@ final class ChatViewController: DefaultViewController {
         return tableView
     }()
     
-    private lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(tableView: chatTableView) { tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.reuseIdentifier, for: indexPath) as? ChatTableViewCell else {
+    private lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(
+        tableView: chatTableView
+    ) { tableView, indexPath, data -> UITableViewCell in
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ChatTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? ChatTableViewCell else {
             return UITableViewCell()
         }
         cell.set(data: data, lastMessage: "", hasNewMessage: false)
@@ -46,6 +51,8 @@ final class ChatViewController: DefaultViewController {
             make.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
+    
+    override func bind() {}
     
     private func setupTableView() {
         self.chatTableViewSnapShot.appendSections([.main])

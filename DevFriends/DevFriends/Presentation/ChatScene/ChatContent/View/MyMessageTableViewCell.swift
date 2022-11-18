@@ -21,7 +21,7 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
+        self.layout()
     }
     
     required init?(coder: NSCoder) {

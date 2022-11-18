@@ -11,13 +11,24 @@ import UIKit
 class ChatContentViewController: DefaultViewController {
     private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(FriendMessageTableViewCell.self, forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier)
-        tableView.register(MyMessageTableViewCell.self, forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier)
+        tableView.register(
+            FriendMessageTableViewCell.self,
+            forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier
+        )
+        tableView.register(
+            MyMessageTableViewCell.self,
+            forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier
+        )
         return tableView
     }()
     
-    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendMessageTableViewCell.reuseIdentifier, for: indexPath) as? FriendMessageTableViewCell else {
+    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(
+        tableView: messageTableView
+    ) { tableView, indexPath, data -> UITableViewCell in
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: FriendMessageTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? FriendMessageTableViewCell else {
             return UITableViewCell()
         }
         cell.updateContent(data: data, messageContentType: .profileAndTime)
