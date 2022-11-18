@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ChatDetailFlowCoordinatorDependencies  {
+protocol ChatDetailFlowCoordinatorDependencies {
     func makeChatContentViewController(group: Group) -> ChatContentViewController
 }
 
@@ -17,15 +17,24 @@ final class ChatCoordinator: Coordinator {
 
     var childCoordinators: [Coordinator] = []
     
-    init(navigationController: UINavigationController,
-         dependencies: ChatDetailFlowCoordinatorDependencies) {
+    init(
+        navigationController: UINavigationController,
+        dependencies: ChatDetailFlowCoordinatorDependencies
+    ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
     }
     
     func start() {
-        let chatViewController = ChatViewController()
-        chatViewController.coordinator = self
+        let userRepository = DefaultUserRepository()
+        let chatGroupsRepository = DefaultChatGroupsRepository()
+        let actions = ChatViewModelActions(showChatContent: showChatContentViewController)
+        let loadChatGroupsUseCase = DefaultLoadChatGroupsUseCase(
+            userRepository: userRepository,
+            chatGroupsRepository: chatGroupsRepository
+        )
+        let chatViewModel = DefaultChatViewModel(loadChatGroupsUseCase: loadChatGroupsUseCase, actions: actions)
+        let chatViewController = ChatViewController(chatViewModel: chatViewModel)
         navigationController?.pushViewController(chatViewController, animated: false)
     }
 }
