@@ -33,7 +33,7 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         self.messageLabel.text = ""
     }
     
-    func updateContent(data: Message, messageContentType: MessageContentType) {
+    func set(data: Message, messageContentType: MessageContentType) {
         self.messageLabel.text = data.content
         
         switch messageContentType {

@@ -13,22 +13,23 @@ class ChatContentViewController: DefaultViewController {
         let tableView = UITableView()
         tableView.register(FriendMessageTableViewCell.self, forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier)
         tableView.register(MyMessageTableViewCell.self, forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier)
+        tableView.separatorStyle = .none
         return tableView
     }()
-    
-    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendMessageTableViewCell.reuseIdentifier, for: indexPath) as? FriendMessageTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.updateContent(data: data, messageContentType: .profileAndTime)
-        return cell
-    }
     
     private lazy var messageTextField: SendableTextView = {
         let textField = SendableTextView(placeholder: "메시지를 작성해주세요")
         textField.delegate = self
         return textField
     }()
+    
+    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { [weak self] tableView, indexPath, data -> UITableViewCell in
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyMessageTableViewCell.reuseIdentifier, for: indexPath) as? MyMessageTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.set(data: data, messageContentType: .time)
+        return cell
+    }
     
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     

@@ -13,6 +13,7 @@ final class ChatViewController: DefaultViewController {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
         tableView.delegate = self
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -38,6 +39,7 @@ final class ChatViewController: DefaultViewController {
     
     override func configureUI() {
         self.setupTableView()
+        self.populateSnapshot(data: [Group(participantIDs: ["1"], title: "스터디")])
     }
     
     override func layout() {

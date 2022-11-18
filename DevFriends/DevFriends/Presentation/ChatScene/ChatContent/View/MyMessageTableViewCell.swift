@@ -28,7 +28,7 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateContent(data: Message, messageContentType: MessageContentType) {
+    func set(data: Message, messageContentType: MessageContentType) {
         self.messageLabel.text = data.content
         
         switch messageContentType {
