@@ -9,31 +9,31 @@ import UIKit
 import SnapKit
 import MapKit
 
-class MogakcoViewController: UIViewController {
+final class MogakcoViewController: UIViewController {
     
-    lazy var mogakcoMapView: MKMapView = {
-        let mogakcoMapView = MKMapView(frame: .zero)
-        return mogakcoMapView
+    private lazy var mogakcoMapView: MKMapView = {
+        let mapView = MKMapView(frame: .zero)
+        return mapView
     }()
     
-    lazy var currentLocationButton: UIButton = {
+    private lazy var currentLocationButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "scope")
         configuration.baseForegroundColor = .black
         configuration.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
-        let currentLocationButton = UIButton(configuration: configuration, primaryAction: nil)
-        currentLocationButton.backgroundColor = .white
-        currentLocationButton.layer.cornerRadius = 25
-        currentLocationButton.layer.cornerCurve = .circular
-        currentLocationButton.layer.shadowColor = UIColor.gray.cgColor
-        currentLocationButton.layer.shadowOpacity = 1.0
-        currentLocationButton.layer.shadowOffset = CGSize.zero
-        currentLocationButton.layer.shadowRadius = 6
-        currentLocationButton.addTarget(self, action: #selector(didTapCurrentButton), for: .touchUpInside)
-        return currentLocationButton
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 25
+        button.layer.cornerCurve = .circular
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowOffset = CGSize.zero
+        button.layer.shadowRadius = 6
+        button.addTarget(self, action: #selector(didTapCurrentButton), for: .touchUpInside)
+        return button
     }()
     
-    lazy var viewModeButton: UIButton = {
+    private lazy var viewModeButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "line.3.horizontal")
         configuration.baseForegroundColor = .black
@@ -41,35 +41,35 @@ class MogakcoViewController: UIViewController {
         configuration.imagePadding = 5
         configuration.title = "목록보기"
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        let viewModeButton = UIButton(configuration: configuration, primaryAction: nil)
-        viewModeButton.backgroundColor = .white
-        viewModeButton.layer.cornerRadius = 25
-        viewModeButton.layer.cornerCurve = .circular
-        viewModeButton.layer.shadowColor = UIColor.gray.cgColor
-        viewModeButton.layer.shadowOpacity = 1.0
-        viewModeButton.layer.shadowOffset = CGSize.zero
-        viewModeButton.layer.shadowRadius = 3
-        viewModeButton.addTarget(self, action: #selector(didTapViewModeButton), for: .touchUpInside)
-        return viewModeButton
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 25
+        button.layer.cornerCurve = .circular
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowOffset = CGSize.zero
+        button.layer.shadowRadius = 3
+        button.addTarget(self, action: #selector(didTapViewModeButton), for: .touchUpInside)
+        return button
     }()
     
-    lazy var mogakcoSubView: UICollectionView = {
+    private lazy var mogakcoSubView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width * 0.9, height: 140.0)
         
-        let mogakcoSubView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        mogakcoSubView.backgroundColor = .clear
-        mogakcoSubView.showsHorizontalScrollIndicator = false
-        mogakcoSubView.dataSource = self
-        mogakcoSubView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
-        return mogakcoSubView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.id)
+        return collectionView
     }()
    
-    var isSelectingPin = false
+    private var isSelectingPin = false
     
-    let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +79,12 @@ class MogakcoViewController: UIViewController {
         setUserLocation()
         // 내맘대로 핀 1개 찍기
         moveLocation(latitudeValue: 37.5029, longtudeValue: 127.0279, delta: 0.1)
-        setAnnotation(latitudeValue: 37.5029, longitudeValue: 127.0279, delta: 0.1, title: "Combine 공부할 사람 내가 가르쳐줌", subtitle: "강남 에이비카페")
+        setAnnotation(
+            latitudeValue: 37.5029,
+            longitudeValue: 127.0279,
+            delta: 0.1,
+            title: "Combine 공부할 사람 내가 가르쳐줌",
+            subtitle: "강남 에이비카페")
     }
     
     override func didReceiveMemoryWarning() {
@@ -190,10 +195,7 @@ extension MogakcoViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.id, for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         
         return cell
     }
