@@ -64,7 +64,6 @@ class MogakcoViewController: UIViewController {
         mogakcoSubView.showsHorizontalScrollIndicator = false
         mogakcoSubView.dataSource = self
         mogakcoSubView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
-        mogakcoSubView.isHidden = true
         return mogakcoSubView
     }()
    
@@ -210,10 +209,10 @@ extension MogakcoViewController {
         
         view.addSubview(mogakcoSubView)
         mogakcoSubView.snp.makeConstraints { make in
-            make.top.equalTo(mogakcoMapView.snp.bottom)
+            make.bottom.equalTo(mogakcoMapView)
             make.leading.equalTo(mogakcoMapView).offset(20)
             make.trailing.equalTo(-20)
-            make.height.equalTo(100)
+            make.height.equalTo(0) // 처음에 높이 0으로 설정, 나중에 SubView를 띄울 때 설정
         }
         
         view.addSubview(currentLocationButton)
@@ -233,29 +232,18 @@ extension MogakcoViewController {
     }
     
     func showMogakcoSubView() {
-        mogakcoSubView.isHidden = false
-//        mogakcoSubView.snp.updateConstraints { make in
-//            make.bottom.equalTo(mogakcoMapView).offset(-20)
-//        }
-        mogakcoSubView.snp.remakeConstraints { make in
-            make.bottom.equalTo(mogakcoMapView).offset(-20)
-            make.leading.equalTo(mogakcoMapView)
-            make.trailing.equalTo(mogakcoMapView)
+        mogakcoSubView.snp.updateConstraints { make in
             make.height.equalTo(150)
         }
     }
     
     func hideMogakcoSubView() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.mogakcoSubView.snp.remakeConstraints { make in
-                make.top.equalTo(self.mogakcoMapView.snp.bottom)
-                make.leading.equalTo(self.mogakcoMapView)
-                make.trailing.equalTo(self.mogakcoMapView)
-                make.height.equalTo(180)
+            self.mogakcoSubView.snp.updateConstraints { make in
+                make.height.equalTo(0)
             }
             self.mogakcoSubView.superview?.layoutIfNeeded()
         }
-        mogakcoSubView.isHidden = true
     }
     
     func showMogakcoModal() {
