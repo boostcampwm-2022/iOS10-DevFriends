@@ -23,8 +23,8 @@ final class AppFlowCoordinator: Coordinator {
     }
 
     func start() {
-        let moviesSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let flow = moviesSceneDIContainer.makeChatDetailFlowCoordinator(navigationController: navigationController)
+        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
+        let flow = chatSceneDIContainer.makeChatFlowCoordinator(navigationController: navigationController)
         flow.start()
         childCoordinators.append(flow)
     }

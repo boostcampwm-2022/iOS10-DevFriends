@@ -8,13 +8,44 @@
 import UIKit
 
 struct ChatSceneDIContainer {
-    func makeChatDetailFlowCoordinator(navigationController: UINavigationController) -> ChatCoordinator {
+    // MARK: Flow Coordinators
+    func makeChatFlowCoordinator(navigationController: UINavigationController) -> ChatCoordinator {
         return ChatCoordinator(navigationController: navigationController, dependencies: self)
     }
 }
 
-extension ChatSceneDIContainer: ChatDetailFlowCoordinatorDependencies {
-    //MARK: Chat Content
+extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
+    // MARK: Repositories
+    func makeUserRepository() -> UserRepository {
+        return DefaultUserRepository()
+    }
+    
+    func makeChatGroupsRepository() -> ChatGroupsRepository {
+        return DefaultChatGroupsRepository()
+    }
+    
+    // MARK: UseCases
+    func makeLoadGroupsUseCase() -> LoadChatGroupsUseCase {
+        return DefaultLoadChatGroupsUseCase(
+            userRepository: makeUserRepository(),
+            chatGroupsRepository: makeChatGroupsRepository()
+        )
+    }
+    
+    // MARK: Chat
+    func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController {
+        return ChatViewController(chatViewModel: makeChatViewModel(actions: actions))
+    }
+    
+    func makeChatViewModel(actions: ChatViewModelActions) -> ChatViewModel {
+        return DefaultChatViewModel(loadChatGroupsUseCase: makeLoadGroupsUseCase(), actions: actions)
+    }
+    
+
+    
+
+    
+    // MARK: Chat Content
     func makeChatContentViewController(group: Group) -> ChatContentViewController {
         return ChatContentViewController(group: group)
     }
