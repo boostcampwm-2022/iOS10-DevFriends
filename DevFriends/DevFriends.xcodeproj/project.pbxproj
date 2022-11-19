@@ -76,6 +76,10 @@
 		FCD8AEFA291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */; };
 		FCD8AF07291CD10300CCE5D3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */; };
 		FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */; };
+		FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */; };
+		FCE46BAA2928C97100383F6F /* GroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BA92928C97100383F6F /* GroupRepository.swift */; };
+		FCE46BAC2928C9B700383F6F /* FetchGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */; };
+		FCE46BAE2928DBF000383F6F /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +177,10 @@
 		FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFriendsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
+		FCE46BA92928C97100383F6F /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
+		FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
+		FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,6 +383,7 @@
 				E33A20CA2926665E00887EC9 /* UIImage+Custom.swift */,
 				E33A20CB2926665E00887EC9 /* UIView+Combine.swift */,
 				E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */,
+				FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -468,6 +477,7 @@
 		FC79AEB9292223AF0077AE5C /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -475,6 +485,7 @@
 		FC79AEBA292223B50077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				FCE46BA92928C97100383F6F /* GroupRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -492,6 +503,7 @@
 		FC79AEBC292223DF0077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -849,7 +861,9 @@
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
+				FCE46BAC2928C9B700383F6F /* FetchGroupUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
+				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
@@ -865,6 +879,7 @@
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
+				FCE46BAA2928C97100383F6F /* GroupRepository.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
@@ -894,6 +909,7 @@
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
 				A6ED8BA72924E44A003105E2 /* (null) in Sources */,
+				FCE46BAE2928DBF000383F6F /* CLLocation+Distance.swift in Sources */,
 				E33A208A2926622000887EC9 /* ChatViewCoordinator.swift in Sources */,
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,

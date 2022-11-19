@@ -39,7 +39,6 @@ final class ChatViewController: DefaultViewController {
     
     override func configureUI() {
         self.setupTableView()
-        self.populateSnapshot(data: [Group(participantIDs: ["1"], title: "스터디")])
     }
     
     override func layout() {
@@ -61,6 +60,5 @@ final class ChatViewController: DefaultViewController {
 
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.showChatContentViewController(group: Group(participantIDs: ["0"], title: "title"))
     }
 }
