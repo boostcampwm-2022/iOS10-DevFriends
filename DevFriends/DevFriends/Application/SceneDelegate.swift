@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.backgroundColor = .white
         
         let navigationController = UINavigationController()
-        window?.rootViewController = navigationController
+        window?.rootViewController = GroupListViewController()
         appFlowCoordinator = AppFlowCoordinator(navigationController: navigationController,
                                                 appDIContainer: appDIContainer)
         appFlowCoordinator?.start()

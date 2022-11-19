@@ -46,10 +46,12 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         return label
     }()
     
-//    func set(_ group: Group) {
-//
-//    }
-//
+    func setGroupInfoUI(_ info: GroupCellInfo) {
+        titleLabel.text = info.title
+        placeLabel.text = "📍\(info.place)"
+        participantLabel.text = "👥\(info.currentPeople)/\(info.peopleLimit)"
+    }
+
     
     // MARK: - Configure UI
     

@@ -8,5 +8,24 @@
 import Foundation
 
 final class GroupListViewModel {
+    let groupListUseCase = GroupListUseCase()
     
+    @Published var recommandGroups: [GroupCellInfo] = []
+    @Published var filteredGroups: [GroupCellInfo] = []
+    struct GroupListViewInput {
+        
+    }
+    
+    struct GroupListViewOutput {
+        
+    }
+    
+    func fetchRecommandGroups() {
+        recommandGroups = groupListUseCase.fetchRecommandGroups()
+    }
+    
+    func fetchFilteredGroups() {
+        filteredGroups = groupListUseCase.fetchAllGroups()
+        // 여기에 필터 정보를 바탕으로 sorting 진행
+    }
 }

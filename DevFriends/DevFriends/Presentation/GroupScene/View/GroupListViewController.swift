@@ -10,8 +10,9 @@ import SnapKit
 import UIKit
 
 final class GroupListViewController: DefaultViewController {
-//    private let viewModel: GroupListViewModel!
-    private var cancellabes = Set<AnyCancellable>()
+    private let viewModel = GroupListViewModel()
+    private var recommandGroupsList: [GroupCellInfo] = []
+    private var filteredGroupsList: [GroupCellInfo] = []
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -123,6 +124,8 @@ final class GroupListViewController: DefaultViewController {
     
     override func configureUI() {
         self.view.backgroundColor = .systemGray6
+        self.viewModel.fetchRecommandGroups()
+        self.viewModel.fetchFilteredGroups()
     }
     
     override func layout() {
@@ -141,6 +144,25 @@ final class GroupListViewController: DefaultViewController {
     }
     
     override func bind() {
+        viewModel.$recommandGroups
+            .sink { (updatedList: [GroupCellInfo]) in
+                print("Updating RecommandGroups - ViewController")
+                self.recommandGroupsList = updatedList
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }.store(in: &cancellables)
+        
+        viewModel.$filteredGroups
+            .sink { (updatedList: [GroupCellInfo]) in
+                print("Updating FilteredGroups - ViewController")
+                self.filteredGroupsList = updatedList
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }.store(in: &cancellables)
+        
+        
 //        viewModel.$filterTrigger
 //            .receive(on: DispatchQueue.main)
 //            .sink { [weak self] _ in
@@ -217,11 +239,9 @@ extension GroupListViewController: UICollectionViewDataSource {
     // 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return 6
-//            return viewModel.recommendGroups.count
+            return recommandGroupsList.count
         } else {
-            return 5
-//            return viewModel.filteredGroups.count
+            return filteredGroupsList.count
         }
     }
     
@@ -229,14 +249,13 @@ extension GroupListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+            for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         
-//        if indexPath.section == 0 {
-//            cell.configure(viewModel.recommendGroups[indexPath.item])
-//        } else {
-//            cell.configure(viewModel.filteredGroups[indexPath.item])
-//        }
+        if indexPath.section == 0 {
+            cell.setGroupInfoUI(recommandGroupsList[indexPath.item])
+        } else {
+            cell.setGroupInfoUI(filteredGroupsList[indexPath.item])
+        }
         
         return cell
     }

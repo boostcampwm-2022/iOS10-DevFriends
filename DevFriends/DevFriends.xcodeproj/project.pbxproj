@@ -10,6 +10,8 @@
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
 		A6618575292916C300921B2F /* GroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618574292916C300921B2F /* GroupListViewModel.swift */; };
+		A66185772929179500921B2F /* GroupCellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66185762929179500921B2F /* GroupCellInfo.swift */; };
+		A6618579292918D300921B2F /* GroupListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618578292918D300921B2F /* GroupListUseCase.swift */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -107,6 +109,8 @@
 		9A479E087E3E3E0E8DFBFF7B /* Pods-DevFriends-DevFriendsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C8D73A43F6124E9E2A99737 /* Pods-DevFriends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.release.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.release.xcconfig"; sourceTree = "<group>"; };
 		A6618574292916C300921B2F /* GroupListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
+		A66185762929179500921B2F /* GroupCellInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCellInfo.swift; sourceTree = "<group>"; };
+		A6618578292918D300921B2F /* GroupListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListUseCase.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -480,6 +484,7 @@
 			children = (
 				FC79AEC42922494F0077AE5C /* Group.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
+				A66185762929179500921B2F /* GroupCellInfo.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 		FC79AEB9292223AF0077AE5C /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				A6618578292918D300921B2F /* GroupListUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -861,6 +867,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E33A204029262B6B00887EC9 /* GroupListViewController.swift in Sources */,
+				A66185772929179500921B2F /* GroupCellInfo.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
@@ -918,6 +925,7 @@
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
+				A6618579292918D300921B2F /* GroupListUseCase.swift in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
 				E33A20942926623200887EC9 /* MogakcoModalViewController.swift in Sources */,
 			);
