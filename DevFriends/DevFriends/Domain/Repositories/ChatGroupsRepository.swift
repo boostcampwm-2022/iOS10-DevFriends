@@ -8,14 +8,6 @@
 import Foundation
 import FirebaseFirestore
 
-protocol ContainsFirestore {}
-
-extension ContainsFirestore {
-    var firestore: Firestore {
-        return Firestore.firestore()
-    }
-}
-
 protocol ChatGroupsRepository: ContainsFirestore {
     func fetchGroupList(uids: [String]) async throws -> [Group]
 }
