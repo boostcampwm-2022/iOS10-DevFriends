@@ -213,6 +213,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A66185722929150600921B2F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E33A203F29262B6B00887EC9 /* GroupFilterViewControllerDelegate.swift */,
+				E33A203D29262B6B00887EC9 /* GroupFilterViewController.swift */,
+				E33A203B29262B6B00887EC9 /* GroupListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A66185732929152F00921B2F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E33A203E29262B6B00887EC9 /* GroupFilterViewModelType.swift */,
+				E33A203C29262B6B00887EC9 /* GroupListViewModelType.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		D3ED73830EEA4BDA2E80A9AC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,11 +456,8 @@
 		FC79AEAE29221F9F0077AE5C /* GroupScene */ = {
 			isa = PBXGroup;
 			children = (
-				E33A203D29262B6B00887EC9 /* GroupFilterViewController.swift */,
-				E33A203F29262B6B00887EC9 /* GroupFilterViewControllerDelegate.swift */,
-				E33A203E29262B6B00887EC9 /* GroupFilterViewModelType.swift */,
-				E33A203B29262B6B00887EC9 /* GroupListViewController.swift */,
-				E33A203C29262B6B00887EC9 /* GroupListViewModelType.swift */,
+				A66185732929152F00921B2F /* ViewModel */,
+				A66185722929150600921B2F /* View */,
 			);
 			path = GroupScene;
 			sourceTree = "<group>";
