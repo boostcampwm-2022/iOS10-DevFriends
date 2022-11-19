@@ -9,10 +9,10 @@ import UIKit
 import SnapKit
 import MapKit
 
-final class MogakcoViewController: UIViewController {
-    
+final class MogakcoViewController: DefaultViewController {
     private lazy var mogakcoMapView: MKMapView = {
         let mapView = MKMapView(frame: .zero)
+        mapView.delegate = self
         return mapView
     }()
     
@@ -29,7 +29,6 @@ final class MogakcoViewController: UIViewController {
         button.layer.shadowOpacity = 1.0
         button.layer.shadowOffset = CGSize.zero
         button.layer.shadowRadius = 6
-        button.addTarget(self, action: #selector(didTapCurrentButton), for: .touchUpInside)
         return button
     }()
     
@@ -49,7 +48,6 @@ final class MogakcoViewController: UIViewController {
         button.layer.shadowOpacity = 1.0
         button.layer.shadowOffset = CGSize.zero
         button.layer.shadowRadius = 3
-        button.addTarget(self, action: #selector(didTapViewModeButton), for: .touchUpInside)
         return button
     }()
     
@@ -71,41 +69,10 @@ final class MogakcoViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mogakcoMapView.delegate = self
-        view.backgroundColor = .white
-        layout()
-        setUserLocation()
-        // 내맘대로 핀 1개 찍기
-        moveLocation(latitudeValue: 37.5029, longtudeValue: 127.0279, delta: 0.1)
-        setAnnotation(
-            latitudeValue: 37.5029,
-            longitudeValue: 127.0279,
-            delta: 0.1,
-            title: "Combine 공부할 사람 내가 가르쳐줌",
-            subtitle: "강남 에이비카페")
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // MARK: Action Methods
-    
-    @objc func didTapCurrentButton() {
-        print("tap Current Button")
-        setUserLocation()
-    }
-    
-    @objc func didTapViewModeButton() {
-        print("tap ViewMode Button")
-        deselectAllAnnotations()
-        hideMogakcoSubView()
-        showMogakcoModal()
-    }
-    
     // MARK: Set Annotation Methods
     private func moveLocation(latitudeValue: CLLocationDegrees, longtudeValue: CLLocationDegrees, delta span: Double) {
         let pLocation = CLLocationCoordinate2DMake(latitudeValue, longtudeValue)
@@ -126,6 +93,92 @@ final class MogakcoViewController: UIViewController {
         for annotation in mogakcoMapView.annotations {
             mogakcoMapView.deselectAnnotation(annotation, animated: true)
         }
+    }
+    
+    override func configureUI() {
+        setUserLocation()
+        // 내맘대로 핀 1개 찍기
+        moveLocation(latitudeValue: 37.5029, longtudeValue: 127.0279, delta: 0.1)
+        setAnnotation(
+            latitudeValue: 37.5029,
+            longitudeValue: 127.0279,
+            delta: 0.1,
+            title: "Combine 공부할 사람 내가 가르쳐줌",
+            subtitle: "강남 에이비카페")
+    }
+    
+    override func layout() {
+        view.addSubview(mogakcoMapView)
+        mogakcoMapView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        view.addSubview(mogakcoSubView)
+        mogakcoSubView.snp.makeConstraints { make in
+            make.bottom.equalTo(mogakcoMapView)
+            make.leading.equalTo(mogakcoMapView).offset(20)
+            make.trailing.equalTo(-20)
+            make.height.equalTo(0) // 처음에 높이 0으로 설정, 나중에 SubView를 띄울 때 설정
+        }
+        
+        view.addSubview(currentLocationButton)
+        currentLocationButton.snp.makeConstraints { make in
+            make.leading.equalTo(mogakcoSubView).offset(20)
+            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
+            make.width.height.equalTo(50)
+        }
+        
+        view.addSubview(viewModeButton)
+        viewModeButton.snp.makeConstraints { make in
+            make.trailing.equalTo(mogakcoSubView).offset(-20)
+            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
+            make.height.equalTo(50)
+            make.width.equalTo(120)
+        }
+    }
+    
+    override func bind() {
+        viewModeButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.deselectAllAnnotations()
+                self?.hideMogakcoSubView()
+                self?.showMogakcoModal()
+            }
+            .store(in: &cancellables)
+        
+        currentLocationButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.setUserLocation()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func showMogakcoSubView() {
+        mogakcoSubView.snp.updateConstraints { make in
+            make.height.equalTo(150)
+        }
+    }
+    
+    func hideMogakcoSubView() {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.mogakcoSubView.snp.updateConstraints { make in
+                make.height.equalTo(0)
+            }
+        }
+    }
+    
+    func showMogakcoModal() {
+        let mogakcoModal = MogakcoModalViewController()
+        mogakcoModal.modalPresentationStyle = .pageSheet
+        if let sheet = mogakcoModal.sheetPresentationController {
+            // 지원할 크기 지정
+            sheet.detents = [.medium()]
+            // 시트 상단에 그래버 표시 (기본 값은 false)
+            sheet.prefersGrabberVisible = true
+            // 뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
+            sheet.largestUndimmedDetentIdentifier = .medium
+        }
+        present(mogakcoModal, animated: true, completion: nil)
     }
 }
 
@@ -200,67 +253,5 @@ extension MogakcoViewController: UICollectionViewDataSource {
         }
         
         return cell
-    }
-}
-
-// MARK: UI Layout Methods
-extension MogakcoViewController {
-    private func layout() {
-        view.addSubview(mogakcoMapView)
-        mogakcoMapView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        view.addSubview(mogakcoSubView)
-        mogakcoSubView.snp.makeConstraints { make in
-            make.bottom.equalTo(mogakcoMapView)
-            make.leading.equalTo(mogakcoMapView).offset(20)
-            make.trailing.equalTo(-20)
-            make.height.equalTo(0) // 처음에 높이 0으로 설정, 나중에 SubView를 띄울 때 설정
-        }
-        
-        view.addSubview(currentLocationButton)
-        currentLocationButton.snp.makeConstraints { make in
-            make.leading.equalTo(mogakcoSubView).offset(20)
-            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
-            make.width.height.equalTo(50)
-        }
-        
-        view.addSubview(viewModeButton)
-        viewModeButton.snp.makeConstraints { make in
-            make.trailing.equalTo(mogakcoSubView).offset(-20)
-            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
-            make.height.equalTo(50)
-            make.width.equalTo(120)
-        }
-    }
-    
-    func showMogakcoSubView() {
-        mogakcoSubView.snp.updateConstraints { make in
-            make.height.equalTo(150)
-        }
-    }
-    
-    func hideMogakcoSubView() {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.mogakcoSubView.snp.updateConstraints { make in
-                make.height.equalTo(0)
-            }
-            self.mogakcoSubView.superview?.layoutIfNeeded()
-        }
-    }
-    
-    func showMogakcoModal() {
-        let mogakcoModal = MogakcoModalViewController()
-        mogakcoModal.modalPresentationStyle = .pageSheet
-        if let sheet = mogakcoModal.sheetPresentationController {
-            // 지원할 크기 지정
-            sheet.detents = [.medium()]
-            // 시트 상단에 그래버 표시 (기본 값은 false)
-            sheet.prefersGrabberVisible = true
-            // 뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
-            sheet.largestUndimmedDetentIdentifier = .medium
-        }
-        present(mogakcoModal, animated: true, completion: nil)
     }
 }

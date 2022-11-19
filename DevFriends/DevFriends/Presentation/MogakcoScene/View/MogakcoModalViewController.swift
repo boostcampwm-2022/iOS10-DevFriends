@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 
-final class MogakcoModalViewController: UIViewController {
-    
+final class MogakcoModalViewController: DefaultViewController {
     private lazy var mogakcoListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -23,14 +22,12 @@ final class MogakcoModalViewController: UIViewController {
         collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func configureUI() {
         view.backgroundColor = .white
-        layout()
     }
     
-    private func layout() {
+    override func layout() {
         view.addSubview(mogakcoListCollectionView)
         mogakcoListCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(50)

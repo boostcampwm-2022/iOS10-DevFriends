@@ -17,12 +17,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .white
-        
-        let navigationController = UINavigationController()
+        window?.rootViewController = MogakcoViewController()
+        /*let navigationController = UINavigationController()
         window?.rootViewController = navigationController
         appFlowCoordinator = AppFlowCoordinator(navigationController: navigationController,
                                                 appDIContainer: appDIContainer)
-        appFlowCoordinator?.start()
+        appFlowCoordinator?.start()*/
         
         window?.makeKeyAndVisible()
     }
