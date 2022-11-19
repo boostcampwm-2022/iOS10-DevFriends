@@ -42,11 +42,8 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
     
     private func fetchGroup(uid: String) async throws -> Group {
         let groupSnapshot = try await firestore.collection("Group").document(uid).getDocument()
-        guard let group = groupSnapshot.data(),
-            let participantIDs = group["participantIDs"] as? [String],
-            let title = group["title"] as? String
-        else { fatalError("Wrong UID!!") }
+        let group = try groupSnapshot.data(as: Group.self)
         
-        return Group(participantIDs: participantIDs, title: title)
+        return group
     }
 }

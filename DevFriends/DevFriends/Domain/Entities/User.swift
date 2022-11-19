@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct User {
+struct User: Codable {
+    @DocumentID var uid: String?
     let nickname: String
     let profileImagePath: String
     let categories: [String]

@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct Group: Hashable {
+struct Group: Codable, Hashable {
+    @DocumentID var uid: String?
     let participantIDs: [String]
     let title: String
 }
