@@ -12,6 +12,7 @@
 		A6618575292916C300921B2F /* GroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618574292916C300921B2F /* GroupListViewModel.swift */; };
 		A66185772929179500921B2F /* GroupCellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66185762929179500921B2F /* GroupCellInfo.swift */; };
 		A6618579292918D300921B2F /* GroupListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618578292918D300921B2F /* GroupListUseCase.swift */; };
+		A661857B292928B200921B2F /* GroupListCellRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A661857A292928B200921B2F /* GroupListCellRepository.swift */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -111,6 +112,7 @@
 		A6618574292916C300921B2F /* GroupListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		A66185762929179500921B2F /* GroupCellInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCellInfo.swift; sourceTree = "<group>"; };
 		A6618578292918D300921B2F /* GroupListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListUseCase.swift; sourceTree = "<group>"; };
+		A661857A292928B200921B2F /* GroupListCellRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCellRepository.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 		FC79AEBA292223B50077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				A661857A292928B200921B2F /* GroupListCellRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -884,6 +887,7 @@
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
+				A661857B292928B200921B2F /* GroupListCellRepository.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,

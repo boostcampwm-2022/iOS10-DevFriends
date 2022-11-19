@@ -8,6 +8,8 @@
 import Foundation
 
 final class GroupListUseCase {
+    private let groupListCellRepo = GroupListCellRepository()
+    
     func fetchRecommandGroups() -> [GroupCellInfo] {
         var groups: [GroupCellInfo] = []
         groups.append(GroupCellInfo(title: "같이 C언어 하실 분?", categories: ["C언어"], place: "네이버 1784", currentPeople: 1, peopleLimit: 4))
@@ -17,6 +19,7 @@ final class GroupListUseCase {
     }
     
     func fetchAllGroups() -> [GroupCellInfo] {
+//        groupListCellRepo.fetchGroupList()
         var groups: [GroupCellInfo] = []
         groups.append(GroupCellInfo(title: "같이 C언어 하실 분?", categories: ["C언어"], place: "네이버 1784", currentPeople: 1, peopleLimit: 4))
         groups.append(GroupCellInfo(title: "iOS 토이 프로젝트 같이 하실 분 구해요", categories: ["Swift", "프로젝트"], place: "강남 스터디카페", currentPeople: 3, peopleLimit: 4))
