@@ -43,7 +43,11 @@ class ChatContentViewController: DefaultViewController {
     
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
-    init(group: Group) {
+    private let viewModel: ChatContentViewModel
+    
+    init(chatContentViewModel: ChatContentViewModel) {
+        self.viewModel = chatContentViewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -68,6 +72,13 @@ class ChatContentViewController: DefaultViewController {
     
     override func bind() {
         self.hideKeyboardWhenTappedAround()
+        viewModel.messages
+            .receive(on: RunLoop.main)
+            .sink {
+                self.populateSnapshot(data: $0) // MARK: 얘는 메인 스레드에서 안 돌려도 되는데 어떻게 깔끔하게 분리할까?
+                self.messageTableView.reloadData()
+            }
+            .store(in: &cancellables)
     }
     
     override func configureUI() {
@@ -76,6 +87,7 @@ class ChatContentViewController: DefaultViewController {
     
     private func setupTableView() {
         self.messageTableViewSnapShot.appendSections([.main])
+        viewModel.didLoadMessages()
     }
     
     private func populateSnapshot(data: [Message]) {
