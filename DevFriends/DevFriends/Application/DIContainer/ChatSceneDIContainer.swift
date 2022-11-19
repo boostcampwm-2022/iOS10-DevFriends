@@ -24,12 +24,21 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
         return DefaultChatGroupsRepository()
     }
     
+    func makeChatMessagesRepository() -> ChatMessagesRepository {
+        return DefaultChatMessagesRepository()
+    }
+    
     // MARK: UseCases
     func makeLoadGroupsUseCase() -> LoadChatGroupsUseCase {
         return DefaultLoadChatGroupsUseCase(
             userRepository: makeUserRepository(),
             chatGroupsRepository: makeChatGroupsRepository()
         )
+    }
+    
+    func makeLoadChatMessagesUseCase(chatUID: String) -> LoadChatMessagesUseCase {
+        // TODO: repositories 의존성 주입하기
+        return DefaultLoadChatMessagesUseCase(chatUID: chatUID, chatMessagesRepository: makeChatMessagesRepository())
     }
     
     // MARK: Chat
@@ -41,12 +50,15 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
         return DefaultChatViewModel(loadChatGroupsUseCase: makeLoadGroupsUseCase(), actions: actions)
     }
     
-
-    
-
-    
     // MARK: Chat Content
     func makeChatContentViewController(group: Group) -> ChatContentViewController {
-        return ChatContentViewController(group: group)
+        return ChatContentViewController(chatContentViewModel: makeChatContentViewModel(group: group))
+    }
+    
+    func makeChatContentViewModel(group: Group) -> ChatContentViewModel {
+        return DefaultChatContentViewModel(
+            group: group,
+            loadChatMessagesUseCase: makeLoadChatMessagesUseCase(chatUID: group.chatID)
+        )
     }
 }
