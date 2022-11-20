@@ -111,10 +111,14 @@ class ChatContentViewController: DefaultViewController {
                 ) as? FriendMessageTableViewCell else {
                     return UITableViewCell()
                 }
-                cell.updateContent(data: data, messageContentType: .time)
+                cell.updateContent(data: data, messageContentType: .profileAndTime)
                 
                 if indexPath.row + 1 != self.viewModel.messages.value.count && data.time.isSame(as: self.viewModel.messages.value[indexPath.row + 1].time) {
                     cell.setTimeLabel(isHidden: true)
+                }
+                
+                if indexPath.row - 1 >= 0 && data.userID == self.viewModel.messages.value[indexPath.row - 1].userID {
+                    cell.setProfileAndName(isHidden: true)
                 }
                 return cell
             }

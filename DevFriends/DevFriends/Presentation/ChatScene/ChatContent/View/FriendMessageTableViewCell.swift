@@ -78,6 +78,17 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         }
     }
     
+    func setProfileAndName(isHidden: Bool) {
+        // TODO: 이건 사실 숨기는 게 아니라 이미지 값을 없애는건데 현재 만들어놓은 코드에서는 profileImageView에 접근할 수 없어 임시방편으로 처리함
+        if isHidden {
+            self.imageSubject.send(nil)
+            self.nameSubject.send(nil)
+            // timeLabel.isHidden = true
+        } else {
+            // timeLabel.isHidden = false
+        }
+    }
+    
     func removeMessageTopConstraintsOffset() {
         self.messageLabel.snp.updateConstraints { make in
             make.top.equalToSuperview()
