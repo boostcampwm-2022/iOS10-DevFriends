@@ -53,7 +53,7 @@ final class MogakcoViewController: DefaultViewController {
         return button
     }()
     
-    private lazy var mogakcoSubView: UICollectionView = {
+    private lazy var mogakcoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         layout.scrollDirection = .horizontal
@@ -67,7 +67,7 @@ final class MogakcoViewController: DefaultViewController {
         return collectionView
     }()
     
-    private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoSubView) { collectionView, indexPath, data in
+    private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoCollectionView) { collectionView, indexPath, data in
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
                                                             for: indexPath) as? GroupCollectionViewCell else {
             return UICollectionViewCell()
@@ -124,8 +124,8 @@ final class MogakcoViewController: DefaultViewController {
             make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
-        view.addSubview(mogakcoSubView)
-        mogakcoSubView.snp.makeConstraints { make in
+        view.addSubview(mogakcoCollectionView)
+        mogakcoCollectionView.snp.makeConstraints { make in
             make.bottom.equalTo(mogakcoMapView)
             make.leading.equalTo(mogakcoMapView).offset(20)
             make.trailing.equalTo(-20)
@@ -134,15 +134,15 @@ final class MogakcoViewController: DefaultViewController {
         
         view.addSubview(currentLocationButton)
         currentLocationButton.snp.makeConstraints { make in
-            make.leading.equalTo(mogakcoSubView).offset(20)
-            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
+            make.leading.equalTo(mogakcoCollectionView).offset(20)
+            make.bottom.equalTo(mogakcoCollectionView.snp.top).offset(-20)
             make.width.height.equalTo(50)
         }
         
         view.addSubview(viewModeButton)
         viewModeButton.snp.makeConstraints { make in
-            make.trailing.equalTo(mogakcoSubView).offset(-20)
-            make.bottom.equalTo(mogakcoSubView.snp.top).offset(-20)
+            make.trailing.equalTo(mogakcoCollectionView).offset(-20)
+            make.bottom.equalTo(mogakcoCollectionView.snp.top).offset(-20)
             make.height.equalTo(50)
             make.width.equalTo(120)
         }
@@ -195,14 +195,14 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     func showMogakcoSubView() {
-        mogakcoSubView.snp.updateConstraints { make in
+        mogakcoCollectionView.snp.updateConstraints { make in
             make.height.equalTo(150)
         }
     }
     
     func hideMogakcoSubView() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.mogakcoSubView.snp.updateConstraints { make in
+            self.mogakcoCollectionView.snp.updateConstraints { make in
                 make.height.equalTo(0)
             }
         }
