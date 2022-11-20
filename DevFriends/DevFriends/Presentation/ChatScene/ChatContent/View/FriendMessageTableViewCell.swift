@@ -83,6 +83,7 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         if isHidden {
             self.imageSubject.send(nil)
             self.nameSubject.send(nil)
+            self.removeMessageTopConstraintsOffset()
             // timeLabel.isHidden = true
         } else {
             // timeLabel.isHidden = false
