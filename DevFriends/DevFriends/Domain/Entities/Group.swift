@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Group: Codable, Hashable {
@@ -13,4 +14,11 @@ struct Group: Codable, Hashable {
     let participantIDs: [String]
     let title: String
     let chatID: String
+    let categories: [String]
+    let location: GeoPoint
+    let description: String
+    let like: Int
+    let limitedNumberPeople: Int
+    let managerID: String
+    let type: String
 }

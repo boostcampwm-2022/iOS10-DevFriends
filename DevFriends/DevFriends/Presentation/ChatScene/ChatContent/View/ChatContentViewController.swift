@@ -22,17 +22,30 @@ class ChatContentViewController: DefaultViewController {
         return tableView
     }()
     
+    // TODO: VC 쪽에서 어떤 메시지셀을 고를지를 정하면 안될 것 같다
     private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(
         tableView: messageTableView
     ) { tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: FriendMessageTableViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? FriendMessageTableViewCell else {
-            return UITableViewCell()
+        // TODO: 여기서 Friend vs My를 결정하는 로직이 들어가면 안 될듯 -> 추후 수정하기
+        if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: MyMessageTableViewCell.reuseIdentifier,
+                for: indexPath
+            ) as? MyMessageTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.updateContent(data: data, messageContentType: .time)
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: FriendMessageTableViewCell.reuseIdentifier,
+                for: indexPath
+            ) as? FriendMessageTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.updateContent(data: data, messageContentType: .time)
+            return cell
         }
-        cell.updateContent(data: data, messageContentType: .profileAndTime)
-        return cell
     }
     
     private lazy var messageTextField: SendableTextView = {
