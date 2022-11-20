@@ -13,4 +13,5 @@ struct Message: Codable, Hashable {
     let content: String
     let time: Date
     let userID: String
+    let userNickname: String
 }

@@ -70,8 +70,8 @@
 		E359EC662928B6A500CE5775 /* ChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC652928B6A500CE5775 /* ChatMessagesRepository.swift */; };
 		E359EC682928C0C800CE5775 /* LoadChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */; };
 		E359EC6A2928C77500CE5775 /* ContainsFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC692928C77500CE5775 /* ContainsFirestore.swift */; };
-		E359EC6C2929DDAB00CE5775 /* MessageItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC6B2929DDAB00CE5775 /* MessageItemViewModel.swift */; };
 		E359EC6E2929EC5400CE5775 /* SendChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */; };
+		E359EC70292A7C9900CE5775 /* LoadUserNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC6F292A7C9900CE5775 /* LoadUserNameUseCase.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -173,8 +173,8 @@
 		E359EC652928B6A500CE5775 /* ChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessagesRepository.swift; sourceTree = "<group>"; };
 		E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadChatMessagesUseCase.swift; sourceTree = "<group>"; };
 		E359EC692928C77500CE5775 /* ContainsFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsFirestore.swift; sourceTree = "<group>"; };
-		E359EC6B2929DDAB00CE5775 /* MessageItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageItemViewModel.swift; sourceTree = "<group>"; };
 		E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendChatMessagesUseCase.swift; sourceTree = "<group>"; };
+		E359EC6F292A7C9900CE5775 /* LoadUserNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadUserNameUseCase.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -423,7 +423,6 @@
 			isa = PBXGroup;
 			children = (
 				E33A20DF2927659D00887EC9 /* ChatContentViewModel.swift */,
-				E359EC6B2929DDAB00CE5775 /* MessageItemViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -434,6 +433,7 @@
 				E33A20E229277A5100887EC9 /* LoadChatGroupsUseCase.swift */,
 				E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */,
 				E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */,
+				E359EC6F292A7C9900CE5775 /* LoadUserNameUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -903,7 +903,6 @@
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
-				E359EC6C2929DDAB00CE5775 /* MessageItemViewModel.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				E33A20EA2927BB1000887EC9 /* User.swift in Sources */,
@@ -943,6 +942,7 @@
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
+				E359EC70292A7C9900CE5775 /* LoadUserNameUseCase.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,

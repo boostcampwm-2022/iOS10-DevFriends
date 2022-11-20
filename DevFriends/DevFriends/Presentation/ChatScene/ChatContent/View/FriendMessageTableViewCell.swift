@@ -19,13 +19,7 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         return label
     }()
     
-//    private let viewModel: MessageItemViewModel
-//    
-//    init(messageItemViewModel: MessageItemViewModel) {
-//        self.viewModel = messageItemViewModel
-//        
-//        super.init
-//    }
+    var userRepository: UserRepository?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,36 +30,22 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         fatalError("init(coder:) has not been implemented")
     }
     
+    func fill(userRepository: UserRepository) {
+        self.userRepository = userRepository
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.messageLabel.text = ""
     }
     
-    func updateContent(data: Message, messageContentType: MessageContentType) {
+    func updateContent(data: Message) {
         self.messageLabel.text = data.content
         
-        switch messageContentType {
-        case .profile:
-            self.timeSubject.send(nil)
-            self.nameSubject.send(data.userID)
-            self.imageSubject.send(UIImage.profile?.pngData())
-            self.makeMessageTopConstraintsOffset()
-        case .time:
-            self.timeSubject.send(data.time)
-            self.nameSubject.send(nil)
-            self.imageSubject.send(nil)
-            self.removeMessageTopConstraintsOffset()
-        case .profileAndTime:
-            self.timeSubject.send(data.time)
-            self.nameSubject.send(data.userID)
-            self.imageSubject.send(UIImage.profile?.pngData())
-            self.makeMessageTopConstraintsOffset()
-        case .none:
-            self.timeSubject.send(nil)
-            self.nameSubject.send(nil)
-            self.imageSubject.send(nil)
-            self.removeMessageTopConstraintsOffset()
-        }
+        self.timeSubject.send(data.time)
+        self.nameSubject.send(data.userNickname)
+        self.imageSubject.send(UIImage.profile?.pngData())
+        self.makeMessageTopConstraintsOffset()
     }
     
     func removeTimeLabel() {
@@ -78,13 +58,13 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         self.removeMessageTopConstraintsOffset()
     }
     
-    func removeMessageTopConstraintsOffset() {
+    private func removeMessageTopConstraintsOffset() {
         self.messageLabel.snp.updateConstraints { make in
             make.top.equalToSuperview()
         }
     }
     
-    func makeMessageTopConstraintsOffset() {
+    private func makeMessageTopConstraintsOffset() {
         self.messageLabel.snp.updateConstraints { make in
             make.top.equalToSuperview().offset(30)
         }
