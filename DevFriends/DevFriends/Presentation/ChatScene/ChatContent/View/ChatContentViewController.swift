@@ -11,6 +11,7 @@ import UIKit
 class ChatContentViewController: DefaultViewController {
     private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorStyle = .none
         tableView.register(
             FriendMessageTableViewCell.self,
             forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier
