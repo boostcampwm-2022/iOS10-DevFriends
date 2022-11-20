@@ -65,12 +65,13 @@ final class MogakcoViewController: DefaultViewController {
     
     private lazy var mogakcoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width * 0.9, height: 140.0)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 30, height: 140.0)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
+        collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(GroupCollectionViewCell.self,
                                 forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
@@ -87,8 +88,10 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
-   
+    
     private var isSelectingPin = false
+    
+    private var currentCollectionViewCellIndex = 0
     
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
@@ -136,9 +139,7 @@ final class MogakcoViewController: DefaultViewController {
         
         view.addSubview(mogakcoCollectionView)
         mogakcoCollectionView.snp.makeConstraints { make in
-            make.bottom.equalTo(mogakcoMapView)
-            make.leading.equalTo(mogakcoMapView).offset(20)
-            make.trailing.equalTo(-20)
+            make.bottom.leading.trailing.equalTo(mogakcoMapView)
             make.height.equalTo(0) // 처음에 높이 0으로 설정, 나중에 SubView를 띄울 때 설정
         }
         
@@ -168,7 +169,7 @@ final class MogakcoViewController: DefaultViewController {
         viewModeButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.deselectAllAnnotations()
-                self?.hideMogakcoSubView()
+                self?.hideMogakcoCollectionView()
                 self?.showMogakcoModal()
             }
             .store(in: &cancellables)
@@ -218,19 +219,20 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     private func populateSnapshot(data: [Group]) {
+        currentCollectionViewCellIndex = 0
         mogakcoCollectionViewSnapShot.deleteAllItems()
         mogakcoCollectionViewSnapShot.appendSections([.main])
         mogakcoCollectionViewSnapShot.appendItems(data)
         mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
     }
     
-    func showMogakcoSubView() {
+    func showMogakcoCollectionView() {
         mogakcoCollectionView.snp.updateConstraints { make in
             make.height.equalTo(150)
         }
     }
     
-    func hideMogakcoSubView() {
+    func hideMogakcoCollectionView() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
             self.mogakcoCollectionView.snp.updateConstraints { make in
                 make.height.equalTo(0)
@@ -289,13 +291,13 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             let longitude = annotation.coordinate.longitude
             isSelectingPin = true
             moveLocation(latitudeValue: latitude, longtudeValue: longitude, delta: 0.01)
-            showMogakcoSubView()
+            showMogakcoCollectionView()
             input.send(.fetchMogakco(latitude: latitude, longitude: longitude))
         }
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        hideMogakcoSubView()
+        hideMogakcoCollectionView()
     }
     
     // 맵이 이동할 때 호출
@@ -307,6 +309,6 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             return
         }
         deselectAllAnnotations()
-        hideMogakcoSubView()
+        hideMogakcoCollectionView()
     }
 }
