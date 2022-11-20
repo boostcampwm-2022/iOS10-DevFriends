@@ -36,6 +36,10 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
         )
     }
     
+    func makeSendChatMessageUseCase(chatUID: String) -> SendChatMessagesUseCase {
+        return DefaultSendChatMessagesUseCase(chatUID: chatUID, chatMessagesRepository: makeChatMessagesRepository())
+    }
+    
     func makeLoadChatMessagesUseCase(chatUID: String) -> LoadChatMessagesUseCase {
         // TODO: repositories 의존성 주입하기
         return DefaultLoadChatMessagesUseCase(chatUID: chatUID, chatMessagesRepository: makeChatMessagesRepository())
@@ -58,7 +62,8 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
     func makeChatContentViewModel(group: Group) -> ChatContentViewModel {
         return DefaultChatContentViewModel(
             group: group,
-            loadChatMessagesUseCase: makeLoadChatMessagesUseCase(chatUID: group.chatID)
+            loadChatMessagesUseCase: makeLoadChatMessagesUseCase(chatUID: group.chatID),
+            sendChatMessagesUseCase: makeSendChatMessageUseCase(chatUID: group.chatID)
         )
     }
 }

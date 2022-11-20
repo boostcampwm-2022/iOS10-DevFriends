@@ -111,6 +111,6 @@ class ChatContentViewController: DefaultViewController {
 
 extension ChatContentViewController: SendableTextViewDelegate {
     func tapSendButton(text: String) {
-        print(text, "보냄")
+        viewModel.didSendMessage(text: text)
     }
 }
