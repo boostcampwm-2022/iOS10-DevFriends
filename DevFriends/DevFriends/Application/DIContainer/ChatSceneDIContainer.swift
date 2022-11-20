@@ -56,8 +56,7 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
     // MARK: Chat Content
     func makeChatContentViewController(group: Group) -> ChatContentViewController {
         return ChatContentViewController(
-            chatContentViewModel: makeChatContentViewModel(group: group),
-            userRepository: makeUserRepository()
+            chatContentViewModel: makeChatContentViewModel(group: group)
         )
     }
     

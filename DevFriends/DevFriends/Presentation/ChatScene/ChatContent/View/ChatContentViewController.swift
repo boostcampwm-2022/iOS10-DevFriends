@@ -34,11 +34,9 @@ class ChatContentViewController: DefaultViewController {
     var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message>?
     
     private let viewModel: ChatContentViewModel
-    private let userRepository: UserRepository
     
-    init(chatContentViewModel: ChatContentViewModel, userRepository: UserRepository) {
+    init(chatContentViewModel: ChatContentViewModel) {
         self.viewModel = chatContentViewModel
-        self.userRepository = userRepository
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -94,8 +92,7 @@ class ChatContentViewController: DefaultViewController {
         messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(
             tableView: messageTableView
         ) { tableView, indexPath, data -> UITableViewCell in
-//            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
-            if data.userID == "abc" {
+            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
                 let cell = self.createMyMessageTableViewCell(
                     tableView: tableView,
                     indexPath: indexPath,
@@ -135,7 +132,6 @@ class ChatContentViewController: DefaultViewController {
             return nil
         }
         
-        cell.fill(userRepository: self.userRepository)
         cell.updateContent(data: data)
         if self.isNoNeedToHaveTimeLabel(data: data, indexPath: indexPath) {
             cell.removeTimeLabel()

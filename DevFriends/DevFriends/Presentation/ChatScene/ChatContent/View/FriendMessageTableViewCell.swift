@@ -19,8 +19,6 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         return label
     }()
     
-    var userRepository: UserRepository?
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
@@ -28,10 +26,6 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func fill(userRepository: UserRepository) {
-        self.userRepository = userRepository
     }
     
     override func prepareForReuse() {
