@@ -30,7 +30,7 @@ final class ChatTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var lastMessgaeLabel: UILabel = {
+    private lazy var lastMessageLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textColor = .gray
@@ -57,13 +57,13 @@ final class ChatTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.titleLabel.text = ""
         self.participantCountLabel.text = ""
-        self.lastMessgaeLabel.text = ""
+        self.lastMessageLabel.text = ""
     }
     
     func set(data: Group, lastMessage: String?, hasNewMessage: Bool) {
         self.participantCountLabel.text = "\(data.participantIDs.count)"
         self.titleLabel.text = data.title
-        self.lastMessgaeLabel.text = lastMessage
+        self.lastMessageLabel.text = lastMessage
         self.newMessageView.isHidden = !hasNewMessage
     }
 }
@@ -93,8 +93,8 @@ extension ChatTableViewCell: ReusableType {
             make.size.height.width.equalTo(20)
         }
         
-        self.addSubview(lastMessgaeLabel)
-        self.lastMessgaeLabel.snp.makeConstraints { make in
+        self.addSubview(lastMessageLabel)
+        self.lastMessageLabel.snp.makeConstraints { make in
             make.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
             make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
             make.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
