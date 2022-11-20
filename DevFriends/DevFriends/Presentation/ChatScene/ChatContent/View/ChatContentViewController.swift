@@ -22,32 +22,6 @@ class ChatContentViewController: DefaultViewController {
         return tableView
     }()
     
-    // TODO: VC 쪽에서 어떤 메시지셀을 고를지를 정하면 안될 것 같다
-    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(
-        tableView: messageTableView
-    ) { tableView, indexPath, data -> UITableViewCell in
-        // TODO: 여기서 Friend vs My를 결정하는 로직이 들어가면 안 될듯 -> 추후 수정하기
-        if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MyMessageTableViewCell.reuseIdentifier,
-                for: indexPath
-            ) as? MyMessageTableViewCell else {
-                return UITableViewCell()
-            }
-            cell.updateContent(data: data, messageContentType: .time)
-            return cell
-        } else {
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: FriendMessageTableViewCell.reuseIdentifier,
-                for: indexPath
-            ) as? FriendMessageTableViewCell else {
-                return UITableViewCell()
-            }
-            cell.updateContent(data: data, messageContentType: .time)
-            return cell
-        }
-    }
-    
     private lazy var messageTextField: SendableTextView = {
         let textField = SendableTextView(placeholder: "메시지를 작성해주세요")
         textField.delegate = self
@@ -55,6 +29,8 @@ class ChatContentViewController: DefaultViewController {
     }()
     
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+    
+    var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message>?
     
     private let viewModel: ChatContentViewModel
     
@@ -92,7 +68,8 @@ class ChatContentViewController: DefaultViewController {
                 self.messageTableView.reloadData()
                 
                 if !$0.isEmpty {
-                    self.messageTableView.scrollToRow(at: IndexPath(row: $0.count - 1, section: 0), at: .bottom, animated: false)
+                    let indexPath = IndexPath(row: $0.count - 1, section: 0)
+                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)
@@ -100,6 +77,7 @@ class ChatContentViewController: DefaultViewController {
     
     override func configureUI() {
         self.setupTableView()
+        self.createDiffableDataSource()
     }
     
     private func setupTableView() {
@@ -107,9 +85,45 @@ class ChatContentViewController: DefaultViewController {
         viewModel.didLoadMessages()
     }
     
+    private func createDiffableDataSource() {
+        messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(
+            tableView: messageTableView
+        ) { tableView, indexPath, data -> UITableViewCell in
+            // TODO: 여기서 Friend vs My를 결정하는 로직이 들어가면 안 될듯 -> 추후 수정하기
+            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: MyMessageTableViewCell.reuseIdentifier,
+                    for: indexPath
+                ) as? MyMessageTableViewCell else {
+                    return UITableViewCell()
+                }
+                cell.updateContent(data: data)
+                
+                // TODO: 시간을 어떻게 띄울지 말지에 관한 로직을 VC에서 하는 것은 문제가 있음
+                if indexPath.row + 1 != self.viewModel.messages.value.count && data.time.isSame(as: self.viewModel.messages.value[indexPath.row + 1].time) {
+                    cell.setTimeLabel(isHidden: true)
+                }
+                return cell
+            } else {
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: FriendMessageTableViewCell.reuseIdentifier,
+                    for: indexPath
+                ) as? FriendMessageTableViewCell else {
+                    return UITableViewCell()
+                }
+                cell.updateContent(data: data, messageContentType: .time)
+                
+                if indexPath.row + 1 != self.viewModel.messages.value.count && data.time.isSame(as: self.viewModel.messages.value[indexPath.row + 1].time) {
+                    cell.setTimeLabel(isHidden: true)
+                }
+                return cell
+            }
+        }
+    }
+    
     private func populateSnapshot(data: [Message]) {
         self.messageTableViewSnapShot.appendItems(data)
-        self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
+        self.messageTableViewDiffableDataSource?.apply(messageTableViewSnapShot, animatingDifferences: true)
     }
 }
 

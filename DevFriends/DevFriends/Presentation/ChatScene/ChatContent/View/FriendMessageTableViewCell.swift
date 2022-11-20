@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, ContainsProfile, ContainsTime {
-    var timeSubject = PassthroughSubject<String?, Error>()
+    var timeSubject = CurrentValueSubject<Date?, Error>(nil)
     var nameSubject = PassthroughSubject<String?, Error>()
     var imageSubject = PassthroughSubject<Data?, Error>()
     var cancellables = Set<AnyCancellable>()
@@ -18,6 +18,14 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         let label = MessageLabel(type: .friend)
         return label
     }()
+    
+//    private let viewModel: MessageItemViewModel
+//    
+//    init(messageItemViewModel: MessageItemViewModel) {
+//        self.viewModel = messageItemViewModel
+//        
+//        super.init
+//    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,12 +51,12 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
             self.imageSubject.send(UIImage.profile?.pngData())
             self.makeMessageTopConstraintsOffset()
         case .time:
-            self.timeSubject.send(data.time.toTimeString())
+            self.timeSubject.send(data.time)
             self.nameSubject.send(nil)
             self.imageSubject.send(nil)
             self.removeMessageTopConstraintsOffset()
         case .profileAndTime:
-            self.timeSubject.send(data.time.toTimeString())
+            self.timeSubject.send(data.time)
             self.nameSubject.send(data.userID)
             self.imageSubject.send(UIImage.profile?.pngData())
             self.makeMessageTopConstraintsOffset()
@@ -57,6 +65,16 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
             self.nameSubject.send(nil)
             self.imageSubject.send(nil)
             self.removeMessageTopConstraintsOffset()
+        }
+    }
+    
+    func setTimeLabel(isHidden: Bool) {
+        // TODO: 이건 사실 숨기는 게 아니라 시간 값을 없애는건데 현재 만들어놓은 코드에서는 timeLabel에 접근할 수 없어 임시방편으로 처리함
+        if isHidden {
+            self.timeSubject.send(nil)
+            // timeLabel.isHidden = true
+        } else {
+            // timeLabel.isHidden = false
         }
     }
     

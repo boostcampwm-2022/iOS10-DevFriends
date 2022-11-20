@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 protocol ContainsTime: UIView {
-    var timeSubject: PassthroughSubject<String?, Error> { get set }
+    var timeSubject: CurrentValueSubject<Date?, Error> { get set }
     var cancellables: Set<AnyCancellable> { get set }
 }
 
@@ -46,7 +46,7 @@ extension ContainsTime {
         } receiveValue: { time in
             if let time = time {
                 timeLabel.isHidden = false
-                timeLabel.text = time
+                timeLabel.text = time.toTimeString()
             } else {
                 timeLabel.isHidden = true
             }
