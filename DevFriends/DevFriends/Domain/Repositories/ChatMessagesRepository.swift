@@ -22,6 +22,7 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
             .collection("Chat")
             .document(chatUID)
             .collection("Message")
+            .order(by: "time", descending: false)
             .addSnapshotListener { snapshot, error in
                 guard let snapshot = snapshot, error == nil else { fatalError("message snapshot error occured!!") }
                 
