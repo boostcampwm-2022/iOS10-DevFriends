@@ -12,10 +12,7 @@ protocol ChatGroupsRepository: ContainsFirestore {
     func fetchGroupList(uids: [String]) async throws -> [Group]
 }
 
-final class DefaultChatGroupsRepository {
-    // MARK: 미래에 Realm을 쓸 때 사용할 의존성
-    // let cache: ChatGroupsResponseStorage
-}
+final class DefaultChatGroupsRepository {}
 
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
     func fetchGroupList(uids: [String]) async throws -> [Group] {

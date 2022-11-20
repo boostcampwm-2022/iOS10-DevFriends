@@ -16,8 +16,10 @@ final class AppFlowCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
     
-    init(navigationController: UINavigationController,
-         appDIContainer: AppDIContainer) {
+    init(
+        navigationController: UINavigationController,
+        appDIContainer: AppDIContainer
+    ) {
         self.navigationController = navigationController
         self.appDIContainer = appDIContainer
     }

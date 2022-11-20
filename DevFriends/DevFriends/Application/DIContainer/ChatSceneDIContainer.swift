@@ -41,7 +41,6 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
     }
     
     func makeLoadChatMessagesUseCase(chatUID: String) -> LoadChatMessagesUseCase {
-        // TODO: repositories 의존성 주입하기
         return DefaultLoadChatMessagesUseCase(chatUID: chatUID, chatMessagesRepository: makeChatMessagesRepository())
     }
     

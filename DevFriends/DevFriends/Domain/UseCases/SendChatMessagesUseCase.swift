@@ -11,7 +11,6 @@ protocol SendChatMessagesUseCase {
     func send(message: Message)
 }
 
-// TODO: LoadChatMessagesUseCase랑 들고 있는 의존성이 완전히 똑같은데 합치는게 나으려나.. 토의 고고
 final class DefaultSendChatMessagesUseCase: SendChatMessagesUseCase {
     private let chatUID: String
     private let chatMessagesRepository: ChatMessagesRepository

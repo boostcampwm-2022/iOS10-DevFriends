@@ -37,14 +37,8 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
         self.timeSubject.send(data.time)
     }
     
-    func setTimeLabel(isHidden: Bool) {
-        // TODO: 이건 사실 숨기는 게 아니라 시간 값을 없애는건데 현재 만들어놓은 코드에서는 timeLabel에 접근할 수 없어 임시방편으로 처리함
-        if isHidden {
-            self.timeSubject.send(nil)
-            // timeLabel.isHidden = true
-        } else {
-            // timeLabel.isHidden = false
-        }
+    func removeTimeLabel() {
+        self.timeSubject.send(nil)
     }
     
     func layout() {
