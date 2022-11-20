@@ -57,9 +57,17 @@ final class ChatViewController: DefaultViewController {
     override func bind() {
         viewModel.groups
             .receive(on: RunLoop.main)
-            .sink {
-                self.populateSnapshot(data: $0) // MARK: 얘는 메인 스레드에서 안 돌려도 되는데 어떻게 깔끔하게 분리할까?
-                self.chatTableView.reloadData()
+            .sink { groups in
+                self.populateSnapshot(data: groups)
+
+                DispatchQueue.main.async {
+                    self.chatTableView.reloadData()
+                    
+                    if !groups.isEmpty {
+                        let indexPath = IndexPath(row: groups.count - 1, section: 0)
+                        self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    }
+                }
             }
             .store(in: &cancellables)
     }
