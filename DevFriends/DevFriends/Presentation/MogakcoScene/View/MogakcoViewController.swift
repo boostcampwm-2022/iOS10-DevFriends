@@ -73,6 +73,7 @@ final class MogakcoViewController: DefaultViewController {
         collectionView.backgroundColor = .clear
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
         collectionView.register(GroupCollectionViewCell.self,
                                 forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         return collectionView
@@ -91,7 +92,9 @@ final class MogakcoViewController: DefaultViewController {
     
     private var isSelectingPin = false
     
-    private var currentCollectionViewCellIndex = 0
+    private var nowCollectionViewCellIndex = 0
+    
+    let mogakcoModalViewController = MogakcoModalViewController()
     
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
@@ -191,14 +194,19 @@ final class MogakcoViewController: DefaultViewController {
             .sink { [weak self] event in
                 switch event {
                 case .allMogakcos(groups: let groups):
-                    break
-                    //self?.setMogakcoPin(groups: groups)
+                    self?.mogakcoModalViewController.populateSnapshot(data: groups)
                 case .mogakcos(groups: let groups):
                     self?.populateSnapshot(data: groups)
                     self?.setMogakcoPin(groups: groups)
+                case .nowMogakco(group: let group):
+                    self?.moveMogakcoLocation(group: group)
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func moveMogakcoLocation(group: Group) {
+        moveLocation(latitudeValue: group.location.latitude, longtudeValue: group.location.longitude, delta: 0.01)
     }
     
     private func setMogakcoPin(groups: [Group]) {
@@ -219,7 +227,6 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     private func populateSnapshot(data: [Group]) {
-        currentCollectionViewCellIndex = 0
         mogakcoCollectionViewSnapShot.deleteAllItems()
         mogakcoCollectionViewSnapShot.appendSections([.main])
         mogakcoCollectionViewSnapShot.appendItems(data)
@@ -241,17 +248,15 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     func showMogakcoModal() {
-        let mogakcoModal = MogakcoModalViewController()
-        mogakcoModal.modalPresentationStyle = .pageSheet
-        if let sheet = mogakcoModal.sheetPresentationController {
-            // 지원할 크기 지정
+        
+        mogakcoModalViewController.modalPresentationStyle = .pageSheet
+        if let sheet = mogakcoModalViewController.sheetPresentationController {
             sheet.detents = [.medium()]
-            // 시트 상단에 그래버 표시 (기본 값은 false)
             sheet.prefersGrabberVisible = true
-            // 뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
             sheet.largestUndimmedDetentIdentifier = .medium
         }
-        present(mogakcoModal, animated: true, completion: nil)
+        present(mogakcoModalViewController, animated: true, completion: nil)
+        input.send(.fetchAllMogakco)
     }
 }
 
@@ -302,13 +307,48 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     
     // 맵이 이동할 때 호출
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        
         // Pin을 터치해서 선택하는 과정에서 맵에 Pin을 중심으로 이동하게 되는데,
         // 그 과정에서 아래에서 Pin이 Deselect되는 것을 방지
         if isSelectingPin {
             isSelectingPin = false
             return
         }
-        deselectAllAnnotations()
-        hideMogakcoCollectionView()
+        //deselectAllAnnotations()
+        //hideMogakcoCollectionView()
+    }
+}
+
+extension MogakcoViewController: UICollectionViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let cellWidthIncludingSpacing = view.frame.width - 30
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+        
+        var roundedIndex = round(index)
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else {
+            roundedIndex = ceil(index)
+        }
+        
+        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
+        
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
+            roundedIndex = ceil(index)
+        } else {
+            roundedIndex = round(index)
+        }
+        
+        if nowCollectionViewCellIndex > Int(roundedIndex) {
+            nowCollectionViewCellIndex -= 1
+        } else if nowCollectionViewCellIndex < Int(roundedIndex) {
+            nowCollectionViewCellIndex += 1
+        }
+        
+        input.send(.nowMogakco(index: nowCollectionViewCellIndex))
     }
 }

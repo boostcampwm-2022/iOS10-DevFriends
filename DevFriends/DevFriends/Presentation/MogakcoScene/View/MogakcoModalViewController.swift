@@ -18,10 +18,20 @@ final class MogakcoModalViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.dataSource = self
         collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
+    
+    private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoListCollectionView) { collectionView, indexPath, data in
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+                                                            for: indexPath) as? GroupCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.set(data)
+        return cell
+    }
+    
+    private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
     override func configureUI() {
         view.backgroundColor = .white
@@ -36,19 +46,11 @@ final class MogakcoModalViewController: DefaultViewController {
             make.bottom.equalToSuperview().offset(-20)
         }
     }
-}
-
-// MARK: CollectionView DataSource Delegate Methods
-extension MogakcoModalViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier, for: indexPath) as? GroupCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        return cell
+    func populateSnapshot(data: [Group]) {
+        mogakcoCollectionViewSnapShot.deleteAllItems()
+        mogakcoCollectionViewSnapShot.appendSections([.main])
+        mogakcoCollectionViewSnapShot.appendItems(data)
+        mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
     }
 }
