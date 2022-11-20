@@ -5,6 +5,7 @@
 //  Created by 이대현 on 2022/11/14.
 //
 
+import Combine
 import UIKit
 import SnapKit
 import MapKit
@@ -13,6 +14,7 @@ final class MogakcoViewController: DefaultViewController {
     private lazy var mogakcoMapView: MKMapView = {
         let mapView = MKMapView(frame: .zero)
         mapView.delegate = self
+        mapView.showsUserLocation = true
         return mapView
     }()
     
@@ -60,16 +62,35 @@ final class MogakcoViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.register(GroupCollectionViewCell.self,
+                                forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
+    
+    private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoSubView) { collectionView, indexPath, data in
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+                                                            for: indexPath) as? GroupCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.set(data)
+        return cell
+    }
+    
+    private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
    
     private var isSelectingPin = false
     
-    private let locationManager = CLLocationManager()
+    private lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        return locationManager
+    }()
     
     private let viewModel = MogakcoViewModel(fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()))
+    private let input = PassthroughSubject<MogakcoViewModel.Input, Never>()
     
     // MARK: Set Annotation Methods
     private func moveLocation(latitudeValue: CLLocationDegrees, longtudeValue: CLLocationDegrees, delta span: Double) {
@@ -95,14 +116,6 @@ final class MogakcoViewController: DefaultViewController {
     
     override func configureUI() {
         setUserLocation()
-        // 내맘대로 핀 1개 찍기
-        moveLocation(latitudeValue: 37.5029, longtudeValue: 127.0279, delta: 0.1)
-        setAnnotation(
-            latitudeValue: 37.5029,
-            longitudeValue: 127.0279,
-            delta: 0.1,
-            title: "Combine 공부할 사람 내가 가르쳐줌",
-            subtitle: "강남 에이비카페")
     }
     
     override func layout() {
@@ -149,6 +162,36 @@ final class MogakcoViewController: DefaultViewController {
                 self?.setUserLocation()
             }
             .store(in: &cancellables)
+        viewModel.transform(input: input.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] event in
+                switch event {
+                case .allMogakcos(groups: let groups): break
+                    //self?.setMogakcoPin(groups: groups)
+                case .mogakcos(groups: let groups):
+                    self?.populateSnapshot(data: groups)
+                    self?.setMogakcoPin(groups: groups)
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func setMogakcoPin(groups: [Group]) {
+        for group in groups {
+            setAnnotation(
+                latitudeValue: group.location.latitude,
+                longitudeValue: group.location.longitude,
+                delta: 0.1,
+                title: group.title,
+                subtitle: "위치 이름")
+        }
+    }
+    
+    private func populateSnapshot(data: [Group]) {
+        mogakcoCollectionViewSnapShot.deleteAllItems()
+        mogakcoCollectionViewSnapShot.appendSections([.main])
+        mogakcoCollectionViewSnapShot.appendItems(data)
+        mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
     }
     
     func showMogakcoSubView() {
@@ -183,11 +226,8 @@ final class MogakcoViewController: DefaultViewController {
 // MARK: Map Init Methods
 extension MogakcoViewController {
     func setUserLocation() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        mogakcoMapView.showsUserLocation = true
+        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
 }
 
@@ -201,10 +241,12 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     func render(_ location: CLLocation) {
-        let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
+                                                longitude: location.coordinate.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mogakcoMapView.setRegion(region, animated: true)
+        input.send(.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
     }
     
     private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -212,13 +254,13 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("you tapped the pin!")
         if let annotation = view.annotation {
-            let latitudeVal = annotation.coordinate.latitude
-            let longtitudeVal = annotation.coordinate.longitude
+            let latitude = annotation.coordinate.latitude
+            let longitude = annotation.coordinate.longitude
             isSelectingPin = true
-            moveLocation(latitudeValue: latitudeVal, longtudeValue: longtitudeVal, delta: 0.01)
+            moveLocation(latitudeValue: latitude, longtudeValue: longitude, delta: 0.01)
             showMogakcoSubView()
+            input.send(.fetchMogakco(latitude: latitude, longitude: longitude))
         }
     }
     
@@ -236,20 +278,5 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         }
         deselectAllAnnotations()
         hideMogakcoSubView()
-    }
-}
-
-// MARK: CollectionView Delegate Methods
-extension MogakcoViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier, for: indexPath) as? GroupCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        return cell
     }
 }

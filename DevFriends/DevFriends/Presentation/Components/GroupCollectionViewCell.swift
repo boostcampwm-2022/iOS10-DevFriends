@@ -46,10 +46,10 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         return label
     }()
     
-//    func set(_ group: Group) {
-//
-//    }
-//
+    func set(_ group: Group) {
+        titleLabel.text = group.title
+    }
+
     
     // MARK: - Configure UI
     

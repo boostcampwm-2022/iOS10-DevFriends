@@ -12,7 +12,6 @@ struct Group: Hashable {
     let title: String
     let categories: [String]
     let chatID: String
-    let currentNumberPeople: Int
     let description: String
     let like: Int
     let limitedNumberPeople: Int
