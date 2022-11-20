@@ -53,6 +53,16 @@ final class MogakcoViewController: DefaultViewController {
         return button
     }()
     
+    private lazy var searchOnCurrentLocationButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.title = "현 지도에서 검색"
+        configuration.baseForegroundColor = .orange
+        let button = UIButton(configuration: configuration)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 15
+        return button
+    }()
+    
     private lazy var mogakcoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -146,6 +156,12 @@ final class MogakcoViewController: DefaultViewController {
             make.height.equalTo(50)
             make.width.equalTo(120)
         }
+        
+        view.addSubview(searchOnCurrentLocationButton)
+        searchOnCurrentLocationButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
     }
     
     override func bind() {
@@ -162,11 +178,19 @@ final class MogakcoViewController: DefaultViewController {
                 self?.setUserLocation()
             }
             .store(in: &cancellables)
+        
+        searchOnCurrentLocationButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.searchOnCurrentLocation()
+            }
+            .store(in: &cancellables)
+        
         viewModel.transform(input: input.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] event in
                 switch event {
-                case .allMogakcos(groups: let groups): break
+                case .allMogakcos(groups: let groups):
+                    break
                     //self?.setMogakcoPin(groups: groups)
                 case .mogakcos(groups: let groups):
                     self?.populateSnapshot(data: groups)
@@ -185,6 +209,12 @@ final class MogakcoViewController: DefaultViewController {
                 title: group.title,
                 subtitle: "위치 이름")
         }
+    }
+    
+    private func searchOnCurrentLocation() {
+        let currentLocation = mogakcoMapView.region.center
+        input.send(.fetchMogakco(latitude: currentLocation.latitude, longitude: currentLocation.longitude))
+        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
     
     private func populateSnapshot(data: [Group]) {

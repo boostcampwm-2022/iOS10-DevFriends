@@ -27,7 +27,6 @@ class MogakcoViewModel {
     let output = PassthroughSubject<Output, Never>()
     
     let fetchGroupUseCase: FetchGroupUseCase
-    let saveGroupUseCase = DefaultSaveGroupUseCase(groupRepository: DefaultGroupRepository())
     
     init(fetchGroupUseCase: FetchGroupUseCase) {
         self.fetchGroupUseCase = fetchGroupUseCase
