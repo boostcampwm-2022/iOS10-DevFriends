@@ -90,6 +90,10 @@ class ChatContentViewController: DefaultViewController {
             .sink {
                 self.populateSnapshot(data: $0) // MARK: 얘는 메인 스레드에서 안 돌려도 되는데 어떻게 깔끔하게 분리할까?
                 self.messageTableView.reloadData()
+                
+                if !$0.isEmpty {
+                    self.messageTableView.scrollToRow(at: IndexPath(row: $0.count - 1, section: 0), at: .bottom, animated: false)
+                }
             }
             .store(in: &cancellables)
     }
