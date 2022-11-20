@@ -33,16 +33,14 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     // MARK: OUTPUT
     var messages = CurrentValueSubject<[Message], Never>([])
     
-    // MARK: Private
-    private func loadMessages() async {
-        let loadTask = Task {
-            return try await loadChatMessagesUseCase.load()
-        }
-        
-        let result = await loadTask.result
-        
+    private func loadMessages() {
         do {
-            messages.send(try result.get())
+            try loadChatMessagesUseCase.load {
+                var tempMessages = self.messages.value
+                tempMessages += $0
+                
+                self.messages.send(tempMessages)
+            }
         } catch {
             print(error)
         }
@@ -56,12 +54,11 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
 // MARK: INPUT
 extension DefaultChatContentViewModel {
     func didLoadMessages() {
-        Task {
-            await loadMessages()
-        }
+        self.loadMessages()
     }
     
     func didSendMessage(text: String) {
+        // TODO: userID를 여기서 이렇게 접근해도 될까? 의존성을 분리하는 방법도 있을 거 같은데.. 일단 씀
         guard let userID = UserDefaults.standard.object(forKey: "uid") as? String
         else { fatalError("사용자의 uid가 로컬에 저장되어 있지 않습니다.") }
         
