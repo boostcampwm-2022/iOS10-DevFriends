@@ -18,7 +18,7 @@ protocol ChatViewModelInput {
 }
 
 protocol ChatViewModelOutput {
-    var groups: CurrentValueSubject<[Group], Never> { get }
+    var groupsSubject: CurrentValueSubject<[Group], Never> { get }
 }
 
 protocol ChatViewModel: ChatViewModelInput, ChatViewModelOutput {}
@@ -28,7 +28,7 @@ final class DefaultChatViewModel: ChatViewModel {
     private let actions: ChatViewModelActions?
     
     // MARK: OUTPUT
-    var groups = CurrentValueSubject<[Group], Never>([])
+    var groupsSubject = CurrentValueSubject<[Group], Never>([])
     
     // MARK: Init
     init(loadChatGroupsUseCase: LoadChatGroupsUseCase, actions: ChatViewModelActions? = nil) {
@@ -45,7 +45,7 @@ final class DefaultChatViewModel: ChatViewModel {
         let result = await loadTask.result
         
         do {
-            groups.send(try result.get())
+            groupsSubject.send(try result.get())
         } catch {
             print(error)
         }
@@ -61,6 +61,6 @@ extension DefaultChatViewModel {
     }
     
     func didSelectGroup(at index: Int) {
-        actions?.showChatContent(groups.value[index])
+        actions?.showChatContent(groupsSubject.value[index])
     }
 }

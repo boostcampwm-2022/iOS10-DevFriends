@@ -85,7 +85,7 @@ class ChatContentViewController: DefaultViewController {
     
     override func bind() {
         self.hideKeyboardWhenTappedAround()
-        viewModel.messages
+        viewModel.messagesSubject
             .sink { messages in
                 self.populateSnapshot(data: messages)
                 
@@ -145,14 +145,14 @@ class ChatContentViewController: DefaultViewController {
     }
     
     private func isNoNeedToHaveTimeLabel(data: Message, indexPath: IndexPath) -> Bool {
-        guard indexPath.row + 1 != self.viewModel.messages.value.count else { return false }
-        let isSameTime = data.time.isSame(as: self.viewModel.messages.value[indexPath.row + 1].time)
+        guard indexPath.row + 1 != self.viewModel.messagesSubject.value.count else { return false }
+        let isSameTime = data.time.isSame(as: self.viewModel.messagesSubject.value[indexPath.row + 1].time)
         return isSameTime
     }
     
     private func isNoNeedToHaveProfileInfo(data: Message, indexPath: IndexPath) -> Bool {
         guard indexPath.row - 1 >= 0 else { return false }
-        let isSameUser = data.userID == self.viewModel.messages.value[indexPath.row - 1].userID
+        let isSameUser = data.userID == self.viewModel.messagesSubject.value[indexPath.row - 1].userID
         return isSameUser
     }
     

@@ -14,7 +14,7 @@ protocol ChatContentViewModelInput {
 }
 
 protocol ChatContentViewModelOutput {
-    var messages: CurrentValueSubject<[Message], Never> { get }
+    var messagesSubject: CurrentValueSubject<[Message], Never> { get }
 }
 
 protocol ChatContentViewModel: ChatContentViewModelInput, ChatContentViewModelOutput {}
@@ -31,16 +31,16 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     }
     
     // MARK: OUTPUT
-    var messages = CurrentValueSubject<[Message], Never>([])
+    var messagesSubject = CurrentValueSubject<[Message], Never>([])
     
     // MARK: Private
     private func loadMessages() {
         do {
             try loadChatMessagesUseCase.execute {
-                var tempMessages = self.messages.value
+                var tempMessages = self.messagesSubject.value
                 tempMessages += $0
                 
-                self.messages.send(tempMessages)
+                self.messagesSubject.send(tempMessages)
             }
         } catch {
             print(error)

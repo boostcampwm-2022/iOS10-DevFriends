@@ -55,7 +55,7 @@ final class ChatViewController: DefaultViewController {
     }
     
     override func bind() {
-        viewModel.groups
+        viewModel.groupsSubject
             .receive(on: RunLoop.main)
             .sink { groups in
                 self.populateSnapshot(data: groups)
