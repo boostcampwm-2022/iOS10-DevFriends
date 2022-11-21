@@ -46,7 +46,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         return label
     }()
     
-    func setGroupInfoUI(_ info: GroupCellInfo) {
+    func set(_ info: GroupCellInfo) {
         titleLabel.text = info.title
         placeLabel.text = "📍\(info.place)"
         participantLabel.text = "👥\(info.currentPeople)/\(info.peopleLimit)"

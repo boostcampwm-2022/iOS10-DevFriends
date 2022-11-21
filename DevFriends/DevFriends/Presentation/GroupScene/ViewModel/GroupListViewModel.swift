@@ -8,7 +8,7 @@
 import Foundation
 
 final class GroupListViewModel {
-    let groupListUseCase = GroupListUseCase()
+    let groupListUseCase = DefaultLoadGroupListUseCase()
     
     @Published var recommandGroups: [GroupCellInfo] = []
     @Published var filteredGroups: [GroupCellInfo] = []
