@@ -226,6 +226,7 @@
 		A66185722929150600921B2F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A661857C292B859000921B2F /* GroupListSection.swift */,
 				E33A203F29262B6B00887EC9 /* GroupFilterViewControllerDelegate.swift */,
 				E33A203D29262B6B00887EC9 /* GroupFilterViewController.swift */,
 				E33A203B29262B6B00887EC9 /* GroupListViewController.swift */,
@@ -389,7 +390,6 @@
 			children = (
 				E33A20C22926665E00887EC9 /* SnapShotSection.swift */,
 				E33A20C32926665E00887EC9 /* DefaultViewController.swift */,
-				A661857C292B859000921B2F /* GroupListSection.swift */,
 				E33A20C42926665E00887EC9 /* Extensions */,
 				E33A20CC2926665E00887EC9 /* Protocols */,
 			);
