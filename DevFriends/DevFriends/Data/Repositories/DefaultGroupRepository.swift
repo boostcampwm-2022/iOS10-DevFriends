@@ -14,27 +14,31 @@ class DefaultGroupRepository: GroupRepository {
     
     func fetch(groupType: GroupType?, location: (latitude: Double, longitude: Double)?) async throws -> [Group] {
         var groups: [Group] = []
-        let snapshot = try await firestore.collection("Group").getDocuments()
+        let snapshot: QuerySnapshot
+        if let groupType = groupType {
+            snapshot = try await firestore.collection("Group")
+                .whereField("type", isEqualTo: groupType.rawValue)
+                .getDocuments()
+        } else {
+            snapshot = try await firestore.collection("Group")
+                .getDocuments()
+        }
+        
         for document in snapshot.documents {
             let groupData = document.data()
             if let group = makeGroup(group: groupData) {
                 if let location = location {
                     let from = CLLocation(latitude: location.latitude, longitude: location.longitude)
                     let to = CLLocation(latitude: group.location.latitude, longitude: group.location.longitude)
-                    if groupType == nil || groupType == group.type {
-                        if location == group.location {
-                            groups.insert(group, at: 0)
-                        } else {
-                            print(to.distance(from: from))
-                            if to.distance(from: from) < 1000 {
-                                groups.append(group)
-                            }
+                    if location == group.location {
+                        groups.insert(group, at: 0)
+                    } else {
+                        if to.distance(from: from) < 1000 {
+                            groups.append(group)
                         }
                     }
                 } else {
-                    if groupType == nil || groupType == group.type {
-                        groups.append(group)
-                    }
+                    groups.append(group)
                 }
             }
         }
