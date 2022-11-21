@@ -39,7 +39,7 @@ final class DefaultChatViewModel: ChatViewModel {
     // MARK: Private
     private func loadGroups() async {
         let loadTask = Task {
-            return try await loadChatGroupsUseCase.load()
+            return try await loadChatGroupsUseCase.execute()
         }
         
         let result = await loadTask.result

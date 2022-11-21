@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoadChatGroupsUseCase {
-    func load() async throws -> [Group]
+    func execute() async throws -> [Group]
 }
 
 final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
@@ -20,7 +20,7 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
         self.chatGroupsRepository = chatGroupsRepository
     }
     
-    func load() async throws -> [Group] {
+    func execute() async throws -> [Group] {
         let user = try await self.userRepository.fetchUser()
         return try await self.chatGroupsRepository.fetchGroupList(uids: user.groups)
     }

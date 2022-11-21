@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoadChatMessagesUseCase {
-    func load(completion: @escaping (_ messages: [Message]) -> Void) throws
+    func execute(completion: @escaping (_ messages: [Message]) -> Void) throws
 }
 
 final class DefaultLoadChatMessagesUseCase: LoadChatMessagesUseCase {
@@ -20,7 +20,7 @@ final class DefaultLoadChatMessagesUseCase: LoadChatMessagesUseCase {
         self.chatMessagesRepository = chatMessagesRepository
     }
     
-    func load(completion: @escaping (_ messages: [Message]) -> Void) throws {
+    func execute(completion: @escaping (_ messages: [Message]) -> Void) throws {
         try self.chatMessagesRepository.fetchMessages(chatUID: self.chatUID, completion: completion)
     }
 }

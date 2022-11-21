@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SendChatMessagesUseCase {
-    func send(message: Message)
+    func execute(message: Message)
 }
 
 final class DefaultSendChatMessagesUseCase: SendChatMessagesUseCase {
@@ -20,7 +20,7 @@ final class DefaultSendChatMessagesUseCase: SendChatMessagesUseCase {
         self.chatMessagesRepository = chatMessagesRepository
     }
     
-    func send(message: Message) {
+    func execute(message: Message) {
         self.chatMessagesRepository.sendMessage(chatUID: self.chatUID, message: message)
     }
 }

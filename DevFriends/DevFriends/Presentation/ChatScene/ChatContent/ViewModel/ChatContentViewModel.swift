@@ -36,7 +36,7 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     // MARK: Private
     private func loadMessages() {
         do {
-            try loadChatMessagesUseCase.load {
+            try loadChatMessagesUseCase.execute {
                 var tempMessages = self.messages.value
                 tempMessages += $0
                 
@@ -48,7 +48,7 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     }
     
     private func sendMessage(message: Message) {
-        sendChatMessagesUseCase.send(message: message)
+        sendChatMessagesUseCase.execute(message: message)
     }
 }
 
