@@ -16,7 +16,7 @@ protocol PostDetailViewModelOutput {
     var postWriterInfoSubject: CurrentValueSubject<PostWriterInfo, Never>{ get }
     var postDetailContents: PostDetailContents { get }
     var postAttentionInfo: PostAttentionInfo { get }
-    var comments: [CommentInfo] { get }
+    var commentsSubject: CurrentValueSubject<[CommentInfo], Never> { get }
 }
 
 protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutput {}
@@ -24,17 +24,19 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let group: Group
     private let fetchUserUseCase: FetchUserUseCase
+    private let fetchCommentsUseCase: FetchCommentsUseCase
 //    private let fetchImageUseCase: FetchImageUseCase
     
     // MARK: - OUTPUT
     var postWriterInfoSubject = CurrentValueSubject<PostWriterInfo, Never>(.init(name: "", job: "", image: nil))
     var postDetailContents: PostDetailContents
     var postAttentionInfo: PostAttentionInfo
-    var comments: [CommentInfo]
+    var commentsSubject = CurrentValueSubject<[CommentInfo], Never>([])
     
-    init(group: Group, fetchUserUseCase: FetchUserUseCase) {
+    init(group: Group, fetchUserUseCase: FetchUserUseCase, fetchCommentsUseCase: FetchCommentsUseCase) {
         self.group = group
         self.fetchUserUseCase = fetchUserUseCase
+        self.fetchCommentsUseCase = fetchCommentsUseCase
         
         postDetailContents = .init(
             title: group.title,
@@ -50,7 +52,6 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             maxParticipantCount: group.limitedNumberPeople,
             currentParticipantCount: group.participantIDs.count
         )
-        comments = []
     }
     
     private func loadUser(id: String) async -> User? {
@@ -67,6 +68,26 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         }
         return resultUser
     }
+    
+    private func loadComments() async -> [Comment] {
+        let loadTask = Task {
+            guard let groupId = group.uid else { return [] }
+            return try await fetchCommentsUseCase.execute(groupId: groupId)
+        }
+        let result = await loadTask.result
+        
+        var resultComments = [Comment]()
+        do {
+            let items = try result.get()
+            items.forEach { item in
+                guard let comment = item as? Comment else { return }
+                resultComments.append(comment)
+            }
+        } catch {
+            print(error)
+        }
+        return resultComments
+    }
 }
 
 extension DefaultPostDetailViewModel {
@@ -74,6 +95,14 @@ extension DefaultPostDetailViewModel {
         Task {
             guard let user = await loadUser(id: group.managerID) else { return }
             postWriterInfoSubject.value = .init(name: user.nickname, job: "defaultJob", image: nil)
+            
+            let comments = await loadComments()
+            commentsSubject.value = comments.map { comment in
+//                guard let user = await loadUser(id: comment.userID) else { return }
+//                CommentInfo(writerInfo: .init(name: user.nickname, job: "defaultJob", image: nil), contents: )
+                return CommentInfo(writerInfo: .init(name: "commentUser", job: "comments", image: nil), contents: comment.content)
+            }
+            
         }
     }
 }

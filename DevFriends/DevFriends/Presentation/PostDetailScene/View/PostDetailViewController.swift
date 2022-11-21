@@ -42,7 +42,7 @@ final class PostDetailViewController: DefaultViewController {
     }()
     
     private let testGroup = Group(
-        uid: nil,
+        uid: "mnYeCkTpbHiATFzHl046",
         participantIDs: [" YkocW98XPzJAsSDVa5qd"],
         title: "Swift를 배워봅시다~",
         chatID: "SHWMLojQYPUZW5U7u24U",
@@ -55,15 +55,25 @@ final class PostDetailViewController: DefaultViewController {
         type: "모각코"
     )
     private let testUserRepository: UserRepository
+    private let testCommentRepository: CommentRepository
     private let testFetchUserUseCase: FetchUserUseCase
+    private let testFetchCommentsUseCase: FetchCommentsUseCase
     private let viewModel: PostDetailViewModel
     
     // MARK: - Init & Life Cycles
     
     init() {
         testUserRepository = DefaultUserRepository()
+        testCommentRepository = DefaultCommentRepository()
+        
         testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
-        viewModel = DefaultPostDetailViewModel(group: testGroup, fetchUserUseCase: testFetchUserUseCase)
+        testFetchCommentsUseCase = DefaultFetchCommentsUseCase(commentRepository: testCommentRepository)
+        
+        viewModel = DefaultPostDetailViewModel(
+            group: testGroup,
+            fetchUserUseCase: testFetchUserUseCase,
+            fetchCommentsUseCase: testFetchCommentsUseCase
+        )
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -124,8 +134,14 @@ final class PostDetailViewController: DefaultViewController {
         viewModel.postWriterInfoSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] postWriterInfo in
-                print(postWriterInfo)
                 self?.postDetailInfoView.set(postWriterInfo: postWriterInfo)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.commentsSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] comments in
+                self?.commentTableView.reloadData()
             }
             .store(in: &cancellables)
     }
@@ -216,19 +232,19 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.comments.count
+        return viewModel.commentsSubject.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "commentTableViewCell",
+            withIdentifier: CommentTableViewCell.reuseIdentifier,
             for: indexPath
         ) as? CommentTableViewCell
         else {
             return UITableViewCell()
         }
         
-        cell.set(info: viewModel.comments[indexPath.row])
+        cell.set(info: viewModel.commentsSubject.value[indexPath.row])
         
         return cell
     }
