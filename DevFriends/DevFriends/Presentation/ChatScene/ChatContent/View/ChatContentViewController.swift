@@ -33,6 +33,7 @@ class ChatContentViewController: DefaultViewController {
                     indexPath: indexPath,
                     data: data
                 ) ?? UITableViewCell()
+                cell.selectionStyle = .none
                 return cell
             } else {
                 let cell = self.createFriendMessageTableViewCell(
@@ -40,6 +41,7 @@ class ChatContentViewController: DefaultViewController {
                     indexPath: indexPath,
                     data: data
                 ) ?? UITableViewCell()
+                cell.selectionStyle = .none
                 return cell
             }
         }
