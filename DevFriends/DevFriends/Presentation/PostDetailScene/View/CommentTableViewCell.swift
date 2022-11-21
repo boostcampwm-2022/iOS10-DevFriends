@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class CommentTableViewCell: UITableViewCell {
+final class CommentTableViewCell: UITableViewCell, ReusableType {
     private lazy var commentView: PostDetailCommentView = {
         let commentView = PostDetailCommentView()
         return commentView
@@ -24,7 +24,7 @@ final class CommentTableViewCell: UITableViewCell {
         self.layout()
     }
     
-    private func layout() {
+    func layout() {
         self.contentView.addSubview(commentView)
         
         self.commentView.snp.makeConstraints { make in

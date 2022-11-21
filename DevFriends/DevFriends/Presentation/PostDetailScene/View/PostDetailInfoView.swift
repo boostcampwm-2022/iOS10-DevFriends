@@ -45,6 +45,10 @@ final class PostDetailInfoView: UIView {
         self.mainStackView.setCustomSpacing(20, after: postWriterInfoView)
     }
     
+    func set(postWriterInfo: PostWriterInfo) {
+        self.postWriterInfoView.set(info: postWriterInfo)
+    }
+    
     func set(postWriterInfo: PostWriterInfo, postDetailContents: PostDetailContents) {
         self.postWriterInfoView.set(info: postWriterInfo)
         self.postDetailContentsView.set(contents: postDetailContents)

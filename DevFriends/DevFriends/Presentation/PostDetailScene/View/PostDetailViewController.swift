@@ -5,16 +5,23 @@
 //  Created by 유승원 on 2022/11/14.
 //
 
-import UIKit
+import Combine
 import SnapKit
+import UIKit
 
-final class PostDetailViewController: UIViewController {
+final class PostDetailViewController: DefaultViewController {
     private lazy var commentTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(
+            CommentTableViewCell.self,
+            forCellReuseIdentifier: CommentTableViewCell.reuseIdentifier
+        )
         return tableView
     }()
     private lazy var commentTextField: CommonTextField = {
@@ -34,10 +41,30 @@ final class PostDetailViewController: UIViewController {
         return postAttentionView
     }()
     
+    private let testGroup = Group(
+        uid: nil,
+        participantIDs: [" YkocW98XPzJAsSDVa5qd"],
+        title: "Swift를 배워봅시다~",
+        chatID: "SHWMLojQYPUZW5U7u24U",
+        categories: ["89kKYamuTTGC0rK7VZO8"],
+        location: nil,
+        description: "저랑 같이 공부해요 화이팅!",
+        like: 1,
+        limitedNumberPeople: 4,
+        managerID: "YkocW98XPzJAsSDVa5qd",
+        type: "모각코"
+    )
+    private let testUserRepository: UserRepository
+    private let testFetchUserUseCase: FetchUserUseCase
     private let viewModel: PostDetailViewModel
     
-    init(postDetailViewModel: PostDetailViewModel) {
-        self.viewModel = postDetailViewModel
+    // MARK: - Init & Life Cycles
+    
+    init() {
+        testUserRepository = DefaultUserRepository()
+        testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
+        viewModel = DefaultPostDetailViewModel(group: testGroup, fetchUserUseCase: testFetchUserUseCase)
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,13 +75,8 @@ final class PostDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
         setupViews()
-        
         hideKeyboardWhenTapped()
-        
-        setTableViewDelegate()
-        registerTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,15 +91,17 @@ final class PostDetailViewController: UIViewController {
         removeKeyboardObserver()
     }
     
-    private func configure() {
+    // MARK: - Setting
+    
+    override func layout() {
         view.addSubview(commentTableView)
-        view.addSubview(commentTextField)
-        
         commentTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.left.right.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
         }
+        
+        view.addSubview(commentTextField)
         commentTextField.snp.makeConstraints { make in
             make.left.right.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -87,15 +111,23 @@ final class PostDetailViewController: UIViewController {
     
     private func setupViews() {
         postDetailInfoView.set(
-            postWriterInfo: viewModel.postWriterInfo,
+            postWriterInfo: viewModel.postWriterInfoSubject.value,
             postDetailContents: viewModel.postDetailContents
         )
+        
         postAttentionView.set(info: viewModel.postAttentionInfo)
+        
+        viewModel.didLoadGroup()
     }
     
-    private func setTableViewDelegate() {
-        commentTableView.delegate = self
-        commentTableView.dataSource = self
+    override func bind() {
+        viewModel.postWriterInfoSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] postWriterInfo in
+                print(postWriterInfo)
+                self?.postDetailInfoView.set(postWriterInfo: postWriterInfo)
+            }
+            .store(in: &cancellables)
     }
     
     private func createHeaderView() -> UIView {
@@ -137,7 +169,8 @@ final class PostDetailViewController: UIViewController {
     }
 }
 
-// MARK: Keyboard Methods
+// MARK: - Keyboard Methods
+
 extension PostDetailViewController {
     private func addKeyboardObserver() {
         NotificationCenter.default.addObserver(
@@ -174,7 +207,8 @@ extension PostDetailViewController {
     }
 }
 
-// MARK: UITableView
+// MARK: - UITableView
+
 extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = createHeaderView()
@@ -186,7 +220,7 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = commentTableView.dequeueReusableCell(
+        guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "commentTableViewCell",
             for: indexPath
         ) as? CommentTableViewCell
@@ -197,12 +231,5 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
         cell.set(info: viewModel.comments[indexPath.row])
         
         return cell
-    }
-    
-    private func registerTableView() {
-        self.commentTableView.register(
-            CommentTableViewCell.classForCoder(),
-            forCellReuseIdentifier: "commentTableViewCell"
-        )
     }
 }
