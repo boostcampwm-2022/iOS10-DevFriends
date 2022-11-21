@@ -14,6 +14,8 @@
 		A6618579292918D300921B2F /* LoadGroupListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618578292918D300921B2F /* LoadGroupListUseCase.swift */; };
 		A661857B292928B200921B2F /* GroupListCellRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A661857A292928B200921B2F /* GroupListCellRepository.swift */; };
 		A661857D292B859000921B2F /* GroupListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A661857C292B859000921B2F /* GroupListSection.swift */; };
+		A661857F292BCB3B00921B2F /* GroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A661857E292BCB3B00921B2F /* GroupRepository.swift */; };
+		A6618581292BCBE200921B2F /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618580292BCBE200921B2F /* DefaultGroupRepository.swift */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -115,6 +117,8 @@
 		A6618578292918D300921B2F /* LoadGroupListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadGroupListUseCase.swift; sourceTree = "<group>"; };
 		A661857A292928B200921B2F /* GroupListCellRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCellRepository.swift; sourceTree = "<group>"; };
 		A661857C292B859000921B2F /* GroupListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListSection.swift; sourceTree = "<group>"; };
+		A661857E292BCB3B00921B2F /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupRepository.swift; path = ../../../../../../../../Documents/GroupRepository.swift; sourceTree = "<group>"; };
+		A6618580292BCBE200921B2F /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -506,6 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				A661857A292928B200921B2F /* GroupListCellRepository.swift */,
+				A661857E292BCB3B00921B2F /* GroupRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -523,6 +528,7 @@
 		FC79AEBC292223DF0077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				A6618580292BCBE200921B2F /* DefaultGroupRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -885,6 +891,7 @@
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
+				A6618581292BCBE200921B2F /* DefaultGroupRepository.swift in Sources */,
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
@@ -936,6 +943,7 @@
 				A6618579292918D300921B2F /* LoadGroupListUseCase.swift in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
 				E33A20942926623200887EC9 /* MogakcoModalViewController.swift in Sources */,
+				A661857F292BCB3B00921B2F /* GroupRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
