@@ -116,11 +116,10 @@ final class MogakcoViewController: DefaultViewController {
         mogakcoMapView.setRegion(pRegion, animated: true)
     }
     
-    private func setAnnotation(latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span: Double, title strTitle: String, subtitle strSubTitle: String) {
+    private func setAnnotation(latitudeValue: CLLocationDegrees, longitudeValue: CLLocationDegrees, delta span: Double, title strTitle: String) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(latitudeValue, longitudeValue)
         annotation.title = strTitle
-        annotation.subtitle = strSubTitle
         mogakcoMapView.addAnnotation(annotation)
     }
     
@@ -215,8 +214,7 @@ final class MogakcoViewController: DefaultViewController {
                 latitudeValue: group.location.latitude,
                 longitudeValue: group.location.longitude,
                 delta: 0.1,
-                title: group.title,
-                subtitle: "위치 이름")
+                title: group.title)
         }
     }
     
@@ -314,8 +312,8 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             isSelectingPin = false
             return
         }
-        //deselectAllAnnotations()
-        //hideMogakcoCollectionView()
+        deselectAllAnnotations()
+        hideMogakcoCollectionView()
     }
 }
 
