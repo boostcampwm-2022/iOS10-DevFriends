@@ -20,18 +20,18 @@ protocol MogakcoViewModelOutput {
     var nowMogakcoSubject: PassthroughSubject<Group, Never> { get set }
 }
 
-class MogakcoViewModel: MogakcoViewModelInput, MogakcoViewModelOutput {
+protocol MogakcoViewModelType: MogakcoViewModelInput, MogakcoViewModelOutput { }
+
+class MogakcoViewModel: MogakcoViewModelType {
     var allMogakcosSubject = PassthroughSubject<[Group], Never>()
     var mogakcosSubject = PassthroughSubject<[Group], Never>()
     var nowMogakcoSubject = PassthroughSubject<Group, Never>()
     
-    var allMogakcoList: [Group] = []
-    var nowMogakcoList: [Group] = []
-    var nowMogakco: Group?
+    private var allMogakcoList: [Group] = []
+    private var nowMogakcoList: [Group] = []
+    private var nowMogakco: Group?
     
-    var cancellabels = Set<AnyCancellable>()
-    
-    let fetchGroupUseCase: FetchGroupUseCase
+    private let fetchGroupUseCase: FetchGroupUseCase
     
     init(fetchGroupUseCase: FetchGroupUseCase) {
         self.fetchGroupUseCase = fetchGroupUseCase
@@ -66,7 +66,8 @@ class MogakcoViewModel: MogakcoViewModelInput, MogakcoViewModelOutput {
         if index < allMogakcoList.count {
             nowMogakco = allMogakcoList[index]
             nowMogakcoSubject.send(allMogakcoList[index])
-            fetchMogakco(latitude: allMogakcoList[index].location.latitude, longitude: allMogakcoList[index].location.longitude)
+            fetchMogakco(latitude: allMogakcoList[index].location.latitude,
+                         longitude: allMogakcoList[index].location.longitude)
         }
     }
 }
