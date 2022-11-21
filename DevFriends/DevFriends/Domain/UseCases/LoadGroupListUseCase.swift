@@ -12,7 +12,7 @@ protocol LoadGroupListUseCase {
 }
 
 final class DefaultLoadGroupListUseCase: LoadGroupListUseCase {
-    private let groupListCellRepo = GroupListCellRepository()
+    private let groupRepository = DefaultGroupRepository()
     
     func fetchRecommandGroups() -> [GroupCellInfo] {
         var groups: [GroupCellInfo] = []

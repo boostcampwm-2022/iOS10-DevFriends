@@ -10,7 +10,9 @@ import SnapKit
 import UIKit
 
 final class GroupListViewController: DefaultViewController {
-    private let viewModel = DefaultGroupListViewModel()
+    private let viewModel = DefaultGroupListViewModel(
+        fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()),
+        fetchGroupCellInfoUseCase: DefaultFecthGroupCellInfoUseCase())
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
