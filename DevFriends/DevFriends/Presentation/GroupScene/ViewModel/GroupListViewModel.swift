@@ -6,19 +6,26 @@
 //
 
 import Foundation
+import Combine
 
-final class GroupListViewModel {
-    let groupListUseCase = DefaultLoadGroupListUseCase()
+protocol GroupListViewModelInput {
+//    func didLoadGroupList()
+}
+
+protocol GroupListViewModelOutput {
+    var groupListSubject: CurrentValueSubject<[GroupCellInfo], Never> { get }
+}
+
+protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {}
+
+final class DefaultGroupListViewModel: GroupListViewModel {
+    private let groupListUseCase = DefaultLoadGroupListUseCase()
+    
+    // MARK: OUTPUT
+    var groupListSubject = CurrentValueSubject<[GroupCellInfo], Never>([])
     
     @Published var recommandGroups: [GroupCellInfo] = []
     @Published var filteredGroups: [GroupCellInfo] = []
-    struct GroupListViewInput {
-        
-    }
-    
-    struct GroupListViewOutput {
-        
-    }
     
     func fetchRecommandGroups() {
         recommandGroups = groupListUseCase.fetchRecommandGroups()

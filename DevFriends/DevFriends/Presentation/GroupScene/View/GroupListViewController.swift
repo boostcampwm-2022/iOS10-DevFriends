@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 final class GroupListViewController: DefaultViewController {
-    private let viewModel = GroupListViewModel()
+    private let viewModel = DefaultGroupListViewModel()
     //TODO: DiffableSource? 로 하면 아래 변수가 필요 없을 듯
     private var recommandGroupsList: [GroupCellInfo] = []
     private var filteredGroupsList: [GroupCellInfo] = []
@@ -182,6 +182,13 @@ final class GroupListViewController: DefaultViewController {
     }
     
     override func bind() {
+        viewModel.groupListSubject
+            .receive(on: RunLoop.main)
+            .sink { groupList in
+                self.populateSnapShot(recommandData: self.recommandGroupsList, filteredData: self.filteredGroupsList)
+            }
+            .store(in: &cancellables)
+        
         viewModel.$recommandGroups
             .sink { (updatedList: [GroupCellInfo]) in
                 print("Updating RecommandGroups - ViewController")
