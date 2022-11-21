@@ -48,10 +48,13 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         return label
     }()
     
+    var location: (latitude: Double, longitude: Double)?
+    
     func set(_ group: Group) {
         titleLabel.text = group.title
         participantLabel.text = "👥 \(group.participantIDs.count)/\(group.limitedNumberPeople)"
         setAddress(group: group)
+        location = group.location
     }
     
     func setAddress(group: Group) {

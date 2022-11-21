@@ -90,11 +90,13 @@ final class MogakcoViewController: DefaultViewController {
     
     private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
-    private var isSelectingPin = false
-    
     private var nowCollectionViewCellIndex = 0
     
-    let mogakcoModalViewController = MogakcoModalViewController()
+    lazy var mogakcoModalViewController: MogakcoModalViewController = {
+        let mogakcoModelViewController = MogakcoModalViewController()
+        mogakcoModelViewController.delegate = self
+        return mogakcoModelViewController
+    }()
     
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
@@ -171,7 +173,6 @@ final class MogakcoViewController: DefaultViewController {
         viewModeButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.deselectAllAnnotations()
-                self?.hideMogakcoCollectionView()
                 self?.showMogakcoModal()
             }
             .store(in: &cancellables)
@@ -193,6 +194,8 @@ final class MogakcoViewController: DefaultViewController {
             .sink { [weak self] event in
                 switch event {
                 case .allMogakcos(groups: let groups):
+                    self?.deselectAllAnnotations()
+                    self?.setMogakcoPin(groups: groups)
                     self?.mogakcoModalViewController.populateSnapshot(data: groups)
                 case .mogakcos(groups: let groups):
                     self?.populateSnapshot(data: groups)
@@ -232,7 +235,7 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     func showMogakcoCollectionView() {
-        mogakcoCollectionView.snp.updateConstraints { make in
+        self.mogakcoCollectionView.snp.updateConstraints { make in
             make.height.equalTo(150)
         }
     }
@@ -284,15 +287,10 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         input.send(.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
     }
     
-    private func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("Errors: " + error.localizedDescription)
-    }
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let annotation = view.annotation {
             let latitude = annotation.coordinate.latitude
             let longitude = annotation.coordinate.longitude
-            isSelectingPin = true
             moveLocation(latitudeValue: latitude, longtudeValue: longitude, delta: 0.01)
             showMogakcoCollectionView()
             input.send(.fetchMogakco(latitude: latitude, longitude: longitude))
@@ -302,18 +300,12 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         hideMogakcoCollectionView()
     }
-    
-    // 맵이 이동할 때 호출
-    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        
-        // Pin을 터치해서 선택하는 과정에서 맵에 Pin을 중심으로 이동하게 되는데,
-        // 그 과정에서 아래에서 Pin이 Deselect되는 것을 방지
-        if isSelectingPin {
-            isSelectingPin = false
-            return
-        }
-        deselectAllAnnotations()
-        hideMogakcoCollectionView()
+}
+
+extension MogakcoViewController: MogakcoModalViewControllerDelegate {
+    func tapCell(index: Int) {
+        showMogakcoCollectionView()
+        input.send(.nowMogakcoWithAllList(index: index))
     }
 }
 

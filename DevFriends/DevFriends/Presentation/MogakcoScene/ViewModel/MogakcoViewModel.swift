@@ -11,6 +11,7 @@ class MogakcoViewModel {
     enum Input {
         case fetchAllMogakco
         case fetchMogakco(latitude: Double, longitude: Double)
+        case nowMogakcoWithAllList(index: Int)
         case nowMogakco(index: Int)
     }
     
@@ -20,8 +21,9 @@ class MogakcoViewModel {
         case nowMogakco(group: Group)
     }
     
+    var allMogakcoList: [Group] = []
     var nowMogakcoList: [Group] = []
-    var nowMogakco: Group? = nil
+    var nowMogakco: Group?
     
     var cancellabels = Set<AnyCancellable>()
     let output = PassthroughSubject<Output, Never>()
@@ -41,6 +43,8 @@ class MogakcoViewModel {
                 self?.fetchMogakco(latitude: latitude, longitude: longitude)
             case .nowMogakco(index: let index):
                 self?.nowMogakco(index: index)
+            case .nowMogakcoWithAllList(index: let index):
+                self?.nowMogakcoWithAllList(index: index)
             }
         }
         .store(in: &cancellabels)
@@ -52,6 +56,7 @@ class MogakcoViewModel {
         Task {
             let groups = try await fetchGroupUseCase
                 .execute(groupType: .mogakco, location: nil)
+            allMogakcoList = groups
             output.send(.allMogakcos(groups: groups))
         }
     }
@@ -69,6 +74,14 @@ class MogakcoViewModel {
         if index < nowMogakcoList.count {
             nowMogakco = nowMogakcoList[index]
             output.send(.nowMogakco(group: nowMogakcoList[index]))
+        }
+    }
+    
+    func nowMogakcoWithAllList(index: Int) {
+        if index < allMogakcoList.count {
+            nowMogakco = allMogakcoList[index]
+            output.send(.nowMogakco(group: allMogakcoList[index]))
+            fetchMogakco(latitude: allMogakcoList[index].location.latitude, longitude: allMogakcoList[index].location.longitude)
         }
     }
 }

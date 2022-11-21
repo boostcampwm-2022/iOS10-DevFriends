@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol MogakcoModalViewControllerDelegate: AnyObject {
+    func tapCell(index: Int)
+}
+
 final class MogakcoModalViewController: DefaultViewController {
     private lazy var mogakcoListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -19,6 +23,7 @@ final class MogakcoModalViewController: DefaultViewController {
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -32,6 +37,7 @@ final class MogakcoModalViewController: DefaultViewController {
     }
     
     private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    weak var delegate: MogakcoModalViewControllerDelegate?
     
     override func configureUI() {
         view.backgroundColor = .white
@@ -52,5 +58,12 @@ final class MogakcoModalViewController: DefaultViewController {
         mogakcoCollectionViewSnapShot.appendSections([.main])
         mogakcoCollectionViewSnapShot.appendItems(data)
         mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
+    }
+}
+
+extension MogakcoModalViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.tapCell(index: indexPath.row)
+        self.dismiss(animated: true)
     }
 }
