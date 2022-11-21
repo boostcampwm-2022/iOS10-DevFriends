@@ -85,6 +85,7 @@ final class ChatViewController: DefaultViewController {
 
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         viewModel.didSelectGroup(at: indexPath.row)
     }
 }
