@@ -46,7 +46,6 @@ final class ChatViewController: DefaultViewController {
     
     override func configureUI() {
         self.setupTableView()
-        self.populateSnapshot(data: [Group(participantIDs: ["1"], title: "스터디")])
     }
     
     override func layout() {

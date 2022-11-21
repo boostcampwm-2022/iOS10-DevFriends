@@ -54,14 +54,6 @@ class ChatContentViewController: DefaultViewController {
         return textField
     }()
     
-    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { [weak self] tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyMessageTableViewCell.reuseIdentifier, for: indexPath) as? MyMessageTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.set(data: data, messageContentType: .time)
-        return cell
-    }
-    
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
     private let viewModel: ChatContentViewModel
