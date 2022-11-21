@@ -7,26 +7,29 @@
 
 import Combine
 
-class MogakcoViewModel {
-    enum Input {
-        case fetchAllMogakco
-        case fetchMogakco(latitude: Double, longitude: Double)
-        case nowMogakcoWithAllList(index: Int)
-        case nowMogakco(index: Int)
-    }
-    
-    enum Output {
-        case allMogakcos(groups: [Group])
-        case mogakcos(groups: [Group])
-        case nowMogakco(group: Group)
-    }
+protocol MogakcoViewModelInput {
+    func fetchAllMogakco()
+    func fetchMogakco(latitude: Double, longitude: Double)
+    func nowMogakco(index: Int)
+    func nowMogakcoWithAllList(index: Int)
+}
+
+protocol MogakcoViewModelOutput {
+    var allMogakcosSubject: PassthroughSubject<[Group], Never> { get set }
+    var mogakcosSubject: PassthroughSubject<[Group], Never> { get set }
+    var nowMogakcoSubject: PassthroughSubject<Group, Never> { get set }
+}
+
+class MogakcoViewModel: MogakcoViewModelInput, MogakcoViewModelOutput {
+    var allMogakcosSubject = PassthroughSubject<[Group], Never>()
+    var mogakcosSubject = PassthroughSubject<[Group], Never>()
+    var nowMogakcoSubject = PassthroughSubject<Group, Never>()
     
     var allMogakcoList: [Group] = []
     var nowMogakcoList: [Group] = []
     var nowMogakco: Group?
     
     var cancellabels = Set<AnyCancellable>()
-    let output = PassthroughSubject<Output, Never>()
     
     let fetchGroupUseCase: FetchGroupUseCase
     
@@ -34,30 +37,12 @@ class MogakcoViewModel {
         self.fetchGroupUseCase = fetchGroupUseCase
     }
     
-    func transform(input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
-        input.sink { [weak self] event in
-            switch event {
-            case .fetchAllMogakco:
-                self?.fetchAllMogakco()
-            case .fetchMogakco(latitude: let latitude, longitude: let longitude):
-                self?.fetchMogakco(latitude: latitude, longitude: longitude)
-            case .nowMogakco(index: let index):
-                self?.nowMogakco(index: index)
-            case .nowMogakcoWithAllList(index: let index):
-                self?.nowMogakcoWithAllList(index: index)
-            }
-        }
-        .store(in: &cancellabels)
-        
-        return output.eraseToAnyPublisher()
-    }
-    
     func fetchAllMogakco() {
         Task {
             let groups = try await fetchGroupUseCase
                 .execute(groupType: .mogakco, location: nil)
             allMogakcoList = groups
-            output.send(.allMogakcos(groups: groups))
+            allMogakcosSubject.send(groups)
         }
     }
     
@@ -66,21 +51,21 @@ class MogakcoViewModel {
             let groups = try await fetchGroupUseCase
                 .execute(groupType: .mogakco, location: (latitude, longitude))
             nowMogakcoList = groups
-            output.send(.mogakcos(groups: groups))
+            mogakcosSubject.send(groups)
         }
     }
     
     func nowMogakco(index: Int) {
         if index < nowMogakcoList.count {
             nowMogakco = nowMogakcoList[index]
-            output.send(.nowMogakco(group: nowMogakcoList[index]))
+            nowMogakcoSubject.send(nowMogakcoList[index])
         }
     }
     
     func nowMogakcoWithAllList(index: Int) {
         if index < allMogakcoList.count {
             nowMogakco = allMogakcoList[index]
-            output.send(.nowMogakco(group: allMogakcoList[index]))
+            nowMogakcoSubject.send(allMogakcoList[index])
             fetchMogakco(latitude: allMogakcoList[index].location.latitude, longitude: allMogakcoList[index].location.longitude)
         }
     }

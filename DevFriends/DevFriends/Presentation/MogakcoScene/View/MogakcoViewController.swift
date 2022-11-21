@@ -108,7 +108,6 @@ final class MogakcoViewController: DefaultViewController {
     }()
     
     private let viewModel = MogakcoViewModel(fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()))
-    private let input = PassthroughSubject<MogakcoViewModel.Input, Never>()
     
     // MARK: Set Annotation Methods
     private func moveLocation(latitudeValue: CLLocationDegrees, longtudeValue: CLLocationDegrees, delta span: Double) {
@@ -189,20 +188,27 @@ final class MogakcoViewController: DefaultViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.transform(input: input.eraseToAnyPublisher())
+        viewModel.allMogakcosSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] event in
-                switch event {
-                case .allMogakcos(groups: let groups):
-                    self?.deselectAllAnnotations()
-                    self?.setMogakcoPin(groups: groups)
-                    self?.mogakcoModalViewController.populateSnapshot(data: groups)
-                case .mogakcos(groups: let groups):
-                    self?.populateSnapshot(data: groups)
-                    self?.setMogakcoPin(groups: groups)
-                case .nowMogakco(group: let group):
-                    self?.moveMogakcoLocation(group: group)
-                }
+            .sink { [weak self] groups in
+                self?.deselectAllAnnotations()
+                self?.setMogakcoPin(groups: groups)
+                self?.mogakcoModalViewController.populateSnapshot(data: groups)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.mogakcosSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] groups in
+                self?.populateSnapshot(data: groups)
+                self?.setMogakcoPin(groups: groups)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.nowMogakcoSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] group in
+                self?.moveMogakcoLocation(group: group)
             }
             .store(in: &cancellables)
     }
@@ -223,7 +229,7 @@ final class MogakcoViewController: DefaultViewController {
     
     private func searchOnCurrentLocation() {
         let currentLocation = mogakcoMapView.region.center
-        input.send(.fetchMogakco(latitude: currentLocation.latitude, longitude: currentLocation.longitude))
+        viewModel.fetchMogakco(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
         mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
     
@@ -257,7 +263,7 @@ final class MogakcoViewController: DefaultViewController {
             sheet.largestUndimmedDetentIdentifier = .medium
         }
         present(mogakcoModalViewController, animated: true, completion: nil)
-        input.send(.fetchAllMogakco)
+        viewModel.fetchAllMogakco()
     }
 }
 
@@ -284,7 +290,7 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mogakcoMapView.setRegion(region, animated: true)
-        input.send(.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+        viewModel.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -293,7 +299,7 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             let longitude = annotation.coordinate.longitude
             moveLocation(latitudeValue: latitude, longtudeValue: longitude, delta: 0.01)
             showMogakcoCollectionView()
-            input.send(.fetchMogakco(latitude: latitude, longitude: longitude))
+            viewModel.fetchMogakco(latitude: latitude, longitude: longitude)
         }
     }
     
@@ -305,7 +311,7 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
 extension MogakcoViewController: MogakcoModalViewControllerDelegate {
     func tapCell(index: Int) {
         showMogakcoCollectionView()
-        input.send(.nowMogakcoWithAllList(index: index))
+        viewModel.nowMogakcoWithAllList(index: index)
     }
 }
 
@@ -338,7 +344,6 @@ extension MogakcoViewController: UICollectionViewDelegate {
         } else if nowCollectionViewCellIndex < Int(roundedIndex) {
             nowCollectionViewCellIndex += 1
         }
-        
-        input.send(.nowMogakco(index: nowCollectionViewCellIndex))
+        viewModel.nowMogakco(index: nowCollectionViewCellIndex)
     }
 }
