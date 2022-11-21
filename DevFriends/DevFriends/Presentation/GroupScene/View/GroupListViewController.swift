@@ -11,9 +11,6 @@ import UIKit
 
 final class GroupListViewController: DefaultViewController {
     private let viewModel = DefaultGroupListViewModel()
-    //TODO: DiffableSource? 로 하면 아래 변수가 필요 없을 듯
-    private var recommandGroupsList: [GroupCellInfo] = []
-    private var filteredGroupsList: [GroupCellInfo] = []
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -50,13 +47,15 @@ final class GroupListViewController: DefaultViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.register(
+            GroupCollectionViewCell.self,
+            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         
         return collectionView
     }()
     
     private lazy var collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo>(
-        collectionView: self.collectionView) { (collectionView, indexPath, data) -> UICollectionViewCell? in
+        collectionView: self.collectionView) { collectionView, indexPath, data -> UICollectionViewCell? in
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
@@ -135,10 +134,9 @@ final class GroupListViewController: DefaultViewController {
     
     override func configureUI() {
         self.view.backgroundColor = .systemGray6
-        self.viewModel.fetchRecommandGroups() // TODO: refactor
-        self.viewModel.fetchFilteredGroups() // TODO: refactor
+        self.setupCollectionView()
         self.setupCollectionViewHeader()
-        self.populateSnapShot(recommandData: self.recommandGroupsList, filteredData: self.filteredGroupsList)
+        self.viewModel.loadGroupList()
     }
     
     override func layout() {
@@ -149,6 +147,10 @@ final class GroupListViewController: DefaultViewController {
             make.leading.trailing.equalToSuperview()
             make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setupCollectionView() {
+        self.collectionViewSnapShot.appendSections([.recommand, .filtered])
     }
     
     private func setupCollectionViewHeader() {
@@ -168,45 +170,30 @@ final class GroupListViewController: DefaultViewController {
         }
     }
     
-    private func populateSnapShot(recommandData: [GroupCellInfo], filteredData: [GroupCellInfo]) {
-        self.collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()
-        self.collectionViewSnapShot.appendSections([.recommand])
-        self.collectionViewSnapShot.appendItems(recommandData, toSection: .recommand)
-        self.collectionViewSnapShot.appendSections([.filtered])
-        self.collectionViewSnapShot.appendItems(filteredData, toSection: .filtered)
+    private func populateSnapShot(data: [GroupCellInfo], to section: GroupListSection) {
+        self.collectionViewSnapShot.appendItems(data, toSection: section)
         self.collectionViewDiffableDataSource.apply(collectionViewSnapShot, animatingDifferences: true)
     }
+    
     private func setupNavigation() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
     override func bind() {
-        viewModel.groupListSubject
+        viewModel.recommandGroupsSubject
             .receive(on: RunLoop.main)
             .sink { groupList in
-                self.populateSnapShot(recommandData: self.recommandGroupsList, filteredData: self.filteredGroupsList)
+                self.populateSnapShot(data: groupList, to: .recommand)
             }
             .store(in: &cancellables)
         
-        viewModel.$recommandGroups
-            .sink { (updatedList: [GroupCellInfo]) in
-                print("Updating RecommandGroups - ViewController")
-                self.recommandGroupsList = updatedList
-                DispatchQueue.main.async {
-                    self.populateSnapShot(recommandData: self.recommandGroupsList, filteredData: self.filteredGroupsList)
-                }
-            }.store(in: &cancellables)
-        
-        viewModel.$filteredGroups
-            .sink { (updatedList: [GroupCellInfo]) in
-                print("Updating FilteredGroups - ViewController")
-                self.filteredGroupsList = updatedList
-                DispatchQueue.main.async {
-                    self.populateSnapShot(recommandData: self.recommandGroupsList, filteredData: self.filteredGroupsList)
-                }
-            }.store(in: &cancellables)
-        
+        viewModel.filteredGroupsSubject
+            .receive(on: RunLoop.main)
+            .sink { groupList in
+                self.populateSnapShot(data: groupList, to: .filtered)
+            }
+            .store(in: &cancellables)
         
 //        viewModel.$filterTrigger
 //            .receive(on: DispatchQueue.main)

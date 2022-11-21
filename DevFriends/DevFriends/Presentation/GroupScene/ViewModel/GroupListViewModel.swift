@@ -9,11 +9,12 @@ import Foundation
 import Combine
 
 protocol GroupListViewModelInput {
-//    func didLoadGroupList()
+    func loadGroupList()
 }
 
 protocol GroupListViewModelOutput {
-    var groupListSubject: CurrentValueSubject<[GroupCellInfo], Never> { get }
+    var recommandGroupsSubject: CurrentValueSubject<[GroupCellInfo], Never> { get }
+    var filteredGroupsSubject: CurrentValueSubject<[GroupCellInfo], Never> { get }
 }
 
 protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {}
@@ -22,17 +23,14 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     private let groupListUseCase = DefaultLoadGroupListUseCase()
     
     // MARK: OUTPUT
-    var groupListSubject = CurrentValueSubject<[GroupCellInfo], Never>([])
-    
-    @Published var recommandGroups: [GroupCellInfo] = []
-    @Published var filteredGroups: [GroupCellInfo] = []
-    
-    func fetchRecommandGroups() {
-        recommandGroups = groupListUseCase.fetchRecommandGroups()
-    }
-    
-    func fetchFilteredGroups() {
-        filteredGroups = groupListUseCase.fetchAllGroups()
-        // 여기에 필터 정보를 바탕으로 sorting 진행
+    var recommandGroupsSubject = CurrentValueSubject<[GroupCellInfo], Never>([])
+    var filteredGroupsSubject = CurrentValueSubject<[GroupCellInfo], Never>([])
+}
+
+// MARK: INPUT
+extension DefaultGroupListViewModel {
+    func loadGroupList() {
+        recommandGroupsSubject.send(groupListUseCase.fetchRecommandGroups()) // TODO: Refactor
+        filteredGroupsSubject.send(groupListUseCase.execute())
     }
 }
