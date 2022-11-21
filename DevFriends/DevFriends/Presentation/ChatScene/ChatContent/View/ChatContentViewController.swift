@@ -23,6 +23,29 @@ class ChatContentViewController: DefaultViewController {
         return tableView
     }()
     
+    private lazy var messageTableViewDiffableDataSource = {
+        let diffableDataSource = UITableViewDiffableDataSource<Section, Message>(
+            tableView: messageTableView
+        ) { tableView, indexPath, data -> UITableViewCell in
+            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
+                let cell = self.createMyMessageTableViewCell(
+                    tableView: tableView,
+                    indexPath: indexPath,
+                    data: data
+                ) ?? UITableViewCell()
+                return cell
+            } else {
+                let cell = self.createFriendMessageTableViewCell(
+                    tableView: tableView,
+                    indexPath: indexPath,
+                    data: data
+                ) ?? UITableViewCell()
+                return cell
+            }
+        }
+        return diffableDataSource
+    }()
+    
     private lazy var messageTextField: SendableTextView = {
         let textField = SendableTextView(placeholder: "메세지를 작성해주세요")
         textField.delegate = self
@@ -30,8 +53,6 @@ class ChatContentViewController: DefaultViewController {
     }()
     
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
-    
-    var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message>?
     
     private let viewModel: ChatContentViewModel
     
@@ -80,34 +101,11 @@ class ChatContentViewController: DefaultViewController {
     
     override func configureUI() {
         self.setupTableView()
-        self.createDiffableDataSource()
     }
     
     private func setupTableView() {
         self.messageTableViewSnapShot.appendSections([.main])
         viewModel.didLoadMessages()
-    }
-    
-    private func createDiffableDataSource() {
-        messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(
-            tableView: messageTableView
-        ) { tableView, indexPath, data -> UITableViewCell in
-            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
-                let cell = self.createMyMessageTableViewCell(
-                    tableView: tableView,
-                    indexPath: indexPath,
-                    data: data
-                ) ?? UITableViewCell()
-                return cell
-            } else {
-                let cell = self.createFriendMessageTableViewCell(
-                    tableView: tableView,
-                    indexPath: indexPath,
-                    data: data
-                ) ?? UITableViewCell()
-                return cell
-            }
-        }
     }
     
     private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {
@@ -158,7 +156,7 @@ class ChatContentViewController: DefaultViewController {
     
     private func populateSnapshot(data: [Message]) {
         self.messageTableViewSnapShot.appendItems(data)
-        self.messageTableViewDiffableDataSource?.apply(messageTableViewSnapShot, animatingDifferences: true)
+        self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
     }
 }
 
