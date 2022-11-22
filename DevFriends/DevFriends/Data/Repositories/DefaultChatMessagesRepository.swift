@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-final class DefaultChatMessagesRepository {}
+final class DefaultChatMessagesRepository: ContainsFirestore {}
 
 extension DefaultChatMessagesRepository: ChatMessagesRepository {
     func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws {

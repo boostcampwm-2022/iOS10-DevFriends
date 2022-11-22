@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-final class DefaultUserRepository {}
+final class DefaultUserRepository: ContainsFirestore {}
 
 extension DefaultUserRepository: UserRepository {
     func fetch(uid: String) async throws -> User {

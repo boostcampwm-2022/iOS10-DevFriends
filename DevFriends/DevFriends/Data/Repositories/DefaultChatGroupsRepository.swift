@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-final class DefaultChatGroupsRepository {}
+final class DefaultChatGroupsRepository: ContainsFirestore {}
 
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
     func fetch(uids: [String]) async throws -> [Group] {

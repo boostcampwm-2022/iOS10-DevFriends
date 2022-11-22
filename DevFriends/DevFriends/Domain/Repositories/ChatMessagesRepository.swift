@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ChatMessagesRepository: ContainsFirestore {
+protocol ChatMessagesRepository {
     func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws
     func send(chatUID: String, message: Message)
 }

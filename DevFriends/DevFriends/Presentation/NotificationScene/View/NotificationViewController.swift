@@ -5,6 +5,7 @@
 //  Created by 유승원 on 2022/11/21.
 //
 
+import Combine
 import UIKit
 
 final class NotificationViewController: UITableViewController {
@@ -22,35 +23,39 @@ final class NotificationViewController: UITableViewController {
     }()
     
     private lazy var notificationTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Notification>()
-    private let tempNotifications = [
-        Notification(
-            groupID: "abc",
-            groupTitle: "서울숲에서 모각코합니다!",
-            senderID: "def",
-            senderNickname: "빈살만왕세자",
-            type: "joinRequest",
-            isOK: false
-        ),
-        Notification(
-            groupID: "def",
-            groupTitle: "카타르에서 축구를 보면서 코딩합시다",
-            type: "joinWait"
-        ),
-        Notification(
-            groupID: "rpg",
-            groupTitle: "물구나무 서면 피가 거꾸로 쏠려요",
-            type: "joinSuccess"
-        )
-    ]
+    
+    private let viewModel: NotificationViewModel
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(notificationViewModel: NotificationViewModel) {
+        self.viewModel = notificationViewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
-        tableView.rowHeight = 72
-        setupTableView()
-        populateSnapshot(data: tempNotifications)
+        super.viewDidLoad()
+        self.tableView.rowHeight = 72
+        self.setupTableView()
+        self.bind()
+        self.viewModel.didLoadNotifications()
+    }
+    
+    private func bind() {
+        self.viewModel.notificationsSubject
+            .receive(on: RunLoop.main)
+            .sink {
+                self.populateSnapshot(data: $0)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupTableView() {
-        tableView.register(
+        self.tableView.register(
             NotificationTableViewCell.self,
             forCellReuseIdentifier: NotificationTableViewCell.reuseIdentifier
         )

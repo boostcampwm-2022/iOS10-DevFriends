@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Notification: Hashable {
+// MARK: NotificationResponseDTO로 바꿔보자
+struct Notification: Codable, Hashable {
     let image: Data?
     let groupID: String
     let groupTitle: String

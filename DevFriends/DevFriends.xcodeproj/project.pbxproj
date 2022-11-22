@@ -78,6 +78,10 @@
 		E359EC88292C96DD00CE5775 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC86292C96DD00CE5775 /* NotificationViewController.swift */; };
 		E359EC8A292C96FD00CE5775 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC89292C96FD00CE5775 /* Notification.swift */; };
 		E359EC8C292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC8B292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift */; };
+		E359EC8F292CC5C600CE5775 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC8E292CC5C600CE5775 /* NotificationViewModel.swift */; };
+		E359EC91292CC6CF00CE5775 /* LoadNotificationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC90292CC6CF00CE5775 /* LoadNotificationsUseCase.swift */; };
+		E359EC93292CC8EE00CE5775 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC92292CC8EE00CE5775 /* NotificationRepository.swift */; };
+		E359EC95292CC95E00CE5775 /* DefaultNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC94292CC95E00CE5775 /* DefaultNotificationRepository.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -197,6 +201,10 @@
 		E359EC86292C96DD00CE5775 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		E359EC89292C96FD00CE5775 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		E359EC8B292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		E359EC8E292CC5C600CE5775 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		E359EC90292CC6CF00CE5775 /* LoadNotificationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotificationsUseCase.swift; sourceTree = "<group>"; };
+		E359EC92292CC8EE00CE5775 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
+		E359EC94292CC95E00CE5775 /* DefaultNotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNotificationRepository.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -475,6 +483,7 @@
 				FC07DDBA292CA8FF00D16FBC /* SaveGroupUseCase.swift */,
 				E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */,
 				E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */,
+				E359EC90292CC6CF00CE5775 /* LoadNotificationsUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -487,6 +496,7 @@
 				FC07DDB8292CA8F200D16FBC /* GroupRepository.swift */,
 				E33A20E529277B3900887EC9 /* ChatGroupsRepository.swift */,
 				E359EC652928B6A500CE5775 /* ChatMessagesRepository.swift */,
+				E359EC92292CC8EE00CE5775 /* NotificationRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -520,6 +530,7 @@
 		E359EC83292C96DD00CE5775 /* NotificationScene */ = {
 			isa = PBXGroup;
 			children = (
+				E359EC8D292CC5B800CE5775 /* ViewModel */,
 				E359EC84292C96DD00CE5775 /* View */,
 			);
 			path = NotificationScene;
@@ -532,6 +543,14 @@
 				E359EC86292C96DD00CE5775 /* NotificationViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		E359EC8D292CC5B800CE5775 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E359EC8E292CC5C600CE5775 /* NotificationViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E394C49D292231D80064ADA7 /* PostDetailScene */ = {
@@ -633,6 +652,7 @@
 				E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */,
 				E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */,
 				E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */,
+				E359EC94292CC95E00CE5775 /* DefaultNotificationRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -968,6 +988,7 @@
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
+				E359EC95292CC95E00CE5775 /* DefaultNotificationRepository.swift in Sources */,
 				E33A20E629277B3900887EC9 /* ChatGroupsRepository.swift in Sources */,
 				E359EC662928B6A500CE5775 /* ChatMessagesRepository.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
@@ -1009,6 +1030,7 @@
 				E359EC8A292C96FD00CE5775 /* Notification.swift in Sources */,
 				E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
+				E359EC93292CC8EE00CE5775 /* NotificationRepository.swift in Sources */,
 				FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
@@ -1044,8 +1066,10 @@
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
+				E359EC91292CC6CF00CE5775 /* LoadNotificationsUseCase.swift in Sources */,
 				E33A20DE2927658700887EC9 /* ChatViewModel.swift in Sources */,
 				E33A20942926623200887EC9 /* MogakcoModalViewController.swift in Sources */,
+				E359EC8F292CC5C600CE5775 /* NotificationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
