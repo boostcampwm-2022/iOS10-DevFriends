@@ -74,6 +74,10 @@
 		E359EC7B292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */; };
 		E359EC7D292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */; };
 		E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */; };
+		E359EC87292C96DD00CE5775 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC85292C96DD00CE5775 /* NotificationTableViewCell.swift */; };
+		E359EC88292C96DD00CE5775 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC86292C96DD00CE5775 /* NotificationViewController.swift */; };
+		E359EC8A292C96FD00CE5775 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC89292C96FD00CE5775 /* Notification.swift */; };
+		E359EC8C292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC8B292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -189,6 +193,10 @@
 		E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
 		E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
+		E359EC85292C96DD00CE5775 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		E359EC86292C96DD00CE5775 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		E359EC89292C96FD00CE5775 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		E359EC8B292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -504,8 +512,26 @@
 				FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */,
 				FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */,
 				FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */,
+				E359EC8B292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift */,
 			);
 			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		E359EC83292C96DD00CE5775 /* NotificationScene */ = {
+			isa = PBXGroup;
+			children = (
+				E359EC84292C96DD00CE5775 /* View */,
+			);
+			path = NotificationScene;
+			sourceTree = "<group>";
+		};
+		E359EC84292C96DD00CE5775 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E359EC85292C96DD00CE5775 /* NotificationTableViewCell.swift */,
+				E359EC86292C96DD00CE5775 /* NotificationViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E394C49D292231D80064ADA7 /* PostDetailScene */ = {
@@ -545,6 +571,7 @@
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				E359EC83292C96DD00CE5775 /* NotificationScene */,
 				E394C49D292231D80064ADA7 /* PostDetailScene */,
 				FC79AEAE29221F9F0077AE5C /* GroupScene */,
 				E33A20702926621F00887EC9 /* ChatScene */,
@@ -580,6 +607,7 @@
 		FC79AEB8292223A70077AE5C /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				E359EC89292C96FD00CE5775 /* Notification.swift */,
 				E33A20E92927BB1000887EC9 /* User.swift */,
 				FC79AEC42922494F0077AE5C /* Group.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
@@ -932,6 +960,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E359EC8C292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				E33A204029262B6B00887EC9 /* GroupListViewController.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
@@ -967,6 +996,7 @@
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
+				E359EC87292C96DD00CE5775 /* NotificationTableViewCell.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */,
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
@@ -976,6 +1006,7 @@
 				FC07DDB5292C93B000D16FBC /* Location.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
+				E359EC8A292C96FD00CE5775 /* Notification.swift in Sources */,
 				E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
 				FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */,
@@ -994,6 +1025,7 @@
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
+				E359EC88292C96DD00CE5775 /* NotificationViewController.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
 				E33A20E02927659D00887EC9 /* ChatContentViewModel.swift in Sources */,
 				E33A20842926622000887EC9 /* MessageLabel.swift in Sources */,

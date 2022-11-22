@@ -24,7 +24,6 @@ final class NotificationTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         layout()
     }
     
@@ -36,24 +35,44 @@ final class NotificationTableViewCell: UITableViewCell {
 extension NotificationTableViewCell: ReusableType {
     static var reuseIdentifier = String(describing: NotificationTableViewCell.self)
     
-    func layout() {
+    func layout() {}
+    
+    func updateContent(data: Notification) {
+        var content = defaultContentConfiguration()
+        
+        content.text = data.groupTitle
+        content.textProperties.font = .boldSystemFont(ofSize: 14)
+        content.secondaryTextProperties.font = .systemFont(ofSize: 14)
+        content.textToSecondaryTextVerticalPadding = 10.0
+        content.image = UIImage.profile
+        
+        switch data.type {
+        case "joinRequest":
+            guard let senderNickname = data.senderNickname, let isOK = data.isOK else { return }
+            content.secondaryText = "\(senderNickname)의 참여 요청"
+            setButton(isSelected: isOK)
+        case "joinWait":
+            content.secondaryText = "참여 신청이 완료되었습니다."
+        case "joinSuccess":
+            content.secondaryText = "모임에 가입되셨습니다!"
+        default:
+            break
+        }
+        
+        self.contentConfiguration = content
+    }
+    
+    private func setButton(isSelected status: Bool) {
         self.addSubview(acceptButton)
         self.acceptButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-20)
         }
-    }
-    
-    func updateContent(data: Notification) {
-        var content = defaultContentConfiguration()
-        
-        content.text = data.title
-        content.textProperties.font = .boldSystemFont(ofSize: 14)
-        content.secondaryText = data.subTitle
-        content.secondaryTextProperties.font = .systemFont(ofSize: 14)
-        content.textToSecondaryTextVerticalPadding = 10.0
-        content.image = UIImage.profile
-        
-        self.contentConfiguration = content
+        if isSelected {
+            var config = self.acceptButton.configuration ?? UIButton.Configuration.filled()
+            config.title = "승인됨"
+            config.baseBackgroundColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 1)
+            self.acceptButton.configuration = config
+        }
     }
 }

@@ -22,7 +22,26 @@ final class NotificationViewController: UITableViewController {
     }()
     
     private lazy var notificationTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Notification>()
-    private let tempNotifications = [Notification(image: nil, title: "서울숲에서 모각코합니다!", subTitle: "내일 모임이 예정되어있어요!"), Notification(image: nil, title: "C언어 공부하실 분!!", subTitle: "모임에 가입되었습니다.")]
+    private let tempNotifications = [
+        Notification(
+            groupID: "abc",
+            groupTitle: "서울숲에서 모각코합니다!",
+            senderID: "def",
+            senderNickname: "빈살만왕세자",
+            type: "joinRequest",
+            isOK: false
+        ),
+        Notification(
+            groupID: "def",
+            groupTitle: "카타르에서 축구를 보면서 코딩합시다",
+            type: "joinWait"
+        ),
+        Notification(
+            groupID: "rpg",
+            groupTitle: "물구나무 서면 피가 거꾸로 쏠려요",
+            type: "joinSuccess"
+        )
+    ]
     
     override func viewDidLoad() {
         tableView.rowHeight = 72
