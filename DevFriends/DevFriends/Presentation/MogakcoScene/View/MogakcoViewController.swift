@@ -218,6 +218,7 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     private func setMogakcoPin(groups: [Group]) {
+        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
         for group in groups {
             setAnnotation(
                 latitudeValue: group.location.latitude,
@@ -229,8 +230,7 @@ final class MogakcoViewController: DefaultViewController {
     
     private func searchOnCurrentLocation() {
         let currentLocation = mogakcoMapView.region.center
-        viewModel.fetchMogakco(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
-        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
+        viewModel.fetchMogakco(latitude: currentLocation.latitude, longitude: currentLocation.longitude, distance: mapViewDistance())
     }
     
     private func populateSnapshot(data: [Group]) {
@@ -265,32 +265,35 @@ final class MogakcoViewController: DefaultViewController {
         present(mogakcoModalViewController, animated: true, completion: nil)
         viewModel.fetchAllMogakco()
     }
+    
+    func mapViewDistance() -> Double {
+        let span = mogakcoMapView.region.span
+        let center = mogakcoMapView.region.center
+        let centerLocation = CLLocation(latitude: center.latitude, longitude: center.longitude)
+        let to = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude + span.longitudeDelta * 0.5)
+        return to.distance(from: centerLocation)
+    }
 }
 
 // MARK: Map Init Methods
 extension MogakcoViewController {
     func setUserLocation() {
         locationManager.startUpdatingLocation()
-        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
 }
 
 // MARK: MapView, Location Delegate Methods
 extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
+        if let location = locations.last {
             manager.stopUpdatingLocation()
-            render(location)
+            let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
+                                                    longitude: location.coordinate.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: coordinate, span: span)
+            mogakcoMapView.setRegion(region, animated: true)
+            viewModel.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, distance: mapViewDistance())
         }
-    }
-    
-    func render(_ location: CLLocation) {
-        let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                longitude: location.coordinate.longitude)
-        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-        let region = MKCoordinateRegion(center: coordinate, span: span)
-        mogakcoMapView.setRegion(region, animated: true)
-        viewModel.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -299,7 +302,7 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             let longitude = annotation.coordinate.longitude
             moveLocation(latitudeValue: latitude, longtudeValue: longitude, delta: 0.01)
             showMogakcoCollectionView()
-            viewModel.fetchMogakco(latitude: latitude, longitude: longitude)
+            viewModel.fetchMogakco(latitude: latitude, longitude: longitude, distance: mapViewDistance())
         }
     }
     
@@ -311,7 +314,7 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
 extension MogakcoViewController: MogakcoModalViewControllerDelegate {
     func tapCell(index: Int) {
         showMogakcoCollectionView()
-        viewModel.nowMogakcoWithAllList(index: index)
+        viewModel.nowMogakcoWithAllList(index: index, distance: mapViewDistance())
     }
 }
 

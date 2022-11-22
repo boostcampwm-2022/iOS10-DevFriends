@@ -15,7 +15,8 @@ class DefaultGroupRepository: GroupRepository {
     func fetch(groupType: GroupType?, location: (latitude: Double, longitude: Double)?, distance: Double?) async throws -> [Group] {
         var groups: [Group] = []
         var query: Query
-        if let location = location, let distance = distance {
+        if let location = location, var distance = distance {
+            distance = min(1100000, distance)
             let lat = 0.000009094341036
             let lon = 0.00001126887537
             
