@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, ContainsProfile, ContainsTime {
-    var timeSubject = PassthroughSubject<String?, Error>()
+    var timeSubject = CurrentValueSubject<Date?, Error>(nil)
     var nameSubject = PassthroughSubject<String?, Error>()
     var imageSubject = PassthroughSubject<Data?, Error>()
     var cancellables = Set<AnyCancellable>()
@@ -18,7 +18,7 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         let label = MessageLabel(type: .friend)
         return label
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
@@ -33,40 +33,32 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         self.messageLabel.text = ""
     }
     
-    func set(data: Message, messageContentType: MessageContentType) {
+    func updateContent(data: Message) {
         self.messageLabel.text = data.content
         
-        switch messageContentType {
-        case .profile:
-            self.timeSubject.send(nil)
-            self.nameSubject.send(data.userID)
-            self.imageSubject.send(UIImage.profile?.pngData())
-            self.makeMessageTopConstraintsOffset()
-        case .time:
-            self.timeSubject.send(data.time.toTimeString())
-            self.nameSubject.send(nil)
-            self.imageSubject.send(nil)
-            self.removeMessageTopConstraintsOffset()
-        case .profileAndTime:
-            self.timeSubject.send(data.time.toTimeString())
-            self.nameSubject.send(data.userID)
-            self.imageSubject.send(UIImage.profile?.pngData())
-            self.makeMessageTopConstraintsOffset()
-        case .none:
-            self.timeSubject.send(nil)
-            self.nameSubject.send(nil)
-            self.imageSubject.send(nil)
-            self.removeMessageTopConstraintsOffset()
-        }
+        self.timeSubject.send(data.time)
+        self.nameSubject.send(data.userNickname)
+        self.imageSubject.send(UIImage.profile?.pngData())
+        self.makeMessageTopConstraintsOffset()
     }
     
-    func removeMessageTopConstraintsOffset() {
+    func removeTimeLabel() {
+        self.timeSubject.send(nil)
+    }
+    
+    func removeProfileAndName() {
+        self.imageSubject.send(nil)
+        self.nameSubject.send(nil)
+        self.removeMessageTopConstraintsOffset()
+    }
+    
+    private func removeMessageTopConstraintsOffset() {
         self.messageLabel.snp.updateConstraints { make in
             make.top.equalToSuperview()
         }
     }
     
-    func makeMessageTopConstraintsOffset() {
+    private func makeMessageTopConstraintsOffset() {
         self.messageLabel.snp.updateConstraints { make in
             make.top.equalToSuperview().offset(30)
         }

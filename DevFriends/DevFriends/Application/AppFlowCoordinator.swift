@@ -16,15 +16,17 @@ final class AppFlowCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
     
-    init(navigationController: UINavigationController,
-         appDIContainer: AppDIContainer) {
+    init(
+        navigationController: UINavigationController,
+        appDIContainer: AppDIContainer
+    ) {
         self.navigationController = navigationController
         self.appDIContainer = appDIContainer
     }
 
     func start() {
-        let moviesSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let flow = moviesSceneDIContainer.makeChatDetailFlowCoordinator(navigationController: navigationController)
+        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
+        let flow = chatSceneDIContainer.makeChatFlowCoordinator(navigationController: navigationController)
         flow.start()
         childCoordinators.append(flow)
     }

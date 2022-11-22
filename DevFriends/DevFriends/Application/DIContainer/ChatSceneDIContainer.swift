@@ -8,14 +8,63 @@
 import UIKit
 
 struct ChatSceneDIContainer {
-    func makeChatDetailFlowCoordinator(navigationController: UINavigationController) -> ChatCoordinator {
+    // MARK: Flow Coordinators
+    func makeChatFlowCoordinator(navigationController: UINavigationController) -> ChatCoordinator {
         return ChatCoordinator(navigationController: navigationController, dependencies: self)
     }
 }
 
-extension ChatSceneDIContainer: ChatDetailFlowCoordinatorDependencies {
-    //MARK: Chat Content
+extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
+    // MARK: Repositories
+    func makeUserRepository() -> UserRepository {
+        return DefaultUserRepository()
+    }
+    
+    func makeChatGroupsRepository() -> ChatGroupsRepository {
+        return DefaultChatGroupsRepository()
+    }
+    
+    func makeChatMessagesRepository() -> ChatMessagesRepository {
+        return DefaultChatMessagesRepository()
+    }
+    
+    // MARK: UseCases
+    func makeLoadGroupsUseCase() -> LoadChatGroupsUseCase {
+        return DefaultLoadChatGroupsUseCase(
+            userRepository: makeUserRepository(),
+            chatGroupsRepository: makeChatGroupsRepository()
+        )
+    }
+    
+    func makeSendChatMessageUseCase(chatUID: String) -> SendChatMessagesUseCase {
+        return DefaultSendChatMessagesUseCase(chatUID: chatUID, chatMessagesRepository: makeChatMessagesRepository())
+    }
+    
+    func makeLoadChatMessagesUseCase(chatUID: String) -> LoadChatMessagesUseCase {
+        return DefaultLoadChatMessagesUseCase(chatUID: chatUID, chatMessagesRepository: makeChatMessagesRepository())
+    }
+    
+    // MARK: Chat
+    func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController {
+        return ChatViewController(chatViewModel: makeChatViewModel(actions: actions))
+    }
+    
+    func makeChatViewModel(actions: ChatViewModelActions) -> ChatViewModel {
+        return DefaultChatViewModel(loadChatGroupsUseCase: makeLoadGroupsUseCase(), actions: actions)
+    }
+    
+    // MARK: Chat Content
     func makeChatContentViewController(group: Group) -> ChatContentViewController {
-        return ChatContentViewController(group: group)
+        return ChatContentViewController(
+            chatContentViewModel: makeChatContentViewModel(group: group)
+        )
+    }
+    
+    func makeChatContentViewModel(group: Group) -> ChatContentViewModel {
+        return DefaultChatContentViewModel(
+            group: group,
+            loadChatMessagesUseCase: makeLoadChatMessagesUseCase(chatUID: group.chatID),
+            sendChatMessagesUseCase: makeSendChatMessageUseCase(chatUID: group.chatID)
+        )
     }
 }

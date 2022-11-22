@@ -13,4 +13,20 @@ extension Date {
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: self)
     }
+    
+    func isSame(as other: Date?) -> Bool {
+        guard let other = other else { return false }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        let myDate = dateFormatter.string(from: self)
+        let otherDate = dateFormatter.string(from: other)
+        
+        if myDate == otherDate {
+            return true
+        }
+        
+        return false
+    }
 }
