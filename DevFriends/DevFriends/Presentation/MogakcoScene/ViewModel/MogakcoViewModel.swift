@@ -15,9 +15,9 @@ protocol MogakcoViewModelInput {
 }
 
 protocol MogakcoViewModelOutput {
-    var allMogakcosSubject: PassthroughSubject<[Group], Never> { get set }
-    var mogakcosSubject: PassthroughSubject<[Group], Never> { get set }
-    var nowMogakcoSubject: PassthroughSubject<Group, Never> { get set }
+    var allMogakcosSubject: PassthroughSubject<[Group], Never> { get }
+    var mogakcosSubject: PassthroughSubject<[Group], Never> { get }
+    var nowMogakcoSubject: PassthroughSubject<Group, Never> { get }
 }
 
 protocol MogakcoViewModelType: MogakcoViewModelInput, MogakcoViewModelOutput { }
@@ -40,7 +40,7 @@ class MogakcoViewModel: MogakcoViewModelType {
     func fetchAllMogakco() {
         Task {
             let groups = try await fetchGroupUseCase
-                .execute(groupType: .mogakco, location: nil)
+                .execute(groupType: .mogakco, location: nil, distance: nil)
             allMogakcoList = groups
             allMogakcosSubject.send(groups)
         }
@@ -49,7 +49,7 @@ class MogakcoViewModel: MogakcoViewModelType {
     func fetchMogakco(latitude: Double, longitude: Double) {
         Task {
             let groups = try await fetchGroupUseCase
-                .execute(groupType: .mogakco, location: (latitude, longitude))
+                .execute(groupType: .mogakco, location: (latitude, longitude), distance: 1000)
             nowMogakcoList = groups
             mogakcosSubject.send(groups)
         }

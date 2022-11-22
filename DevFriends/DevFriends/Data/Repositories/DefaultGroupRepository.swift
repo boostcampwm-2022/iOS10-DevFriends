@@ -12,30 +12,45 @@ import CoreLocation
 class DefaultGroupRepository: GroupRepository {
     let firestore = Firestore.firestore()
     
-    func fetch(groupType: GroupType?, location: (latitude: Double, longitude: Double)?) async throws -> [Group] {
+    func fetch(groupType: GroupType?, location: (latitude: Double, longitude: Double)?, distance: Double?) async throws -> [Group] {
         var groups: [Group] = []
-        let snapshot: QuerySnapshot
-        if let groupType = groupType {
-            snapshot = try await firestore.collection("Group")
-                .whereField("type", isEqualTo: groupType.rawValue)
-                .getDocuments()
+        var query: Query
+        if let location = location, let distance = distance {
+            let lat = 0.000009094341036
+            let lon = 0.00001126887537
+            
+            let lowerLat = location.latitude - (lat * distance)
+            let lowerLon = location.longitude - (lon * distance)
+            
+            let greaterLat = location.latitude + (lat * distance)
+            let greaterLon = location.longitude + (lon * distance)
+            
+            let lesserGeopoint = GeoPoint(latitude: lowerLat, longitude: lowerLon)
+            let greaterGeopoint = GeoPoint(latitude: greaterLat, longitude: greaterLon)
+            query = firestore.collection("Group")
+                .whereField("location", isGreaterThan: lesserGeopoint)
+                .whereField("location", isLessThan: greaterGeopoint)
+            if let groupType = groupType {
+                query = query.whereField("type", isEqualTo: groupType.rawValue)
+            }
         } else {
-            snapshot = try await firestore.collection("Group")
-                .getDocuments()
+            if let groupType = groupType {
+                query = firestore.collection("Group")
+                    .whereField("type", isEqualTo: groupType.rawValue)
+            } else {
+                query = firestore.collection("Group")
+            }
         }
+        let snapshot = try await query.getDocuments()
         
         for document in snapshot.documents {
             let groupData = document.data()
             if let group = makeGroup(group: groupData) {
                 if let location = location {
-                    let from = CLLocation(latitude: location.latitude, longitude: location.longitude)
-                    let to = CLLocation(latitude: group.location.latitude, longitude: group.location.longitude)
                     if location == group.location {
                         groups.insert(group, at: 0)
                     } else {
-                        if to.distance(from: from) < 1000 {
-                            groups.append(group)
-                        }
+                        groups.append(group)
                     }
                 } else {
                     groups.append(group)

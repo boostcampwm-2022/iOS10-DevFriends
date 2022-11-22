@@ -8,7 +8,7 @@
 import Foundation
 
 protocol FetchGroupUseCase {
-    func execute(groupType: GroupType?, location: (latitude: Double, longitude: Double)?) async throws -> [Group]
+    func execute(groupType: GroupType?, location: (latitude: Double, longitude: Double)?, distance: Double?) async throws -> [Group]
 }
 
 final class DefaultFetchGroupUseCase: FetchGroupUseCase {
@@ -18,7 +18,7 @@ final class DefaultFetchGroupUseCase: FetchGroupUseCase {
         self.groupRepository = groupRepository
     }
     
-    func execute(groupType: GroupType?, location: (latitude: Double, longitude: Double)?) async throws -> [Group] {
-        return try await groupRepository.fetch(groupType: groupType, location: location)
+    func execute(groupType: GroupType?, location: (latitude: Double, longitude: Double)?, distance: Double?) async throws -> [Group] {
+        return try await groupRepository.fetch(groupType: groupType, location: location, distance: distance)
     }
 }
