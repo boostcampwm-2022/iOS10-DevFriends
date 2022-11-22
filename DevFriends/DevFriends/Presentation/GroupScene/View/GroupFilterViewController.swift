@@ -15,8 +15,10 @@ final class GroupFilterViewController: DefaultViewController {
         case group = 1
         case category = 2
     }
-    //    private let viewModel: GroupListViewModel!
-    private var cancellabes = Set<AnyCancellable>()
+        private let viewModel = DefaultGroupFilterViewModel(fetchCategoryUseCase: DefaultFetchCategoryUseCase(categoryRepository: DefaultCategoryRepository()))
+    
+    var categoryDataSource: [String] = []
+    
     weak var delegate: GroupFilterViewControllerDelegate?
     
     lazy var collectionView: UICollectionView = {
@@ -45,13 +47,6 @@ final class GroupFilterViewController: DefaultViewController {
     
     // MARK: - Initializer
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    
-        bind()
-//        viewModel.fetchCategoryType()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -64,6 +59,7 @@ final class GroupFilterViewController: DefaultViewController {
     
     override func configureUI() {
         self.view.backgroundColor = .white
+        self.viewModel.loadCategories()
     }
     
     override func layout() {
@@ -76,6 +72,12 @@ final class GroupFilterViewController: DefaultViewController {
     }
     
     override func bind() {
+        viewModel.categoriesSubject
+            .receive(on: RunLoop.main)
+            .sink { updatedList in
+                self.categoryDataSource = updatedList.map { $0.name }
+            }.store(in: &cancellables)
+        
 //        viewModel.$categoryType
 //            .receive(on: DispatchQueue.main)
 //            .sink { [weak self] _ in
@@ -118,7 +120,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         if section == 0 || section == 1 {
             return 2
         } else {
-            return 7
+            return categoryDataSource.count
         }
     }
     
@@ -137,6 +139,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         }
         // 지워주시면 됩니다
         
+        cell.configure("테스트")
 //        switch indexPath.section {
 //        case 0: // 정렬 순서
 //            cell.configure(viewModel.alignType[indexPath.item])

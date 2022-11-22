@@ -18,6 +18,11 @@
 		A6618581292BCBE200921B2F /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618580292BCBE200921B2F /* DefaultGroupRepository.swift */; };
 		A6618583292BCF7600921B2F /* FetchGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618582292BCF7600921B2F /* FetchGroupUseCase.swift */; };
 		A6618585292BD24000921B2F /* FetchGroupCellInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618584292BD24000921B2F /* FetchGroupCellInfoUseCase.swift */; };
+		A6618587292C9D2900921B2F /* GroupFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618586292C9D2900921B2F /* GroupFilterViewModel.swift */; };
+		A6618589292C9F2400921B2F /* FetchCategoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6618588292C9F2400921B2F /* FetchCategoryUseCase.swift */; };
+		A661858B292C9F7800921B2F /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A661858A292C9F7800921B2F /* CategoryRepository.swift */; };
+		A661858D292C9FB700921B2F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A661858C292C9FB700921B2F /* Category.swift */; };
+		A661858F292CA06A00921B2F /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A661858E292CA06A00921B2F /* DefaultCategoryRepository.swift */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -123,6 +128,11 @@
 		A6618580292BCBE200921B2F /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
 		A6618582292BCF7600921B2F /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
 		A6618584292BD24000921B2F /* FetchGroupCellInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGroupCellInfoUseCase.swift; sourceTree = "<group>"; };
+		A6618586292C9D2900921B2F /* GroupFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupFilterViewModel.swift; sourceTree = "<group>"; };
+		A6618588292C9F2400921B2F /* FetchCategoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCategoryUseCase.swift; sourceTree = "<group>"; };
+		A661858A292C9F7800921B2F /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
+		A661858C292C9FB700921B2F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		A661858E292CA06A00921B2F /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +258,7 @@
 				E33A203E29262B6B00887EC9 /* GroupFilterViewModelType.swift */,
 				E33A203C29262B6B00887EC9 /* GroupListViewModelType.swift */,
 				A6618574292916C300921B2F /* GroupListViewModel.swift */,
+				A6618586292C9D2900921B2F /* GroupFilterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -498,6 +509,7 @@
 				FC79AEC42922494F0077AE5C /* Group.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
 				A66185762929179500921B2F /* GroupCellInfo.swift */,
+				A661858C292C9FB700921B2F /* Category.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -508,6 +520,7 @@
 				A6618578292918D300921B2F /* LoadGroupListUseCase.swift */,
 				A6618582292BCF7600921B2F /* FetchGroupUseCase.swift */,
 				A6618584292BD24000921B2F /* FetchGroupCellInfoUseCase.swift */,
+				A6618588292C9F2400921B2F /* FetchCategoryUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -517,6 +530,7 @@
 			children = (
 				A661857A292928B200921B2F /* GroupListCellRepository.swift */,
 				A661857E292BCB3B00921B2F /* GroupRepository.swift */,
+				A661858A292C9F7800921B2F /* CategoryRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -535,6 +549,7 @@
 			isa = PBXGroup;
 			children = (
 				A6618580292BCBE200921B2F /* DefaultGroupRepository.swift */,
+				A661858E292CA06A00921B2F /* DefaultCategoryRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -898,6 +913,7 @@
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				A6618581292BCBE200921B2F /* DefaultGroupRepository.swift in Sources */,
+				A661858B292C9F7800921B2F /* CategoryRepository.swift in Sources */,
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
@@ -906,6 +922,8 @@
 				A661857B292928B200921B2F /* GroupListCellRepository.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
+				A661858D292C9FB700921B2F /* Category.swift in Sources */,
+				A6618589292C9F2400921B2F /* FetchCategoryUseCase.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
@@ -916,6 +934,7 @@
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
 				A6618585292BD24000921B2F /* FetchGroupCellInfoUseCase.swift in Sources */,
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
+				A6618587292C9D2900921B2F /* GroupFilterViewModel.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
@@ -946,6 +965,7 @@
 				A6ED8BA72924E44A003105E2 /* (null) in Sources */,
 				E33A208A2926622000887EC9 /* ChatViewCoordinator.swift in Sources */,
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,
+				A661858F292CA06A00921B2F /* DefaultCategoryRepository.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
 				A6618579292918D300921B2F /* LoadGroupListUseCase.swift in Sources */,
