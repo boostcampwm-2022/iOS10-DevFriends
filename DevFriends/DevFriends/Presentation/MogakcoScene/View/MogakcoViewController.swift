@@ -216,7 +216,6 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     private func setMogakcoPin(groups: [Group]) {
-        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
         for group in groups {
             setAnnotation(
                 latitudeValue: group.location.latitude,
@@ -230,6 +229,7 @@ final class MogakcoViewController: DefaultViewController {
         let currentLocation = mogakcoMapView.region.center
         let location = Location(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
         viewModel.fetchMogakco(location: location, distance: mapViewDistance())
+        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
     
     private func populateSnapshot(data: [Group]) {
@@ -272,12 +272,10 @@ final class MogakcoViewController: DefaultViewController {
         let to = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude + span.longitudeDelta * 0.5)
         return to.distance(from: centerLocation)
     }
-}
-
-// MARK: Map Init Methods
-extension MogakcoViewController {
+    
     func setUserLocation() {
         locationManager.startUpdatingLocation()
+        mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
 }
 
@@ -311,7 +309,6 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             setUserLocation()
             isFirstLoadingMap = false
         }
-        
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
