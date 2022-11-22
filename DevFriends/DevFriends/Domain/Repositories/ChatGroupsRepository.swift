@@ -6,33 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestore
 
 protocol ChatGroupsRepository: ContainsFirestore {
     func fetchGroupList(uids: [String]) async throws -> [Group]
-}
-
-final class DefaultChatGroupsRepository {}
-
-extension DefaultChatGroupsRepository: ChatGroupsRepository {
-    func fetchGroupList(uids: [String]) async throws -> [Group] {
-        return try await withThrowingTaskGroup(of: Group.self) { taskGroup in
-            for uid in uids {
-                taskGroup.addTask {
-                    try await self.fetchGroup(uid: uid)
-                }
-            }
-            
-            return try await taskGroup.reduce(into: []) { partialResult, group in
-                partialResult.append(group)
-            }
-        }
-    }
-    
-    private func fetchGroup(uid: String) async throws -> Group {
-        let groupSnapshot = try await firestore.collection("Group").document(uid).getDocument()
-        let group = try groupSnapshot.data(as: Group.self)
-        
-        return group
-    }
 }

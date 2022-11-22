@@ -71,6 +71,9 @@
 		E359EC682928C0C800CE5775 /* LoadChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */; };
 		E359EC6A2928C77500CE5775 /* ContainsFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC692928C77500CE5775 /* ContainsFirestore.swift */; };
 		E359EC6E2929EC5400CE5775 /* SendChatMessagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */; };
+		E359EC7B292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */; };
+		E359EC7D292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */; };
+		E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -173,6 +176,9 @@
 		E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadChatMessagesUseCase.swift; sourceTree = "<group>"; };
 		E359EC692928C77500CE5775 /* ContainsFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsFirestore.swift; sourceTree = "<group>"; };
 		E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendChatMessagesUseCase.swift; sourceTree = "<group>"; };
+		E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
+		E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
+		E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -446,6 +452,28 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
+		E359EC80292C6BA000CE5775 /* RealmStorage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RealmStorage;
+			sourceTree = "<group>";
+		};
+		E359EC81292C6BC300CE5775 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				E359EC82292C6BCA00CE5775 /* DataMapping */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		E359EC82292C6BCA00CE5775 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataMapping;
+			sourceTree = "<group>";
+		};
 		E394C49D292231D80064ADA7 /* PostDetailScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,8 +556,8 @@
 		FC79AEBB292223D90077AE5C /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				FC79AEBF292225AF0077AE5C /* RealmStorage */,
-				FC79AEBD292224190077AE5C /* Network */,
+				E359EC81292C6BC300CE5775 /* Network */,
+				E359EC80292C6BA000CE5775 /* RealmStorage */,
 				FC79AEBC292223DF0077AE5C /* Repositories */,
 			);
 			path = Data;
@@ -538,30 +566,11 @@
 		FC79AEBC292223DF0077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */,
+				E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */,
+				E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */,
 			);
 			path = Repositories;
-			sourceTree = "<group>";
-		};
-		FC79AEBD292224190077AE5C /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				FC79AEBE2922241F0077AE5C /* DataMapping */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		FC79AEBE2922241F0077AE5C /* DataMapping */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataMapping;
-			sourceTree = "<group>";
-		};
-		FC79AEBF292225AF0077AE5C /* RealmStorage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RealmStorage;
 			sourceTree = "<group>";
 		};
 		FC79AEC0292226C70077AE5C /* Resources */ = {
@@ -889,6 +898,7 @@
 			files = (
 				E33A204029262B6B00887EC9 /* GroupListViewController.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
+				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
@@ -898,6 +908,7 @@
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				E359EC6E2929EC5400CE5775 /* SendChatMessagesUseCase.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
+				E359EC7B292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
@@ -907,6 +918,7 @@
 				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
+				E359EC7D292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift in Sources */,
 				E359EC682928C0C800CE5775 /* LoadChatMessagesUseCase.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
