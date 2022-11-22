@@ -66,6 +66,12 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
         }
     }
     
+    func fetch(groupID: String) async throws -> Group {
+        let group = try await firestore.collection("Group").document(groupID).getDocument().data(as: GroupResponseDTO.self)
+        
+        return group.toDomain()
+    }
+    
     func makeGroupResponseDTO(group: Group) -> GroupResponseDTO {
         return GroupResponseDTO(participantIDs: group.participantIDs,
                                 title: group.title,
@@ -74,8 +80,17 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
                                 location: GeoPoint(latitude: group.location.latitude, longitude: group.location.longitude),
                                 description: group.description,
                                 like: group.like,
+                                hit: group.hit,
                                 limitedNumberPeople: group.limitedNumberPeople,
                                 managerID: group.managerID,
                                 type: group.type)
+    }
+    
+    func update(groupID: String, group: Group) {
+        do {
+            try firestore.collection("Group").document(groupID).setData(from: makeGroupResponseDTO(group: group))
+        } catch {
+            print(error)
+        }
     }
 }

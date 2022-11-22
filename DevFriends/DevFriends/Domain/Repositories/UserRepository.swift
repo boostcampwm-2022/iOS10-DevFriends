@@ -9,4 +9,5 @@ import Foundation
 
 protocol UserRepository {
     func fetch(uid: String) async throws -> User
+    func update(userID: String, user: User)
 }

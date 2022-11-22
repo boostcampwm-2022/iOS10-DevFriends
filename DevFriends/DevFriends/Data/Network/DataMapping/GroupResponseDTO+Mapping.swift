@@ -18,6 +18,7 @@ struct GroupResponseDTO: Codable {
     let location: GeoPoint
     let description: String
     let like: Int
+    let hit: Int
     let limitedNumberPeople: Int
     let managerID: String
     let type: String
@@ -32,6 +33,7 @@ extension GroupResponseDTO {
                      location: Location(latitude: location.latitude, longitude: location.longitude),
                      description: description,
                      like: like,
+                     hit: hit,
                      limitedNumberPeople: limitedNumberPeople,
                      managerID: managerID,
                      type: type)

@@ -18,4 +18,21 @@ extension DefaultUserRepository: UserRepository {
         
         return user.toDomain()
     }
+    
+    func update(userID: String, user: User) {
+        do {
+            try firestore.collection("User").document(userID).setData(from: makeUserResponseDTO(user: user))
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func makeUserResponseDTO(user: User) -> UserResponseDTO {
+        return UserResponseDTO(
+            nickname: user.nickname,
+            profileImagePath: user.profileImagePath,
+            categories: user.categories,
+            groups: user.groups
+        )
+    }
 }

@@ -10,4 +10,5 @@ import Foundation
 protocol NotificationRepository {
     func fetch(uid: String) async throws -> [Notification]
     func send(uid: String, notification: Notification)
+    func update(isOK: Bool, userID: String, notification: Notification)
 }
