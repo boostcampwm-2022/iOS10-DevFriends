@@ -14,9 +14,17 @@ final class NotificationViewController: UITableViewController {
             tableView: tableView
         ) { tableView, indexPath, data in
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: NotificationTableViewCell.reuseIdentifier
+                withIdentifier: NotificationTableViewCell.reuseIdentifier,
+                for: indexPath
             ) as? NotificationTableViewCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
             cell.updateContent(data: data)
+            cell.acceptButton
+                .publisher(for: .touchUpInside)
+                .sink {
+                    self.viewModel.didAcceptedParticipant(index: indexPath.row)
+                }
+                .store(in: &self.cancellables)
             return cell
         }
         return diffableDataSource
