@@ -88,6 +88,10 @@
 		FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */; };
 		FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */; };
 		FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */; };
+		FC07DDC7292CD9EC00D16FBC /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC6292CD9EC00D16FBC /* MyPageViewController.swift */; };
+		FC07DDC9292CE20100D16FBC /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC8292CE20100D16FBC /* UIColor+Custom.swift */; };
+		FC07DDCB292CEF6000D16FBC /* SubtitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDCA292CEF6000D16FBC /* SubtitleButton.swift */; };
+		FC07DDCD292CF45E00D16FBC /* FixMyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDCC292CF45E00D16FBC /* FixMyInfoViewController.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
@@ -203,6 +207,10 @@
 		FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		FC07DDC6292CD9EC00D16FBC /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		FC07DDC8292CE20100D16FBC /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
+		FC07DDCA292CEF6000D16FBC /* SubtitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleButton.swift; sourceTree = "<group>"; };
+		FC07DDCC292CF45E00D16FBC /* FixMyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixMyInfoViewController.swift; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -431,6 +439,7 @@
 				E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */,
 				FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */,
 				FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */,
+				FC07DDC8292CE20100D16FBC /* UIColor+Custom.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -542,6 +551,24 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		FC07DDC4292CD79000D16FBC /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				FC07DDC5292CD7A100D16FBC /* View */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		FC07DDC5292CD7A100D16FBC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FC07DDC6292CD9EC00D16FBC /* MyPageViewController.swift */,
+				FC07DDCA292CEF6000D16FBC /* SubtitleButton.swift */,
+				FC07DDCC292CF45E00D16FBC /* FixMyInfoViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,6 +576,7 @@
 				FC79AEAE29221F9F0077AE5C /* GroupScene */,
 				E33A20702926621F00887EC9 /* ChatScene */,
 				E33A208C2926623200887EC9 /* MogakcoScene */,
+				FC07DDC4292CD79000D16FBC /* MyPage */,
 				E33A20C12926665E00887EC9 /* Utils */,
 				E33A20AE292665A700887EC9 /* Components */,
 			);
@@ -946,6 +974,7 @@
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				E359EC7B292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
+				FC07DDC9292CE20100D16FBC /* UIColor+Custom.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
@@ -975,6 +1004,7 @@
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
 				FC07DDB5292C93B000D16FBC /* Location.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
+				FC07DDC7292CD9EC00D16FBC /* MyPageViewController.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
@@ -988,10 +1018,12 @@
 				E33A204129262B6B00887EC9 /* GroupListViewModelType.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
+				FC07DDCD292CF45E00D16FBC /* FixMyInfoViewController.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
+				FC07DDCB292CEF6000D16FBC /* SubtitleButton.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
