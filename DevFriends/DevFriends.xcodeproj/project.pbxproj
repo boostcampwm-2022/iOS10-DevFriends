@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05781361292C934D003DA919 /* DefaultPostDetailUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */; };
+		05781363292C9409003DA919 /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781362292C9409003DA919 /* DefaultGroupRepository.swift */; };
+		05781365292C9460003DA919 /* DefaultGroupCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781364292C9460003DA919 /* DefaultGroupCommentRepository.swift */; };
+		05781367292C948D003DA919 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781366292C948D003DA919 /* DefaultCategoryRepository.swift */; };
 		058DD04929291EB600784AAC /* PostDetailUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058DD04829291EB600784AAC /* PostDetailUserRepository.swift */; };
 		05A8DEBF292B6A5F00497902 /* FetchUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEBE292B6A5F00497902 /* FetchUserUseCase.swift */; };
 		05A8DEC1292B71C200497902 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC0292B71C200497902 /* User.swift */; };
 		05A8DEC3292B725500497902 /* ContainsFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC2292B725500497902 /* ContainsFirestore.swift */; };
 		05A8DEC5292B963000497902 /* GroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC4292B963000497902 /* GroupRepository.swift */; };
 		05A8DEC7292BBF7B00497902 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC6292BBF7B00497902 /* Comment.swift */; };
-		05A8DEC9292BC2CF00497902 /* CommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC8292BC2CF00497902 /* CommentRepository.swift */; };
+		05A8DEC9292BC2CF00497902 /* GroupCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC8292BC2CF00497902 /* GroupCommentRepository.swift */; };
 		05A8DECB292BC4CA00497902 /* FetchCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DECA292BC4CA00497902 /* FetchCommentsUseCase.swift */; };
 		05A8DECD292BDFEA00497902 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DECC292BDFEA00497902 /* CategoryRepository.swift */; };
 		05A8DECF292BE0DC00497902 /* FetchCategoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DECE292BE0DC00497902 /* FetchCategoryUseCase.swift */; };
@@ -107,13 +111,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPostDetailUserRepository.swift; sourceTree = "<group>"; };
+		05781362292C9409003DA919 /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
+		05781364292C9460003DA919 /* DefaultGroupCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupCommentRepository.swift; sourceTree = "<group>"; };
+		05781366292C948D003DA919 /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
 		058DD04829291EB600784AAC /* PostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailUserRepository.swift; sourceTree = "<group>"; };
 		05A8DEBE292B6A5F00497902 /* FetchUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserUseCase.swift; sourceTree = "<group>"; };
 		05A8DEC0292B71C200497902 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		05A8DEC2292B725500497902 /* ContainsFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsFirestore.swift; sourceTree = "<group>"; };
 		05A8DEC4292B963000497902 /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
 		05A8DEC6292BBF7B00497902 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
-		05A8DEC8292BC2CF00497902 /* CommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRepository.swift; sourceTree = "<group>"; };
+		05A8DEC8292BC2CF00497902 /* GroupCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCommentRepository.swift; sourceTree = "<group>"; };
 		05A8DECA292BC4CA00497902 /* FetchCommentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCommentsUseCase.swift; sourceTree = "<group>"; };
 		05A8DECC292BDFEA00497902 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		05A8DECE292BE0DC00497902 /* FetchCategoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCategoryUseCase.swift; sourceTree = "<group>"; };
@@ -506,7 +514,7 @@
 				058DD04829291EB600784AAC /* PostDetailUserRepository.swift */,
 				05A8DEC2292B725500497902 /* ContainsFirestore.swift */,
 				05A8DEC4292B963000497902 /* GroupRepository.swift */,
-				05A8DEC8292BC2CF00497902 /* CommentRepository.swift */,
+				05A8DEC8292BC2CF00497902 /* GroupCommentRepository.swift */,
 				05A8DECC292BDFEA00497902 /* CategoryRepository.swift */,
 			);
 			path = Repositories;
@@ -525,6 +533,10 @@
 		FC79AEBC292223DF0077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */,
+				05781362292C9409003DA919 /* DefaultGroupRepository.swift */,
+				05781364292C9460003DA919 /* DefaultGroupCommentRepository.swift */,
+				05781366292C948D003DA919 /* DefaultCategoryRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -889,6 +901,7 @@
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
+				05781365292C9460003DA919 /* DefaultGroupCommentRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
@@ -909,7 +922,7 @@
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
-				05A8DEC9292BC2CF00497902 /* CommentRepository.swift in Sources */,
+				05A8DEC9292BC2CF00497902 /* GroupCommentRepository.swift in Sources */,
 				05A8DEBF292B6A5F00497902 /* FetchUserUseCase.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
@@ -923,14 +936,17 @@
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
+				05781363292C9409003DA919 /* DefaultGroupRepository.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
+				05781367292C948D003DA919 /* DefaultCategoryRepository.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
 				E33A20842926622000887EC9 /* MessageLabel.swift in Sources */,
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
+				05781361292C934D003DA919 /* DefaultPostDetailUserRepository.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
 				05A8DECF292BE0DC00497902 /* FetchCategoryUseCase.swift in Sources */,
 				05A8DECB292BC4CA00497902 /* FetchCommentsUseCase.swift in Sources */,

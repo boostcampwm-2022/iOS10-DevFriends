@@ -19,7 +19,6 @@ final class DefaultFetchCategoryUseCase: FetchCategoryUseCase {
     }
     
     func execute(categoryIds: [String]) async throws -> [Category] {
-        let categories = try await self.categoryRepository.fetch(categoryIds)
-        return categories
+        return try await self.categoryRepository.fetch(categoryIds)
     }
 }

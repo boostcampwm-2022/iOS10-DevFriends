@@ -12,13 +12,13 @@ protocol FetchCommentsUseCase {
 }
 
 final class DefaultFetchCommentsUseCase: FetchCommentsUseCase {
-    private let commentRepository: CommentRepository
+    private let commentRepository: GroupCommentRepository
     
-    init(commentRepository: CommentRepository) {
+    init(commentRepository: GroupCommentRepository) {
         self.commentRepository = commentRepository
     }
     
     func execute(groupId: String) async throws -> [Comment] {
-        return try await self.commentRepository.fetchComments(groupId: groupId)
+        return try await self.commentRepository.fetch(groupId)
     }
 }

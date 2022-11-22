@@ -56,7 +56,7 @@ final class PostDetailViewController: DefaultViewController {
     )
     private let testUserRepository: UserRepository
     private let testCategoryRepository: CategoryRepository
-    private let testCommentRepository: CommentRepository
+    private let testCommentRepository: GroupCommentRepository
     private let testFetchUserUseCase: FetchUserUseCase
     private let testCategoryUseCase: FetchCategoryUseCase
     private let testFetchCommentsUseCase: FetchCommentsUseCase
@@ -66,7 +66,7 @@ final class PostDetailViewController: DefaultViewController {
     
     init() {
         testUserRepository = DefaultUserRepository()
-        testCommentRepository = DefaultCommentRepository()
+        testCommentRepository = DefaultGroupCommentRepository()
         testCategoryRepository = DefaultCategoryRepository()
         
         testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
