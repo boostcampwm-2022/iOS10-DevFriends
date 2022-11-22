@@ -51,16 +51,9 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
     func set(_ group: Group) {
         titleLabel.text = group.title
         participantLabel.text = "👥 \(group.participantIDs.count)/\(group.limitedNumberPeople)"
-        setAddress(group: group)
-    }
-    
-    func setAddress(group: Group) {
         let location = CLLocation(latitude: group.location.latitude, longitude: group.location.longitude)
-        let geocoder = CLGeocoder()
-        let locale = Locale(identifier: "Ko-kr")
-        geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] placemarks, _ in
-            guard let placemark = placemarks?.first else {return}
-            self?.placeLabel.text = "📍\(placemark.thoroughfare ?? "")"
+        Task {
+            placeLabel.text = try await location.placemark()
         }
     }
 

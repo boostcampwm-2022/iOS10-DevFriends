@@ -68,6 +68,7 @@
 		E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */; };
 		E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */; };
 		FC07DDB5292C93B000D16FBC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB4292C93B000D16FBC /* Location.swift */; };
+		FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCA285862929E79F0066FD86 /* SaveGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */; };
@@ -166,6 +167,7 @@
 		E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueDisplayView.swift; sourceTree = "<group>"; };
 		E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
 		FC07DDB4292C93B000D16FBC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Address.swift"; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				E33A20CB2926665E00887EC9 /* UIView+Combine.swift */,
 				E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */,
 				FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */,
+				FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -887,6 +890,7 @@
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
 				FCE46BAA2928C97100383F6F /* GroupRepository.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
+				FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */,
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
