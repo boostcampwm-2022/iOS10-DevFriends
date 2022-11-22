@@ -6,8 +6,8 @@
 //
 
 import Combine
-import UIKit
 import SnapKit
+import UIKit
 
 final class ChatViewController: DefaultViewController {
     private lazy var chatTableView: UITableView = {
@@ -60,14 +60,9 @@ final class ChatViewController: DefaultViewController {
             .receive(on: RunLoop.main)
             .sink { groups in
                 self.populateSnapshot(data: groups)
-
-                DispatchQueue.main.async {
-                    self.chatTableView.reloadData()
-                    
-                    if !groups.isEmpty {
-                        let indexPath = IndexPath(row: groups.count - 1, section: 0)
-                        self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                    }
+                if !groups.isEmpty {
+                    let indexPath = IndexPath(row: groups.count - 1, section: 0)
+                    self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)

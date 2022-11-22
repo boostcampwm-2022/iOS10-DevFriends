@@ -86,16 +86,13 @@ class ChatContentViewController: DefaultViewController {
     override func bind() {
         self.hideKeyboardWhenTappedAround()
         viewModel.messagesSubject
+            .receive(on: RunLoop.main)
             .sink { messages in
                 self.populateSnapshot(data: messages)
                 
-                DispatchQueue.main.async {
-                    self.messageTableView.reloadData()
-                    
-                    if !messages.isEmpty {
-                        let indexPath = IndexPath(row: messages.count - 1, section: 0)
-                        self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                    }
+                if !messages.isEmpty {
+                    let indexPath = IndexPath(row: messages.count - 1, section: 0)
+                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)
