@@ -8,8 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Message: Codable, Hashable {
-    @DocumentID var uid: String?
+struct Message: Hashable {
     let content: String
     let time: Date
     let userID: String

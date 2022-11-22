@@ -7,6 +7,7 @@
 
 import SnapKit
 import UIKit
+import CoreLocation
 
 final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
     private lazy var imageView: UIImageView = {
@@ -43,14 +44,19 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         let label = UILabel()
         label.text = "👥 0/0"
         label.font = .systemFont(ofSize: 12, weight: .bold)
+        label.textAlignment = .right
         return label
     }()
     
-//    func set(_ group: Group) {
-//
-//    }
-//
-    
+    func set(_ group: Group) {
+        titleLabel.text = group.title
+        participantLabel.text = "👥 \(group.participantIDs.count)/\(group.limitedNumberPeople)"
+        let location = CLLocation(latitude: group.location.latitude, longitude: group.location.longitude)
+        Task {
+            placeLabel.text = try await location.placemark()
+        }
+    }
+
     // MARK: - Configure UI
     
     override func didMoveToSuperview() {
@@ -79,16 +85,17 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
             make.leading.equalTo(titleLabel.snp.leading)
         }
         
-        self.contentView.addSubview(placeLabel)
-        placeLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(imageView.snp.bottom).offset(-8)
-            make.leading.equalTo(titleLabel.snp.leading)
-        }
-        
         self.contentView.addSubview(participantLabel)
         participantLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(placeLabel.snp.bottom)
-            make.trailing.equalToSuperview().offset(-60)
+            make.bottom.equalTo(imageView.snp.bottom).offset(-8)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
+        self.contentView.addSubview(placeLabel)
+        placeLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(participantLabel.snp.bottom)
+            make.leading.equalTo(titleLabel.snp.leading)
+            make.trailing.lessThanOrEqualTo(participantLabel.snp.leading)
         }
     }
     

@@ -80,6 +80,14 @@
 		E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */; };
 		E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */; };
 		E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */; };
+		FC07DDB5292C93B000D16FBC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB4292C93B000D16FBC /* Location.swift */; };
+		FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */; };
+		FC07DDB9292CA8F200D16FBC /* GroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB8292CA8F200D16FBC /* GroupRepository.swift */; };
+		FC07DDBB292CA8FF00D16FBC /* SaveGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBA292CA8FF00D16FBC /* SaveGroupUseCase.swift */; };
+		FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */; };
+		FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */; };
+		FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */; };
+		FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
@@ -89,6 +97,8 @@
 		FCD8AEFA291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */; };
 		FCD8AF07291CD10300CCE5D3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */; };
 		FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */; };
+		FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */; };
+		FCE46BAE2928DBF000383F6F /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,9 +195,18 @@
 		E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailContentsView.swift; sourceTree = "<group>"; };
 		E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueDisplayView.swift; sourceTree = "<group>"; };
 		E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		FC07DDB4292C93B000D16FBC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Address.swift"; sourceTree = "<group>"; };
+		FC07DDB8292CA8F200D16FBC /* GroupRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
+		FC07DDBA292CA8FF00D16FBC /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
+		FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
+		FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCD8AEE2291CCE9600CCE5D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -199,6 +218,10 @@
 		FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFriendsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
+		FCE46BA92928C97100383F6F /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
+		FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
+		FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +279,9 @@
 			isa = PBXGroup;
 			children = (
 				FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */,
+				FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */,
+				FCE46BA92928C97100383F6F /* GroupRepository.swift */,
+				FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -403,6 +429,8 @@
 				E33A20CA2926665E00887EC9 /* UIImage+Custom.swift */,
 				E33A20CB2926665E00887EC9 /* UIView+Combine.swift */,
 				E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */,
+				FCE46BAD2928DBF000383F6F /* CLLocation+Distance.swift */,
+				FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -435,6 +463,8 @@
 			isa = PBXGroup;
 			children = (
 				E33A20E229277A5100887EC9 /* LoadChatGroupsUseCase.swift */,
+				FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */,
+				FC07DDBA292CA8FF00D16FBC /* SaveGroupUseCase.swift */,
 				E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */,
 				E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */,
 			);
@@ -446,6 +476,7 @@
 			children = (
 				E359EC692928C77500CE5775 /* ContainsFirestore.swift */,
 				E33A20E72927BADE00887EC9 /* UserRepository.swift */,
+				FC07DDB8292CA8F200D16FBC /* GroupRepository.swift */,
 				E33A20E529277B3900887EC9 /* ChatGroupsRepository.swift */,
 				E359EC652928B6A500CE5775 /* ChatMessagesRepository.swift */,
 			);
@@ -470,6 +501,9 @@
 		E359EC82292C6BCA00CE5775 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */,
+				FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */,
+				FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -549,6 +583,7 @@
 				E33A20E92927BB1000887EC9 /* User.swift */,
 				FC79AEC42922494F0077AE5C /* Group.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
+				FC07DDB4292C93B000D16FBC /* Location.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -566,6 +601,7 @@
 		FC79AEBC292223DF0077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */,
 				E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */,
 				E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */,
 				E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */,
@@ -910,6 +946,7 @@
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				E359EC7B292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
+				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
@@ -923,6 +960,7 @@
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
+				FC07DDB9292CA8F200D16FBC /* GroupRepository.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
@@ -930,14 +968,17 @@
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
+				FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */,
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
+				FC07DDB5292C93B000D16FBC /* Location.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
+				FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
 				E33A20AC2926639400887EC9 /* AppFlowCoordinator.swift in Sources */,
@@ -959,8 +1000,13 @@
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
+				FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */,
 				A6ED8BA72924E44A003105E2 /* (null) in Sources */,
+				FCE46BAE2928DBF000383F6F /* CLLocation+Distance.swift in Sources */,
+				FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */,
+				FC07DDBB292CA8FF00D16FBC /* SaveGroupUseCase.swift in Sources */,
 				E359EC6A2928C77500CE5775 /* ContainsFirestore.swift in Sources */,
+				FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */,
 				E33A208A2926622000887EC9 /* ChatViewCoordinator.swift in Sources */,
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
