@@ -11,7 +11,7 @@ import FirebaseFirestore
 final class DefaultChatMessagesRepository {}
 
 extension DefaultChatMessagesRepository: ChatMessagesRepository {
-    func fetchMessages(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws {
+    func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws {
         _ = firestore
             .collection("Chat")
             .document(chatUID)
@@ -26,7 +26,7 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
             }
     }
     
-    func sendMessage(chatUID: String, message: Message) {
+    func send(chatUID: String, message: Message) {
         do {
             let newDocReference = try firestore
                 .collection("Chat")

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol UserRepository: ContainsFirestore {
-    func fetchUser(uid: String) async throws -> User
+    func fetch(uid: String) async throws -> User
 }

@@ -11,7 +11,7 @@ import FirebaseFirestore
 final class DefaultChatGroupsRepository {}
 
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
-    func fetchGroupList(uids: [String]) async throws -> [Group] {
+    func fetch(uids: [String]) async throws -> [Group] {
         return try await withThrowingTaskGroup(of: Group.self) { taskGroup in
             for uid in uids {
                 taskGroup.addTask {

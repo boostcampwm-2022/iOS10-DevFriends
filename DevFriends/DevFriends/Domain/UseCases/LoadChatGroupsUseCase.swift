@@ -24,7 +24,7 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
         // MARK: user를 나중에 어떻게 가져올지 논의해보기
         guard let uid = UserDefaults.standard.object(forKey: "uid") as? String
         else { fatalError("UID was not stored!!") }
-        let user = try await self.userRepository.fetchUser(uid: uid)
-        return try await self.chatGroupsRepository.fetchGroupList(uids: user.groups)
+        let user = try await self.userRepository.fetch(uid: uid)
+        return try await self.chatGroupsRepository.fetch(uids: user.groups)
     }
 }

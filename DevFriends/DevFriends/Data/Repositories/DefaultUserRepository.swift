@@ -11,7 +11,7 @@ import FirebaseFirestore
 final class DefaultUserRepository {}
 
 extension DefaultUserRepository: UserRepository {
-    func fetchUser(uid: String) async throws -> User {
+    func fetch(uid: String) async throws -> User {
         let userSnapshot = try await firestore.collection("User").document(uid).getDocument()
         
         let user = try userSnapshot.data(as: User.self)

@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ChatMessagesRepository: ContainsFirestore {
-    func fetchMessages(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws
-    func sendMessage(chatUID: String, message: Message)
+    func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws
+    func send(chatUID: String, message: Message)
 }

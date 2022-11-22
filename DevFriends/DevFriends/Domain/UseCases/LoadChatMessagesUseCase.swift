@@ -21,6 +21,6 @@ final class DefaultLoadChatMessagesUseCase: LoadChatMessagesUseCase {
     }
     
     func execute(completion: @escaping (_ messages: [Message]) -> Void) throws {
-        try self.chatMessagesRepository.fetchMessages(chatUID: self.chatUID, completion: completion)
+        try self.chatMessagesRepository.fetch(chatUID: self.chatUID, completion: completion)
     }
 }
