@@ -14,8 +14,8 @@ extension DefaultUserRepository: UserRepository {
     func fetch(uid: String) async throws -> User {
         let userSnapshot = try await firestore.collection("User").document(uid).getDocument()
         
-        let user = try userSnapshot.data(as: User.self)
+        let user = try userSnapshot.data(as: UserResponseDTO.self)
         
-        return user
+        return user.toDomain()
     }
 }

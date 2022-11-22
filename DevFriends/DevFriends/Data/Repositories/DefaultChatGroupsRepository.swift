@@ -27,8 +27,8 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
     
     private func fetchGroup(uid: String) async throws -> Group {
         let groupSnapshot = try await firestore.collection("Group").document(uid).getDocument()
-        let group = try groupSnapshot.data(as: Group.self)
+        let group = try groupSnapshot.data(as: GroupResponseDTO.self)
         
-        return group
+        return group.toDomain()
     }
 }
