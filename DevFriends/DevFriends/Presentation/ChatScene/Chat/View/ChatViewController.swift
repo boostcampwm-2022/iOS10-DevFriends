@@ -5,8 +5,9 @@
 //  Created by 심주미 on 2022/11/14.
 //
 
-import UIKit
+import Combine
 import SnapKit
+import UIKit
 
 final class ChatViewController: DefaultViewController {
     private lazy var chatTableView: UITableView = {
@@ -17,8 +18,13 @@ final class ChatViewController: DefaultViewController {
         return tableView
     }()
     
-    private lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(tableView: chatTableView) { tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.reuseIdentifier, for: indexPath) as? ChatTableViewCell else {
+    private lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(
+        tableView: chatTableView
+    ) { tableView, indexPath, data -> UITableViewCell in
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ChatTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? ChatTableViewCell else {
             return UITableViewCell()
         }
         cell.set(data: data, lastMessage: "", hasNewMessage: false)
@@ -26,10 +32,11 @@ final class ChatViewController: DefaultViewController {
     }
     
     private lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    private let viewModel: ChatViewModel
     
-    weak var coordinator: ChatViewCoordinator?
-    
-    init() {
+    init(chatViewModel: ChatViewModel) {
+        self.viewModel = chatViewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,8 +55,22 @@ final class ChatViewController: DefaultViewController {
         }
     }
     
+    override func bind() {
+        viewModel.groupsSubject
+            .receive(on: RunLoop.main)
+            .sink { groups in
+                self.populateSnapshot(data: groups)
+                if !groups.isEmpty {
+                    let indexPath = IndexPath(row: groups.count - 1, section: 0)
+                    self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
     private func setupTableView() {
         self.chatTableViewSnapShot.appendSections([.main])
+        viewModel.didLoadGroups()
     }
     
     private func populateSnapshot(data: [Group]) {
@@ -60,5 +81,7 @@ final class ChatViewController: DefaultViewController {
 
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.didSelectGroup(at: indexPath.row)
     }
 }

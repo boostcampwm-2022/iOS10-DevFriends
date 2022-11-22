@@ -6,24 +6,19 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-struct Group: Hashable {
+struct Group: Codable, Hashable {
+    @DocumentID var uid: String? // TODO: 왜 옵셔널로 해야만 할까?
     let participantIDs: [String]
     let title: String
-    let categories: [String]
     let chatID: String
+    let categories: [String]
+    let location: GeoPoint
     let description: String
     let like: Int
     let limitedNumberPeople: Int
-    let location: Location
     let managerID: String
-    let type: GroupType
-    
-    static func == (lhs: Group, rhs: Group) -> Bool {
-        return lhs.chatID == rhs.chatID
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(chatID)
-    }
+    let type: String
 }

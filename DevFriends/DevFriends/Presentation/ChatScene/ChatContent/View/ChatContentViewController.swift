@@ -11,29 +11,56 @@ import UIKit
 class ChatContentViewController: DefaultViewController {
     private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(FriendMessageTableViewCell.self, forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier)
-        tableView.register(MyMessageTableViewCell.self, forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier)
         tableView.separatorStyle = .none
+        tableView.register(
+            FriendMessageTableViewCell.self,
+            forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier
+        )
+        tableView.register(
+            MyMessageTableViewCell.self,
+            forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier
+        )
         return tableView
     }()
     
+    private lazy var messageTableViewDiffableDataSource = {
+        let diffableDataSource = UITableViewDiffableDataSource<Section, Message>(
+            tableView: messageTableView
+        ) { tableView, indexPath, data -> UITableViewCell in
+            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
+                let cell = self.createMyMessageTableViewCell(
+                    tableView: tableView,
+                    indexPath: indexPath,
+                    data: data
+                ) ?? UITableViewCell()
+                cell.selectionStyle = .none
+                return cell
+            } else {
+                let cell = self.createFriendMessageTableViewCell(
+                    tableView: tableView,
+                    indexPath: indexPath,
+                    data: data
+                ) ?? UITableViewCell()
+                cell.selectionStyle = .none
+                return cell
+            }
+        }
+        return diffableDataSource
+    }()
+    
     private lazy var messageTextField: SendableTextView = {
-        let textField = SendableTextView(placeholder: "메시지를 작성해주세요")
+        let textField = SendableTextView(placeholder: "메세지를 작성해주세요")
         textField.delegate = self
         return textField
     }()
     
-    private lazy var messageTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Message>(tableView: messageTableView) { [weak self] tableView, indexPath, data -> UITableViewCell in
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyMessageTableViewCell.reuseIdentifier, for: indexPath) as? MyMessageTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.set(data: data, messageContentType: .time)
-        return cell
-    }
-    
     lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
-    init(group: Group) {
+    private let viewModel: ChatContentViewModel
+    
+    init(chatContentViewModel: ChatContentViewModel) {
+        self.viewModel = chatContentViewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,6 +85,17 @@ class ChatContentViewController: DefaultViewController {
     
     override func bind() {
         self.hideKeyboardWhenTappedAround()
+        viewModel.messagesSubject
+            .receive(on: RunLoop.main)
+            .sink { messages in
+                self.populateSnapshot(data: messages)
+                
+                if !messages.isEmpty {
+                    let indexPath = IndexPath(row: messages.count - 1, section: 0)
+                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     override func configureUI() {
@@ -66,6 +104,53 @@ class ChatContentViewController: DefaultViewController {
     
     private func setupTableView() {
         self.messageTableViewSnapShot.appendSections([.main])
+        viewModel.didLoadMessages()
+    }
+    
+    private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: MyMessageTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? MyMessageTableViewCell else { return nil }
+        
+        cell.updateContent(data: data)
+        if self.isNoNeedToHaveTimeLabel(data: data, indexPath: indexPath) {
+            cell.removeTimeLabel()
+        }
+        
+        return cell
+    }
+    
+    private func createFriendMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> FriendMessageTableViewCell? {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: FriendMessageTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? FriendMessageTableViewCell else {
+            return nil
+        }
+        
+        cell.updateContent(data: data)
+        if self.isNoNeedToHaveTimeLabel(data: data, indexPath: indexPath) {
+            cell.removeTimeLabel()
+        }
+        
+        if self.isNoNeedToHaveProfileInfo(data: data, indexPath: indexPath) {
+            cell.removeProfileAndName()
+        }
+        
+        return cell
+    }
+    
+    private func isNoNeedToHaveTimeLabel(data: Message, indexPath: IndexPath) -> Bool {
+        guard indexPath.row + 1 != self.viewModel.messagesSubject.value.count else { return false }
+        let isSameTime = data.time.isSame(as: self.viewModel.messagesSubject.value[indexPath.row + 1].time)
+        return isSameTime
+    }
+    
+    private func isNoNeedToHaveProfileInfo(data: Message, indexPath: IndexPath) -> Bool {
+        guard indexPath.row - 1 >= 0 else { return false }
+        let isSameUser = data.userID == self.viewModel.messagesSubject.value[indexPath.row - 1].userID
+        return isSameUser
     }
     
     private func populateSnapshot(data: [Message]) {
@@ -76,6 +161,6 @@ class ChatContentViewController: DefaultViewController {
 
 extension ChatContentViewController: SendableTextViewDelegate {
     func tapSendButton(text: String) {
-        print(text, "보냄")
+        viewModel.didSendMessage(text: text)
     }
 }

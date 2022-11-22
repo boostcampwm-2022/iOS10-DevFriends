@@ -630,6 +630,12 @@ PODS:
     - "gRPC-C++ (~> 1.44.0)"
     - leveldb-library (~> 1.22)
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseFirestoreSwift (10.2.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseCoreExtension (~> 10.0)
+    - FirebaseFirestore (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
+  - FirebaseSharedSwift (10.2.0)
   - FirebaseStorage (10.1.0):
     - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseAuthInterop (~> 10.0)
@@ -723,6 +729,7 @@ PODS:
 DEPENDENCIES:
   - FirebaseAuth
   - FirebaseFirestore
+  - FirebaseFirestoreSwift
   - FirebaseStorage
   - Kingfisher (~> 7.0)
   - SnapKit (~> 5.6.0)
@@ -739,6 +746,8 @@ SPEC REPOS:
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseFirestore
+    - FirebaseFirestoreSwift
+    - FirebaseSharedSwift
     - FirebaseStorage
     - GoogleUtilities
     - "gRPC-C++"
@@ -762,6 +771,8 @@ SPEC CHECKSUMS:
   FirebaseCoreExtension: 69b966c399abc4ca6dc75006ab87160f81512725
   FirebaseCoreInternal: 96d75228e10fd369564da51bd898414eb0f54df5
   FirebaseFirestore: d482e5e0f95dba8ef5d499a7efa87ba2f56ef0c0
+  FirebaseFirestoreSwift: 3efd6253025b189eb11861d6027d6b33988005ce
+  FirebaseSharedSwift: a160b39d4ce77be922b3d6ff009099c7294e36e5
   FirebaseStorage: 132c10c4d2f8ed8afbfa918eb35d19a87f383d59
   GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
@@ -775,6 +786,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
 
-PODFILE CHECKSUM: a87981a7e35b7bd080d9eb4cea7ec137489420e8
+PODFILE CHECKSUM: 58ab8e5085fb30c06dd42bf6d51599ccf9a85c88
 
 COCOAPODS: 1.11.2
