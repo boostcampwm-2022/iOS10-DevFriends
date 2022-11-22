@@ -42,14 +42,16 @@ final class PostDetailViewController: DefaultViewController {
     }()
     
     private let testGroup = Group(
-        uid: "mnYeCkTpbHiATFzHl046",
+        id: "mnYeCkTpbHiATFzHl046",
         participantIDs: [" YkocW98XPzJAsSDVa5qd"],
         title: "Swift를 배워봅시다~",
         chatID: "SHWMLojQYPUZW5U7u24U",
         categories: ["89kKYamuTTGC0rK7VZO8"],
-        location: nil,
+        location: Location(latitude: 50.0, longitude: 50.0),
         description: "저랑 같이 공부해요 화이팅!",
+        time: Date(),
         like: 1,
+        hit: 13,
         limitedNumberPeople: 4,
         managerID: "YkocW98XPzJAsSDVa5qd",
         type: "모각코"
@@ -152,7 +154,7 @@ final class PostDetailViewController: DefaultViewController {
         
         viewModel.commentsSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] comments in
+            .sink { [weak self] _ in
                 self?.commentTableView.reloadData()
             }
             .store(in: &cancellables)

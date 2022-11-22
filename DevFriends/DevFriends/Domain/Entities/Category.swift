@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 
 struct Category: Codable {
-    @DocumentID var uid: String?
+    let id: String
     let name: String
 }

@@ -17,7 +17,7 @@ final class DefaultGroupCommentRepository: GroupCommentRepository {
             .order(by: "time")
             .getDocuments()
         
-        let comments = querySnapshot.documentChanges.compactMap { try? $0.document.data(as: Comment.self) }
-        return comments
+        let comments = querySnapshot.documentChanges.compactMap { try? $0.document.data(as: CommentResponseDTO.self) }
+        return comments.map { $0.toDomain() }
     }
 }

@@ -8,14 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		05781361292C934D003DA919 /* DefaultPostDetailUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */; };
-		05781363292C9409003DA919 /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781362292C9409003DA919 /* DefaultGroupRepository.swift */; };
 		05781365292C9460003DA919 /* DefaultGroupCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781364292C9460003DA919 /* DefaultGroupCommentRepository.swift */; };
 		05781367292C948D003DA919 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781366292C948D003DA919 /* DefaultCategoryRepository.swift */; };
+		0578136B292CEB46003DA919 /* UserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0578136A292CEB46003DA919 /* UserResponseDTO+Mapping.swift */; };
+		0578136D292CF081003DA919 /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0578136C292CF081003DA919 /* GroupResponseDTO+Mapping.swift */; };
+		0578136F292CF0F4003DA919 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0578136E292CF0F4003DA919 /* Location.swift */; };
+		05781371292CF1CF003DA919 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781370292CF1CF003DA919 /* CommentResponseDTO+Mapping.swift */; };
+		05781373292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05781372292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift */; };
 		058DD04929291EB600784AAC /* PostDetailUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058DD04829291EB600784AAC /* PostDetailUserRepository.swift */; };
 		05A8DEBF292B6A5F00497902 /* FetchUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEBE292B6A5F00497902 /* FetchUserUseCase.swift */; };
 		05A8DEC1292B71C200497902 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC0292B71C200497902 /* User.swift */; };
 		05A8DEC3292B725500497902 /* ContainsFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC2292B725500497902 /* ContainsFirestore.swift */; };
-		05A8DEC5292B963000497902 /* GroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC4292B963000497902 /* GroupRepository.swift */; };
 		05A8DEC7292BBF7B00497902 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC6292BBF7B00497902 /* Comment.swift */; };
 		05A8DEC9292BC2CF00497902 /* GroupCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DEC8292BC2CF00497902 /* GroupCommentRepository.swift */; };
 		05A8DECB292BC4CA00497902 /* FetchCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A8DECA292BC4CA00497902 /* FetchCommentsUseCase.swift */; };
@@ -112,14 +115,17 @@
 
 /* Begin PBXFileReference section */
 		05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPostDetailUserRepository.swift; sourceTree = "<group>"; };
-		05781362292C9409003DA919 /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
 		05781364292C9460003DA919 /* DefaultGroupCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupCommentRepository.swift; sourceTree = "<group>"; };
 		05781366292C948D003DA919 /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
+		0578136A292CEB46003DA919 /* UserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		0578136C292CF081003DA919 /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		0578136E292CF0F4003DA919 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		05781370292CF1CF003DA919 /* CommentResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		05781372292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		058DD04829291EB600784AAC /* PostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailUserRepository.swift; sourceTree = "<group>"; };
 		05A8DEBE292B6A5F00497902 /* FetchUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserUseCase.swift; sourceTree = "<group>"; };
 		05A8DEC0292B71C200497902 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		05A8DEC2292B725500497902 /* ContainsFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsFirestore.swift; sourceTree = "<group>"; };
-		05A8DEC4292B963000497902 /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
 		05A8DEC6292BBF7B00497902 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		05A8DEC8292BC2CF00497902 /* GroupCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCommentRepository.swift; sourceTree = "<group>"; };
 		05A8DECA292BC4CA00497902 /* FetchCommentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCommentsUseCase.swift; sourceTree = "<group>"; };
@@ -494,6 +500,7 @@
 				05A8DEC0292B71C200497902 /* User.swift */,
 				05A8DEC6292BBF7B00497902 /* Comment.swift */,
 				05A8DED0292BF0EA00497902 /* Category.swift */,
+				0578136E292CF0F4003DA919 /* Location.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -513,7 +520,6 @@
 			children = (
 				058DD04829291EB600784AAC /* PostDetailUserRepository.swift */,
 				05A8DEC2292B725500497902 /* ContainsFirestore.swift */,
-				05A8DEC4292B963000497902 /* GroupRepository.swift */,
 				05A8DEC8292BC2CF00497902 /* GroupCommentRepository.swift */,
 				05A8DECC292BDFEA00497902 /* CategoryRepository.swift */,
 			);
@@ -534,7 +540,6 @@
 			isa = PBXGroup;
 			children = (
 				05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */,
-				05781362292C9409003DA919 /* DefaultGroupRepository.swift */,
 				05781364292C9460003DA919 /* DefaultGroupCommentRepository.swift */,
 				05781366292C948D003DA919 /* DefaultCategoryRepository.swift */,
 			);
@@ -552,6 +557,10 @@
 		FC79AEBE2922241F0077AE5C /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				0578136A292CEB46003DA919 /* UserResponseDTO+Mapping.swift */,
+				0578136C292CF081003DA919 /* GroupResponseDTO+Mapping.swift */,
+				05781370292CF1CF003DA919 /* CommentResponseDTO+Mapping.swift */,
+				05781372292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -894,11 +903,13 @@
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
+				05781371292CF1CF003DA919 /* CommentResponseDTO+Mapping.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				05A8DEC3292B725500497902 /* ContainsFirestore.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
+				05781373292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				05781365292C9460003DA919 /* DefaultGroupCommentRepository.swift in Sources */,
@@ -920,6 +931,7 @@
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
+				0578136F292CF0F4003DA919 /* Location.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
 				05A8DEC9292BC2CF00497902 /* GroupCommentRepository.swift in Sources */,
@@ -932,11 +944,11 @@
 				E33A204229262B6B00887EC9 /* GroupFilterViewController.swift in Sources */,
 				E33A20832926622000887EC9 /* FriendMessageTableViewCell.swift in Sources */,
 				E33A204129262B6B00887EC9 /* GroupListViewModelType.swift in Sources */,
+				0578136B292CEB46003DA919 /* UserResponseDTO+Mapping.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
-				05781363292C9409003DA919 /* DefaultGroupRepository.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
 				05781367292C948D003DA919 /* DefaultCategoryRepository.swift in Sources */,
@@ -956,8 +968,8 @@
 				05A8DECD292BDFEA00497902 /* CategoryRepository.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				05A8DEC7292BBF7B00497902 /* Comment.swift in Sources */,
+				0578136D292CF081003DA919 /* GroupResponseDTO+Mapping.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
-				05A8DEC5292B963000497902 /* GroupRepository.swift in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
 				E33A20942926623200887EC9 /* MogakcoModalViewController.swift in Sources */,
 			);

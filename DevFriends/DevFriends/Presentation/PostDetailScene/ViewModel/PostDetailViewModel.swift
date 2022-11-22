@@ -58,9 +58,9 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             title: group.title,
             description: group.description,
             interests: [],
-            time: "0000년 0월 0일 (일) 오전 0:00",
+            time: group.time.toKoreanString(),
             likeCount: group.like,
-            hitsCount: 0
+            hitsCount: group.hit
         )
         
         postAttentionInfo = .init(
@@ -72,68 +72,45 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     }
     
     private func loadUser(id: String) async -> User? {
-        let loadTask = Task {
-            return try await fetchUserUseCase.execute(userId: id)
-        }
-        let result = await loadTask.result
-        
-        var resultUser: User?
-        do {
-            resultUser = try result.get()
-        } catch {
-            print(error)
-        }
-        return resultUser
+        return try? await Task {
+            try await fetchUserUseCase.execute(userId: id)
+        }.result.get()
     }
     
     private func loadUsers(ids: [String]) async -> [User] {
-        let loadTask = Task {
-            return try await fetchUserUseCase.execute(userIds: ids)
-        }
-        let result = await loadTask.result
-        
-        var resultUsers = [User]()
+        var result: [User] = []
         do {
-            resultUsers = try result.get()
+            result = try await Task {
+                try await fetchUserUseCase.execute(userIds: ids)
+            }.result.get()
         } catch {
             print(error)
         }
-        return resultUsers
+        return result
     }
     
     private func loadCategories() async -> [Category] {
-        let loadTask = Task {
-            return try await fetchCategoryUseCase.execute(categoryIds: group.categories)
-        }
-        let result = await loadTask.result
-        
-        var resultCategories: [Category] = []
+        var result: [Category] = []
         do {
-            resultCategories = try result.get()
+            result = try await Task {
+                try await fetchCategoryUseCase.execute(categoryIds: group.categories)
+            }.result.get()
         } catch {
             print(error)
         }
-        return resultCategories
+        return result
     }
     
     private func loadComments() async -> [Comment] {
-        let loadTask = Task {
-            guard let groupId = group.uid else { return [] }
-            return try await fetchCommentsUseCase.execute(groupId: groupId)
-        }
-        let result = await loadTask.result
-        
-        var resultComments: [Comment] = []
+        var result: [Comment] = []
         do {
-            let items = try result.get()
-            items.forEach { item in
-                guard let comment = item as? Comment else { return }
-                resultComments.append(comment)
-            }
+            result = try await Task {
+                try await fetchCommentsUseCase.execute(groupId: group.id)
+            }.result.get()
         } catch {
             print(error)
         }
-        return resultComments
+        return result
     }
 }
 
@@ -141,29 +118,29 @@ extension DefaultPostDetailViewModel {
     func didLoadGroup() {
         Task {
             guard let user = await loadUser(id: group.managerID) else { return }
-            postWriterInfoSubject.value = .init(name: user.nickname, job: "defaultJob", image: nil)
+            postWriterInfoSubject.value = .init(name: user.nickname, job: user.job, image: nil)
             
             let categories = await loadCategories()
             postDetailContentsSubject.value = .init(
                 title: group.title,
                 description: group.description,
                 interests: categories.map { $0.name },
-                time: "0000년 0월 0일 (일) 오전 0:00",
+                time: group.time.toKoreanString(),
                 likeCount: group.like,
-                hitsCount: 0
+                hitsCount: group.hit
             )
             
             let comments = await loadComments()
             let commentUsers = await loadUsers(ids: comments.map { $0.userID })
             commentsSubject.value = comments.map { comment in
-                guard let user = commentUsers.first(where: { $0.uid == comment.userID }) else {
+                guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
                     return CommentInfo(
                         writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
                         contents: comment.content
                     )
                 }
                 return CommentInfo(
-                    writerInfo: .init(name: user.nickname, job: "defaultJob", image: nil),
+                    writerInfo: .init(name: user.nickname, job: user.job, image: nil),
                     contents: comment.content
                 )
             }

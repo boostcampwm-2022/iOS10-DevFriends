@@ -13,4 +13,10 @@ extension Date {
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: self)
     }
+    
+    func toKoreanString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY년 MM월 dd일 HH:mm"
+        return dateFormatter.string(from: self)
+    }
 }
