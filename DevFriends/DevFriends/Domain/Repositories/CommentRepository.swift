@@ -19,6 +19,7 @@ final class DefaultCommentRepository: CommentRepository {
             .collection("Group")
             .document(groupId)
             .collection("Comment")
+            .order(by: "time")
             .getDocuments()
         
         let comments = querySnapshot.documentChanges.compactMap{ try? $0.document.data(as: Comment.self) }
