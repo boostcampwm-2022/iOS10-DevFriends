@@ -92,6 +92,7 @@
 		FC07DDC9292CE20100D16FBC /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC8292CE20100D16FBC /* UIColor+Custom.swift */; };
 		FC07DDCB292CEF6000D16FBC /* SubtitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDCA292CEF6000D16FBC /* SubtitleButton.swift */; };
 		FC07DDCD292CF45E00D16FBC /* FixMyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDCC292CF45E00D16FBC /* FixMyInfoViewController.swift */; };
+		FC07DDCF292D10C600D16FBC /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDCE292D10C600D16FBC /* PopupViewController.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
@@ -211,6 +212,7 @@
 		FC07DDC8292CE20100D16FBC /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
 		FC07DDCA292CEF6000D16FBC /* SubtitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleButton.swift; sourceTree = "<group>"; };
 		FC07DDCC292CF45E00D16FBC /* FixMyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixMyInfoViewController.swift; sourceTree = "<group>"; };
+		FC07DDCE292D10C600D16FBC /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				E33A20B1292665A700887EC9 /* SendableTextView.swift */,
 				E33A20B2292665A700887EC9 /* GroupFilterCollectionHeaderView.swift */,
 				E33A20B3292665A700887EC9 /* GroupFilterCollectionViewCell.swift */,
+				FC07DDCE292D10C600D16FBC /* PopupViewController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -986,6 +989,7 @@
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
 				E359EC7D292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift in Sources */,
 				E359EC682928C0C800CE5775 /* LoadChatMessagesUseCase.swift in Sources */,
+				FC07DDCF292D10C600D16FBC /* PopupViewController.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,

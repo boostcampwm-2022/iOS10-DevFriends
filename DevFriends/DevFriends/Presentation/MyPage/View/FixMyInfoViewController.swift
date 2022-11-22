@@ -59,6 +59,7 @@ class FixMyInfoViewController: DefaultViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
+            make.height.equalTo(40)
         }
     }
 }

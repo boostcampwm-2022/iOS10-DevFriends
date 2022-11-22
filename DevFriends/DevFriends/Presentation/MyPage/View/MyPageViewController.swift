@@ -38,12 +38,33 @@ final class MyPageViewController: DefaultViewController {
                 self?.showFixMyInfoViewController()
             }
             .store(in: &cancellables)
+        
+        logoutButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.showLogoutViewController()
+            }
+            .store(in: &cancellables)
     }
     
     func showFixMyInfoViewController() {
         let vc = FixMyInfoViewController()
         vc.view.backgroundColor = .white
         present(vc, animated: true)
+    }
+    
+    func showLogoutViewController() {
+        let vc = PopupViewController()
+        vc.set(title: "로그아웃", message: "정말 로그아웃 하시겠어요?", done: "로그아웃", close: "닫기")
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: false)
+        
+        /*mogakcoModalViewController.modalPresentationStyle = .pageSheet
+        if let sheet = mogakcoModalViewController.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+            sheet.largestUndimmedDetentIdentifier = .medium
+        }
+        present(mogakcoModalViewController, animated: true, completion: nil)*/
     }
     
     private func makeTitleLabel(text: String) -> UILabel {
