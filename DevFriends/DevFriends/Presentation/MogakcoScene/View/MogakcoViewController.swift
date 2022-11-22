@@ -92,6 +92,8 @@ final class MogakcoViewController: DefaultViewController {
     
     private var nowCollectionViewCellIndex = 0
     
+    private var isFirstLoadingMap = true
+    
     lazy var mogakcoModalViewController: MogakcoModalViewController = {
         let mogakcoModelViewController = MogakcoModalViewController()
         mogakcoModelViewController.delegate = self
@@ -128,10 +130,6 @@ final class MogakcoViewController: DefaultViewController {
         for annotation in mogakcoMapView.annotations {
             mogakcoMapView.deselectAnnotation(annotation, animated: true)
         }
-    }
-    
-    override func configureUI() {
-        setUserLocation()
     }
     
     override func layout() {
@@ -291,7 +289,7 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
                                                     longitude: location.coordinate.longitude)
             let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: coordinate, span: span)
-            mogakcoMapView.setRegion(region, animated: true)
+            mogakcoMapView.setRegion(region, animated: false)
             viewModel.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, distance: mapViewDistance())
         }
     }
@@ -304,6 +302,13 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             showMogakcoCollectionView()
             viewModel.fetchMogakco(latitude: latitude, longitude: longitude, distance: mapViewDistance())
         }
+    }
+    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+        if isFirstLoadingMap {
+            setUserLocation()
+            isFirstLoadingMap = false
+        }
+        
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
