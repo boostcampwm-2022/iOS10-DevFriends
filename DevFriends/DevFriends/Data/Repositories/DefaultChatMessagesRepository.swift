@@ -12,8 +12,7 @@ final class DefaultChatMessagesRepository {}
 
 extension DefaultChatMessagesRepository: ChatMessagesRepository {
     func fetchMessages(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws {
-        _ = Firestore
-            .firestore()
+        _ = firestore
             .collection("Chat")
             .document(chatUID)
             .collection("Message")
