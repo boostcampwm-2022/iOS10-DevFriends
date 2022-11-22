@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol GroupFilterViewControllerDelegate: AnyObject {
-    
+    func didSelectFilter ()
 //    func selectFilter(_ groupFilterViewController: GroupFilterViewController,
 //                      didSelectAlignType alignType: AlignType,
 //                      didSelectGroupType groupType: GroupType,

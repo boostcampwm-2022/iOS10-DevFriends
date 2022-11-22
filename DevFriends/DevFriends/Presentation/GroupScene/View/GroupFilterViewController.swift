@@ -15,9 +15,9 @@ final class GroupFilterViewController: DefaultViewController {
         case group = 1
         case category = 2
     }
-    private let viewModel = DefaultGroupFilterViewModel(fetchCategoryUseCase: DefaultFetchCategoryUseCase(categoryRepository: DefaultCategoryRepository()))
-    
-    var categoryDataSource: [String] = []
+    private let viewModel = DefaultGroupFilterViewModel(
+        fetchCategoryUseCase: DefaultFetchCategoryUseCase(
+            categoryRepository: DefaultCategoryRepository()))
     
     weak var delegate: GroupFilterViewControllerDelegate?
     
@@ -48,12 +48,11 @@ final class GroupFilterViewController: DefaultViewController {
     // MARK: - Initializer
     
     override func viewWillDisappear(_ animated: Bool) {
+        print(self.viewModel.alignFilter)
+        print(self.viewModel.groupFilter)
+        print(self.viewModel.categoryFilter)
         super.viewWillDisappear(animated)
-        
-//        delegate?.selectFilter(self,
-//                               didSelectAlignType: viewModel.selectedAlignType,
-//                               didSelectGroupType: viewModel.selectedGroupType,
-//                               didSelectCategoryType: viewModel.selectedCategoryTypes)
+        delegate?.didSelectFilter()
     }
     // MARK: - Setting
     
@@ -72,12 +71,12 @@ final class GroupFilterViewController: DefaultViewController {
     }
     
     override func bind() {
-        viewModel.categoriesSubject
+        viewModel.didUpdateFilterSubject
             .receive(on: RunLoop.main)
-            .sink { updatedList in
-                self.categoryDataSource = updatedList.map { $0.name }
+            .sink { _ in
                 self.collectionView.reloadData()
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
         
 //        viewModel.$categoryType
 //            .receive(on: DispatchQueue.main)
@@ -118,10 +117,12 @@ extension GroupFilterViewController: UICollectionViewDataSource {
     
     // 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 || section == 1 {
-            return 2
+        if section == 0 {
+            return viewModel.alignType.count
+        } else if section == 1 {
+            return viewModel.groupType.count
         } else {
-            return categoryDataSource.count
+            return viewModel.categoryType.count
         }
     }
     
@@ -131,26 +132,27 @@ extension GroupFilterViewController: UICollectionViewDataSource {
             withReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier,
             for: indexPath
         ) as? GroupFilterCollectionViewCell else { return UICollectionViewCell() }
-        
-        // 이 부분은 viewModel 구현 후에
-//        indexPath.item % 2 == 0 ? cell.configure("태그태그") : cell.configure("태그")
-//        if indexPath.item == 1 && indexPath.section == 0 {
-//            cell.isSelected = true
-//            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
-//        }
-        // 지워주시면 됩니다
-        
+  
         switch indexPath.section {
         case 0: // 정렬 순서
             cell.configure(viewModel.alignType[indexPath.item].rawValue)
+            if viewModel.alignType[indexPath.item] == viewModel.alignFilter {
+                cell.isSelected = true
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+            }
         case 1: // 모임 종류
             cell.configure(viewModel.groupType[indexPath.item].rawValue)
-//            if viewModel.selectedGroupType == viewModel.groupType[indexPath.item] {
-//                cell.isSelected = true
-//                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
-//            }
+            if let groupFilter = viewModel.groupFilter,
+               groupFilter == viewModel.groupType[indexPath.item] {
+                cell.isSelected = true
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+            }
         case 2: // 태그 종류
-            cell.configure(self.categoryDataSource[indexPath.item])
+            cell.configure(viewModel.categoryType[indexPath.item])
+            if viewModel.categoryFilter.contains(viewModel.categoryType[indexPath.item]) {
+                cell.isSelected = true
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+            }
         default:
             break
         }
@@ -182,30 +184,34 @@ extension GroupFilterViewController: UICollectionViewDelegate {
     
     // 셀 선택
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        switch indexPath.section {
-//        case 0: // 정렬 순서
-//            viewModel.selectedAlignType = viewModel.alignType[indexPath.item]
-//        case 1: // 모임 종류
-//            viewModel.selectedGroupType = viewModel.groupType[indexPath.item]
-//        case 2: // 태그 종류
-//            viewModel.selectedTagTypes.append(viewModel.categoryType[indexPath.item])
-//        default:
-//            break
-//        }
+        switch indexPath.section {
+        case 0: // 정렬 순서
+            viewModel.setAlignFilter(type: viewModel.alignType[indexPath.item])
+        case 1: // 모임 종류
+            viewModel.setGroupFilter(type: viewModel.groupType[indexPath.item])
+        case 2: // 태그 종류
+            viewModel.setCategoryFilter(category: viewModel.categoryType[indexPath.item])
+        default:
+            break
+        }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? GroupFilterCollectionViewCell else { return }
+        cell.isSelected = true
     }
     
     // 셀 선택 해제
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        switch indexPath.section {
-//        case 0: // 정렬 순서
-//            break
-//        case 1: // 모임 종류
-//            viewModel.selectedGroupType = nil
-//        case 2: // 태그 종류
-//            viewModel.selectedTagTypes.removeAll(where: $0 == viewModel.categoryType[indexPath.item])
-//        default:
-//            break
-//        }
+        switch indexPath.section {
+        case 0: // 정렬 순서
+            break
+        case 1: // 모임 종류
+            viewModel.removeAllGroupFilter()
+        case 2: // 태그 종류
+            viewModel.removeCategoryFilter(category: viewModel.categoryType[indexPath.item])
+        default:
+            break
+        }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? GroupFilterCollectionViewCell else { return }
+        cell.isSelected = false
     }
 }
 
@@ -221,7 +227,7 @@ extension GroupFilterViewController: UICollectionViewDelegateFlowLayout {
         case 1:
             tagString = viewModel.groupType[indexPath.item].rawValue
         case 2:
-            tagString = self.categoryDataSource[indexPath.item]
+            tagString = viewModel.categoryType[indexPath.item]
         default:
             tagString = ""
         }

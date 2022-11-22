@@ -196,13 +196,6 @@ final class GroupListViewController: DefaultViewController {
                 self.populateSnapShot(data: groupList, to: .filtered)
             }
             .store(in: &cancellables)
-        
-//        viewModel.$filterTrigger
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                self?.collectionView.reloadData()
-//            }
-//            .store(in: cancellabes)
     }
 }
 
@@ -211,6 +204,7 @@ final class GroupListViewController: DefaultViewController {
 extension GroupListViewController {
     @objc func didTapFilterButton(_ sender: UIButton) {
         let filterVC = GroupFilterViewController()
+        filterVC.delegate = self
         present(filterVC, animated: true)
     }
     
@@ -247,5 +241,12 @@ extension GroupListViewController {
 extension GroupListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Section \(indexPath.section) : \(indexPath.item)번째 아이템을 선택했습니다.")
+    }
+}
+
+// MARK: - GroupFilterViewController Delegate
+extension GroupListViewController: GroupFilterViewControllerDelegate {
+    func didSelectFilter() {
+        self.collectionView.reloadData()
     }
 }
