@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol GroupListViewModelInput {
-    func loadGroupList() async
+    func loadGroupList()
 }
 
 protocol GroupListViewModelOutput {
