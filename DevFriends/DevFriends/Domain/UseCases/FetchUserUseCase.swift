@@ -9,6 +9,7 @@ import Foundation
 
 protocol FetchUserUseCase {
     func execute(userId: String) async throws -> User
+    func execute(userIds: [String]) async throws -> [User]
 }
 
 final class DefaultFetchUserUseCase: FetchUserUseCase {
@@ -20,5 +21,9 @@ final class DefaultFetchUserUseCase: FetchUserUseCase {
     
     func execute(userId: String) async throws -> User {
         return try await self.userRepository.fetch(userId)
+    }
+    
+    func execute(userIds: [String]) async throws -> [User] {
+        return try await self.userRepository.fetch(userIds)
     }
 }

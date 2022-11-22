@@ -49,6 +49,10 @@ final class PostDetailInfoView: UIView {
         self.postWriterInfoView.set(info: postWriterInfo)
     }
     
+    func set(postDetailContents: PostDetailContents) {
+        self.postDetailContentsView.set(contents: postDetailContents)
+    }
+    
     func set(postWriterInfo: PostWriterInfo, postDetailContents: PostDetailContents) {
         self.postWriterInfoView.set(info: postWriterInfo)
         self.postDetailContentsView.set(contents: postDetailContents)

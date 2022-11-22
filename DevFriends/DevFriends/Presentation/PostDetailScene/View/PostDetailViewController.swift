@@ -55,8 +55,10 @@ final class PostDetailViewController: DefaultViewController {
         type: "모각코"
     )
     private let testUserRepository: UserRepository
+    private let testCategoryRepository: CategoryRepository
     private let testCommentRepository: CommentRepository
     private let testFetchUserUseCase: FetchUserUseCase
+    private let testCategoryUseCase: FetchCategoryUseCase
     private let testFetchCommentsUseCase: FetchCommentsUseCase
     private let viewModel: PostDetailViewModel
     
@@ -65,13 +67,16 @@ final class PostDetailViewController: DefaultViewController {
     init() {
         testUserRepository = DefaultUserRepository()
         testCommentRepository = DefaultCommentRepository()
+        testCategoryRepository = DefaultCategoryRepository()
         
         testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
+        testCategoryUseCase = DefaultFetchCategoryUseCase(categoryRepository: testCategoryRepository)
         testFetchCommentsUseCase = DefaultFetchCommentsUseCase(commentRepository: testCommentRepository)
         
         viewModel = DefaultPostDetailViewModel(
             group: testGroup,
             fetchUserUseCase: testFetchUserUseCase,
+            fetchCategoryUseCase: testCategoryUseCase,
             fetchCommentsUseCase: testFetchCommentsUseCase
         )
         
@@ -122,7 +127,7 @@ final class PostDetailViewController: DefaultViewController {
     private func setupViews() {
         postDetailInfoView.set(
             postWriterInfo: viewModel.postWriterInfoSubject.value,
-            postDetailContents: viewModel.postDetailContents
+            postDetailContents: viewModel.postDetailContentsSubject.value
         )
         
         postAttentionView.set(info: viewModel.postAttentionInfo)
@@ -135,6 +140,13 @@ final class PostDetailViewController: DefaultViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] postWriterInfo in
                 self?.postDetailInfoView.set(postWriterInfo: postWriterInfo)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.postDetailContentsSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] postDetailContents in
+                self?.postDetailInfoView.set(postDetailContents: postDetailContents)
             }
             .store(in: &cancellables)
         

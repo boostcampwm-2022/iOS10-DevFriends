@@ -14,7 +14,7 @@ protocol PostDetailViewModelInput {
 
 protocol PostDetailViewModelOutput {
     var postWriterInfoSubject: CurrentValueSubject<PostWriterInfo, Never>{ get }
-    var postDetailContents: PostDetailContents { get }
+    var postDetailContentsSubject: CurrentValueSubject<PostDetailContents, Never>{ get }
     var postAttentionInfo: PostAttentionInfo { get }
     var commentsSubject: CurrentValueSubject<[CommentInfo], Never> { get }
 }
@@ -24,28 +24,44 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let group: Group
     private let fetchUserUseCase: FetchUserUseCase
+    private let fetchCategoryUseCase: FetchCategoryUseCase
     private let fetchCommentsUseCase: FetchCommentsUseCase
 //    private let fetchImageUseCase: FetchImageUseCase
     
     // MARK: - OUTPUT
     var postWriterInfoSubject = CurrentValueSubject<PostWriterInfo, Never>(.init(name: "", job: "", image: nil))
-    var postDetailContents: PostDetailContents
+    var postDetailContentsSubject = CurrentValueSubject<PostDetailContents, Never>(
+        .init(
+            title: "",
+            description: "",
+            interests: [],
+            time: "",
+            likeCount: 0,
+            hitsCount: 0
+        )
+    )
     var postAttentionInfo: PostAttentionInfo
     var commentsSubject = CurrentValueSubject<[CommentInfo], Never>([])
     
-    init(group: Group, fetchUserUseCase: FetchUserUseCase, fetchCommentsUseCase: FetchCommentsUseCase) {
+    init(group: Group,
+         fetchUserUseCase: FetchUserUseCase,
+         fetchCategoryUseCase: FetchCategoryUseCase,
+         fetchCommentsUseCase: FetchCommentsUseCase
+    ) {
         self.group = group
         self.fetchUserUseCase = fetchUserUseCase
+        self.fetchCategoryUseCase = fetchCategoryUseCase
         self.fetchCommentsUseCase = fetchCommentsUseCase
         
-        postDetailContents = .init(
+        postDetailContentsSubject.value = .init(
             title: group.title,
             description: group.description,
-            interests: group.categories,
+            interests: [],
             time: "0000년 0월 0일 (일) 오전 0:00",
             likeCount: group.like,
             hitsCount: 0
         )
+        
         postAttentionInfo = .init(
             likeOrNot: false,
             commentsCount: 0,
@@ -67,6 +83,36 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             print(error)
         }
         return resultUser
+    }
+    
+    private func loadUsers(ids: [String]) async -> [User] {
+        let loadTask = Task {
+            return try await fetchUserUseCase.execute(userIds: ids)
+        }
+        let result = await loadTask.result
+        
+        var resultUsers = [User]()
+        do {
+            resultUsers = try result.get()
+        } catch {
+            print(error)
+        }
+        return resultUsers
+    }
+    
+    private func loadCategories() async -> [Category] {
+        let loadTask = Task {
+            return try await fetchCategoryUseCase.execute(categoryIds: group.categories)
+        }
+        let result = await loadTask.result
+        
+        var resultCategories = [Category]()
+        do {
+            resultCategories = try result.get()
+        } catch {
+            print(error)
+        }
+        return resultCategories
     }
     
     private func loadComments() async -> [Comment] {
@@ -96,13 +142,24 @@ extension DefaultPostDetailViewModel {
             guard let user = await loadUser(id: group.managerID) else { return }
             postWriterInfoSubject.value = .init(name: user.nickname, job: "defaultJob", image: nil)
             
-            let comments = await loadComments()
-            commentsSubject.value = comments.map { comment in
-//                guard let user = await loadUser(id: comment.userID) else { return }
-//                CommentInfo(writerInfo: .init(name: user.nickname, job: "defaultJob", image: nil), contents: )
-                return CommentInfo(writerInfo: .init(name: "commentUser", job: "comments", image: nil), contents: comment.content)
-            }
+            let categories = await loadCategories()
+            postDetailContentsSubject.value = .init(
+                title: group.title,
+                description: group.description,
+                interests: categories.map{ $0.name },
+                time: "0000년 0월 0일 (일) 오전 0:00",
+                likeCount: group.like,
+                hitsCount: 0
+            )
             
+            let comments = await loadComments()
+            let commentUsers = await loadUsers(ids: comments.map{ $0.userID })
+            commentsSubject.value = comments.map { comment in
+                guard let user = commentUsers.first(where: { $0.uid == comment.userID }) else {
+                    return CommentInfo(writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil), contents: comment.content)
+                }
+                return CommentInfo(writerInfo: .init(name: user.nickname, job: "defaultJob", image: nil), contents: comment.content)
+            }
         }
     }
 }
