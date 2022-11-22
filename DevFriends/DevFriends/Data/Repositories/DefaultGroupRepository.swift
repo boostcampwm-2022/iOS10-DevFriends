@@ -45,6 +45,32 @@ class DefaultGroupRepository: GroupRepository {
         return groups
     }
     
+    func fetch(filter: Filter) async throws -> [Group] {
+        var groups: [Group] = []
+        let snapshot: QuerySnapshot
+        if let groupFilter = filter.groupFilter {
+            snapshot = try await firestore.collection("Group")
+                .whereField("type", isEqualTo: groupFilter.rawValue)
+                .getDocuments()
+        } else {
+            snapshot = try await firestore.collection("Group")
+                .getDocuments()
+        }
+        
+        for document in snapshot.documents {
+            let groupData = document.data()
+            if let group = makeGroup(group: groupData) {
+                // 필터 카테고리가 비어있으면 필터링 x
+                // 필터 카테고리 중 하나라도 모임 카테고리가 겹쳐야 함
+                if filter.categoryFilter.isEmpty ||
+                   !group.categories.filter({ filter.categoryFilter.contains($0) }).isEmpty {
+                    groups.append(group)
+                }
+            }
+        }
+        return groups
+    }
+    
     func makeGroup(group: [String : Any]) -> Group? {
         guard let title = group["title"] as? String,
               let description = group["description"] as? String,

@@ -18,8 +18,8 @@ final class GroupFilterViewController: DefaultViewController {
     private let viewModel = DefaultGroupFilterViewModel(
         fetchCategoryUseCase: DefaultFetchCategoryUseCase(
             categoryRepository: DefaultCategoryRepository()))
-    
     weak var delegate: GroupFilterViewControllerDelegate?
+    var initialFilter: Filter?
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -46,13 +46,21 @@ final class GroupFilterViewController: DefaultViewController {
     }()
     
     // MARK: - Initializer
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let initialFilter {
+            self.viewModel.initFilter(filter: initialFilter)
+        }
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         print(self.viewModel.alignFilter)
         print(self.viewModel.groupFilter)
         print(self.viewModel.categoryFilter)
         super.viewWillDisappear(animated)
-        delegate?.didSelectFilter()
+        delegate?.didSelectFilter(filter: Filter(alignFilter: self.viewModel.alignFilter,
+                                                 groupFilter: self.viewModel.groupFilter,
+                                                 categoryFilter: self.viewModel.categoryFilter))
     }
     // MARK: - Setting
     

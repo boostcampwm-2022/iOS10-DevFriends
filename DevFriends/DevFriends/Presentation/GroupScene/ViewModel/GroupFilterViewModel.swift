@@ -10,6 +10,7 @@ import Combine
 
 protocol GroupFilterViewModelInput {
     func loadCategories()
+    func initFilter(filter: Filter)
     func setAlignFilter(type: AlignType)
     func setGroupFilter(type: GroupType)
     func removeAllGroupFilter()
@@ -56,6 +57,12 @@ extension DefaultGroupFilterViewModel {
             self.categoryType = categories.map { return $0.name }
             didUpdateFilterSubject.send()
         }
+    }
+    func initFilter(filter: Filter) {
+        self.alignFilter = filter.alignFilter
+        self.groupFilter = filter.groupFilter
+        self.categoryFilter = filter.categoryFilter
+        didUpdateFilterSubject.send()
     }
     func setAlignFilter(type: AlignType) {
         self.alignFilter = type

@@ -11,8 +11,7 @@ import UIKit
 
 final class GroupListViewController: DefaultViewController {
     private let viewModel = DefaultGroupListViewModel(
-        fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()),
-        fetchGroupCellInfoUseCase: DefaultFecthGroupCellInfoUseCase())
+        fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()))
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -61,7 +60,7 @@ final class GroupListViewController: DefaultViewController {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
-        cell.set(data)
+            cell.set(data.group)
         return cell
     }
     
@@ -173,6 +172,9 @@ final class GroupListViewController: DefaultViewController {
     }
     
     private func populateSnapShot(data: [GroupCellInfo], to section: GroupListSection) {
+        print("populate", section)
+        let oldItem = self.collectionViewSnapShot.itemIdentifiers(inSection: section)
+        self.collectionViewSnapShot.deleteItems(oldItem)
         self.collectionViewSnapShot.appendItems(data, toSection: section)
         self.collectionViewDiffableDataSource.apply(collectionViewSnapShot, animatingDifferences: true)
     }
@@ -205,6 +207,7 @@ extension GroupListViewController {
     @objc func didTapFilterButton(_ sender: UIButton) {
         let filterVC = GroupFilterViewController()
         filterVC.delegate = self
+        filterVC.initialFilter = self.viewModel.groupFilter
         present(filterVC, animated: true)
     }
     
@@ -246,7 +249,8 @@ extension GroupListViewController: UICollectionViewDelegate {
 
 // MARK: - GroupFilterViewController Delegate
 extension GroupListViewController: GroupFilterViewControllerDelegate {
-    func didSelectFilter() {
-        self.collectionView.reloadData()
+    func didSelectFilter(filter: Filter) {
+        self.viewModel.updateFilter(filter: filter)
+        self.viewModel.loadGroupList()
     }
 }

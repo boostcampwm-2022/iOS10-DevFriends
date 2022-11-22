@@ -10,6 +10,7 @@ import Combine
 
 protocol GroupListViewModelInput {
     func loadGroupList()
+    func updateFilter(filter: Filter)
 }
 
 protocol GroupListViewModelOutput {
@@ -17,15 +18,20 @@ protocol GroupListViewModelOutput {
     var filteredGroupsSubject: CurrentValueSubject<[GroupCellInfo], Never> { get }
 }
 
-protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {}
+protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
+    var recommandFilter: Filter { get set }
+    var groupFilter: Filter { get set }
+}
 
 final class DefaultGroupListViewModel: GroupListViewModel {
     private let fetchGroupUseCase: FetchGroupUseCase
-    private let fetchGroupCellInfoUseCase: FetchGroupCellInfoUseCase
+    var recommandFilter: Filter
+    var groupFilter: Filter = Filter(alignFilter: .newest, categoryFilter: [])
     
-    init(fetchGroupUseCase: FetchGroupUseCase, fetchGroupCellInfoUseCase: FetchGroupCellInfoUseCase) {
+    init(fetchGroupUseCase: FetchGroupUseCase) {
         self.fetchGroupUseCase = fetchGroupUseCase
-        self.fetchGroupCellInfoUseCase = fetchGroupCellInfoUseCase
+        // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
+        self.recommandFilter = Filter(alignFilter: .newest, categoryFilter: [])
     }
     
     // MARK: OUTPUT
@@ -37,18 +43,19 @@ final class DefaultGroupListViewModel: GroupListViewModel {
 extension DefaultGroupListViewModel {
     func loadGroupList() {
         Task {
-            let groups = try await fetchGroupUseCase
-                .execute(groupType: nil, location: nil)
-            let groupCellInfo = await fetchGroupCellInfoUseCase
-                .execute(groupsData: groups)
-            recommandGroupsSubject.send(groupCellInfo) // TODO: 이후에 필터링 진행
+            let recommandGroups = try await fetchGroupUseCase
+                .execute(filter: self.recommandFilter)
+            // 셀의 중복 방지를 위해, uuid 정보가 있는 GroupCellInfo로 한번 더 mapping 해줬습니다
+            let recommandGroupCellInfos = recommandGroups.map { GroupCellInfo(group: $0) }
+            recommandGroupsSubject.send(recommandGroupCellInfos)
             
-            let testCellInfo = await fetchGroupCellInfoUseCase
-            // TODO: Problem
-            // 여기서 Cell info를 한번더 불러오는건 원래는 아주 낭비인데,
-            // 이렇게 해서 UUID를 다른 값으로 초기화시키지 않으면, 같은 아이템의 경우 표시가 정상적으로 되지 않는다
-                .execute(groupsData: groups)
-            filteredGroupsSubject.send(testCellInfo) // TODO: 이후에 필터링 진행
+            let filteredGroups = try await fetchGroupUseCase
+                .execute(filter: self.groupFilter)
+            let filteredGroupCellInfos = filteredGroups.map { GroupCellInfo(group: $0) }
+            filteredGroupsSubject.send(filteredGroupCellInfos)
         }
+    }
+    func updateFilter(filter: Filter) {
+        self.groupFilter = filter
     }
 }
