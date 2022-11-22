@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GroupRepository {
-    func fetch(groupType: GroupType?, location: (latitude: Double, longitude: Double)?, distance: Double?) async throws -> [Group]
+    func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group]
     
     func save(group: Group)
 }

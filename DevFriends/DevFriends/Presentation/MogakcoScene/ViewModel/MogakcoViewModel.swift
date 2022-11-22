@@ -9,7 +9,7 @@ import Combine
 
 protocol MogakcoViewModelInput {
     func fetchAllMogakco()
-    func fetchMogakco(latitude: Double, longitude: Double, distance: Double)
+    func fetchMogakco(location: Location, distance: Double)
     func nowMogakco(index: Int)
     func nowMogakcoWithAllList(index: Int, distance: Double)
 }
@@ -46,10 +46,10 @@ class MogakcoViewModel: MogakcoViewModelType {
         }
     }
     
-    func fetchMogakco(latitude: Double, longitude: Double, distance: Double) {
+    func fetchMogakco(location: Location, distance: Double) {
         Task {
             let groups = try await fetchGroupUseCase
-                .execute(groupType: .mogakco, location: (latitude, longitude), distance: distance)
+                .execute(groupType: .mogakco, location: location, distance: distance)
             nowMogakcoList = groups
             mogakcosSubject.send(groups)
         }
@@ -66,9 +66,7 @@ class MogakcoViewModel: MogakcoViewModelType {
         if index < allMogakcoList.count {
             nowMogakco = allMogakcoList[index]
             nowMogakcoSubject.send(allMogakcoList[index])
-            fetchMogakco(latitude: allMogakcoList[index].location.latitude,
-                         longitude: allMogakcoList[index].location.longitude,
-                         distance: distance)
+            fetchMogakco(location: allMogakcoList[index].location, distance: distance)
         }
     }
 }

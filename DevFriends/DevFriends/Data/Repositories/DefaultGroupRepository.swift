@@ -12,7 +12,7 @@ import CoreLocation
 class DefaultGroupRepository: GroupRepository {
     let firestore = Firestore.firestore()
     
-    func fetch(groupType: GroupType?, location: (latitude: Double, longitude: Double)?, distance: Double?) async throws -> [Group] {
+    func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group] {
         var groups: [Group] = []
         var query: Query
         if let location = location, let distance = distance {
@@ -80,7 +80,7 @@ class DefaultGroupRepository: GroupRepository {
                      description: description,
                      like: like,
                      limitedNumberPeople: limitedNumberPeople,
-                     location: (location.latitude, location.longitude),
+                     location: Location(latitude: location.latitude, longitude: location.longitude),
                      managerID: managerID,
                      type: groupType)
     }

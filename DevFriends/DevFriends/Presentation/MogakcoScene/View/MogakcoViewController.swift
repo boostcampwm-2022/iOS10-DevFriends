@@ -6,9 +6,9 @@
 //
 
 import Combine
-import UIKit
-import SnapKit
 import MapKit
+import SnapKit
+import UIKit
 
 final class MogakcoViewController: DefaultViewController {
     private lazy var mogakcoMapView: MKMapView = {
@@ -228,7 +228,8 @@ final class MogakcoViewController: DefaultViewController {
     
     private func searchOnCurrentLocation() {
         let currentLocation = mogakcoMapView.region.center
-        viewModel.fetchMogakco(latitude: currentLocation.latitude, longitude: currentLocation.longitude, distance: mapViewDistance())
+        let location = Location(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+        viewModel.fetchMogakco(location: location, distance: mapViewDistance())
     }
     
     private func populateSnapshot(data: [Group]) {
@@ -290,7 +291,8 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: coordinate, span: span)
             mogakcoMapView.setRegion(region, animated: false)
-            viewModel.fetchMogakco(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, distance: mapViewDistance())
+            let location = Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            viewModel.fetchMogakco(location: location, distance: mapViewDistance())
         }
     }
     
@@ -300,7 +302,8 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             let longitude = annotation.coordinate.longitude
             moveLocation(latitudeValue: latitude, longtudeValue: longitude, delta: 0.01)
             showMogakcoCollectionView()
-            viewModel.fetchMogakco(latitude: latitude, longitude: longitude, distance: mapViewDistance())
+            let location = Location(latitude: latitude, longitude: longitude)
+            viewModel.fetchMogakco(location: location, distance: mapViewDistance())
         }
     }
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
