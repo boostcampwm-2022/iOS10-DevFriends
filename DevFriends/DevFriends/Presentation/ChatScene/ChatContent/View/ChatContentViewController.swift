@@ -23,7 +23,7 @@ class ChatContentViewController: DefaultViewController {
         return tableView
     }()
     
-    private lazy var messageTableViewDiffableDataSource = {
+    private lazy var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message> = {
         let diffableDataSource = UITableViewDiffableDataSource<Section, Message>(
             tableView: messageTableView
         ) { tableView, indexPath, data -> UITableViewCell in

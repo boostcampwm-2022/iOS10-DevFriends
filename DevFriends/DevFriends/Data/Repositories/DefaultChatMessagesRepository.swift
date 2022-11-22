@@ -20,9 +20,12 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
             .addSnapshotListener { snapshot, error in
                 guard let snapshot = snapshot, error == nil else { fatalError("message snapshot error occured!!") }
                 
-                let messages = snapshot.documentChanges.compactMap { try? $0.document.data(as: Message.self) }
+                let messages = snapshot.documentChanges.compactMap {
+                    try? $0.document.data(as: MessageResponseDTO.self)
+                    
+                }
                 
-                completion(messages)
+                completion(messages.map{$0.toDomain()})
             }
     }
     
@@ -32,10 +35,17 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
                 .collection("Chat")
                 .document(chatUID)
                 .collection("Message")
-                .addDocument(from: message)
+                .addDocument(from: makeMessageResponseDTO(message: message))
             print("message stored with new document reference: \(newDocReference)")
         } catch {
             print(error)
         }
+    }
+    
+    func makeMessageResponseDTO(message: Message) -> MessageResponseDTO {
+        return MessageResponseDTO(content: message.content,
+                                  time: message.time,
+                                  userID: message.userID,
+                                  userNickname: message.userNickname)
     }
 }
