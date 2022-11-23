@@ -85,13 +85,6 @@ final class GroupFilterViewController: DefaultViewController {
                 self.collectionView.reloadData()
             }
             .store(in: &cancellables)
-        
-//        viewModel.$categoryType
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                self?.collectionView.reloadSections(IndexSet(integer: 2))
-//            }
-//            .store(in: cancellabes)
     }
 }
 
@@ -112,9 +105,9 @@ extension GroupFilterViewController: UICollectionViewDataSource {
             for: indexPath
         ) as? GroupFilterCollectionHeaderView else { return UICollectionReusableView() }
         
-        if indexPath.section == 0 {
+        if indexPath.section == SectionType.align.rawValue {
             header.configure("정렬 순서")
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == SectionType.group.rawValue {
             header.configure("모임 종류")
         } else {
             header.configure("카테고리")
@@ -125,9 +118,9 @@ extension GroupFilterViewController: UICollectionViewDataSource {
     
     // 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
+        if section == SectionType.align.rawValue {
             return viewModel.alignType.count
-        } else if section == 1 {
+        } else if section == SectionType.group.rawValue {
             return viewModel.groupType.count
         } else {
             return viewModel.categoryType.count
@@ -142,20 +135,20 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         ) as? GroupFilterCollectionViewCell else { return UICollectionViewCell() }
   
         switch indexPath.section {
-        case 0: // 정렬 순서
+        case SectionType.align.rawValue: // 정렬 순서
             cell.configure(viewModel.alignType[indexPath.item].rawValue)
             if viewModel.alignType[indexPath.item] == viewModel.alignFilter {
                 cell.isSelected = true
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
-        case 1: // 모임 종류
+        case SectionType.group.rawValue: // 모임 종류
             cell.configure(viewModel.groupType[indexPath.item].rawValue)
             if let groupFilter = viewModel.groupFilter,
                groupFilter == viewModel.groupType[indexPath.item] {
                 cell.isSelected = true
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
-        case 2: // 태그 종류
+        case SectionType.category.rawValue: // 태그 종류
             cell.configure(viewModel.categoryType[indexPath.item])
             if viewModel.categoryFilter.contains(viewModel.categoryType[indexPath.item]) {
                 cell.isSelected = true
@@ -174,7 +167,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
 extension GroupFilterViewController: UICollectionViewDelegate {
     // 셀이 선택되기 전
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 2 { return true }
+        if indexPath.section == SectionType.category.rawValue { return true }
         
         collectionView.indexPathsForSelectedItems?
             .filter { $0.section == indexPath.section && $0 != indexPath }
@@ -184,7 +177,7 @@ extension GroupFilterViewController: UICollectionViewDelegate {
     
     // 셀이 선택 해제되기 전
     func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
-        if indexPath.section != 0 { return true }
+        if indexPath.section != SectionType.align.rawValue { return true }
         
         guard let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems else { return false }
         return !indexPathsForSelectedItems.filter { $0.section == indexPath.section }.contains(indexPath)
@@ -193,11 +186,11 @@ extension GroupFilterViewController: UICollectionViewDelegate {
     // 셀 선택
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
-        case 0: // 정렬 순서
+        case SectionType.align.rawValue: // 정렬 순서
             viewModel.setAlignFilter(type: viewModel.alignType[indexPath.item])
-        case 1: // 모임 종류
+        case SectionType.group.rawValue: // 모임 종류
             viewModel.setGroupFilter(type: viewModel.groupType[indexPath.item])
-        case 2: // 태그 종류
+        case SectionType.category.rawValue: // 태그 종류
             viewModel.setCategoryFilter(category: viewModel.categoryType[indexPath.item])
         default:
             break
@@ -209,11 +202,11 @@ extension GroupFilterViewController: UICollectionViewDelegate {
     // 셀 선택 해제
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         switch indexPath.section {
-        case 0: // 정렬 순서
+        case SectionType.align.rawValue: // 정렬 순서
             break
-        case 1: // 모임 종류
+        case SectionType.group.rawValue: // 모임 종류
             viewModel.removeAllGroupFilter()
-        case 2: // 태그 종류
+        case SectionType.category.rawValue: // 태그 종류
             viewModel.removeCategoryFilter(category: viewModel.categoryType[indexPath.item])
         default:
             break
@@ -230,11 +223,11 @@ extension GroupFilterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let tagString: String
         switch indexPath.section {
-        case 0:
+        case SectionType.align.rawValue:
             tagString = viewModel.alignType[indexPath.item].rawValue
-        case 1:
+        case SectionType.group.rawValue:
             tagString = viewModel.groupType[indexPath.item].rawValue
-        case 2:
+        case SectionType.category.rawValue:
             tagString = viewModel.categoryType[indexPath.item]
         default:
             tagString = ""

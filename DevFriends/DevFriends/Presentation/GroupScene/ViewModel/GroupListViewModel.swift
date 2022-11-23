@@ -46,12 +46,12 @@ extension DefaultGroupListViewModel {
             let recommandGroups = try await fetchGroupUseCase
                 .execute(filter: self.recommandFilter)
             // 셀의 중복 방지를 위해, uuid 정보가 있는 GroupCellInfo로 한번 더 mapping 해줬습니다
-            let recommandGroupCellInfos = recommandGroups.map { GroupCellInfo(group: $0) }
+            let recommandGroupCellInfos = recommandGroups.map { GroupCellInfo(group: $0, at: .recommand) }
             recommandGroupsSubject.send(recommandGroupCellInfos)
             
             let filteredGroups = try await fetchGroupUseCase
                 .execute(filter: self.groupFilter)
-            let filteredGroupCellInfos = filteredGroups.map { GroupCellInfo(group: $0) }
+            let filteredGroupCellInfos = filteredGroups.map { GroupCellInfo(group: $0, at: .filtered) }
             filteredGroupsSubject.send(filteredGroupCellInfos)
         }
     }
