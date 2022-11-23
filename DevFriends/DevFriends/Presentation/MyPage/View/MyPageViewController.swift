@@ -33,6 +33,11 @@ final class MyPageViewController: DefaultViewController {
     private let withdrawalButton = SubtitleButton(text: "회원탈퇴")
     
     override func bind() {
+        makedGroupButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.showMyGroupsViewController()
+            }
+            .store(in: &cancellables)
         fixMyInfoButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.showFixMyInfoViewController()
@@ -44,6 +49,18 @@ final class MyPageViewController: DefaultViewController {
                 self?.showLogoutViewController()
             }
             .store(in: &cancellables)
+        
+        withdrawalButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.showWithdrawalViewController()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func showMyGroupsViewController() {
+        let vc = MyGroupsViewController()
+        vc.view.backgroundColor = .white
+        present(vc, animated: true)
     }
     
     func showFixMyInfoViewController() {
@@ -57,14 +74,13 @@ final class MyPageViewController: DefaultViewController {
         vc.set(title: "로그아웃", message: "정말 로그아웃 하시겠어요?", done: "로그아웃", close: "닫기")
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false)
-        
-        /*mogakcoModalViewController.modalPresentationStyle = .pageSheet
-        if let sheet = mogakcoModalViewController.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-            sheet.largestUndimmedDetentIdentifier = .medium
-        }
-        present(mogakcoModalViewController, animated: true, completion: nil)*/
+    }
+    
+    func showWithdrawalViewController() {
+        let vc = PopupViewController()
+        vc.set(title: "탈퇴하기", message: "계정을 삭제하면 개발친구의 모든 활동 정보가 삭제됩니다. 계정 삭제 후 7일간 다시 가입할 수 없습니다.", done: "탈퇴하기", close: "취소")
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: false)
     }
     
     private func makeTitleLabel(text: String) -> UILabel {

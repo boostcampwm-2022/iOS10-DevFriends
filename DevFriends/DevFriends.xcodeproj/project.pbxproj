@@ -94,6 +94,9 @@
 		FC07DDCD292CF45E00D16FBC /* FixMyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDCC292CF45E00D16FBC /* FixMyInfoViewController.swift */; };
 		FC07DDCF292D10C600D16FBC /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDCE292D10C600D16FBC /* PopupViewController.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
+		FC42246E292DCE2B0060C0F7 /* MyGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC42246D292DCE2B0060C0F7 /* MyGroupsViewController.swift */; };
+		FC422473292DCEE00060C0F7 /* MyGroupsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC422472292DCEE00060C0F7 /* MyGroupsType.swift */; };
+		FC422475292DD05C0060C0F7 /* MyGroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC422474292DD05C0060C0F7 /* MyGroupsViewModel.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
 		FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */; };
@@ -215,6 +218,9 @@
 		FC07DDCE292D10C600D16FBC /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		FC42246D292DCE2B0060C0F7 /* MyGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsViewController.swift; sourceTree = "<group>"; };
+		FC422472292DCEE00060C0F7 /* MyGroupsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsType.swift; sourceTree = "<group>"; };
+		FC422474292DD05C0060C0F7 /* MyGroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsViewModel.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -557,6 +563,7 @@
 		FC07DDC4292CD79000D16FBC /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				FC422471292DCED00060C0F7 /* ViewModel */,
 				FC07DDC5292CD7A100D16FBC /* View */,
 			);
 			path = MyPage;
@@ -568,8 +575,18 @@
 				FC07DDC6292CD9EC00D16FBC /* MyPageViewController.swift */,
 				FC07DDCA292CEF6000D16FBC /* SubtitleButton.swift */,
 				FC07DDCC292CF45E00D16FBC /* FixMyInfoViewController.swift */,
+				FC42246D292DCE2B0060C0F7 /* MyGroupsViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FC422471292DCED00060C0F7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FC422472292DCEE00060C0F7 /* MyGroupsType.swift */,
+				FC422474292DD05C0060C0F7 /* MyGroupsViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
@@ -964,6 +981,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E33A204029262B6B00887EC9 /* GroupListViewController.swift in Sources */,
+				FC42246E292DCE2B0060C0F7 /* MyGroupsViewController.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
@@ -1024,6 +1042,7 @@
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				FC07DDCD292CF45E00D16FBC /* FixMyInfoViewController.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
+				FC422475292DD05C0060C0F7 /* MyGroupsViewModel.swift in Sources */,
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
@@ -1048,6 +1067,7 @@
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
+				FC422473292DCEE00060C0F7 /* MyGroupsType.swift in Sources */,
 				E33A20DE2927658700887EC9 /* ChatViewModel.swift in Sources */,
 				E33A20942926623200887EC9 /* MogakcoModalViewController.swift in Sources */,
 			);
