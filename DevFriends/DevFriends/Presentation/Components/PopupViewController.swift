@@ -7,6 +7,20 @@
 
 import UIKit
 
+struct Popup {
+    let title: String
+    let message: String
+    let done: String
+    let close: String
+    
+    init(title: String, message: String, done: String = "확인", close: String = "닫기") {
+        self.title = title
+        self.message = message
+        self.done = done
+        self.close = close
+    }
+}
+
 class PopupViewController: DefaultViewController {
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -41,11 +55,11 @@ class PopupViewController: DefaultViewController {
         return view
     }()
     
-    func set(title: String, message: String, done: String = "확인", close: String = "닫기") {
-        titleLabel.text = title
-        messageLabel.text = message
-        doneButton.setTitle(done, for: .normal)
-        closeButton.setTitle(close, for: .normal)
+    func set(popup: Popup) {
+        titleLabel.text = popup.title
+        messageLabel.text = popup.message
+        doneButton.setTitle(popup.done, for: .normal)
+        closeButton.setTitle(popup.close, for: .normal)
     }
     
     override func configureUI() {

@@ -8,8 +8,9 @@
 import Foundation
 
 final class MyGroupsViewModel {
+    let type: MyGroupsType
     
     init(type: MyGroupsType) {
-        
+        self.type = type
     }
 }

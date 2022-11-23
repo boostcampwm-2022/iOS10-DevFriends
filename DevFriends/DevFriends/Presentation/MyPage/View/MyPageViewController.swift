@@ -32,55 +32,52 @@ final class MyPageViewController: DefaultViewController {
     private let logoutButton = SubtitleButton(text: "로그아웃")
     private let withdrawalButton = SubtitleButton(text: "회원탈퇴")
     
+    private let viewModel: MyPageViewModel
+    
+    init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func bind() {
         makedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.showMyGroupsViewController()
+                self?.viewModel.showMakedGroup()
             }
             .store(in: &cancellables)
+        
+        participatedGroupButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.showParticipatedGroup()
+            }
+            .store(in: &cancellables)
+        likedGroupButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.showLikedGroup()
+            }
+            .store(in: &cancellables)
+        
         fixMyInfoButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.showFixMyInfoViewController()
+                self?.viewModel.showFixMyInfo()
             }
             .store(in: &cancellables)
         
         logoutButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.showLogoutViewController()
+                self?.viewModel.showLogout()
             }
             .store(in: &cancellables)
         
         withdrawalButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.showWithdrawalViewController()
+                self?.viewModel.showWithdrawl()
             }
             .store(in: &cancellables)
-    }
-    
-    func showMyGroupsViewController() {
-        let vc = MyGroupsViewController()
-        vc.view.backgroundColor = .white
-        present(vc, animated: true)
-    }
-    
-    func showFixMyInfoViewController() {
-        let vc = FixMyInfoViewController()
-        vc.view.backgroundColor = .white
-        present(vc, animated: true)
-    }
-    
-    func showLogoutViewController() {
-        let vc = PopupViewController()
-        vc.set(title: "로그아웃", message: "정말 로그아웃 하시겠어요?", done: "로그아웃", close: "닫기")
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: false)
-    }
-    
-    func showWithdrawalViewController() {
-        let vc = PopupViewController()
-        vc.set(title: "탈퇴하기", message: "계정을 삭제하면 개발친구의 모든 활동 정보가 삭제됩니다. 계정 삭제 후 7일간 다시 가입할 수 없습니다.", done: "탈퇴하기", close: "취소")
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: false)
     }
     
     private func makeTitleLabel(text: String) -> UILabel {

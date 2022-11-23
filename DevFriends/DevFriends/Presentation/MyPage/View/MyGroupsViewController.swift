@@ -33,6 +33,17 @@ final class MyGroupsViewController: DefaultViewController {
     
     private var groupCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
+    let viewModel: MyGroupsViewModel
+    
+    init(viewModel: MyGroupsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func configureUI() {
         setupCollectionView()
     }
