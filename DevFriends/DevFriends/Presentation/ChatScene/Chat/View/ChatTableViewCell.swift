@@ -4,7 +4,6 @@
 //
 //  Created by 심주미 on 2022/11/14.
 //
-
 import UIKit
 import SnapKit
 
@@ -30,7 +29,7 @@ final class ChatTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var lastMessgaeLabel: UILabel = {
+    private lazy var lastMessageLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textColor = .gray
@@ -46,7 +45,7 @@ final class ChatTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
+        self.layout()
     }
     
     required init?(coder: NSCoder) {
@@ -57,13 +56,13 @@ final class ChatTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.titleLabel.text = ""
         self.participantCountLabel.text = ""
-        self.lastMessgaeLabel.text = ""
+        self.lastMessageLabel.text = ""
     }
     
     func set(data: Group, lastMessage: String?, hasNewMessage: Bool) {
         self.participantCountLabel.text = "\(data.participantIDs.count)"
         self.titleLabel.text = data.title
-        self.lastMessgaeLabel.text = lastMessage
+        self.lastMessageLabel.text = lastMessage
         self.newMessageView.isHidden = !hasNewMessage
     }
 }
@@ -93,18 +92,18 @@ extension ChatTableViewCell: ReusableType {
             make.size.height.width.equalTo(20)
         }
         
+        self.addSubview(lastMessageLabel)
+        self.lastMessageLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
+            make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
+            make.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
+        }
+        
         self.addSubview(participantCountLabel)
         self.participantCountLabel.snp.makeConstraints { make in
             make.top.equalTo(self.titleLabel.snp.top)
             make.leading.equalTo(self.titleLabel.snp.trailing).offset(10)
             make.trailing.lessThanOrEqualTo(self.newMessageView.snp.leading).offset(-10)
-        }
-        
-        self.addSubview(lastMessgaeLabel)
-        self.lastMessgaeLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
-            make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
-            make.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
         }
     }
 }

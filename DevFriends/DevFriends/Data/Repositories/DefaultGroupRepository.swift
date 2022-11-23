@@ -10,8 +10,6 @@ import Foundation
 import CoreLocation
 
 class DefaultGroupRepository: GroupRepository {
-    let firestore = Firestore.firestore()
-    
     func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group] {
         var groups: [Group] = []
         var query: Query
