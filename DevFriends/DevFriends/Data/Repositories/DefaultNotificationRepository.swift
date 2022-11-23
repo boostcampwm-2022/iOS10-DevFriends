@@ -34,9 +34,7 @@ extension DefaultNotificationRepository: NotificationRepository {
                 .collection("User")
                 .document(uid)
                 .collection("Notification")
-                .addDocument(from: notificationResponseDTO) {
-                    print($0)
-                }
+                .addDocument(from: notificationResponseDTO)
         } catch {
             print(error)
         }
@@ -63,11 +61,7 @@ extension DefaultNotificationRepository: NotificationRepository {
         }
     }
     
-    func delete(userID: String, notification: Notification) {
-        guard let notificationID = notification.uid else { fatalError("notificationID is nil") }
-        
-        let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
-        
+    func delete(userID: String, notificationID: String) {
         firestore
             .collection("User")
             .document(userID)
