@@ -10,9 +10,13 @@ import SnapKit
 import UIKit
 
 final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTime {
-    
-    var timeSubject = PassthroughSubject<String?, Error>()
+    // TODO: private을 사용하고 싶은데 어떻게 안될까요?
+    var timeSubject = CurrentValueSubject<Date?, Error>(nil)
     var cancellables = Set<AnyCancellable>()
+    
+    var time: Date? {
+        return timeSubject.value
+    }
     
     lazy var messageLabel: MessageLabel = {
         let label = MessageLabel(type: .me)
@@ -21,24 +25,20 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
+        self.layout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateContent(data: Message, messageContentType: MessageContentType) {
+    func updateContent(data: Message) {
         self.messageLabel.text = data.content
-        
-        switch messageContentType {
-        case .time:
-            self.timeSubject.send(data.time.toTimeString())
-        case .none:
-            self.timeSubject.send(nil)
-        default:
-            break
-        }
+        self.timeSubject.send(data.time)
+    }
+    
+    func removeTimeLabel() {
+        self.timeSubject.send(nil)
     }
     
     func layout() {

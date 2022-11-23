@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct Message: Hashable {
     let content: String
     let time: Date
     let userID: String
+    let userNickname: String
 }

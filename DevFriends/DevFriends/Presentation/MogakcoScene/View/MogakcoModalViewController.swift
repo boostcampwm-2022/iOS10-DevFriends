@@ -8,29 +8,42 @@
 import UIKit
 import SnapKit
 
-class MogakcoModalViewController: UIViewController {
-    
-    lazy var mogakcoListCollectionView: UICollectionView = {
+protocol MogakcoModalViewControllerDelegate: AnyObject {
+    func tapCell(index: Int)
+}
+
+final class MogakcoModalViewController: DefaultViewController {
+    private lazy var mogakcoListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: 140.0)
 
-        let mogakcoListView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        mogakcoListView.backgroundColor = .white
-        mogakcoListView.showsVerticalScrollIndicator = false
-        mogakcoListView.dataSource = self
-        mogakcoListView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
-        return mogakcoListView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.delegate = self
+        return collectionView
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        layout()
+    
+    private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoListCollectionView) { collectionView, indexPath, data in
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+                                                            for: indexPath) as? GroupCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.set(data)
+        return cell
     }
     
-    private func layout() {
+    private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    weak var delegate: MogakcoModalViewControllerDelegate?
+    
+    override func configureUI() {
+        view.backgroundColor = .white
+    }
+    
+    override func layout() {
         view.addSubview(mogakcoListCollectionView)
         mogakcoListCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(50)
@@ -39,20 +52,18 @@ class MogakcoModalViewController: UIViewController {
             make.bottom.equalToSuperview().offset(-20)
         }
     }
+    
+    func populateSnapshot(data: [Group]) {
+        mogakcoCollectionViewSnapShot.deleteAllItems()
+        mogakcoCollectionViewSnapShot.appendSections([.main])
+        mogakcoCollectionViewSnapShot.appendItems(data)
+        mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
+    }
 }
 
-// MARK: CollectionView DataSource Delegate Methods
-extension MogakcoModalViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
-        
-        return cell
+extension MogakcoModalViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.tapCell(index: indexPath.row)
+        self.dismiss(animated: true)
     }
 }

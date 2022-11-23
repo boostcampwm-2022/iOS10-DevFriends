@@ -10,9 +10,9 @@ import SnapKit
 import UIKit
 
 protocol ContainsProfile: UIView {
-    var nameSubject: PassthroughSubject<String?, Error> {get set}
-    var imageSubject: PassthroughSubject<Data?, Error> {get set}
-    var cancellables: Set<AnyCancellable> {get set}
+    var nameSubject: PassthroughSubject<String?, Error> { get set }
+    var imageSubject: PassthroughSubject<Data?, Error> { get set }
+    var cancellables: Set<AnyCancellable> { get set }
 }
 
 extension ContainsProfile {
@@ -32,27 +32,31 @@ extension ContainsProfile {
             return label
         }()
         
-        self.layout(nameLabel: nameLabel, profileImageView: profileImageView, profileImageViewHeight: profileImageViewHeight)
+        self.layout(
+            nameLabel: nameLabel,
+            profileImageView: profileImageView,
+            profileImageViewHeight: profileImageViewHeight
+        )
         self.bind(nameLabel: nameLabel, profileImageView: profileImageView)
     }
     
     func layout(nameLabel: UILabel, profileImageView: UIImageView, profileImageViewHeight: CGFloat) {
-        self.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.top).offset(10)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(10)
-        }
-        
         self.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.size.height.width.equalTo(profileImageViewHeight)
         }
+        
+        self.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.top).offset(10)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(10)
+        }
     }
     
     func bind(nameLabel: UILabel, profileImageView: UIImageView) {
-        nameSubject.sink { _ in
+        self.nameSubject.sink { _ in
         } receiveValue: { name in
             if let name = name {
                 nameLabel.isHidden = false
@@ -63,7 +67,7 @@ extension ContainsProfile {
         }
         .store(in: &cancellables)
         
-        imageSubject.sink { _ in
+        self.imageSubject.sink { _ in
         } receiveValue: { image in
             if let image = image {
                 profileImageView.isHidden = false

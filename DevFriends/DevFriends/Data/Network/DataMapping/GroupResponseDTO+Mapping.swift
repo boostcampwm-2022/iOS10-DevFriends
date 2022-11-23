@@ -4,10 +4,12 @@
 //
 //  Created by 심주미 on 2022/11/22.
 //
+
 import Foundation
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct GroupResponseDTO: Codable, Hashable {
+struct GroupResponseDTO: Codable {
     @DocumentID var uid: String? // TODO: 왜 옵셔널로 해야만 할까?
     let participantIDs: [String]
     let title: String
