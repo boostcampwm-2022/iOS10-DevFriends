@@ -11,7 +11,8 @@ target 'DevFriends' do
   pod 'Kingfisher', '~> 7.0'
   pod 'FirebaseStorage'
   pod 'FirebaseAuth'
-  pod 'FirebaseFirestore' 
+  pod 'FirebaseFirestore'
+  pod 'FirebaseFirestoreSwift'
 
   target 'DevFriendsTests' do
     inherit! :search_paths

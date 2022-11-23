@@ -28,7 +28,7 @@ final class DefaultCategoryRepository: CategoryRepository {
         for document in snapshot.documents {
             let categoryData = document.data()
             if let categoryString = categoryData["name"] as? String {
-                categories.append(Category(name: categoryString))
+                categories.append(Category(id: ""/*TODO: 이후 수정*/, name: categoryString))
             }
         }
         return categories
