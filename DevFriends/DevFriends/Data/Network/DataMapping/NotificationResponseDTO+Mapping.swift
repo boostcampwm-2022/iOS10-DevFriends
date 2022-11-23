@@ -10,11 +10,23 @@ import FirebaseFirestoreSwift
 
 struct NotificationResponseDTO: Codable {
     @DocumentID var uid: String?
-    let image: Data?
     let groupID: String
     let groupTitle: String
-    let senderID: String
-    let senderNickname: String
+    let senderID: String?
+    let senderNickname: String?
     let type: String
-    let isOK: Bool
+    let isOK: Bool?
+}
+
+extension NotificationResponseDTO {
+    func toDamain() -> Notification {
+        return Notification(
+            groupID: self.groupID,
+            groupTitle: self.groupTitle,
+            senderID: self.senderID,
+            senderNickname: self.senderNickname,
+            type: self.type,
+            isOK: self.isOK
+        )
+    }
 }

@@ -6,12 +6,9 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 
-// MARK: NotificationResponseDTO로 바꿔보자
-struct Notification: Codable, Hashable {
-    @DocumentID var uid: String?
-    let image: Data?
+struct Notification: Hashable {
+    let uid: String?
     let groupID: String
     let groupTitle: String
     let senderID: String?
@@ -19,8 +16,8 @@ struct Notification: Codable, Hashable {
     let type: String
     var isOK: Bool?
     
-    init(image: Data? = nil, groupID: String, groupTitle: String, senderID: String? = nil, senderNickname: String? = nil, type: String, isOK: Bool? = nil) {
-        self.image = image
+    init(uid: String? = nil, groupID: String, groupTitle: String, senderID: String? = nil, senderNickname: String? = nil, type: String, isOK: Bool? = nil) {
+        self.uid = uid
         self.groupID = groupID
         self.groupTitle = groupTitle
         self.senderID = senderID

@@ -13,20 +13,28 @@ final class DefaultNotificationRepository: ContainsFirestore {}
 
 extension DefaultNotificationRepository: NotificationRepository {
     func fetch(uid: String) async throws -> [Notification] {
-        let snapshot = try await firestore.collection("User").document(uid).collection("Notification").getDocuments()
+        let snapshot = try await firestore
+            .collection("User")
+            .document(uid)
+            .collection("Notification")
+            .getDocuments()
         
-        let notifications = try snapshot.documents.map{ try $0.data(as: Notification.self) }
+        let notifications = try snapshot.documents
+            .map { try $0.data(as: NotificationResponseDTO.self) }
+            .map { $0.toDamain() }
         
         return notifications
     }
     
     func send(uid: String, notification: Notification) {
+        let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
+        
         do {
             _ = try firestore
                 .collection("User")
                 .document(uid)
                 .collection("Notification")
-                .addDocument(from: notification)
+                .addDocument(from: notificationResponseDTO)
         } catch {
             print(error)
         }
@@ -37,6 +45,8 @@ extension DefaultNotificationRepository: NotificationRepository {
         var notification = notification
         notification.isOK = true
         
+        let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
+        
         if isOK {
             do {
                 try firestore
@@ -44,10 +54,24 @@ extension DefaultNotificationRepository: NotificationRepository {
                     .document(userID)
                     .collection("Notification")
                     .document(notificationID)
-                    .setData(from: notification)
+                    .setData(from: notificationResponseDTO)
             } catch {
                 print(error)
             }
         }
+    }
+}
+
+// MARK: Private
+extension DefaultNotificationRepository {
+    private func makeNotificationResponseDTO(notification: Notification) -> NotificationResponseDTO {
+        return NotificationResponseDTO(
+            groupID: notification.groupID,
+            groupTitle: notification.groupTitle,
+            senderID: notification.senderID,
+            senderNickname: notification.senderNickname,
+            type: notification.type,
+            isOK: notification.isOK
+        )
     }
 }
