@@ -8,8 +8,16 @@
 import Combine
 import UIKit
 
+enum GroupApplyButtonState {
+    case available
+    case applied
+    case joined
+    case closed
+}
+
 protocol PostDetailViewModelInput {
     func didLoadGroup()
+    func didTapApplyButton()
     func didTapCommentPostButton(content: String)
 }
 
@@ -19,6 +27,7 @@ protocol PostDetailViewModelOutput {
     var postAttentionInfo: PostAttentionInfo { get }
     var commentsSubject: CurrentValueSubject<[CommentInfo], Never> { get }
     var scrollToBottomSubject: PassthroughSubject<Void, Never> { get }
+    var groupApplyButtonStateSubject: CurrentValueSubject<GroupApplyButtonState, Never> { get }
 }
 
 protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutput {}
@@ -28,6 +37,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let fetchUserUseCase: FetchUserUseCase
     private let fetchCategoryUseCase: FetchCategoryUseCase
     private let fetchCommentsUseCase: FetchCommentsUseCase
+    private let applyGroupUseCase: ApplyGroupUseCase
     private let postCommentUseCase: PostCommentUseCase
     
     // MARK: - OUTPUT
@@ -45,18 +55,21 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     var postAttentionInfo: PostAttentionInfo
     var commentsSubject = CurrentValueSubject<[CommentInfo], Never>([])
     var scrollToBottomSubject = PassthroughSubject<Void, Never>()
+    var groupApplyButtonStateSubject = CurrentValueSubject<GroupApplyButtonState, Never>(.closed)
     
     init(
         group: Group,
         fetchUserUseCase: FetchUserUseCase,
         fetchCategoryUseCase: FetchCategoryUseCase,
         fetchCommentsUseCase: FetchCommentsUseCase,
+        applyGroupUseCase: ApplyGroupUseCase,
         postCommentUseCase: PostCommentUseCase
     ) {
         self.group = group
         self.fetchUserUseCase = fetchUserUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.fetchCommentsUseCase = fetchCommentsUseCase
+        self.applyGroupUseCase = applyGroupUseCase
         self.postCommentUseCase = postCommentUseCase
         
         postDetailContentsSubject.value = .init(
@@ -74,6 +87,9 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             maxParticipantCount: group.limitedNumberPeople,
             currentParticipantCount: group.participantIDs.count
         )
+        
+        // 이 부분에서 유저가 해당 모임에 가입 or 신청했는지 판단하여 분기
+        groupApplyButtonStateSubject.value = .available
     }
     
     private func loadUser(id: String) async -> User? {
@@ -150,6 +166,14 @@ extension DefaultPostDetailViewModel {
                 )
             }
         }
+    }
+    
+    func didTapApplyButton() {
+//        let localUser = User(로컬 유저 정보 업데이트)
+//        applyGroupUseCase.execute(user: localUser)
+//      그룹장이 가입승인을 했을떄 localUser를 업데이트 해야하는데 어떻게 하지?
+        
+        groupApplyButtonStateSubject.value = .applied
     }
     
     func didTapCommentPostButton(content: String) {

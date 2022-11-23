@@ -15,4 +15,5 @@ struct User: Codable {
     let profileImagePath: String
     let categories: [String]
     let groups: [String]
+    let appliedGroups: [String]
 }

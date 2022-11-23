@@ -68,6 +68,7 @@ final class PostDetailViewController: DefaultViewController {
     private let testFetchUserUseCase: FetchUserUseCase
     private let testCategoryUseCase: FetchCategoryUseCase
     private let testFetchCommentsUseCase: FetchCommentsUseCase
+    private let testApplyGroupUseCase: ApplyGroupUseCase
     private let testPostCommentUseCase: PostCommentUseCase
     private let viewModel: PostDetailViewModel
     
@@ -81,6 +82,7 @@ final class PostDetailViewController: DefaultViewController {
         testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
         testCategoryUseCase = DefaultFetchCategoryUseCase(categoryRepository: testCategoryRepository)
         testFetchCommentsUseCase = DefaultFetchCommentsUseCase(commentRepository: testCommentRepository)
+        testApplyGroupUseCase = DefaultApplyGroupUseCase(userRepository: testUserRepository)
         testPostCommentUseCase = DefaultPostCommentUseCase(commentRepository: testCommentRepository)
         
         viewModel = DefaultPostDetailViewModel(
@@ -88,6 +90,7 @@ final class PostDetailViewController: DefaultViewController {
             fetchUserUseCase: testFetchUserUseCase,
             fetchCategoryUseCase: testCategoryUseCase,
             fetchCommentsUseCase: testFetchCommentsUseCase,
+            applyGroupUseCase: testApplyGroupUseCase,
             postCommentUseCase: testPostCommentUseCase
         )
         
@@ -183,6 +186,37 @@ final class PostDetailViewController: DefaultViewController {
                 guard let commentCount = self?.viewModel.commentsSubject.value.count else { return }
                 let bottomIndex = IndexPath(row: commentCount - 1, section: 0)
                 self?.commentTableView.scrollToRow(at: bottomIndex, at: .top, animated: true)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.groupApplyButtonStateSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                switch state {
+                case .available:
+                    self?.postRequestButton.setTitle("모임 신청", for: .normal)
+                    self?.postRequestButton.backgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
+                    self?.postRequestButton.isEnabled = true
+                    self?.postRequestButton.isHidden = false
+                case .applied:
+                    self?.postRequestButton.setTitle("신청된 모임입니다", for: .normal)
+                    self?.postRequestButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                    self?.postRequestButton.isEnabled = false
+                    self?.postRequestButton.isHidden = false
+                case .joined:
+                    self?.postRequestButton.isHidden = true
+                case .closed:
+                    self?.postRequestButton.setTitle("마감된 모임입니다", for: .normal)
+                    self?.postRequestButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                    self?.postRequestButton.isEnabled = false
+                    self?.postRequestButton.isHidden = false
+                }
+            }
+            .store(in: &cancellables)
+        
+        self.postRequestButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.didTapApplyButton()
             }
             .store(in: &cancellables)
         
