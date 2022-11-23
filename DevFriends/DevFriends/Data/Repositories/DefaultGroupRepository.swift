@@ -67,15 +67,19 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
     }
     
     func makeGroupResponseDTO(group: Group) -> GroupResponseDTO {
-        return GroupResponseDTO(participantIDs: group.participantIDs,
-                                title: group.title,
-                                chatID: group.chatID,
-                                categories: group.categories,
-                                location: GeoPoint(latitude: group.location.latitude, longitude: group.location.longitude),
-                                description: group.description,
-                                like: group.like,
-                                limitedNumberPeople: group.limitedNumberPeople,
-                                managerID: group.managerID,
-                                type: group.type)
+        return GroupResponseDTO(
+            participantIDs: group.participantIDs,
+            title: group.title,
+            chatID: group.chatID,
+            categories: group.categories,
+            location: GeoPoint(latitude: group.location.latitude, longitude: group.location.longitude),
+            description: group.description,
+            time: group.time,
+            like: group.like,
+            hit: group.hit,
+            limitedNumberPeople: group.limitedNumberPeople,
+            managerID: group.managerID,
+            type: group.type
+        )
     }
 }

@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
+		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
+		05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */; };
+		05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A2A292DF13500A97531 /* DefaultGroupCommentRepository.swift */; };
+		05CB4A33292DF15200A97531 /* GroupCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A30292DF15100A97531 /* GroupCommentRepository.swift */; };
+		05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A31292DF15100A97531 /* CategoryRepository.swift */; };
+		05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A35292DF16800A97531 /* FetchCategoryUseCase.swift */; };
+		05CB4A39292DF16900A97531 /* FetchUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */; };
+		05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */; };
+		05CB4A3D292DF17C00A97531 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A3B292DF17B00A97531 /* Category.swift */; };
+		05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A3C292DF17C00A97531 /* Comment.swift */; };
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -119,6 +130,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPostDetailUserRepository.swift; sourceTree = "<group>"; };
+		05781366292C948D003DA919 /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
+		0578136A292CEB46003DA919 /* UserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		0578136C292CF081003DA919 /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		0578136E292CF0F4003DA919 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		05781372292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		058DD04829291EB600784AAC /* PostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailUserRepository.swift; sourceTree = "<group>"; };
+		05A8DEC0292B71C200497902 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		05A8DEC6292BBF7B00497902 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		05A8DECC292BDFEA00497902 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
+		05A8DED0292BF0EA00497902 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CategoryResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CommentResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
+		05CB4A2A292DF13500A97531 /* DefaultGroupCommentRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultGroupCommentRepository.swift; sourceTree = "<group>"; };
+		05CB4A30292DF15100A97531 /* GroupCommentRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCommentRepository.swift; sourceTree = "<group>"; };
+		05CB4A31292DF15100A97531 /* CategoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
+		05CB4A35292DF16800A97531 /* FetchCategoryUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCategoryUseCase.swift; sourceTree = "<group>"; };
+		05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchUserUseCase.swift; sourceTree = "<group>"; };
+		05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCommentsUseCase.swift; sourceTree = "<group>"; };
+		05CB4A3B292DF17B00A97531 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		05CB4A3C292DF17C00A97531 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		08AB74F8E8B5617454A9F712 /* Pods-DevFriends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.debug.xcconfig"; sourceTree = "<group>"; };
 		09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFriendsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFriends_DevFriendsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -282,6 +315,17 @@
 				FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */,
 				FCE46BA92928C97100383F6F /* GroupRepository.swift */,
 				FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */,
+				05A8DEC0292B71C200497902 /* User.swift */,
+				05781372292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift */,
+				058DD04829291EB600784AAC /* PostDetailUserRepository.swift */,
+				0578136E292CF0F4003DA919 /* Location.swift */,
+				05A8DED0292BF0EA00497902 /* Category.swift */,
+				0578136A292CEB46003DA919 /* UserResponseDTO+Mapping.swift */,
+				05781366292C948D003DA919 /* DefaultCategoryRepository.swift */,
+				05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */,
+				05A8DECC292BDFEA00497902 /* CategoryRepository.swift */,
+				05A8DEC6292BBF7B00497902 /* Comment.swift */,
+				0578136C292CF081003DA919 /* GroupResponseDTO+Mapping.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -467,6 +511,9 @@
 				FC07DDBA292CA8FF00D16FBC /* SaveGroupUseCase.swift */,
 				E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */,
 				E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */,
+				05CB4A35292DF16800A97531 /* FetchCategoryUseCase.swift */,
+				05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */,
+				05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -479,6 +526,8 @@
 				FC07DDB8292CA8F200D16FBC /* GroupRepository.swift */,
 				E33A20E529277B3900887EC9 /* ChatGroupsRepository.swift */,
 				E359EC652928B6A500CE5775 /* ChatMessagesRepository.swift */,
+				05CB4A31292DF15100A97531 /* CategoryRepository.swift */,
+				05CB4A30292DF15100A97531 /* GroupCommentRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -501,6 +550,8 @@
 		E359EC82292C6BCA00CE5775 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */,
+				05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */,
 				FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */,
 				FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */,
 				FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */,
@@ -584,6 +635,8 @@
 				FC79AEC42922494F0077AE5C /* Group.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
 				FC07DDB4292C93B000D16FBC /* Location.swift */,
+				05CB4A3B292DF17B00A97531 /* Category.swift */,
+				05CB4A3C292DF17C00A97531 /* Comment.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -601,6 +654,8 @@
 		FC79AEBC292223DF0077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */,
+				05CB4A2A292DF13500A97531 /* DefaultGroupCommentRepository.swift */,
 				FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */,
 				E359EC7A292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift */,
 				E359EC7C292C6B1F00CE5775 /* DefaultChatMessagesRepository.swift */,
@@ -934,17 +989,23 @@
 			files = (
 				E33A204029262B6B00887EC9 /* GroupListViewController.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
+				05CB4A33292DF15200A97531 /* GroupCommentRepository.swift in Sources */,
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
+				05CB4A39292DF16900A97531 /* FetchUserUseCase.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				E33A20E629277B3900887EC9 /* ChatGroupsRepository.swift in Sources */,
 				E359EC662928B6A500CE5775 /* ChatMessagesRepository.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				E359EC6E2929EC5400CE5775 /* SendChatMessagesUseCase.swift in Sources */,
+				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				E359EC7B292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift in Sources */,
+				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,
+				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
+				05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
@@ -959,8 +1020,10 @@
 				E359EC682928C0C800CE5775 /* LoadChatMessagesUseCase.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
+				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				FC07DDB9292CA8F200D16FBC /* GroupRepository.swift in Sources */,
+				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
@@ -970,6 +1033,7 @@
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */,
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
+				05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */,
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
@@ -992,6 +1056,7 @@
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
+				05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
@@ -1005,6 +1070,7 @@
 				FCE46BAE2928DBF000383F6F /* CLLocation+Distance.swift in Sources */,
 				FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */,
 				FC07DDBB292CA8FF00D16FBC /* SaveGroupUseCase.swift in Sources */,
+				05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */,
 				E359EC6A2928C77500CE5775 /* ContainsFirestore.swift in Sources */,
 				FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */,
 				E33A208A2926622000887EC9 /* ChatViewCoordinator.swift in Sources */,
