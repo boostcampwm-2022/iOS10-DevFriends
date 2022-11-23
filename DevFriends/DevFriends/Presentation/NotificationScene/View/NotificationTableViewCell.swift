@@ -91,17 +91,18 @@ extension NotificationTableViewCell: ReusableType {
     func updateContent(data: Notification) {
         titleLabel.text = data.groupTitle
         profileImageView.image = UIImage.profile?.resize(newWidth: 40)
-
-        switch data.type {
-        case "joinRequest":
+        
+        let notificationType = NotificationType.init(rawValue: data.type)
+        switch notificationType {
+        case .joinRequest:
             guard let senderNickname = data.senderNickname, let isOK = data.isOK else { return }
             self.secondaryTitleLabel.text = "\(senderNickname)의 참여 요청"
             self.setButton(isAccepted: isOK)
-        case "joinWait":
+        case .joinWait:
             self.secondaryTitleLabel.text = "참여 신청이 완료되었습니다."
-        case "joinSuccess":
+        case .joinSuccess:
             self.secondaryTitleLabel.text = "모임에 가입되셨습니다!"
-        default:
+        case .unknown:
             break
         }
     }
