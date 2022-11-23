@@ -102,7 +102,8 @@
 		E3752E96292DBADE003C8E17 /* NotificationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E95292DBADE003C8E17 /* NotificationTypes.swift */; };
 		E3752E98292DF9D4003C8E17 /* NotificationDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E97292DF9D4003C8E17 /* NotificationDiffableDataSource.swift */; };
 		E3752E9A292E01FE003C8E17 /* DeleteNotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E99292E01FE003C8E17 /* DeleteNotificationUseCase.swift */; };
-		E3752E9E292E3EA7003C8E17 /* SendCommentNotificationToHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E9D292E3EA7003C8E17 /* SendCommentNotificationToHost.swift */; };
+		E3752E9E292E3EA7003C8E17 /* SendCommentNotificationToHostUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E9D292E3EA7003C8E17 /* SendCommentNotificationToHostUseCase.swift */; };
+		E3752EA0292E5837003C8E17 /* RequestJoinToHostUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E9F292E5837003C8E17 /* RequestJoinToHostUseCase.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -258,7 +259,8 @@
 		E3752E97292DF9D4003C8E17 /* NotificationDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDiffableDataSource.swift; sourceTree = "<group>"; };
 		E3752E99292E01FE003C8E17 /* DeleteNotificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNotificationUseCase.swift; sourceTree = "<group>"; };
 		E3752E9B292E3B3B003C8E17 /* SendCommentNotificationToHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCommentNotificationToHost.swift; sourceTree = "<group>"; };
-		E3752E9D292E3EA7003C8E17 /* SendCommentNotificationToHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCommentNotificationToHost.swift; sourceTree = "<group>"; };
+		E3752E9D292E3EA7003C8E17 /* SendCommentNotificationToHostUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCommentNotificationToHostUseCase.swift; sourceTree = "<group>"; };
+		E3752E9F292E5837003C8E17 /* RequestJoinToHostUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestJoinToHostUseCase.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -559,7 +561,8 @@
 				05CB4A35292DF16800A97531 /* FetchCategoryUseCase.swift */,
 				05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */,
 				05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */,
-				E3752E9D292E3EA7003C8E17 /* SendCommentNotificationToHost.swift */,
+				E3752E9D292E3EA7003C8E17 /* SendCommentNotificationToHostUseCase.swift */,
+				E3752E9F292E5837003C8E17 /* RequestJoinToHostUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1067,7 +1070,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3752E9E292E3EA7003C8E17 /* SendCommentNotificationToHost.swift in Sources */,
+				E3752E9E292E3EA7003C8E17 /* SendCommentNotificationToHostUseCase.swift in Sources */,
 				E359EC9D292CDE2B00CE5775 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
 				E3752E98292DF9D4003C8E17 /* NotificationDiffableDataSource.swift in Sources */,
 				E359EC8C292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift in Sources */,
@@ -1111,6 +1114,7 @@
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				E359EC97292CDDDF00CE5775 /* UpdateNotificationIsOKToTrueUseCase.swift in Sources */,
+				E3752EA0292E5837003C8E17 /* RequestJoinToHostUseCase.swift in Sources */,
 				FC07DDB9292CA8F200D16FBC /* GroupRepository.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
