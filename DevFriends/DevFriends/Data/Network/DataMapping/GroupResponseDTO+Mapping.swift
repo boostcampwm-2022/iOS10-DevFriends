@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct GroupResponseDTO: Codable {
-    @DocumentID var uid: String? // TODO: 왜 옵셔널로 해야만 할까?
+    @DocumentID var uid: String?
     let participantIDs: [String]
     let title: String
     let chatID: String
@@ -26,16 +26,18 @@ struct GroupResponseDTO: Codable {
 
 extension GroupResponseDTO {
     func toDomain() -> Group {
-        return Group(participantIDs: participantIDs,
-                     title: title,
-                     chatID: chatID,
-                     categories: categories,
-                     location: Location(latitude: location.latitude, longitude: location.longitude),
-                     description: description,
-                     like: like,
-                     hit: hit,
-                     limitedNumberPeople: limitedNumberPeople,
-                     managerID: managerID,
-                     type: type)
+        return Group(
+            participantIDs: participantIDs,
+            title: title,
+            chatID: chatID,
+            categories: categories,
+            location: Location(latitude: location.latitude, longitude: location.longitude),
+            description: description,
+            like: like,
+            hit: hit,
+            limitedNumberPeople: limitedNumberPeople,
+            managerID: managerID,
+            type: type
+        )
     }
 }

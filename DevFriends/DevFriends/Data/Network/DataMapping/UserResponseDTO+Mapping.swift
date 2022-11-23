@@ -18,9 +18,11 @@ struct UserResponseDTO: Codable {
 
 extension UserResponseDTO {
     func toDomain() -> User {
-        return User(nickname: nickname,
-                    profileImagePath: profileImagePath,
-                    categories: categories,
-                    groups: groups)
+        return User(
+            nickname: nickname,
+            profileImagePath: profileImagePath,
+            categories: categories,
+            groups: groups
+        )
     }
 }

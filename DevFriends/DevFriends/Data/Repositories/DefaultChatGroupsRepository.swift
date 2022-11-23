@@ -19,9 +19,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                 }
             }
             
-            return try await taskGroup.reduce(into: []) { partialResult, group in
-                partialResult.append(group)
-            }
+            return try await taskGroup.reduce(into: []) { $0.append($1) }
         }
     }
     

@@ -8,12 +8,7 @@
 import Foundation
 
 protocol SendNotificationToParticipantUseCase {
-    func execute(groupID: String, senderID: String, groupTitle: String, type: NotificationType)
-}
-
-enum NotificationType {
-    case accepted
-    case denied
+    func execute(groupID: String, senderID: String, groupTitle: String, type: NotificationJoinType)
 }
 
 final class DefaultSendNotificationToParticipantUseCase: SendNotificationToParticipantUseCase {
@@ -23,7 +18,7 @@ final class DefaultSendNotificationToParticipantUseCase: SendNotificationToParti
         self.notificationRepository = notificationRepository
     }
     
-    func execute(groupID: String, senderID: String, groupTitle: String, type: NotificationType) {
+    func execute(groupID: String, senderID: String, groupTitle: String, type: NotificationJoinType) {
         switch type {
         case .accepted:
             let notification = Notification(groupID: groupID, groupTitle: groupTitle, type: "joinSuccess")
