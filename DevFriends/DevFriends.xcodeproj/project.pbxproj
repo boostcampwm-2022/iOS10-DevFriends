@@ -24,6 +24,7 @@
 		A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1E292E1B930018A654 /* ChatViewModel.swift */; };
 		A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB22292E1C060018A654 /* ChatContentViewModel.swift */; };
 		A648BB25292E1D6F0018A654 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB24292E1D6F0018A654 /* Filter.swift */; };
+		A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB26292E20260018A654 /* GroupCellInfo.swift */; };
 		A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */; };
 		A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */; };
 		A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */; };
@@ -169,6 +170,7 @@
 		A648BB1E292E1B930018A654 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		A648BB22292E1C060018A654 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		A648BB24292E1D6F0018A654 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		A648BB26292E20260018A654 /* GroupCellInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCellInfo.swift; sourceTree = "<group>"; };
 		A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 			children = (
 				E33A20E92927BB1000887EC9 /* User.swift */,
 				FC79AEC42922494F0077AE5C /* Group.swift */,
+				A648BB26292E20260018A654 /* GroupCellInfo.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
 				A66C7BC9292E1A460008B6FD /* Location.swift */,
 				05CB4A3B292DF17B00A97531 /* Category.swift */,
@@ -1030,6 +1033,7 @@
 				A66C7BC0292E19830008B6FD /* ChatMessagesRepository.swift in Sources */,
 				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
+				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
 				A66C7BD8292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,

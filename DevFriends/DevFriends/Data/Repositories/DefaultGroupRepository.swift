@@ -73,14 +73,12 @@ class DefaultGroupRepository: GroupRepository {
         }
         
         for document in snapshot.documents {
-            let groupData = document.data()
-            if let group = makeGroup(group: groupData) {
-                // 필터 카테고리가 비어있으면 필터링 x
-                // 필터 카테고리 중 하나라도 모임 카테고리가 겹쳐야 함
-                if filter.categoryFilter.isEmpty ||
-                   !group.categories.filter({ filter.categoryFilter.contains($0) }).isEmpty {
-                    groups.append(group)
-                }
+            let group = try document.data(as: GroupResponseDTO.self).toDomain()
+            // 필터 카테고리가 비어있으면 필터링 x
+            // 필터 카테고리 중 하나라도 모임 카테고리가 겹쳐야 함
+            if filter.categoryFilter.isEmpty ||
+               !group.categories.filter({ filter.categoryFilter.contains($0) }).isEmpty {
+                groups.append(group)
             }
         }
         return groups

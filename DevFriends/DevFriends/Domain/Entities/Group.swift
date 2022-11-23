@@ -11,22 +11,18 @@ struct Group: Hashable {
     let id: String
     let participantIDs: [String]
     let title: String
-    let categories: [String]
     let chatID: String
+    let categories: [String]
+    let location: Location
     let description: String
     let time: Date
     let like: Int
     let hit: Int
     let limitedNumberPeople: Int
-    let location: (latitude: Double, longitude: Double)
     let managerID: String
-    let type: GroupType
-    
-    static func == (lhs: Group, rhs: Group) -> Bool {
-        return lhs.chatID == rhs.chatID
-    }
+    let type: String
     
     func hash(into hasher: inout Hasher) {
-        return hasher.combine(chatID)
+        hasher.combine(chatID)
     }
 }
