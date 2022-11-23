@@ -4,15 +4,14 @@
 //
 //  Created by 심주미 on 2022/11/16.
 //
-
 import Combine
 import SnapKit
 import UIKit
 
 protocol ContainsProfile: UIView {
-    var nameSubject: PassthroughSubject<String?, Error> {get set}
-    var imageSubject: PassthroughSubject<Data?, Error> {get set}
-    var cancellables: Set<AnyCancellable> {get set}
+    var nameSubject: PassthroughSubject<String?, Error> { get set }
+    var imageSubject: PassthroughSubject<Data?, Error> { get set }
+    var cancellables: Set<AnyCancellable> { get set }
 }
 
 extension ContainsProfile {
@@ -32,7 +31,11 @@ extension ContainsProfile {
             return label
         }()
         
-        self.layout(nameLabel: nameLabel, profileImageView: profileImageView, profileImageViewHeight: profileImageViewHeight)
+        self.layout(
+            nameLabel: nameLabel,
+            profileImageView: profileImageView,
+            profileImageViewHeight: profileImageViewHeight
+        )
         self.bind(nameLabel: nameLabel, profileImageView: profileImageView)
     }
     
@@ -52,7 +55,7 @@ extension ContainsProfile {
     }
     
     func bind(nameLabel: UILabel, profileImageView: UIImageView) {
-        nameSubject.sink { _ in
+        self.nameSubject.sink { _ in
         } receiveValue: { name in
             if let name = name {
                 nameLabel.isHidden = false
@@ -63,7 +66,7 @@ extension ContainsProfile {
         }
         .store(in: &cancellables)
         
-        imageSubject.sink { _ in
+        self.imageSubject.sink { _ in
         } receiveValue: { image in
             if let image = image {
                 profileImageView.isHidden = false

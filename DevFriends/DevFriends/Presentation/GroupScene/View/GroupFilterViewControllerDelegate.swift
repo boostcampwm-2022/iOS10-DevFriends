@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 protocol GroupFilterViewControllerDelegate: AnyObject {
     func didSelectFilter (filter: Filter)
 }
