@@ -115,6 +115,7 @@ final class PostDetailContentsView: UIView {
         self.likeDisplayView.set(title: "좋아요", value: String(contents.likeCount))
         self.hitsDisplayView.set(title: "조회수", value: String(contents.hitsCount))
         
+        self.interestsStackView.subviews.forEach { $0.removeFromSuperview() }
         for interest in contents.interests {
             let interestLabel = createInterestLabel(interest)
             self.interestsStackView.addArrangedSubview(interestLabel)

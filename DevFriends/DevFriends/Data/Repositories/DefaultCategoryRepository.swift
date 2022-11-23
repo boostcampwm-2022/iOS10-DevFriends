@@ -2,14 +2,24 @@
 //  DefaultCategoryRepository.swift
 //  DevFriends
 //
-//  Created by 이대현 on 2022/11/22.
+//  Created by 상현 on 2022/11/22.
 //
 
 import FirebaseFirestore
-import Foundation
+import FirebaseFirestoreSwift
 
-class DefaultCategoryRepository: CategoryRepository {
-    let firestore = Firestore.firestore()
+final class DefaultCategoryRepository: CategoryRepository {
+    func fetch(_ categoryIds: [String]) async throws -> [Category] {
+        return try await withThrowingTaskGroup(of: Category.self) { taskGroup in
+            categoryIds.forEach { id in
+                taskGroup.addTask {
+                    try await self.fetchCategory(id)
+                }
+            }
+            
+            return try await taskGroup.reduce(into: []) { $0.append($1) }
+        }
+    }
     
     func fetch() async throws -> [Category] {
         var categories: [Category] = []
@@ -22,18 +32,6 @@ class DefaultCategoryRepository: CategoryRepository {
             }
         }
         return categories
-    }
-    
-    func fetch(_ categoryIds: [String]) async throws -> [Category] {
-        return try await withThrowingTaskGroup(of: Category.self) { taskGroup in
-            categoryIds.forEach { id in
-                taskGroup.addTask {
-                    try await self.fetchCategory(id)
-                }
-            }
-            
-            return try await taskGroup.reduce(into: []) { $0.append($1) }
-        }
     }
     
     private func fetchCategory(_ id: String) async throws -> Category {
