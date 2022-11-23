@@ -37,4 +37,20 @@ extension DefaultUserRepository {
             groups: user.groups
         )
     }
+    
+    func fetch(uids: [String]) async throws -> [User] {
+        return try await withThrowingTaskGroup(of: User.self) { taskGroup in
+            uids.forEach { id in
+                if id.isEmpty { return }
+                
+                taskGroup.addTask {
+                    try await self.fetch(uid: id)
+                }
+            }
+            
+            return try await taskGroup.reduce(into: []) { partialResult, user in
+                partialResult.append(user)
+            }
+        }
+    }
 }

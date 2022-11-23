@@ -91,6 +91,7 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             categories: group.categories,
             location: GeoPoint(latitude: group.location.latitude, longitude: group.location.longitude),
             description: group.description,
+            time: group.time,
             like: group.like,
             hit: group.hit,
             limitedNumberPeople: group.limitedNumberPeople,

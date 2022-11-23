@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 struct UserResponseDTO: Codable {
     @DocumentID var uid: String?
     let nickname: String
+    let job: String
     let profileImagePath: String
     let categories: [String]
     let groups: [String]
@@ -19,7 +20,9 @@ struct UserResponseDTO: Codable {
 extension UserResponseDTO {
     func toDomain() -> User {
         return User(
+            id: uid ?? "",
             nickname: nickname,
+            job: job,
             profileImagePath: profileImagePath,
             categories: categories,
             groups: groups
