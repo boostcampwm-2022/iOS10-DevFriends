@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostDetailViewModelInput {
     func didLoadGroup()
+    func didTapCommentPostButton(content: String)
 }
 
 protocol PostDetailViewModelOutput {
@@ -17,6 +18,7 @@ protocol PostDetailViewModelOutput {
     var postDetailContentsSubject: CurrentValueSubject<PostDetailContents, Never> { get }
     var postAttentionInfo: PostAttentionInfo { get }
     var commentsSubject: CurrentValueSubject<[CommentInfo], Never> { get }
+    var scrollToBottomSubject: PassthroughSubject<Void, Never> { get }
 }
 
 protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutput {}
@@ -26,7 +28,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let fetchUserUseCase: FetchUserUseCase
     private let fetchCategoryUseCase: FetchCategoryUseCase
     private let fetchCommentsUseCase: FetchCommentsUseCase
-//    private let fetchImageUseCase: FetchImageUseCase
+    private let postCommentUseCase: PostCommentUseCase
     
     // MARK: - OUTPUT
     var postWriterInfoSubject = CurrentValueSubject<PostWriterInfo, Never>(.init(name: "", job: "", image: nil))
@@ -42,17 +44,20 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     )
     var postAttentionInfo: PostAttentionInfo
     var commentsSubject = CurrentValueSubject<[CommentInfo], Never>([])
+    var scrollToBottomSubject = PassthroughSubject<Void, Never>()
     
     init(
         group: Group,
         fetchUserUseCase: FetchUserUseCase,
         fetchCategoryUseCase: FetchCategoryUseCase,
-        fetchCommentsUseCase: FetchCommentsUseCase
+        fetchCommentsUseCase: FetchCommentsUseCase,
+        postCommentUseCase: PostCommentUseCase
     ) {
         self.group = group
         self.fetchUserUseCase = fetchUserUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.fetchCommentsUseCase = fetchCommentsUseCase
+        self.postCommentUseCase = postCommentUseCase
         
         postDetailContentsSubject.value = .init(
             title: group.title,
@@ -144,6 +149,33 @@ extension DefaultPostDetailViewModel {
                     contents: comment.content
                 )
             }
+        }
+    }
+    
+    func didTapCommentPostButton(content: String) {
+        let comment = Comment(
+            content: content,
+            time: Date(),
+            userID: "ac3yRAAR9TKVZKrofpbi"
+        )
+        postCommentUseCase.execute(comment: comment, groupId: self.group.id)
+        
+        Task {
+            let comments = await loadComments()
+            let commentUsers = await loadUsers(ids: comments.map { $0.userID })
+            commentsSubject.value = comments.map { comment in
+                guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
+                    return CommentInfo(
+                        writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
+                        contents: comment.content
+                    )
+                }
+                return CommentInfo(
+                    writerInfo: .init(name: user.nickname, job: user.job, image: nil),
+                    contents: comment.content
+                )
+            }
+            scrollToBottomSubject.send()
         }
     }
 }

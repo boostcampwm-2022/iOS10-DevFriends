@@ -28,6 +28,12 @@ final class PostDetailViewController: DefaultViewController {
         let textField = CommonTextField(placeHolder: "댓글을 입력해주세요")
         return textField
     }()
+    private lazy var commentPostButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("↑", for: .normal)
+        button.backgroundColor = .orange
+        return button
+    }()
     private lazy var postDetailInfoView: PostDetailInfoView = {
         let postDetailInfoView = PostDetailInfoView()
         return postDetailInfoView
@@ -62,6 +68,7 @@ final class PostDetailViewController: DefaultViewController {
     private let testFetchUserUseCase: FetchUserUseCase
     private let testCategoryUseCase: FetchCategoryUseCase
     private let testFetchCommentsUseCase: FetchCommentsUseCase
+    private let testPostCommentUseCase: PostCommentUseCase
     private let viewModel: PostDetailViewModel
     
     // MARK: - Init & Life Cycles
@@ -74,12 +81,14 @@ final class PostDetailViewController: DefaultViewController {
         testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
         testCategoryUseCase = DefaultFetchCategoryUseCase(categoryRepository: testCategoryRepository)
         testFetchCommentsUseCase = DefaultFetchCommentsUseCase(commentRepository: testCommentRepository)
+        testPostCommentUseCase = DefaultPostCommentUseCase(commentRepository: testCommentRepository)
         
         viewModel = DefaultPostDetailViewModel(
             group: testGroup,
             fetchUserUseCase: testFetchUserUseCase,
             fetchCategoryUseCase: testCategoryUseCase,
-            fetchCommentsUseCase: testFetchCommentsUseCase
+            fetchCommentsUseCase: testFetchCommentsUseCase,
+            postCommentUseCase: testPostCommentUseCase
         )
         
         super.init(nibName: nil, bundle: nil)
@@ -120,9 +129,18 @@ final class PostDetailViewController: DefaultViewController {
         
         view.addSubview(commentTextField)
         commentTextField.snp.makeConstraints { make in
-            make.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.left.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(60)
+        }
+        
+        view.addSubview(commentPostButton)
+        commentPostButton.snp.makeConstraints { make in
+            make.left.equalTo(commentTextField.snp.right).offset(10)
+            make.right.equalTo(view.safeAreaLayoutGuide)
+            make.centerY.equalTo(commentTextField)
+            make.height.equalTo(commentTextField).multipliedBy(0.8)
+            make.width.equalTo(commentPostButton.snp.height)
         }
     }
     
@@ -156,6 +174,26 @@ final class PostDetailViewController: DefaultViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.commentTableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.scrollToBottomSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let commentCount = self?.viewModel.commentsSubject.value.count else { return }
+                let bottomIndex = IndexPath(row: commentCount - 1, section: 0)
+                self?.commentTableView.scrollToRow(at: bottomIndex, at: .top, animated: true)
+            }
+            .store(in: &cancellables)
+        
+        self.commentPostButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                guard
+                    let comment = self?.commentTextField.text,
+                    !comment.isEmpty else { return }
+               
+                self?.commentTextField.text = ""
+                self?.viewModel.didTapCommentPostButton(content: comment)
             }
             .store(in: &cancellables)
     }

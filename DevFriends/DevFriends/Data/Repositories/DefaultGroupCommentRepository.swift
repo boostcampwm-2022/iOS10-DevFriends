@@ -20,4 +20,24 @@ final class DefaultGroupCommentRepository: GroupCommentRepository {
         let comments = querySnapshot.documentChanges.compactMap { try? $0.document.data(as: CommentResponseDTO.self) }
         return comments.map { $0.toDomain() }
     }
+    
+    func post(_ comment: Comment, to groupId: String) {
+        do {
+            let reference = try firestore
+                .collection("Group")
+                .document(groupId)
+                .collection("Comment")
+                .addDocument(from: makeCommentResponseDTO(comment: comment))
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func makeCommentResponseDTO(comment: Comment) -> CommentResponseDTO {
+        return CommentResponseDTO(
+            content: comment.content,
+            time: comment.time,
+            userID: comment.userID
+        )
+    }
 }
