@@ -45,12 +45,14 @@ class DefaultGroupRepository: GroupRepository {
         return groups
     }
     
+    // Refactor: wherefield로 카테고리 필터링
     func fetch(filter: Filter) async throws -> [Group] {
         var groups: [Group] = []
         let snapshot: QuerySnapshot
         if let groupFilter = filter.groupFilter {
             snapshot = try await firestore.collection("Group")
                 .whereField("type", isEqualTo: groupFilter.rawValue)
+                /*.whereField(<#T##field: String##String#>, in: <#T##[Any]#>)*/
                 .getDocuments()
         } else {
             snapshot = try await firestore.collection("Group")
