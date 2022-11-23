@@ -32,6 +32,7 @@ extension DefaultUserRepository {
     private func makeUserResponseDTO(user: User) -> UserResponseDTO {
         return UserResponseDTO(
             nickname: user.nickname,
+            job: user.job,
             profileImagePath: user.profileImagePath,
             categories: user.categories,
             groups: user.groups
