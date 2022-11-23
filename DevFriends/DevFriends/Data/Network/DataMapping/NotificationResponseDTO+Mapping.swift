@@ -14,6 +14,8 @@ struct NotificationResponseDTO: Codable {
     let groupTitle: String
     let senderID: String?
     let senderNickname: String?
+    let commentID: String?
+    let comment: String?
     let type: String
     let isOK: Bool?
 }
@@ -26,6 +28,8 @@ extension NotificationResponseDTO {
             groupTitle: self.groupTitle,
             senderID: self.senderID,
             senderNickname: self.senderNickname,
+            commentID: self.commentID,
+            comment: self.comment,
             type: self.type,
             isOK: self.isOK
         )

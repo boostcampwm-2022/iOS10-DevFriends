@@ -102,6 +102,9 @@ extension NotificationTableViewCell: ReusableType {
             self.secondaryTitleLabel.text = "참여 신청이 완료되었습니다."
         case .joinSuccess:
             self.secondaryTitleLabel.text = "모임에 가입되셨습니다!"
+        case .comment:
+            guard let senderNickname = data.senderNickname else { return }
+            self.secondaryTitleLabel.text = "\(senderNickname)님이 댓글을 남기셨습니다."
         case .unknown:
             break
         }

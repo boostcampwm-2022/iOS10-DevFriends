@@ -26,7 +26,7 @@ extension DefaultNotificationRepository: NotificationRepository {
         return notifications
     }
     
-    func send(uid: String, notification: Notification) {
+    func send(to uid: String, notification: Notification) {
         let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
         
         do {
@@ -34,7 +34,9 @@ extension DefaultNotificationRepository: NotificationRepository {
                 .collection("User")
                 .document(uid)
                 .collection("Notification")
-                .addDocument(from: notificationResponseDTO)
+                .addDocument(from: notificationResponseDTO) {
+                    print($0)
+                }
         } catch {
             print(error)
         }
@@ -83,6 +85,8 @@ extension DefaultNotificationRepository {
             groupTitle: notification.groupTitle,
             senderID: notification.senderID,
             senderNickname: notification.senderNickname,
+            commentID: notification.commentID,
+            comment: notification.comment,
             type: notification.type,
             isOK: notification.isOK
         )

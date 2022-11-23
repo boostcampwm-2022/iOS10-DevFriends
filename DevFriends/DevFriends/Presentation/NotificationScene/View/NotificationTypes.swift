@@ -12,6 +12,7 @@ enum NotificationType: String {
     case joinRequest
     case joinWait
     case joinSuccess
+    case comment
     case unknown
     
     init(rawValue: String) {
@@ -19,6 +20,7 @@ enum NotificationType: String {
         case "joinRequest": self = .joinRequest
         case "joinWait": self = .joinWait
         case "joinSuccess": self = .joinSuccess
+        case "comment": self = .comment
         default: self = .unknown
         }
     }

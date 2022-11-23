@@ -21,8 +21,13 @@ final class DefaultSendNotificationToParticipantUseCase: SendNotificationToParti
     func execute(groupID: String, senderID: String, groupTitle: String, type: NotificationJoinType) {
         switch type {
         case .accepted:
-            let notification = Notification(groupID: groupID, groupTitle: groupTitle, type: "joinSuccess")
-            notificationRepository.send(uid: senderID, notification: notification)
+            let notification = Notification(
+                groupID: groupID,
+                groupTitle: groupTitle,
+                type: NotificationType.joinSuccess.rawValue
+            )
+            
+            notificationRepository.send(to: senderID, notification: notification)
         case .denied:
             break
             // TODO: 미래의 누군가가 할 것이야..
