@@ -89,6 +89,8 @@
 		E359EC9F292CF12E00CE5775 /* NotificationSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC9E292CF12E00CE5775 /* NotificationSceneDIContainer.swift */; };
 		E359ECA1292CF32E00CE5775 /* NotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359ECA0292CF32E00CE5775 /* NotificationTests.swift */; };
 		E3752E96292DBADE003C8E17 /* NotificationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E95292DBADE003C8E17 /* NotificationTypes.swift */; };
+		E3752E98292DF9D4003C8E17 /* NotificationDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E97292DF9D4003C8E17 /* NotificationDiffableDataSource.swift */; };
+		E3752E9A292E01FE003C8E17 /* DeleteNotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752E99292E01FE003C8E17 /* DeleteNotificationUseCase.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -219,6 +221,8 @@
 		E359EC9E292CF12E00CE5775 /* NotificationSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSceneDIContainer.swift; sourceTree = "<group>"; };
 		E359ECA0292CF32E00CE5775 /* NotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTests.swift; sourceTree = "<group>"; };
 		E3752E95292DBADE003C8E17 /* NotificationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTypes.swift; sourceTree = "<group>"; };
+		E3752E97292DF9D4003C8E17 /* NotificationDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDiffableDataSource.swift; sourceTree = "<group>"; };
+		E3752E99292E01FE003C8E17 /* DeleteNotificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNotificationUseCase.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -503,6 +507,7 @@
 				E359EC98292CDE0200CE5775 /* SendNotificationToParticipantUseCase.swift */,
 				E359EC9A292CDE1700CE5775 /* UpdateGroupParticipantIDsToAddUseCase.swift */,
 				E359EC9C292CDE2B00CE5775 /* UpdateUserGroupsToAddGroupUseCase.swift */,
+				E3752E99292E01FE003C8E17 /* DeleteNotificationUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -561,6 +566,7 @@
 				E359EC85292C96DD00CE5775 /* NotificationTableViewCell.swift */,
 				E359EC86292C96DD00CE5775 /* NotificationViewController.swift */,
 				E3752E95292DBADE003C8E17 /* NotificationTypes.swift */,
+				E3752E97292DF9D4003C8E17 /* NotificationDiffableDataSource.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1002,9 +1008,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E359EC9D292CDE2B00CE5775 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
+				E3752E98292DF9D4003C8E17 /* NotificationDiffableDataSource.swift in Sources */,
 				E359EC8C292CBC7400CE5775 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				E33A204029262B6B00887EC9 /* GroupListViewController.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
+				E3752E9A292E01FE003C8E17 /* DeleteNotificationUseCase.swift in Sources */,
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,

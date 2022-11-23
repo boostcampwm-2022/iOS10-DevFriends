@@ -21,6 +21,7 @@ struct NotificationResponseDTO: Codable {
 extension NotificationResponseDTO {
     func toDamain() -> Notification {
         return Notification(
+            uid: self.uid,
             groupID: self.groupID,
             groupTitle: self.groupTitle,
             senderID: self.senderID,

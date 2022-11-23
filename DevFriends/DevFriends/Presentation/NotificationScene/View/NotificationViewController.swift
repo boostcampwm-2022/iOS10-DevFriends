@@ -10,8 +10,8 @@ import UIKit
 
 final class NotificationViewController: UITableViewController {
     private lazy var notificationDiffableDataSource = {
-        let diffableDataSource = UITableViewDiffableDataSource<Section, Notification>(
-            tableView: tableView
+        let diffableDataSource = NotificationDiffableDataSource(
+            tableView: self.tableView
         ) { tableView, indexPath, data in
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: NotificationTableViewCell.reuseIdentifier,
@@ -58,6 +58,11 @@ final class NotificationViewController: UITableViewController {
             .receive(on: RunLoop.main)
             .sink {
                 self.populateSnapshot(data: $0)
+            }
+            .store(in: &cancellables)
+        self.notificationDiffableDataSource.notificationSubject
+            .sink {
+                self.viewModel.didDeleteNotification(of: $0)
             }
             .store(in: &cancellables)
     }

@@ -60,6 +60,19 @@ extension DefaultNotificationRepository: NotificationRepository {
             }
         }
     }
+    
+    func delete(userID: String, notification: Notification) {
+        guard let notificationID = notification.uid else { fatalError("notificationID is nil") }
+        
+        let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
+        
+        firestore
+            .collection("User")
+            .document(userID)
+            .collection("Notification")
+            .document(notificationID)
+            .delete()
+    }
 }
 
 // MARK: Private

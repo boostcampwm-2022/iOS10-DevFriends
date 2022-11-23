@@ -11,6 +11,7 @@ import Foundation
 protocol NotificationViewModelIntput {
     func didLoadNotifications()
     func didAcceptedParticipant(index: Int)
+    func didDeleteNotification(of notification: Notification)
 }
 
 protocol NotificationViewModelOutput {
@@ -25,19 +26,22 @@ final class DefaultNotificationViewModel: NotificationViewModel {
     private let sendNotificationToParticipantUseCase: SendNotificationToParticipantUseCase
     private let updateGroupParticipantIDsToAddUseCase: UpdateGroupParticipantIDsToAddUseCase
     private let updateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase
+    private let deleteNotificationUseCase: DeleteNotificationUseCase
     
     init(
         loadNotificationsUseCase: LoadNotificationsUseCase,
         updateNotificationIsOKToTrueUseCase: UpdateNotificationIsOKToTrueUseCase,
         sendNotificationToParticipantUseCase: SendNotificationToParticipantUseCase,
         updateGroupParticipantIDsToAddUseCase: UpdateGroupParticipantIDsToAddUseCase,
-        updateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase
+        updateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase,
+        deleteNotificationUseCase: DeleteNotificationUseCase
     ) {
         self.loadNotificationsUseCase = loadNotificationsUseCase
         self.updateNotificationIsOKToTrueUseCase = updateNotificationIsOKToTrueUseCase
         self.sendNotificationToParticipantUseCase = sendNotificationToParticipantUseCase
         self.updateGroupParticipantIDsToAddUseCase = updateGroupParticipantIDsToAddUseCase
         self.updateUserGroupsToAddGroupUseCase = updateUserGroupsToAddGroupUseCase
+        self.deleteNotificationUseCase = deleteNotificationUseCase
     }
     
     // MARK: OUTPUT
@@ -46,13 +50,13 @@ final class DefaultNotificationViewModel: NotificationViewModel {
     // MARK: Private
     private func loadNotifications() async {
         let loadTask = Task {
-            return try await loadNotificationsUseCase.execute()
+            return try await self.loadNotificationsUseCase.execute()
         }
         
         let result = await loadTask.result
         
         do {
-            notificationsSubject.send(try result.get())
+            self.notificationsSubject.send(try result.get())
         } catch {
             print(error)
         }
@@ -71,10 +75,10 @@ extension DefaultNotificationViewModel {
         // 1. 호스트의 Notification의 isOK를 True로 업데이트해야 함.
         let notification = self.notificationsSubject.value[index]
         guard let senderID = notification.senderID else { fatalError("Notification ID is nil") }
-        updateNotificationIsOKToTrueUseCase.execute(notification: notification)
+        self.updateNotificationIsOKToTrueUseCase.execute(notification: notification)
         
         // 2. 참여 대기자한테 승인되었다는 Notification을 보내야 함.
-        sendNotificationToParticipantUseCase.execute(
+        self.sendNotificationToParticipantUseCase.execute(
             groupID: notification.groupID,
             senderID: senderID,
             groupTitle: notification.groupTitle,
@@ -84,12 +88,12 @@ extension DefaultNotificationViewModel {
         Task {
             do {
                 // 3. Group의 participantIDs에 참여 대기자의 ID를 넣어야 함.
-                try await updateGroupParticipantIDsToAddUseCase.execute(
+                try await self.updateGroupParticipantIDsToAddUseCase.execute(
                     groupID: notification.groupID,
                     senderID: senderID
                 )
                 // 4. 참여 대기자의 User 정보의 Group에 참가할 GroupID를 넣어야 함.
-                try await updateUserGroupsToAddGroupUseCase.execute(
+                try await self.updateUserGroupsToAddGroupUseCase.execute(
                     groupID: notification.groupID,
                     senderID: senderID
                 )
@@ -97,5 +101,9 @@ extension DefaultNotificationViewModel {
                 print(error)
             }
         }
+    }
+    
+    func didDeleteNotification(of notification: Notification) {
+        self.deleteNotificationUseCase.execute(notification: notification)
     }
 }

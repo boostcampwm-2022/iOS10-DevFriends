@@ -44,6 +44,10 @@ extension NotificationSceneDIContainer {
         return DefaultUpdateUserGroupsToAddGroupUseCase(userRepository: makeUserRepository())
     }
     
+    func makeDeleteNotificationUseCase() -> DeleteNotificationUseCase {
+        return DefaultDeleteNotificationUseCase(notificationRepository: makeNotificationRepository())
+    }
+    
     // MARK: Notification
     func makeNotificationViewModel() -> NotificationViewModel {
         return DefaultNotificationViewModel(
@@ -51,7 +55,8 @@ extension NotificationSceneDIContainer {
             updateNotificationIsOKToTrueUseCase: makeUpdateNotificationIsOKToTrueUseCase(),
             sendNotificationToParticipantUseCase: makeSendNotificationToParticipantUseCase(),
             updateGroupParticipantIDsToAddUseCase: makeUpdateGroupParticipantIDsToAddUseCase(),
-            updateUserGroupsToAddGroupUseCase: makeUpdateUserGroupsToAddGroupUseCase()
+            updateUserGroupsToAddGroupUseCase: makeUpdateUserGroupsToAddGroupUseCase(),
+            deleteNotificationUseCase: makeDeleteNotificationUseCase()
         )
     }
 }
