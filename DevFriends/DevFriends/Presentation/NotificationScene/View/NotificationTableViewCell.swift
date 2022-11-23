@@ -113,7 +113,7 @@ extension NotificationTableViewCell: ReusableType {
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-20)
         }
-        print(contentView.subviews)
+        
         if status {
             var config = self.acceptButton.configuration ?? UIButton.Configuration.filled()
             var titleAttr = AttributedString.init("승인됨")
