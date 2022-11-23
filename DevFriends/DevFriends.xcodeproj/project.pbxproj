@@ -89,6 +89,10 @@
 		FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */; };
 		FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
+		FC422479292DF49D0060C0F7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC422478292DF49D0060C0F7 /* TabBarController.swift */; };
+		FC42247B292DF7B50060C0F7 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC42247A292DF7B50060C0F7 /* TabBarCoordinator.swift */; };
+		FC42247D292DF8120060C0F7 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC42247C292DF8120060C0F7 /* TabBarViewModel.swift */; };
+		FC42247F292DFB460060C0F7 /* TabBarSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC42247E292DFB460060C0F7 /* TabBarSceneDIContainer.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
 		FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */; };
@@ -205,6 +209,10 @@
 		FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		FC422478292DF49D0060C0F7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		FC42247A292DF7B50060C0F7 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
+		FC42247C292DF8120060C0F7 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		FC42247E292DFB460060C0F7 /* TabBarSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarSceneDIContainer.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -387,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				E33A20A0292662E500887EC9 /* AppDIContainer.swift */,
+				FC42247E292DFB460060C0F7 /* TabBarSceneDIContainer.swift */,
 				E33A20A1292662E500887EC9 /* ChatSceneDIContainer.swift */,
 			);
 			path = DIContainer;
@@ -542,9 +551,20 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		FC422476292DF4550060C0F7 /* TabBarScene */ = {
+			isa = PBXGroup;
+			children = (
+				FC422478292DF49D0060C0F7 /* TabBarController.swift */,
+				FC42247A292DF7B50060C0F7 /* TabBarCoordinator.swift */,
+				FC42247C292DF8120060C0F7 /* TabBarViewModel.swift */,
+			);
+			path = TabBarScene;
+			sourceTree = "<group>";
+		};
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				FC422476292DF4550060C0F7 /* TabBarScene */,
 				E394C49D292231D80064ADA7 /* PostDetailScene */,
 				FC79AEAE29221F9F0077AE5C /* GroupScene */,
 				E33A20702926621F00887EC9 /* ChatScene */,
@@ -937,6 +957,7 @@
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
+				FC42247D292DF8120060C0F7 /* TabBarViewModel.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				E33A20E629277B3900887EC9 /* ChatGroupsRepository.swift in Sources */,
@@ -970,6 +991,7 @@
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */,
 				E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */,
+				FC42247B292DF7B50060C0F7 /* TabBarCoordinator.swift in Sources */,
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
@@ -978,6 +1000,7 @@
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
+				FC422479292DF49D0060C0F7 /* TabBarController.swift in Sources */,
 				FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
@@ -1000,6 +1023,7 @@
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
+				FC42247F292DFB460060C0F7 /* TabBarSceneDIContainer.swift in Sources */,
 				FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */,
 				A6ED8BA72924E44A003105E2 /* (null) in Sources */,
 				FCE46BAE2928DBF000383F6F /* CLLocation+Distance.swift in Sources */,
