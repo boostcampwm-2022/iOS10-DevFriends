@@ -46,7 +46,7 @@ final class NotificationTableViewCell: UITableViewCell {
         config.attributedTitle = titleAttr
         config.baseBackgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
         config.cornerStyle = .capsule
-        config.contentInsets = NSDirectionalEdgeInsets(top: 6.0, leading: 18.0, bottom: 6.0, trailing: 18.0)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 6.0, leading: 13.0, bottom: 6.0, trailing: 13.0)
         button.configuration = config
         button
             .publisher(for: .touchUpInside)
@@ -115,6 +115,8 @@ extension NotificationTableViewCell: ReusableType {
         self.acceptButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-20)
+            make.height.equalTo(28)
+            make.width.equalTo(59)
         }
         
         if status {
