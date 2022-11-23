@@ -2,11 +2,12 @@
 //  Category.swift
 //  DevFriends
 //
-//  Created by 이대현 on 2022/11/22.
+//  Created by 상현 on 2022/11/22.
 //
 
 import Foundation
 
-struct Category: Hashable {
+struct Category: Codable, Hashable {
+    let id: String
     let name: String
 }
