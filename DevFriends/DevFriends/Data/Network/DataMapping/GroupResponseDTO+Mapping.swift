@@ -17,7 +17,9 @@ struct GroupResponseDTO: Codable {
     let categories: [String]
     let location: GeoPoint
     let description: String
+    let time: Date
     let like: Int
+    let hit: Int
     let limitedNumberPeople: Int
     let managerID: String
     let type: String
@@ -25,15 +27,20 @@ struct GroupResponseDTO: Codable {
 
 extension GroupResponseDTO {
     func toDomain() -> Group {
-        return Group(participantIDs: participantIDs,
-                     title: title,
-                     chatID: chatID,
-                     categories: categories,
-                     location: Location(latitude: location.latitude, longitude: location.longitude),
-                     description: description,
-                     like: like,
-                     limitedNumberPeople: limitedNumberPeople,
-                     managerID: managerID,
-                     type: type)
+        return Group(
+            id: uid ?? "",
+            participantIDs: participantIDs,
+            title: title,
+            chatID: chatID,
+            categories: categories,
+            location: Location(latitude: location.latitude, longitude: location.longitude),
+            description: description,
+            time: time,
+            like: like,
+            hit: hit,
+            limitedNumberPeople: limitedNumberPeople,
+            managerID: managerID,
+            type: type
+        )
     }
 }
