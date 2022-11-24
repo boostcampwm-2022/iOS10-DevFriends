@@ -561,7 +561,6 @@
 		E33A20E429277B2A00887EC9 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				A66C7BB9292E19210008B6FD /* ContainsFirestore.swift */,
 				E33A20E72927BADE00887EC9 /* UserRepository.swift */,
 				A66C7BBB292E19450008B6FD /* GroupRepository.swift */,
 				A66C7BBD292E19660008B6FD /* ChatGroupsRepository.swift */,
@@ -702,6 +701,7 @@
 		FC79AEBC292223DF0077AE5C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				A66C7BB9292E19210008B6FD /* ContainsFirestore.swift */,
 				05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */,
 				05CB4A2A292DF13500A97531 /* DefaultGroupCommentRepository.swift */,
 				FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */,
