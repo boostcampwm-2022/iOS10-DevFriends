@@ -14,12 +14,8 @@ struct TabBarSceneDIContainer {
 }
 
 extension TabBarSceneDIContainer: TabBarFlowCoordinatorDependencies {
-    func makeTabBarViewModel(actions: TabBarViewModelActions) -> TabBarViewModel {
-        return TabBarViewModel(actions: actions)
-    }
-    
-    func makeTabBarController(actions: TabBarViewModelActions) -> TabBarController {
-        return TabBarController(tabBarViewModel: makeTabBarViewModel(actions: actions))
+    func makeTabBarController() -> UITabBarController {
+        return UITabBarController()
     }
     
     func makeChatSceneDIContainer() -> ChatSceneDIContainer {

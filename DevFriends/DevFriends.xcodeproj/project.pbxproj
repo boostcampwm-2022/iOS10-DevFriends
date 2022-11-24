@@ -89,9 +89,7 @@
 		FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */; };
 		FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
-		FC422479292DF49D0060C0F7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC422478292DF49D0060C0F7 /* TabBarController.swift */; };
 		FC42247B292DF7B50060C0F7 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC42247A292DF7B50060C0F7 /* TabBarCoordinator.swift */; };
-		FC42247D292DF8120060C0F7 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC42247C292DF8120060C0F7 /* TabBarViewModel.swift */; };
 		FC42247F292DFB460060C0F7 /* TabBarSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC42247E292DFB460060C0F7 /* TabBarSceneDIContainer.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
@@ -209,9 +207,7 @@
 		FC07DDC2292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		FC422478292DF49D0060C0F7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		FC42247A292DF7B50060C0F7 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
-		FC42247C292DF8120060C0F7 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		FC42247E292DFB460060C0F7 /* TabBarSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarSceneDIContainer.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
@@ -554,9 +550,7 @@
 		FC422476292DF4550060C0F7 /* TabBarScene */ = {
 			isa = PBXGroup;
 			children = (
-				FC422478292DF49D0060C0F7 /* TabBarController.swift */,
 				FC42247A292DF7B50060C0F7 /* TabBarCoordinator.swift */,
-				FC42247C292DF8120060C0F7 /* TabBarViewModel.swift */,
 			);
 			path = TabBarScene;
 			sourceTree = "<group>";
@@ -957,7 +951,6 @@
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
-				FC42247D292DF8120060C0F7 /* TabBarViewModel.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				E33A20E629277B3900887EC9 /* ChatGroupsRepository.swift in Sources */,
@@ -1000,7 +993,6 @@
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E33A20E329277A5100887EC9 /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
-				FC422479292DF49D0060C0F7 /* TabBarController.swift in Sources */,
 				FC07DDC3292CAF6400D16FBC /* MessageResponseDTO+Mapping.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
