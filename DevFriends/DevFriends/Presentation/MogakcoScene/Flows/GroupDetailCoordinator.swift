@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol GroupDetailCoordinator: AnyObject {
+protocol GroupDetailCoordinator {
     func showGroupDetailViewController(group: Group)
 }

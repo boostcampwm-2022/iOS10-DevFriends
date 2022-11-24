@@ -11,6 +11,7 @@ protocol TabBarFlowCoordinatorDependencies {
     func makeTabBarController() -> UITabBarController
     func makeChatSceneDIContainer() -> ChatSceneDIContainer
     func makeMogakcoSceneDIContainer() -> MogakcoSceneDIContainer
+    func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -25,12 +26,20 @@ final class TabBarCoordinator: Coordinator {
     
     func start() {
         let tabBarController = dependencies.makeTabBarController()
-        let chatSceneNavigationController = UINavigationController()
-//        let mogakcoSceneNavigationController = UINavigationController()
-        tabBarController.viewControllers = [chatSceneNavigationController]
         navigationController?.pushViewController(tabBarController, animated: false)
+
+        let chatSceneNavigationController = UINavigationController()
+        let mogakcoSceneNavigationController = UINavigationController()
+        let myPageNavigationController = UINavigationController()
+        tabBarController.viewControllers = [
+            mogakcoSceneNavigationController,
+            chatSceneNavigationController,
+            myPageNavigationController
+        ]
+        
         startChatScene(chatSceneNavigationController: chatSceneNavigationController)
-        startMogakcoScene(navigationController: chatSceneNavigationController)
+        startMogakcoScene(navigationController: mogakcoSceneNavigationController)
+        startMyPageScene(myPageNavigationController: myPageNavigationController)
     }
     
     func startChatScene(chatSceneNavigationController: UINavigationController) {
@@ -45,6 +54,14 @@ final class TabBarCoordinator: Coordinator {
         navigationController.tabBarItem.image = UIImage(systemName: "map.fill")
         let mogakcoSceneDIContainer = dependencies.makeMogakcoSceneDIContainer()
         let flow = mogakcoSceneDIContainer.makeChatFlowCoordinator(navigationController: navigationController)
+        flow.start()
+        childCoordinators.append(flow)
+    }
+        
+    func startMyPageScene(myPageNavigationController: UINavigationController) {
+        myPageNavigationController.tabBarItem.image = UIImage(systemName: "person")
+        let myPageSceneDIContainer = dependencies.makeMyPageSceneDIContainer()
+        let flow = myPageSceneDIContainer.makeMyPageCoordinator(navigationController: myPageNavigationController)
         flow.start()
         childCoordinators.append(flow)
     }

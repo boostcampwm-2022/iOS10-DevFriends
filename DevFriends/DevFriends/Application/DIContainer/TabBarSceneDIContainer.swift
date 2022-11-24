@@ -25,4 +25,8 @@ extension TabBarSceneDIContainer: TabBarFlowCoordinatorDependencies {
     func makeMogakcoSceneDIContainer() -> MogakcoSceneDIContainer {
         return MogakcoSceneDIContainer()
     }
+
+    func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer {
+        return MyPageSceneDIContainer()
+    }
 }
