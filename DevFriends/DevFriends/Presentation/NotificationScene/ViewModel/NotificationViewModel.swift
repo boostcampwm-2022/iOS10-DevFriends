@@ -8,6 +8,8 @@
 import Combine
 import Foundation
 
+struct NotificationViewModelActions {} // TODO: 댓글 알림 누르면 댓글로 이동하는 코드 넣기
+
 protocol NotificationViewModelIntput {
     func didLoadNotifications()
     func didAcceptedParticipant(index: Int)
@@ -27,6 +29,7 @@ final class DefaultNotificationViewModel: NotificationViewModel {
     private let updateGroupParticipantIDsToAddUseCase: UpdateGroupParticipantIDsToAddUseCase
     private let updateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase
     private let deleteNotificationUseCase: DeleteNotificationUseCase
+    private let actions: NotificationViewModelActions
     
     init(
         loadNotificationsUseCase: LoadNotificationsUseCase,
@@ -34,7 +37,8 @@ final class DefaultNotificationViewModel: NotificationViewModel {
         sendNotificationToParticipantUseCase: SendNotificationToParticipantUseCase,
         updateGroupParticipantIDsToAddUseCase: UpdateGroupParticipantIDsToAddUseCase,
         updateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase,
-        deleteNotificationUseCase: DeleteNotificationUseCase
+        deleteNotificationUseCase: DeleteNotificationUseCase,
+        actions: NotificationViewModelActions
     ) {
         self.loadNotificationsUseCase = loadNotificationsUseCase
         self.updateNotificationIsAcceptedToTrueUseCase = updateNotificationIsAcceptedToTrueUseCase
@@ -42,6 +46,7 @@ final class DefaultNotificationViewModel: NotificationViewModel {
         self.updateGroupParticipantIDsToAddUseCase = updateGroupParticipantIDsToAddUseCase
         self.updateUserGroupsToAddGroupUseCase = updateUserGroupsToAddGroupUseCase
         self.deleteNotificationUseCase = deleteNotificationUseCase
+        self.actions = actions
     }
     
     // MARK: OUTPUT

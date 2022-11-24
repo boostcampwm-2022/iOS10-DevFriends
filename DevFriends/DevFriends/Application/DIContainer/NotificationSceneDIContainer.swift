@@ -5,11 +5,16 @@
 //  Created by 유승원 on 2022/11/22.
 //
 
-import Foundation
+import UIKit
 
-struct NotificationSceneDIContainer {}
+struct NotificationSceneDIContainer {
+    // MARK: Flow Coordinators
+    func makeNotificationCoordinator(navigationController: UINavigationController) -> NotificationCoordinator {
+        return NotificationCoordinator(navigationController: navigationController, dependencies: self)
+    }
+}
 
-extension NotificationSceneDIContainer {
+extension NotificationSceneDIContainer: NotificationCoordinatorDependencies {
     // MARK: Repositories
     func makeUserRepository() -> UserRepository {
         return DefaultUserRepository()
@@ -49,14 +54,19 @@ extension NotificationSceneDIContainer {
     }
     
     // MARK: Notification
-    func makeNotificationViewModel() -> NotificationViewModel {
+    func makeNotificationViewModel(actions: NotificationViewModelActions) -> NotificationViewModel {
         return DefaultNotificationViewModel(
             loadNotificationsUseCase: makeLoadNotificationsUseCase(),
             updateNotificationIsAcceptedToTrueUseCase: makeUpdateNotificationIsAcceptedToTrueUseCase(),
             sendNotificationToParticipantUseCase: makeSendNotificationToParticipantUseCase(),
             updateGroupParticipantIDsToAddUseCase: makeUpdateGroupParticipantIDsToAddUseCase(),
             updateUserGroupsToAddGroupUseCase: makeUpdateUserGroupsToAddGroupUseCase(),
-            deleteNotificationUseCase: makeDeleteNotificationUseCase()
+            deleteNotificationUseCase: makeDeleteNotificationUseCase(),
+            actions: actions
         )
+    }
+    
+    func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController {
+        return NotificationViewController(notificationViewModel: makeNotificationViewModel(actions: actions))
     }
 }
