@@ -25,9 +25,9 @@ extension UserResponseDTO {
             nickname: nickname,
             job: job,
             profileImagePath: profileImagePath,
-            categories: categories,
-            groups: groups,
-            appliedGroups: appliedGroups
+            categoryIDs: categories,
+            groupIDs: groups,
+            appliedGroupIDs: appliedGroups
         )
     }
 }

@@ -8,6 +8,11 @@
 import UIKit
 
 final class CommonButton: UIButton {
+    enum ButtonState {
+        case activated
+        case disabled
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -23,5 +28,17 @@ final class CommonButton: UIButton {
         self.backgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
         self.titleLabel?.font = .systemFont(ofSize: 25)
         self.layer.cornerRadius = 15
+    }
+    
+    func set(title: String, state: ButtonState) {
+        self.setTitle(title, for: .normal)
+        switch state {
+        case .activated:
+            self.backgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
+            self.isEnabled = true
+        case .disabled:
+            self.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            self.isEnabled = false
+        }
     }
 }

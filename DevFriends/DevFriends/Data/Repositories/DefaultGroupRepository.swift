@@ -71,7 +71,7 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             participantIDs: group.participantIDs,
             title: group.title,
             chatID: group.chatID,
-            categories: group.categories,
+            categories: group.categoryIDs,
             location: GeoPoint(latitude: group.location.latitude, longitude: group.location.longitude),
             description: group.description,
             time: group.time,

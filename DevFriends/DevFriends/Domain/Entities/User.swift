@@ -13,7 +13,7 @@ struct User: Codable {
     let nickname: String
     let job: String
     let profileImagePath: String
-    let categories: [String]
-    let groups: [String]
-    let appliedGroups: [String]
+    let categoryIDs: [String]
+    let groupIDs: [String]
+    let appliedGroupIDs: [String]
 }

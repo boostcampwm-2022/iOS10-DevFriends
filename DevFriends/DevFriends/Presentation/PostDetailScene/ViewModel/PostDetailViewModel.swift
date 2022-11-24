@@ -114,7 +114,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         var result: [Category] = []
         do {
             result = try await Task {
-                try await fetchCategoryUseCase.execute(categoryIds: group.categories)
+                try await fetchCategoryUseCase.execute(categoryIds: group.categoryIDs)
             }.result.get()
         } catch {
             print(error)

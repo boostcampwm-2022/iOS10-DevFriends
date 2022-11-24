@@ -52,7 +52,7 @@ final class PostDetailViewController: DefaultViewController {
         participantIDs: [" YkocW98XPzJAsSDVa5qd"],
         title: "Swift를 배워봅시다~",
         chatID: "SHWMLojQYPUZW5U7u24U",
-        categories: ["89kKYamuTTGC0rK7VZO8"],
+        categoryIDs: ["89kKYamuTTGC0rK7VZO8"],
         location: Location(latitude: 50.0, longitude: 50.0),
         description: "저랑 같이 공부해요 화이팅!",
         time: Date(),
@@ -192,25 +192,7 @@ final class PostDetailViewController: DefaultViewController {
         viewModel.groupApplyButtonStateSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
-                switch state {
-                case .available:
-                    self?.postRequestButton.setTitle("모임 신청", for: .normal)
-                    self?.postRequestButton.backgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
-                    self?.postRequestButton.isEnabled = true
-                    self?.postRequestButton.isHidden = false
-                case .applied:
-                    self?.postRequestButton.setTitle("신청된 모임입니다", for: .normal)
-                    self?.postRequestButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-                    self?.postRequestButton.isEnabled = false
-                    self?.postRequestButton.isHidden = false
-                case .joined:
-                    self?.postRequestButton.isHidden = true
-                case .closed:
-                    self?.postRequestButton.setTitle("마감된 모임입니다", for: .normal)
-                    self?.postRequestButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-                    self?.postRequestButton.isEnabled = false
-                    self?.postRequestButton.isHidden = false
-                }
+                self?.updateGroupApplyButton(state: state)
             }
             .store(in: &cancellables)
         
@@ -268,6 +250,22 @@ final class PostDetailViewController: DefaultViewController {
         contentsStackView.setCustomSpacing(5, after: postAttentionView)
         
         return contentsView
+    }
+    
+    private func updateGroupApplyButton(state: GroupApplyButtonState) {
+        switch state {
+        case .available:
+            self.postRequestButton.set(title: "모임 신청", state: .activated)
+            self.postRequestButton.isHidden = false
+        case .applied:
+            self.postRequestButton.set(title: "신청된 모임입니다", state: .disabled)
+            self.postRequestButton.isHidden = false
+        case .joined:
+            self.postRequestButton.isHidden = true
+        case .closed:
+            self.postRequestButton.set(title: "마감된 모임입니다", state: .disabled)
+            self.postRequestButton.isHidden = false
+        }
     }
 }
 

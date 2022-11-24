@@ -51,9 +51,9 @@ extension DefaultUserRepository: UserRepository {
             nickname: user.nickname,
             job: user.job,
             profileImagePath: user.profileImagePath,
-            categories: user.categories,
-            groups: user.groups,
-            appliedGroups: user.appliedGroups
+            categories: user.categoryIDs,
+            groups: user.groupIDs,
+            appliedGroups: user.appliedGroupIDs
         )
     }
 }
