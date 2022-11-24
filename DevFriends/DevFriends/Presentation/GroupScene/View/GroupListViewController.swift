@@ -10,8 +10,8 @@ import SnapKit
 import UIKit
 
 final class GroupListViewController: DefaultViewController {
-//    private let viewModel: GroupListViewModel!
-    private var cancellabes = Set<AnyCancellable>()
+    private let viewModel = DefaultGroupListViewModel(
+        fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()))
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -42,18 +42,30 @@ final class GroupListViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.compositionalLayout)
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(
             GroupCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.register(
+            GroupCollectionViewCell.self,
+            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
         
         return collectionView
     }()
     
+    private lazy var collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo>(
+        collectionView: self.collectionView) { collectionView, indexPath, data -> UICollectionViewCell? in
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+            cell.set(data.group)
+        return cell
+    }
+    
+    private lazy var collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()
+                                                                                           
     private lazy var compositionalLayout: UICollectionViewCompositionalLayout = {
         let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             
@@ -123,6 +135,9 @@ final class GroupListViewController: DefaultViewController {
     
     override func configureUI() {
         self.view.backgroundColor = .systemGray6
+        self.setupCollectionView()
+        self.setupCollectionViewHeader()
+        self.viewModel.loadGroupList()
     }
     
     override func layout() {
@@ -135,18 +150,54 @@ final class GroupListViewController: DefaultViewController {
         }
     }
     
+    private func setupCollectionView() {
+        self.collectionViewSnapShot.appendSections([.recommand, .filtered])
+    }
+    
+    private func setupCollectionViewHeader() {
+        self.collectionViewDiffableDataSource.supplementaryViewProvider = { (collectionView: UICollectionView, _: String, indexPath: IndexPath) -> UICollectionReusableView? in
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier,
+                for: indexPath) as? GroupCollectionHeaderView else { return UICollectionReusableView() }
+            
+            if indexPath.section == 0 {
+                header.set(title: "추천 모임")
+            } else if indexPath.section == 1 {
+                header.set(title: "모집중인 모임", self, #selector(self.didTapFilterButton))
+            }
+            
+            return header
+        }
+    }
+    
+    private func populateSnapShot(data: [GroupCellInfo], to section: GroupListSection) {
+        print("populate", section)
+        let oldItem = self.collectionViewSnapShot.itemIdentifiers(inSection: section)
+        self.collectionViewSnapShot.deleteItems(oldItem)
+        self.collectionViewSnapShot.appendItems(data, toSection: section)
+        self.collectionViewDiffableDataSource.apply(collectionViewSnapShot, animatingDifferences: true)
+    }
+    
     private func setupNavigation() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
     override func bind() {
-//        viewModel.$filterTrigger
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                self?.collectionView.reloadData()
-//            }
-//            .store(in: cancellabes)
+        viewModel.recommandGroupsSubject
+            .receive(on: RunLoop.main)
+            .sink { groupList in
+                self.populateSnapShot(data: groupList, to: .recommand)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.filteredGroupsSubject
+            .receive(on: RunLoop.main)
+            .sink { groupList in
+                self.populateSnapShot(data: groupList, to: .filtered)
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -155,6 +206,8 @@ final class GroupListViewController: DefaultViewController {
 extension GroupListViewController {
     @objc func didTapFilterButton(_ sender: UIButton) {
         let filterVC = GroupFilterViewController()
+        filterVC.delegate = self
+        filterVC.initialFilter = self.viewModel.groupFilter
         present(filterVC, animated: true)
     }
     
@@ -187,65 +240,17 @@ extension GroupListViewController {
     }
 }
 
-// MARK: - UICollectionView DataSource
-
-extension GroupListViewController: UICollectionViewDataSource {
-    // 섹션 개수
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
-    }
-    
-    // 헤더 정보
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard
-            kind == UICollectionView.elementKindSectionHeader,
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier,
-                for: indexPath
-            ) as? GroupCollectionHeaderView else { return UICollectionReusableView() }
-        
-        if indexPath.section == 0 {
-            header.set(title: "추천 모임")
-        } else if indexPath.section == 1 {
-            header.set(title: "모집중인 모임", self, #selector(didTapFilterButton))
-        }
-        
-        return header
-    }
-    
-    // 셀 개수
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return 6
-//            return viewModel.recommendGroups.count
-        } else {
-            return 5
-//            return viewModel.filteredGroups.count
-        }
-    }
-    
-    // 셀 정보
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
-        
-//        if indexPath.section == 0 {
-//            cell.configure(viewModel.recommendGroups[indexPath.item])
-//        } else {
-//            cell.configure(viewModel.filteredGroups[indexPath.item])
-//        }
-        
-        return cell
-    }
-}
-
 // MARK: - UICollectionView Delegate
-
 extension GroupListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Section \(indexPath.section) : \(indexPath.item)번째 아이템을 선택했습니다.")
+    }
+}
+
+// MARK: - GroupFilterViewController Delegate
+extension GroupListViewController: GroupFilterViewControllerDelegate {
+    func didSelectFilter(filter: Filter) {
+        self.viewModel.updateFilter(filter: filter)
+        self.viewModel.loadGroupList()
     }
 }

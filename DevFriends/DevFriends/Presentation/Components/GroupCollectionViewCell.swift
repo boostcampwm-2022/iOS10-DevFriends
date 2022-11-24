@@ -53,7 +53,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         participantLabel.text = "👥 \(group.participantIDs.count)/\(group.limitedNumberPeople)"
         let location = CLLocation(latitude: group.location.latitude, longitude: group.location.longitude)
         Task {
-            placeLabel.text = try await location.placemark()
+            placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
         }
     }
 
