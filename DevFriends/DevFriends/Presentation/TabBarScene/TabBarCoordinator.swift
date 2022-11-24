@@ -9,6 +9,7 @@ import UIKit
 
 protocol TabBarFlowCoordinatorDependencies {
     func makeTabBarController() -> UITabBarController
+    func makeGroupSceneDIContainer() -> GroupSceneDIContainer
     func makeChatSceneDIContainer() -> ChatSceneDIContainer
 }
 
@@ -25,9 +26,21 @@ final class TabBarCoordinator: Coordinator {
     func start() {
         let tabBarController = dependencies.makeTabBarController()
         let chatSceneNavigationController = UINavigationController()
-        tabBarController.viewControllers = [chatSceneNavigationController]
+        let groupSceneNavigationController = UINavigationController()
+        tabBarController.viewControllers = [
+            groupSceneNavigationController,
+            chatSceneNavigationController]
         navigationController?.pushViewController(tabBarController, animated: false)
+        startGroupScene(groupSceneNavigationController: groupSceneNavigationController)
         startChatScene(chatSceneNavigationController: chatSceneNavigationController)
+    }
+    
+    func startGroupScene(groupSceneNavigationController: UINavigationController) {
+        groupSceneNavigationController.tabBarItem.image = UIImage(systemName: "message")
+        let groupSceneDIContainer = dependencies.makeGroupSceneDIContainer()
+        let flow = groupSceneDIContainer.makeGroupFlowCoordinator(navigationController: groupSceneNavigationController)
+        flow.start()
+        childCoordinators.append(flow)
     }
     
     func startChatScene(chatSceneNavigationController: UINavigationController) {

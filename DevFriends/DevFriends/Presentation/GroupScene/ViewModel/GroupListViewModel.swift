@@ -5,11 +5,16 @@
 //  Created by 이대현 on 2022/11/19.
 //
 
-import Foundation
 import Combine
+import Foundation
+
+struct GroupListViewModelActions {
+    let showGroupFilterView: (Filter) -> Void
+}
 
 protocol GroupListViewModelInput {
     func loadGroupList()
+    func didSelectFilter()
     func updateFilter(filter: Filter)
 }
 
@@ -25,13 +30,15 @@ protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
 
 final class DefaultGroupListViewModel: GroupListViewModel {
     private let fetchGroupUseCase: FetchGroupUseCase
+    private let actions: GroupListViewModelActions?
     var recommandFilter: Filter
     var groupFilter: Filter = Filter(alignFilter: .newest, categoryFilter: [])
     
-    init(fetchGroupUseCase: FetchGroupUseCase) {
+    init(fetchGroupUseCase: FetchGroupUseCase, actions: GroupListViewModelActions) {
         self.fetchGroupUseCase = fetchGroupUseCase
         // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
         self.recommandFilter = Filter(alignFilter: .newest, categoryFilter: [])
+        self.actions = actions
     }
     
     // MARK: OUTPUT
@@ -55,6 +62,11 @@ extension DefaultGroupListViewModel {
             filteredGroupsSubject.send(filteredGroupCellInfos)
         }
     }
+    
+    func didSelectFilter() {
+        actions?.showGroupFilterView(groupFilter)
+    }
+    
     func updateFilter(filter: Filter) {
         self.groupFilter = filter
     }

@@ -25,6 +25,9 @@
 		A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB22292E1C060018A654 /* ChatContentViewModel.swift */; };
 		A648BB25292E1D6F0018A654 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB24292E1D6F0018A654 /* Filter.swift */; };
 		A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB26292E20260018A654 /* GroupCellInfo.swift */; };
+		A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */; };
+		A648BB38292F534F0018A654 /* GroupListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB37292F534F0018A654 /* GroupListCoordinator.swift */; };
+		A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB39292F590C0018A654 /* GroupListViewCoordinator.swift */; };
 		A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */; };
 		A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */; };
 		A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */; };
@@ -39,7 +42,6 @@
 		A66C7BCA292E1A460008B6FD /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BC9292E1A460008B6FD /* Location.swift */; };
 		A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BCD292E1A9B0008B6FD /* GroupListSection.swift */; };
 		A66C7BD7292E1A9B0008B6FD /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BCE292E1A9B0008B6FD /* GroupListViewController.swift */; };
-		A66C7BD8292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BCF292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift */; };
 		A66C7BD9292E1A9B0008B6FD /* GroupFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BD0292E1A9B0008B6FD /* GroupFilterViewController.swift */; };
 		A66C7BDA292E1A9B0008B6FD /* GroupFilterViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BD2292E1A9B0008B6FD /* GroupFilterViewModelType.swift */; };
 		A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BD3292E1A9B0008B6FD /* GroupListViewModelType.swift */; };
@@ -173,6 +175,9 @@
 		A648BB22292E1C060018A654 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		A648BB24292E1D6F0018A654 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		A648BB26292E20260018A654 /* GroupCellInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCellInfo.swift; sourceTree = "<group>"; };
+		A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSceneDIContainer.swift; sourceTree = "<group>"; };
+		A648BB37292F534F0018A654 /* GroupListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCoordinator.swift; sourceTree = "<group>"; };
+		A648BB39292F590C0018A654 /* GroupListViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewCoordinator.swift; sourceTree = "<group>"; };
 		A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
@@ -187,7 +192,6 @@
 		A66C7BC9292E1A460008B6FD /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		A66C7BCD292E1A9B0008B6FD /* GroupListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListSection.swift; sourceTree = "<group>"; };
 		A66C7BCE292E1A9B0008B6FD /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
-		A66C7BCF292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupFilterViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A66C7BD0292E1A9B0008B6FD /* GroupFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupFilterViewController.swift; sourceTree = "<group>"; };
 		A66C7BD2292E1A9B0008B6FD /* GroupFilterViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupFilterViewModelType.swift; sourceTree = "<group>"; };
 		A66C7BD3292E1A9B0008B6FD /* GroupListViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewModelType.swift; sourceTree = "<group>"; };
@@ -309,12 +313,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A648BB36292F53240018A654 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				A648BB37292F534F0018A654 /* GroupListCoordinator.swift */,
+				A648BB39292F590C0018A654 /* GroupListViewCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
 		A66C7BCC292E1A9B0008B6FD /* View */ = {
 			isa = PBXGroup;
 			children = (
 				A66C7BCD292E1A9B0008B6FD /* GroupListSection.swift */,
 				A66C7BCE292E1A9B0008B6FD /* GroupListViewController.swift */,
-				A66C7BCF292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift */,
 				A66C7BD0292E1A9B0008B6FD /* GroupFilterViewController.swift */,
 			);
 			path = View;
@@ -469,6 +481,7 @@
 				E33A20A0292662E500887EC9 /* AppDIContainer.swift */,
 				FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */,
 				E33A20A1292662E500887EC9 /* ChatSceneDIContainer.swift */,
+				A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -657,6 +670,7 @@
 			children = (
 				A66C7BCC292E1A9B0008B6FD /* View */,
 				A66C7BD1292E1A9B0008B6FD /* ViewModel */,
+				A648BB36292F53240018A654 /* Flows */,
 			);
 			path = GroupScene;
 			sourceTree = "<group>";
@@ -1048,7 +1062,6 @@
 				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
-				A66C7BD8292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
@@ -1071,6 +1084,7 @@
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
+				A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
@@ -1095,6 +1109,7 @@
 				A66C7BBC292E19450008B6FD /* GroupRepository.swift in Sources */,
 				A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */,
 				A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */,
+				A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				A66C7BC2292E19A60008B6FD /* LoadChatGroupsUseCase.swift in Sources */,
@@ -1127,6 +1142,7 @@
 				E33A208A2926622000887EC9 /* ChatViewCoordinator.swift in Sources */,
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
+				A648BB38292F534F0018A654 /* GroupListCoordinator.swift in Sources */,
 				A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
