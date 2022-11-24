@@ -95,6 +95,19 @@
 		E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E72927BADE00887EC9 /* UserRepository.swift */; };
 		E33A20EA2927BB1000887EC9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E92927BB1000887EC9 /* User.swift */; };
 		E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */; };
+		E3752EA9292F53BE003C8E17 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA3292F53BE003C8E17 /* NotificationViewModel.swift */; };
+		E3752EAA292F53BE003C8E17 /* NotificationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA5292F53BE003C8E17 /* NotificationTypes.swift */; };
+		E3752EAB292F53BE003C8E17 /* NotificationDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA6292F53BE003C8E17 /* NotificationDiffableDataSource.swift */; };
+		E3752EAC292F53BE003C8E17 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA7292F53BE003C8E17 /* NotificationTableViewCell.swift */; };
+		E3752EAD292F53BE003C8E17 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA8292F53BE003C8E17 /* NotificationViewController.swift */; };
+		E3752EB4292F5449003C8E17 /* LoadNotificationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EAE292F5448003C8E17 /* LoadNotificationsUseCase.swift */; };
+		E3752EB5292F5449003C8E17 /* SendNotificationToParticipantUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EAF292F5448003C8E17 /* SendNotificationToParticipantUseCase.swift */; };
+		E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EB0292F5448003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift */; };
+		E3752EB7292F5449003C8E17 /* DeleteNotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EB1292F5448003C8E17 /* DeleteNotificationUseCase.swift */; };
+		E3752EB8292F5449003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EB2292F5448003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift */; };
+		E3752EB9292F5449003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EB3292F5448003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift */; };
+		E3752EBB292F5467003C8E17 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EBA292F5467003C8E17 /* NotificationRepository.swift */; };
+		E3752EBD292F548E003C8E17 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EBC292F548E003C8E17 /* Notification.swift */; };
 		E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A0292232630064ADA7 /* PostDetailViewController.swift */; };
 		E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */; };
 		E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */; };
@@ -239,6 +252,19 @@
 		E33A20E72927BADE00887EC9 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		E33A20E92927BB1000887EC9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
+		E3752EA3292F53BE003C8E17 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		E3752EA5292F53BE003C8E17 /* NotificationTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTypes.swift; sourceTree = "<group>"; };
+		E3752EA6292F53BE003C8E17 /* NotificationDiffableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDiffableDataSource.swift; sourceTree = "<group>"; };
+		E3752EA7292F53BE003C8E17 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		E3752EA8292F53BE003C8E17 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		E3752EAE292F5448003C8E17 /* LoadNotificationsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadNotificationsUseCase.swift; sourceTree = "<group>"; };
+		E3752EAF292F5448003C8E17 /* SendNotificationToParticipantUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNotificationToParticipantUseCase.swift; sourceTree = "<group>"; };
+		E3752EB0292F5448003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateNotificationIsAcceptedToTrueUseCase.swift; sourceTree = "<group>"; };
+		E3752EB1292F5448003C8E17 /* DeleteNotificationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteNotificationUseCase.swift; sourceTree = "<group>"; };
+		E3752EB2292F5448003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserGroupsToAddGroupUseCase.swift; sourceTree = "<group>"; };
+		E3752EB3292F5448003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateGroupParticipantIDsToAddUseCase.swift; sourceTree = "<group>"; };
+		E3752EBA292F5467003C8E17 /* NotificationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
+		E3752EBC292F548E003C8E17 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		E394C4A0292232630064ADA7 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		E394C4A22922371C0064ADA7 /* PostDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailInfoView.swift; sourceTree = "<group>"; };
 		E394C4A4292239B00064ADA7 /* PostWriterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWriterInfoView.swift; sourceTree = "<group>"; };
@@ -543,6 +569,12 @@
 		E33A20E129277A4100887EC9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				E3752EB1292F5448003C8E17 /* DeleteNotificationUseCase.swift */,
+				E3752EAE292F5448003C8E17 /* LoadNotificationsUseCase.swift */,
+				E3752EAF292F5448003C8E17 /* SendNotificationToParticipantUseCase.swift */,
+				E3752EB3292F5448003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift */,
+				E3752EB0292F5448003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift */,
+				E3752EB2292F5448003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift */,
 				A66C7BC1292E19A60008B6FD /* LoadChatGroupsUseCase.swift */,
 				FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */,
 				A66C7BC3292E19C70008B6FD /* SaveGroupUseCase.swift */,
@@ -565,6 +597,7 @@
 				A66C7BBF292E19830008B6FD /* ChatMessagesRepository.swift */,
 				05CB4A31292DF15100A97531 /* CategoryRepository.swift */,
 				05CB4A30292DF15100A97531 /* GroupCommentRepository.swift */,
+				E3752EBA292F5467003C8E17 /* NotificationRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -594,6 +627,34 @@
 				A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */,
 			);
 			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		E3752EA1292F53BE003C8E17 /* NotificationScene */ = {
+			isa = PBXGroup;
+			children = (
+				E3752EA2292F53BE003C8E17 /* ViewModel */,
+				E3752EA4292F53BE003C8E17 /* View */,
+			);
+			path = NotificationScene;
+			sourceTree = "<group>";
+		};
+		E3752EA2292F53BE003C8E17 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E3752EA3292F53BE003C8E17 /* NotificationViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E3752EA4292F53BE003C8E17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E3752EA5292F53BE003C8E17 /* NotificationTypes.swift */,
+				E3752EA6292F53BE003C8E17 /* NotificationDiffableDataSource.swift */,
+				E3752EA7292F53BE003C8E17 /* NotificationTableViewCell.swift */,
+				E3752EA8292F53BE003C8E17 /* NotificationViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E394C49D292231D80064ADA7 /* PostDetailScene */ = {
@@ -641,6 +702,7 @@
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				E3752EA1292F53BE003C8E17 /* NotificationScene */,
 				FC5D0191292F4E6200292D33 /* TabBarScene */,
 				E394C49D292231D80064ADA7 /* PostDetailScene */,
 				FC79AEAE29221F9F0077AE5C /* GroupScene */,
@@ -681,6 +743,7 @@
 				A66C7BC9292E1A460008B6FD /* Location.swift */,
 				05CB4A3B292DF17B00A97531 /* Category.swift */,
 				05CB4A3C292DF17C00A97531 /* Comment.swift */,
+				E3752EBC292F548E003C8E17 /* Notification.swift */,
 				A648BB24292E1D6F0018A654 /* Filter.swift */,
 			);
 			path = Entities;
@@ -1040,6 +1103,7 @@
 				A66C7BBE292E19660008B6FD /* ChatGroupsRepository.swift in Sources */,
 				A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
+				E3752EAA292F53BE003C8E17 /* NotificationTypes.swift in Sources */,
 				05CB4A39292DF16900A97531 /* FetchUserUseCase.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
@@ -1049,24 +1113,31 @@
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
 				A66C7BD8292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift in Sources */,
+				E3752EAB292F53BE003C8E17 /* NotificationDiffableDataSource.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,
+				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
 				05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
+				E3752EB8292F5449003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
 				A66C7BD7292E1A9B0008B6FD /* GroupListViewController.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
+				E3752EAC292F53BE003C8E17 /* NotificationTableViewCell.swift in Sources */,
+				E3752EBB292F5467003C8E17 /* NotificationRepository.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */,
 				E33A20EA2927BB1000887EC9 /* User.swift in Sources */,
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
+				E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,
 				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				A66C7BCA292E1A460008B6FD /* Location.swift in Sources */,
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
+				E3752EA9292F53BE003C8E17 /* NotificationViewModel.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
@@ -1096,6 +1167,7 @@
 				A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */,
 				A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
+				E3752EB5292F5449003C8E17 /* SendNotificationToParticipantUseCase.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				A66C7BC2292E19A60008B6FD /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
@@ -1104,12 +1176,15 @@
 				A66C7BC6292E19F60008B6FD /* LoadChatMessagesUseCase.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
+				E3752EB9292F5449003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */,
 				05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
 				A648BB25292E1D6F0018A654 /* Filter.swift in Sources */,
+				E3752EAD292F53BE003C8E17 /* NotificationViewController.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
 				A66C7BDA292E1A9B0008B6FD /* GroupFilterViewModelType.swift in Sources */,
+				E3752EB7292F5449003C8E17 /* DeleteNotificationUseCase.swift in Sources */,
 				FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */,
 				E33A20842926622000887EC9 /* MessageLabel.swift in Sources */,
 				A66C7BBA292E19210008B6FD /* ContainsFirestore.swift in Sources */,
@@ -1129,6 +1204,7 @@
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
+				E3752EB4292F5449003C8E17 /* LoadNotificationsUseCase.swift in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
 				A66C7BC8292E1A160008B6FD /* SendChatMessagesUseCase.swift in Sources */,
 				E33A20942926623200887EC9 /* MogakcoModalViewController.swift in Sources */,
