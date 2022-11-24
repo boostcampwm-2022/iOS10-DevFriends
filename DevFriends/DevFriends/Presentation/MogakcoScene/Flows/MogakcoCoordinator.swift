@@ -7,20 +7,20 @@
 
 import UIKit
 
-protocol MogakcoFlowCoordinatorDependencies {
+protocol MogakcoCoordinatorDependencies {
     func makeMogakcoViewController(actions: MogakcoViewModelActions) -> MogakcoViewController
     func makeGroupDetailViewController(group: Group) -> PostDetailViewController
 }
 
 final class MogakcoCoordinator: Coordinator {
     let navigationController: UINavigationController
-    let dependencies: MogakcoFlowCoordinatorDependencies
+    let dependencies: MogakcoCoordinatorDependencies
 
     var childCoordinators: [Coordinator] = []
     
     init(
         navigationController: UINavigationController,
-        dependencies: MogakcoFlowCoordinatorDependencies
+        dependencies: MogakcoCoordinatorDependencies
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies

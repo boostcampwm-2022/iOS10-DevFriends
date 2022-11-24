@@ -14,7 +14,7 @@ struct MogakcoSceneDIContainer {
     }
 }
 
-extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
+extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     // MARK: Repositories
     private func makeGroupRepository() -> GroupRepository {
         return DefaultGroupRepository()
