@@ -26,7 +26,7 @@ final class DefaultSendCommentNotificationToHostUseCase: SendCommentNotification
             senderNickname: sender.nickname,
             commentID: comment.id,
             comment: comment.content,
-            type: NotificationType.comment.rawValue
+            type: NotificationType.comment
         )
         notificationRepository.send(to: hostID, notification: notification)
     }

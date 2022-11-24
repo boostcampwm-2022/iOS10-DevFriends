@@ -30,7 +30,7 @@ extension NotificationResponseDTO {
             senderNickname: self.senderNickname,
             commentID: self.commentID,
             comment: self.comment,
-            type: self.type,
+            type: NotificationType(rawValue: self.type),
             isAccepted: self.isAccepted
         )
     }

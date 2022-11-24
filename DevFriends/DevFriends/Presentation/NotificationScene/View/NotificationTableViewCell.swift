@@ -92,7 +92,7 @@ extension NotificationTableViewCell: ReusableType {
         titleLabel.text = data.groupTitle
         profileImageView.image = UIImage.profile?.resize(newWidth: 40)
         
-        let notificationType = NotificationType.init(rawValue: data.type)
+        let notificationType = data.type
         switch notificationType {
         case .joinRequest:
             guard let senderNickname = data.senderNickname, let isAccepted = data.isAccepted else { return }

@@ -81,7 +81,7 @@ extension DefaultNotificationRepository {
             senderNickname: notification.senderNickname,
             commentID: notification.commentID,
             comment: notification.comment,
-            type: notification.type,
+            type: notification.type.rawValue,
             isAccepted: notification.isAccepted
         )
     }
