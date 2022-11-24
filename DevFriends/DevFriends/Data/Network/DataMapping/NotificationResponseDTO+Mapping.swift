@@ -17,7 +17,7 @@ struct NotificationResponseDTO: Codable {
     let commentID: String?
     let comment: String?
     let type: String
-    let isOK: Bool?
+    let isAccepted: Bool?
 }
 
 extension NotificationResponseDTO {
@@ -31,7 +31,7 @@ extension NotificationResponseDTO {
             commentID: self.commentID,
             comment: self.comment,
             type: self.type,
-            isOK: self.isOK
+            isAccepted: self.isAccepted
         )
     }
 }

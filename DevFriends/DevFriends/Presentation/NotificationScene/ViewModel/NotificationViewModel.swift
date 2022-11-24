@@ -22,7 +22,7 @@ protocol NotificationViewModel: NotificationViewModelIntput, NotificationViewMod
 
 final class DefaultNotificationViewModel: NotificationViewModel {
     private let loadNotificationsUseCase: LoadNotificationsUseCase
-    private let updateNotificationIsOKToTrueUseCase: UpdateNotificationIsOKToTrueUseCase
+    private let updateNotificationIsAcceptedToTrueUseCase: UpdateNotificationIsAcceptedToTrueUseCase
     private let sendNotificationToParticipantUseCase: SendNotificationToParticipantUseCase
     private let updateGroupParticipantIDsToAddUseCase: UpdateGroupParticipantIDsToAddUseCase
     private let updateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase
@@ -30,14 +30,14 @@ final class DefaultNotificationViewModel: NotificationViewModel {
     
     init(
         loadNotificationsUseCase: LoadNotificationsUseCase,
-        updateNotificationIsOKToTrueUseCase: UpdateNotificationIsOKToTrueUseCase,
+        updateNotificationIsAcceptedToTrueUseCase: UpdateNotificationIsAcceptedToTrueUseCase,
         sendNotificationToParticipantUseCase: SendNotificationToParticipantUseCase,
         updateGroupParticipantIDsToAddUseCase: UpdateGroupParticipantIDsToAddUseCase,
         updateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase,
         deleteNotificationUseCase: DeleteNotificationUseCase
     ) {
         self.loadNotificationsUseCase = loadNotificationsUseCase
-        self.updateNotificationIsOKToTrueUseCase = updateNotificationIsOKToTrueUseCase
+        self.updateNotificationIsAcceptedToTrueUseCase = updateNotificationIsAcceptedToTrueUseCase
         self.sendNotificationToParticipantUseCase = sendNotificationToParticipantUseCase
         self.updateGroupParticipantIDsToAddUseCase = updateGroupParticipantIDsToAddUseCase
         self.updateUserGroupsToAddGroupUseCase = updateUserGroupsToAddGroupUseCase
@@ -72,10 +72,10 @@ extension DefaultNotificationViewModel {
     }
     
     func didAcceptedParticipant(index: Int) {
-        // 1. 호스트의 Notification의 isOK를 True로 업데이트해야 함.
+        // 1. 호스트의 Notification의 isAccepted를 True로 업데이트해야 함.
         let notification = self.notificationsSubject.value[index]
         guard let senderID = notification.senderID else { fatalError("Notification ID is nil") }
-        self.updateNotificationIsOKToTrueUseCase.execute(notification: notification)
+        self.updateNotificationIsAcceptedToTrueUseCase.execute(notification: notification)
 
         // 2. 참여 대기자한테 승인되었다는 Notification을 보내야 함.
         self.sendNotificationToParticipantUseCase.execute(

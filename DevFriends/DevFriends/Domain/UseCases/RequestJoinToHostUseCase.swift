@@ -25,7 +25,7 @@ final class DefaultRequestJoinToHostUseCase: RequestJoinToHostUseCase {
             senderID: sender.id,
             senderNickname: sender.nickname,
             type: NotificationType.joinRequest.rawValue,
-            isOK: false
+            isAccepted: false
         )
         notificationRepository.send(to: group.managerID, notification: notification)
     }

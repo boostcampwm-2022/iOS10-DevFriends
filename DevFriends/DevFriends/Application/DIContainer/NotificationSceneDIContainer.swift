@@ -28,8 +28,8 @@ extension NotificationSceneDIContainer {
         return DefaultLoadNotificationsUseCase(notificationRepository: makeNotificationRepository())
     }
     
-    func makeUpdateNotificationIsOKToTrueUseCase() -> UpdateNotificationIsOKToTrueUseCase {
-        return DefaultUpdateNotificationIsOKToTrueUseCase(notificationRepository: makeNotificationRepository())
+    func makeUpdateNotificationIsAcceptedToTrueUseCase() -> UpdateNotificationIsAcceptedToTrueUseCase {
+        return DefaultUpdateNotificationIsAcceptedToTrueUseCase(notificationRepository: makeNotificationRepository())
     }
     
     func makeSendNotificationToParticipantUseCase() -> SendNotificationToParticipantUseCase {
@@ -52,7 +52,7 @@ extension NotificationSceneDIContainer {
     func makeNotificationViewModel() -> NotificationViewModel {
         return DefaultNotificationViewModel(
             loadNotificationsUseCase: makeLoadNotificationsUseCase(),
-            updateNotificationIsOKToTrueUseCase: makeUpdateNotificationIsOKToTrueUseCase(),
+            updateNotificationIsAcceptedToTrueUseCase: makeUpdateNotificationIsAcceptedToTrueUseCase(),
             sendNotificationToParticipantUseCase: makeSendNotificationToParticipantUseCase(),
             updateGroupParticipantIDsToAddUseCase: makeUpdateGroupParticipantIDsToAddUseCase(),
             updateUserGroupsToAddGroupUseCase: makeUpdateUserGroupsToAddGroupUseCase(),

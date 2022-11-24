@@ -31,11 +31,11 @@ class NotificationTests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
     
-//    func testUpdateNotificationIsOKToTrueUseCase() {
+//    func testUpdateNotificationIsAcceptedToTrueUseCase() {
 //        Task {
 //            let notification = try await notificationDIContainer.makeLoadNotificationsUseCase().execute()
 //        }
-//        let useCase = notificationDIContainer.makeUpdateNotificationIsOKToTrueUseCase()
+//        let useCase = notificationDIContainer.makeUpdateNotificationIsAcceptedToTrueUseCase()
 //        let expectation = expectation(description: "loadNotifications")
 //        Task {
 //            useCase.execute(notification: notification)

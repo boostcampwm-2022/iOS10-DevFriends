@@ -93,7 +93,7 @@
 		E359EC91292CC6CF00CE5775 /* LoadNotificationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC90292CC6CF00CE5775 /* LoadNotificationsUseCase.swift */; };
 		E359EC93292CC8EE00CE5775 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC92292CC8EE00CE5775 /* NotificationRepository.swift */; };
 		E359EC95292CC95E00CE5775 /* DefaultNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC94292CC95E00CE5775 /* DefaultNotificationRepository.swift */; };
-		E359EC97292CDDDF00CE5775 /* UpdateNotificationIsOKToTrueUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC96292CDDDF00CE5775 /* UpdateNotificationIsOKToTrueUseCase.swift */; };
+		E359EC97292CDDDF00CE5775 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC96292CDDDF00CE5775 /* UpdateNotificationIsAcceptedToTrueUseCase.swift */; };
 		E359EC99292CDE0200CE5775 /* SendNotificationToParticipantUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC98292CDE0200CE5775 /* SendNotificationToParticipantUseCase.swift */; };
 		E359EC9B292CDE1700CE5775 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC9A292CDE1700CE5775 /* UpdateGroupParticipantIDsToAddUseCase.swift */; };
 		E359EC9D292CDE2B00CE5775 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC9C292CDE2B00CE5775 /* UpdateUserGroupsToAddGroupUseCase.swift */; };
@@ -249,7 +249,7 @@
 		E359EC90292CC6CF00CE5775 /* LoadNotificationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNotificationsUseCase.swift; sourceTree = "<group>"; };
 		E359EC92292CC8EE00CE5775 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
 		E359EC94292CC95E00CE5775 /* DefaultNotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNotificationRepository.swift; sourceTree = "<group>"; };
-		E359EC96292CDDDF00CE5775 /* UpdateNotificationIsOKToTrueUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNotificationIsOKToTrueUseCase.swift; sourceTree = "<group>"; };
+		E359EC96292CDDDF00CE5775 /* UpdateNotificationIsAcceptedToTrueUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNotificationIsAcceptedToTrueUseCase.swift; sourceTree = "<group>"; };
 		E359EC98292CDE0200CE5775 /* SendNotificationToParticipantUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNotificationToParticipantUseCase.swift; sourceTree = "<group>"; };
 		E359EC9A292CDE1700CE5775 /* UpdateGroupParticipantIDsToAddUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGroupParticipantIDsToAddUseCase.swift; sourceTree = "<group>"; };
 		E359EC9C292CDE2B00CE5775 /* UpdateUserGroupsToAddGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserGroupsToAddGroupUseCase.swift; sourceTree = "<group>"; };
@@ -553,7 +553,7 @@
 				E359EC672928C0C800CE5775 /* LoadChatMessagesUseCase.swift */,
 				E359EC6D2929EC5400CE5775 /* SendChatMessagesUseCase.swift */,
 				E359EC90292CC6CF00CE5775 /* LoadNotificationsUseCase.swift */,
-				E359EC96292CDDDF00CE5775 /* UpdateNotificationIsOKToTrueUseCase.swift */,
+				E359EC96292CDDDF00CE5775 /* UpdateNotificationIsAcceptedToTrueUseCase.swift */,
 				E359EC98292CDE0200CE5775 /* SendNotificationToParticipantUseCase.swift */,
 				E359EC9A292CDE1700CE5775 /* UpdateGroupParticipantIDsToAddUseCase.swift */,
 				E359EC9C292CDE2B00CE5775 /* UpdateUserGroupsToAddGroupUseCase.swift */,
@@ -1113,7 +1113,7 @@
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
-				E359EC97292CDDDF00CE5775 /* UpdateNotificationIsOKToTrueUseCase.swift in Sources */,
+				E359EC97292CDDDF00CE5775 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				E3752EA0292E5837003C8E17 /* RequestJoinToHostUseCase.swift in Sources */,
 				FC07DDB9292CA8F200D16FBC /* GroupRepository.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,

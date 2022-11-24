@@ -95,9 +95,9 @@ extension NotificationTableViewCell: ReusableType {
         let notificationType = NotificationType.init(rawValue: data.type)
         switch notificationType {
         case .joinRequest:
-            guard let senderNickname = data.senderNickname, let isOK = data.isOK else { return }
+            guard let senderNickname = data.senderNickname, let isAccepted = data.isAccepted else { return }
             self.secondaryTitleLabel.text = "\(senderNickname)의 참여 요청"
-            self.setButton(isAccepted: isOK)
+            self.setButton(isAccepted: isAccepted)
         case .joinWait:
             self.secondaryTitleLabel.text = "참여 신청이 완료되었습니다."
         case .joinSuccess:

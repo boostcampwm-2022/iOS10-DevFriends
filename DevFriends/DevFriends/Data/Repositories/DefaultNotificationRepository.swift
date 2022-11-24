@@ -40,14 +40,14 @@ extension DefaultNotificationRepository: NotificationRepository {
         }
     }
     
-    func update(isOK: Bool, userID: String, notification: Notification) {
+    func update(isAccepted: Bool, userID: String, notification: Notification) {
         guard let notificationID = notification.uid else { fatalError("notification UID is nil") }
         var notification = notification
-        notification.isOK = true
+        notification.isAccepted = true
         
         let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
         
-        if isOK {
+        if isAccepted {
             do {
                 try firestore
                     .collection("User")
@@ -82,7 +82,7 @@ extension DefaultNotificationRepository {
             commentID: notification.commentID,
             comment: notification.comment,
             type: notification.type,
-            isOK: notification.isOK
+            isAccepted: notification.isAccepted
         )
     }
 }

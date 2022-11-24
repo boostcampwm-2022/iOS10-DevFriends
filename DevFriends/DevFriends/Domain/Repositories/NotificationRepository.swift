@@ -10,6 +10,6 @@ import Foundation
 protocol NotificationRepository {
     func fetch(uid: String) async throws -> [Notification]
     func send(to uid: String, notification: Notification)
-    func update(isOK: Bool, userID: String, notification: Notification)
+    func update(isAccepted: Bool, userID: String, notification: Notification)
     func delete(userID: String, notificationID: String)
 }

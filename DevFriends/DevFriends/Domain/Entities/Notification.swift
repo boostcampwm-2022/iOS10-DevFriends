@@ -16,7 +16,7 @@ struct Notification: Hashable {
     let commentID: String?
     let comment: String?
     let type: String
-    var isOK: Bool?
+    var isAccepted: Bool?
     
     init(
         uid: String? = nil,
@@ -27,7 +27,7 @@ struct Notification: Hashable {
         commentID: String? = nil,
         comment: String? = nil,
         type: String,
-        isOK: Bool? = nil
+        isAccepted: Bool? = nil
     ) {
         self.uid = uid
         self.groupID = groupID
@@ -37,6 +37,6 @@ struct Notification: Hashable {
         self.commentID = commentID
         self.comment = comment
         self.type = type
-        self.isOK = isOK
+        self.isAccepted = isAccepted
     }
 }
