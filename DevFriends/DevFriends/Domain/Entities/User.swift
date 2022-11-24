@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct User: Codable {
+struct User {
     let id: String
     let nickname: String
     let job: String

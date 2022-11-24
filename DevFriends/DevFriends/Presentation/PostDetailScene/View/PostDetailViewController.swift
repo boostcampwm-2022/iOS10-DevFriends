@@ -47,52 +47,12 @@ final class PostDetailViewController: DefaultViewController {
         return postAttentionView
     }()
     
-    private let testGroup = Group(
-        id: "mnYeCkTpbHiATFzHl046",
-        participantIDs: [" YkocW98XPzJAsSDVa5qd"],
-        title: "Swift를 배워봅시다~",
-        chatID: "SHWMLojQYPUZW5U7u24U",
-        categoryIDs: ["89kKYamuTTGC0rK7VZO8"],
-        location: Location(latitude: 50.0, longitude: 50.0),
-        description: "저랑 같이 공부해요 화이팅!",
-        time: Date(),
-        like: 1,
-        hit: 13,
-        limitedNumberPeople: 4,
-        managerID: "YkocW98XPzJAsSDVa5qd",
-        type: "모각코"
-    )
-    private let testUserRepository: UserRepository
-    private let testCategoryRepository: CategoryRepository
-    private let testCommentRepository: GroupCommentRepository
-    private let testFetchUserUseCase: FetchUserUseCase
-    private let testCategoryUseCase: FetchCategoryUseCase
-    private let testFetchCommentsUseCase: FetchCommentsUseCase
-    private let testApplyGroupUseCase: ApplyGroupUseCase
-    private let testPostCommentUseCase: PostCommentUseCase
     private let viewModel: PostDetailViewModel
     
     // MARK: - Init & Life Cycles
     
-    init() {
-        testUserRepository = DefaultUserRepository()
-        testCommentRepository = DefaultGroupCommentRepository()
-        testCategoryRepository = DefaultCategoryRepository()
-        
-        testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
-        testCategoryUseCase = DefaultFetchCategoryUseCase(categoryRepository: testCategoryRepository)
-        testFetchCommentsUseCase = DefaultFetchCommentsUseCase(commentRepository: testCommentRepository)
-        testApplyGroupUseCase = DefaultApplyGroupUseCase(userRepository: testUserRepository)
-        testPostCommentUseCase = DefaultPostCommentUseCase(commentRepository: testCommentRepository)
-        
-        viewModel = DefaultPostDetailViewModel(
-            group: testGroup,
-            fetchUserUseCase: testFetchUserUseCase,
-            fetchCategoryUseCase: testCategoryUseCase,
-            fetchCommentsUseCase: testFetchCommentsUseCase,
-            applyGroupUseCase: testApplyGroupUseCase,
-            postCommentUseCase: testPostCommentUseCase
-        )
+    init(viewModel: PostDetailViewModel) {
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }

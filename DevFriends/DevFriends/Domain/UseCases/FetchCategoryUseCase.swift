@@ -8,6 +8,7 @@
 import Foundation
 
 protocol FetchCategoryUseCase {
+    func execute() async throws -> [Category]
     func execute(categoryIds: [String]) async throws -> [Category]
 }
 
@@ -18,6 +19,9 @@ final class DefaultFetchCategoryUseCase: FetchCategoryUseCase {
         self.categoryRepository = categoryRepository
     }
     
+    func execute() async throws -> [Category] {
+        return try await categoryRepository.fetch()
+    }
     func execute(categoryIds: [String]) async throws -> [Category] {
         return try await self.categoryRepository.fetch(categoryIds)
     }

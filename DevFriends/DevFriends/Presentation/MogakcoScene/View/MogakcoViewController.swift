@@ -109,7 +109,17 @@ final class MogakcoViewController: DefaultViewController {
         return locationManager
     }()
     
-    private let viewModel = MogakcoViewModel(fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()))
+    private let viewModel: MogakcoViewModel
+    
+    init(viewModel: MogakcoViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: Set Annotation Methods
     private func moveLocation(latitudeValue: CLLocationDegrees, longtudeValue: CLLocationDegrees, delta span: Double) {

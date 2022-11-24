@@ -7,11 +7,16 @@
 
 import Combine
 
+struct MogakcoViewModelActions {
+    let showGroupDetail: (Group) -> Void
+}
+
 protocol MogakcoViewModelInput {
     func fetchAllMogakco()
     func fetchMogakco(location: Location, distance: Double)
     func nowMogakco(index: Int)
     func nowMogakcoWithAllList(index: Int, distance: Double)
+    func didSelectGroup()
 }
 
 protocol MogakcoViewModelOutput {
@@ -22,7 +27,7 @@ protocol MogakcoViewModelOutput {
 
 protocol MogakcoViewModelType: MogakcoViewModelInput, MogakcoViewModelOutput { }
 
-class MogakcoViewModel: MogakcoViewModelType {
+final class MogakcoViewModel: MogakcoViewModelType {
     var allMogakcosSubject = PassthroughSubject<[Group], Never>()
     var mogakcosSubject = PassthroughSubject<[Group], Never>()
     var nowMogakcoSubject = PassthroughSubject<Group, Never>()
@@ -32,9 +37,11 @@ class MogakcoViewModel: MogakcoViewModelType {
     private var nowMogakco: Group?
     
     private let fetchGroupUseCase: FetchGroupUseCase
+    private let actions: MogakcoViewModelActions?
     
-    init(fetchGroupUseCase: FetchGroupUseCase) {
+    init(fetchGroupUseCase: FetchGroupUseCase, actions: MogakcoViewModelActions? = nil) {
         self.fetchGroupUseCase = fetchGroupUseCase
+        self.actions = actions
     }
     
     func fetchAllMogakco() {
@@ -68,5 +75,10 @@ class MogakcoViewModel: MogakcoViewModelType {
             nowMogakcoSubject.send(allMogakcoList[index])
             fetchMogakco(location: allMogakcoList[index].location, distance: distance)
         }
+    }
+    
+    func didSelectGroup() {
+        guard let nowMogakco = self.nowMogakco else { return }
+        actions?.showGroupDetail(nowMogakco)
     }
 }
