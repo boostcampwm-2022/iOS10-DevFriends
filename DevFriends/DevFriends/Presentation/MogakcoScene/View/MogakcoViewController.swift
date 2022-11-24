@@ -364,4 +364,8 @@ extension MogakcoViewController: UICollectionViewDelegate {
         }
         viewModel.nowMogakco(index: nowCollectionViewCellIndex)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectNowMogakco()
+    }
 }

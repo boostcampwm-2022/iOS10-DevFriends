@@ -108,6 +108,7 @@ final class PostDetailViewController: DefaultViewController {
     }
     
     private func setupViews() {
+        self.view.backgroundColor = .white
         postDetailInfoView.set(
             postWriterInfo: viewModel.postWriterInfoSubject.value,
             postDetailContents: viewModel.postDetailContentsSubject.value

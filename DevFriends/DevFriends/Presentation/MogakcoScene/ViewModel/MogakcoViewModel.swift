@@ -16,7 +16,7 @@ protocol MogakcoViewModelInput {
     func fetchMogakco(location: Location, distance: Double)
     func nowMogakco(index: Int)
     func nowMogakcoWithAllList(index: Int, distance: Double)
-    func didSelectGroup()
+    func didSelectNowMogakco()
 }
 
 protocol MogakcoViewModelOutput {
@@ -77,7 +77,7 @@ final class MogakcoViewModel: MogakcoViewModelType {
         }
     }
     
-    func didSelectGroup() {
+    func didSelectNowMogakco() {
         guard let nowMogakco = self.nowMogakco else { return }
         actions?.showGroupDetail(nowMogakco)
     }
