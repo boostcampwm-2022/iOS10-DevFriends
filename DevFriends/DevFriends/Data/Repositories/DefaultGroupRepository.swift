@@ -9,7 +9,7 @@ import FirebaseFirestore
 import Foundation
 import CoreLocation
 
-class DefaultGroupRepository: GroupRepository {
+class DefaultGroupRepository: GroupRepository, ContainsFirestore {
     func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group] {
         var groups: [Group] = []
         var query: Query
