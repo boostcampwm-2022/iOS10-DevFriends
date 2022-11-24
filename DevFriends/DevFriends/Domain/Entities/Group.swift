@@ -12,7 +12,7 @@ struct Group: Hashable {
     var participantIDs: [String]
     let title: String
     let chatID: String
-    let categories: [String]
+    let categoryIDs: [String]
     let location: Location
     let description: String
     let time: Date

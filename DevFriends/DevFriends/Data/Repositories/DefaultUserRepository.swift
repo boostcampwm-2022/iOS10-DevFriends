@@ -34,8 +34,9 @@ extension DefaultUserRepository {
             nickname: user.nickname,
             job: user.job,
             profileImagePath: user.profileImagePath,
-            categories: user.categories,
-            groups: user.groups
+            categories: user.categoryIDs,
+            groups: user.groupIDs,
+            appliedGroups: user.appliedGroupIDs
         )
     }
     
@@ -53,5 +54,27 @@ extension DefaultUserRepository {
                 partialResult.append(user)
             }
         }
+    }
+    
+    func update(_ user: User) {
+        do {
+            try firestore
+                .collection("User")
+                .document(user.id)
+                .setData(from: makeUserResponseDTO(user))
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func makeUserResponseDTO(_ user: User) -> UserResponseDTO {
+        return UserResponseDTO(
+            nickname: user.nickname,
+            job: user.job,
+            profileImagePath: user.profileImagePath,
+            categories: user.categoryIDs,
+            groups: user.groupIDs,
+            appliedGroups: user.appliedGroupIDs
+        )
     }
 }

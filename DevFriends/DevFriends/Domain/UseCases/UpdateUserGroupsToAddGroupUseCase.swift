@@ -20,9 +20,9 @@ final class DefaultUpdateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroup
     
     func execute(groupID: String, senderID: String) async throws {
         var user = try await self.userRepository.fetch(uid: senderID)
-        var tempGroups = user.groups
+        var tempGroups = user.groupIDs
         tempGroups.append(groupID)
-        user.groups = tempGroups
+        user.groupIDs = tempGroups
         
         self.userRepository.update(userID: senderID, user: user)
     }

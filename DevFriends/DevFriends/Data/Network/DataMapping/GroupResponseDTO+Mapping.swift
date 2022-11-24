@@ -32,7 +32,7 @@ extension GroupResponseDTO {
             participantIDs: participantIDs,
             title: title,
             chatID: chatID,
-            categories: categories,
+            categoryIDs: categories,
             location: Location(latitude: location.latitude, longitude: location.longitude),
             description: description,
             time: time,

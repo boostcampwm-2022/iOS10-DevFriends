@@ -18,6 +18,11 @@
 		05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */; };
 		05CB4A3D292DF17C00A97531 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A3B292DF17B00A97531 /* Category.swift */; };
 		05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A3C292DF17C00A97531 /* Comment.swift */; };
+		05EAC535292E68100067D63E /* PostCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EAC534292E68100067D63E /* PostCommentUseCase.swift */; };
+		05F22B9F292F5757002B7B74 /* MogakcoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F22B9E292F5757002B7B74 /* MogakcoCoordinator.swift */; };
+		05F22BA5292F646B002B7B74 /* GroupDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F22BA4292F646B002B7B74 /* GroupDetailCoordinator.swift */; };
+		05F22BA7292F6883002B7B74 /* MogakcoSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F22BA6292F6883002B7B74 /* MogakcoSceneDIContainer.swift */; };
+		05F22BA9292F6987002B7B74 /* ApplyGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */; };
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
 		A648BB1D292E1B1C0018A654 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */; };
@@ -186,6 +191,13 @@
 		05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCommentsUseCase.swift; sourceTree = "<group>"; };
 		05CB4A3B292DF17B00A97531 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		05CB4A3C292DF17C00A97531 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		05EAC534292E68100067D63E /* PostCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentUseCase.swift; sourceTree = "<group>"; };
+		05F22B99292F52BA002B7B74 /* ApplyGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyGroupUseCase.swift; sourceTree = "<group>"; };
+		05F22B9B292F5350002B7B74 /* MogakcoSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoSceneDIContainer.swift; sourceTree = "<group>"; };
+		05F22B9E292F5757002B7B74 /* MogakcoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoCoordinator.swift; sourceTree = "<group>"; };
+		05F22BA4292F646B002B7B74 /* GroupDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailCoordinator.swift; sourceTree = "<group>"; };
+		05F22BA6292F6883002B7B74 /* MogakcoSceneDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MogakcoSceneDIContainer.swift; sourceTree = "<group>"; };
+		05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyGroupUseCase.swift; sourceTree = "<group>"; };
 		08AB74F8E8B5617454A9F712 /* Pods-DevFriends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.debug.xcconfig"; sourceTree = "<group>"; };
 		09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFriendsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFriends_DevFriendsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -353,6 +365,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05F22B9D292F56E7002B7B74 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				05F22B9E292F5757002B7B74 /* MogakcoCoordinator.swift */,
+				05F22BA4292F646B002B7B74 /* GroupDetailCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
 		2F8D43D69DE6A399FD792CD1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +437,8 @@
 				05A8DECC292BDFEA00497902 /* CategoryRepository.swift */,
 				05A8DEC6292BBF7B00497902 /* Comment.swift */,
 				0578136C292CF081003DA919 /* GroupResponseDTO+Mapping.swift */,
+				05F22B9B292F5350002B7B74 /* MogakcoSceneDIContainer.swift */,
+				05F22B99292F52BA002B7B74 /* ApplyGroupUseCase.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -482,6 +505,7 @@
 		E33A208C2926623200887EC9 /* MogakcoScene */ = {
 			isa = PBXGroup;
 			children = (
+				05F22B9D292F56E7002B7B74 /* Flows */,
 				E33A208D2926623200887EC9 /* ViewModel */,
 				E33A208F2926623200887EC9 /* View */,
 			);
@@ -523,6 +547,7 @@
 				FC5D0196292F540A00292D33 /* MyPageSceneDIContainer.swift */,
 				FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */,
 				E33A20A1292662E500887EC9 /* ChatSceneDIContainer.swift */,
+				05F22BA6292F6883002B7B74 /* MogakcoSceneDIContainer.swift */,
 				E3752EC7292F5D08003C8E17 /* NotificationSceneDIContainer.swift */,
 			);
 			path = DIContainer;
@@ -614,6 +639,8 @@
 				05CB4A35292DF16800A97531 /* FetchCategoryUseCase.swift */,
 				05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */,
 				05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */,
+				05EAC534292E68100067D63E /* PostCommentUseCase.swift */,
+				05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1231,6 +1258,7 @@
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
+				05F22BA5292F646B002B7B74 /* GroupDetailCoordinator.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */,
@@ -1266,15 +1294,18 @@
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				A66C7BC2292E19A60008B6FD /* LoadChatGroupsUseCase.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
+				05F22BA9292F6987002B7B74 /* ApplyGroupUseCase.swift in Sources */,
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
 				A66C7BDC292E1A9B0008B6FD /* GroupListViewModel.swift in Sources */,
 				A66C7BC6292E19F60008B6FD /* LoadChatMessagesUseCase.swift in Sources */,
+				05F22B9F292F5757002B7B74 /* MogakcoCoordinator.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
 				E3752EB9292F5449003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */,
 				05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */,
 				FC5D01A6292F54EE00292D33 /* MyGroupsViewModel.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
+				05EAC535292E68100067D63E /* PostCommentUseCase.swift in Sources */,
 				E33A20BD292665BC00887EC9 /* CommonButton.swift in Sources */,
 				A648BB25292E1D6F0018A654 /* Filter.swift in Sources */,
 				E3752EAD292F53BE003C8E17 /* NotificationViewController.swift in Sources */,
@@ -1296,6 +1327,7 @@
 				05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */,
 				A66C7BDD292E1A9B0008B6FD /* GroupFilterViewModel.swift in Sources */,
 				FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */,
+				05F22BA7292F6883002B7B74 /* MogakcoSceneDIContainer.swift in Sources */,
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */,

@@ -16,7 +16,6 @@ struct CategoryResponseDTO: Codable {
 extension CategoryResponseDTO {
     func toDomain() -> Category {
         return Category(
-            id: uid ?? "",
             name: name
         )
     }

@@ -13,7 +13,7 @@ struct TabBarSceneDIContainer {
     }
 }
 
-extension TabBarSceneDIContainer: TabBarFlowCoordinatorDependencies {
+extension TabBarSceneDIContainer: TabBarFlowCoordinatorDependencies {    
     func makeTabBarController() -> UITabBarController {
         return UITabBarController()
     }
@@ -22,6 +22,10 @@ extension TabBarSceneDIContainer: TabBarFlowCoordinatorDependencies {
         return ChatSceneDIContainer()
     }
     
+    func makeMogakcoSceneDIContainer() -> MogakcoSceneDIContainer {
+        return MogakcoSceneDIContainer()
+    }
+
     func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer {
         return MyPageSceneDIContainer()
     }

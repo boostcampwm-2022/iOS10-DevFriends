@@ -73,7 +73,7 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             // 필터 카테고리가 비어있으면 필터링 x
             // 필터 카테고리 중 하나라도 모임 카테고리가 겹쳐야 함
             if filter.categoryFilter.isEmpty ||
-               !group.categories.filter({ filter.categoryFilter.contains($0) }).isEmpty {
+               !group.categoryIDs.filter({ filter.categoryFilter.contains($0) }).isEmpty {
                 groups.append(group)
             }
         }
@@ -114,7 +114,7 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             participantIDs: group.participantIDs,
             title: group.title,
             chatID: group.chatID,
-            categories: group.categories,
+            categories: group.categoryIDs,
             location: GeoPoint(latitude: group.location.latitude, longitude: group.location.longitude),
             description: group.description,
             time: group.time,

@@ -8,7 +8,6 @@
 import Foundation
 
 struct Comment {
-    let id: String?
     let content: String
     let time: Date
     let userID: String

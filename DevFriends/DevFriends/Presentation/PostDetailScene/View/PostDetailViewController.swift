@@ -28,6 +28,12 @@ final class PostDetailViewController: DefaultViewController {
         let textField = CommonTextField(placeHolder: "댓글을 입력해주세요")
         return textField
     }()
+    private lazy var commentPostButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("↑", for: .normal)
+        button.backgroundColor = .orange
+        return button
+    }()
     private lazy var postDetailInfoView: PostDetailInfoView = {
         let postDetailInfoView = PostDetailInfoView()
         return postDetailInfoView
@@ -41,46 +47,12 @@ final class PostDetailViewController: DefaultViewController {
         return postAttentionView
     }()
     
-    private let testGroup = Group(
-        id: "mnYeCkTpbHiATFzHl046",
-        participantIDs: [" YkocW98XPzJAsSDVa5qd"],
-        title: "Swift를 배워봅시다~",
-        chatID: "SHWMLojQYPUZW5U7u24U",
-        categories: ["89kKYamuTTGC0rK7VZO8"],
-        location: Location(latitude: 50.0, longitude: 50.0),
-        description: "저랑 같이 공부해요 화이팅!",
-        time: Date(),
-        like: 1,
-        hit: 13,
-        limitedNumberPeople: 4,
-        managerID: "YkocW98XPzJAsSDVa5qd",
-        type: "모각코"
-    )
-    private let testUserRepository: UserRepository
-    private let testCategoryRepository: CategoryRepository
-    private let testCommentRepository: GroupCommentRepository
-    private let testFetchUserUseCase: FetchUserUseCase
-    private let testCategoryUseCase: FetchCategoryUseCase
-    private let testFetchCommentsUseCase: FetchCommentsUseCase
     private let viewModel: PostDetailViewModel
     
     // MARK: - Init & Life Cycles
     
-    init() {
-        testUserRepository = DefaultUserRepository()
-        testCommentRepository = DefaultGroupCommentRepository()
-        testCategoryRepository = DefaultCategoryRepository()
-        
-        testFetchUserUseCase = DefaultFetchUserUseCase(userRepository: testUserRepository)
-        testCategoryUseCase = DefaultFetchCategoryUseCase(categoryRepository: testCategoryRepository)
-        testFetchCommentsUseCase = DefaultFetchCommentsUseCase(commentRepository: testCommentRepository)
-        
-        viewModel = DefaultPostDetailViewModel(
-            group: testGroup,
-            fetchUserUseCase: testFetchUserUseCase,
-            fetchCategoryUseCase: testCategoryUseCase,
-            fetchCommentsUseCase: testFetchCommentsUseCase
-        )
+    init(viewModel: PostDetailViewModel) {
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -120,13 +92,23 @@ final class PostDetailViewController: DefaultViewController {
         
         view.addSubview(commentTextField)
         commentTextField.snp.makeConstraints { make in
-            make.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.left.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(60)
+        }
+        
+        view.addSubview(commentPostButton)
+        commentPostButton.snp.makeConstraints { make in
+            make.left.equalTo(commentTextField.snp.right).offset(10)
+            make.right.equalTo(view.safeAreaLayoutGuide)
+            make.centerY.equalTo(commentTextField)
+            make.height.equalTo(commentTextField).multipliedBy(0.8)
+            make.width.equalTo(commentPostButton.snp.height)
         }
     }
     
     private func setupViews() {
+        self.view.backgroundColor = .white
         postDetailInfoView.set(
             postWriterInfo: viewModel.postWriterInfoSubject.value,
             postDetailContents: viewModel.postDetailContentsSubject.value
@@ -156,6 +138,39 @@ final class PostDetailViewController: DefaultViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.commentTableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.scrollToBottomSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let commentCount = self?.viewModel.commentsSubject.value.count else { return }
+                let bottomIndex = IndexPath(row: commentCount - 1, section: 0)
+                self?.commentTableView.scrollToRow(at: bottomIndex, at: .top, animated: true)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.groupApplyButtonStateSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.updateGroupApplyButton(state: state)
+            }
+            .store(in: &cancellables)
+        
+        self.postRequestButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.didTapApplyButton()
+            }
+            .store(in: &cancellables)
+        
+        self.commentPostButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                guard
+                    let comment = self?.commentTextField.text,
+                    !comment.isEmpty else { return }
+               
+                self?.commentTextField.text = ""
+                self?.viewModel.didTapCommentPostButton(content: comment)
             }
             .store(in: &cancellables)
     }
@@ -196,6 +211,22 @@ final class PostDetailViewController: DefaultViewController {
         contentsStackView.setCustomSpacing(5, after: postAttentionView)
         
         return contentsView
+    }
+    
+    private func updateGroupApplyButton(state: GroupApplyButtonState) {
+        switch state {
+        case .available:
+            self.postRequestButton.set(title: "모임 신청", state: .activated)
+            self.postRequestButton.isHidden = false
+        case .applied:
+            self.postRequestButton.set(title: "신청된 모임입니다", state: .disabled)
+            self.postRequestButton.isHidden = false
+        case .joined:
+            self.postRequestButton.isHidden = true
+        case .closed:
+            self.postRequestButton.set(title: "마감된 모임입니다", state: .disabled)
+            self.postRequestButton.isHidden = false
+        }
     }
 }
 
