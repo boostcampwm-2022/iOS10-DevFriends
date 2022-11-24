@@ -8,5 +8,6 @@
 import Foundation
 
 protocol CategoryRepository: ContainsFirestore {
+    func fetch() async throws -> [Category]
     func fetch(_ categoryIds: [String]) async throws -> [Category]
 }

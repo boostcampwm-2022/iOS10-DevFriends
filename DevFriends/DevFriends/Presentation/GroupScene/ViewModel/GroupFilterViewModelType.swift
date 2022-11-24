@@ -14,9 +14,9 @@ enum AlignType: String, CaseIterable {
 }
 
 enum GroupType: String, CaseIterable {
-    case mogakco = "모각코"
     case study = "스터디"
     case project = "프로젝트"
+    case mogakco = "모각코"
 }
 
 protocol GroupFilterViewModelType {
