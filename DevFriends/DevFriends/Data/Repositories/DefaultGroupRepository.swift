@@ -25,7 +25,9 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             
             let lesserGeopoint = GeoPoint(latitude: lowerLat, longitude: lowerLon)
             let greaterGeopoint = GeoPoint(latitude: greaterLat, longitude: greaterLon)
-            query = firestore.collection("Group")
+            
+            query = firestore
+                .collection("Group")
                 .whereField("location", isGreaterThan: lesserGeopoint)
                 .whereField("location", isLessThan: greaterGeopoint)
             if let groupType = groupType {
@@ -39,20 +41,16 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
                 query = firestore.collection("Group")
             }
         }
-        let snapshot = try await query.getDocuments()
         
-        for document in snapshot.documents {
-            let group = try document.data(as: GroupResponseDTO.self).toDomain()
-            if let location = location {
-                if location == group.location {
-                    groups.insert(group, at: 0)
-                } else {
-                    groups.append(group)
-                }
+        try await query.getDocuments().documents.forEach {
+            let group = try $0.data(as: GroupResponseDTO.self).toDomain()
+            if let location = location, location == group.location {
+                groups.insert(group, at: 0)
             } else {
                 groups.append(group)
             }
         }
+        
         return groups
     }
     
@@ -92,7 +90,26 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
         }
     }
     
-    func makeGroupResponseDTO(group: Group) -> GroupResponseDTO {
+    func fetch(groupID: String) async throws -> Group {
+        let group = try await firestore
+            .collection("Group")
+            .document(groupID)
+            .getDocument()
+            .data(as: GroupResponseDTO.self)
+        
+        return group.toDomain()
+    }
+    
+    func update(groupID: String, group: Group) {
+        do {
+            let groupResponseDTO = makeGroupResponseDTO(group: group)
+            try firestore.collection("Group").document(groupID).setData(from: groupResponseDTO)
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func makeGroupResponseDTO(group: Group) -> GroupResponseDTO {
         return GroupResponseDTO(
             participantIDs: group.participantIDs,
             title: group.title,
