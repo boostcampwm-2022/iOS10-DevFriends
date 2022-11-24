@@ -48,7 +48,7 @@ final class GroupFilterViewController: DefaultViewController {
     // MARK: - Initializer
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let initialFilter {
+        if let initialFilter = initialFilter {
             self.viewModel.initFilter(filter: initialFilter)
         }
     }
