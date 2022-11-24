@@ -60,7 +60,7 @@ final class MyGroupsViewController: DefaultViewController {
     override func layout() {
         view.addSubview(groupCollectionView)
         groupCollectionView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
