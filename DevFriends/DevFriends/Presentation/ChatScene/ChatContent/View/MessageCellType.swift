@@ -22,5 +22,5 @@ enum MessageContentType {
 }
 
 protocol MessageCellType: ReusableType {
-    var messageLabel: MessageLabel {get set}
+    var messageLabel: MessageLabel { get set }
 }

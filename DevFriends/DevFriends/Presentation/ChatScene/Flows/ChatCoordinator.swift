@@ -33,7 +33,7 @@ final class ChatCoordinator: Coordinator {
     }
 }
 
-extension ChatCoordinator: ChatViewCoordinator {
+extension ChatCoordinator {
     func showChatContentViewController(group: Group) {
         let chatContentViewController = dependencies.makeChatContentViewController(group: group)
         navigationController.pushViewController(chatContentViewController, animated: true)

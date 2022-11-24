@@ -7,8 +7,9 @@
 
 import Foundation
 
-protocol UserRepository: ContainsFirestore {
+protocol UserRepository {
     func fetch(uid: String) async throws -> User
+    func update(userID: String, user: User)
     func fetch(uids: [String]) async throws -> [User]
     func update(_ user: User)
 }

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-final class DefaultChatGroupsRepository {}
+final class DefaultChatGroupsRepository: ContainsFirestore {}
 
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
     func fetch(uids: [String]) async throws -> [Group] {
@@ -19,9 +19,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                 }
             }
             
-            return try await taskGroup.reduce(into: []) { partialResult, group in
-                partialResult.append(group)
-            }
+            return try await taskGroup.reduce(into: []) { $0.append($1) }
         }
     }
     

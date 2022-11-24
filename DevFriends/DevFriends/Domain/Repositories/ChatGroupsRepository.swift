@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ChatGroupsRepository: ContainsFirestore {
+protocol ChatGroupsRepository {
     func fetch(uids: [String]) async throws -> [Group]
 }

@@ -9,7 +9,7 @@ import Foundation
 
 struct Group: Hashable {
     let id: String
-    let participantIDs: [String]
+    var participantIDs: [String]
     let title: String
     let chatID: String
     let categoryIDs: [String]
