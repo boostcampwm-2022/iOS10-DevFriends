@@ -20,6 +20,10 @@
 		05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A3C292DF17C00A97531 /* Comment.swift */; };
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
+		A648BB2D292E5F940018A654 /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB2C292E5F940018A654 /* AddGroupViewController.swift */; };
+		A648BB2F292E5FD50018A654 /* AddGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB2E292E5FD50018A654 /* AddGroupViewModel.swift */; };
+		A648BB31292F07E60018A654 /* ChooseCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB30292F07E60018A654 /* ChooseCategoryViewController.swift */; };
+		A648BB33292F07FA0018A654 /* ChooseLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB32292F07FA0018A654 /* ChooseLocationViewController.swift */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -161,6 +165,10 @@
 		837D31618E31BF1C7C65D48C /* Pods-DevFriendsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriendsTests.release.xcconfig"; path = "Target Support Files/Pods-DevFriendsTests/Pods-DevFriendsTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A479E087E3E3E0E8DFBFF7B /* Pods-DevFriends-DevFriendsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C8D73A43F6124E9E2A99737 /* Pods-DevFriends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.release.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.release.xcconfig"; sourceTree = "<group>"; };
+		A648BB2C292E5F940018A654 /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
+		A648BB2E292E5FD50018A654 /* AddGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupViewModel.swift; sourceTree = "<group>"; };
+		A648BB30292F07E60018A654 /* ChooseCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryViewController.swift; sourceTree = "<group>"; };
+		A648BB32292F07FA0018A654 /* ChooseLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseLocationViewController.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -293,6 +301,33 @@
 				09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A648BB29292E5F400018A654 /* AddGroupScene */ = {
+			isa = PBXGroup;
+			children = (
+				A648BB2A292E5F640018A654 /* View */,
+				A648BB2B292E5F690018A654 /* ViewModel */,
+			);
+			path = AddGroupScene;
+			sourceTree = "<group>";
+		};
+		A648BB2A292E5F640018A654 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A648BB2C292E5F940018A654 /* AddGroupViewController.swift */,
+				A648BB30292F07E60018A654 /* ChooseCategoryViewController.swift */,
+				A648BB32292F07FA0018A654 /* ChooseLocationViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A648BB2B292E5F690018A654 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A648BB2E292E5FD50018A654 /* AddGroupViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		D3ED73830EEA4BDA2E80A9AC /* Pods */ = {
@@ -600,6 +635,7 @@
 				FC79AEAE29221F9F0077AE5C /* GroupScene */,
 				E33A20702926621F00887EC9 /* ChatScene */,
 				E33A208C2926623200887EC9 /* MogakcoScene */,
+				A648BB29292E5F400018A654 /* AddGroupScene */,
 				E33A20C12926665E00887EC9 /* Utils */,
 				E33A20AE292665A700887EC9 /* Components */,
 			);
@@ -1005,6 +1041,7 @@
 				E359EC7B292C6ADF00CE5775 /* DefaultChatGroupsRepository.swift in Sources */,
 				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
+				A648BB2D292E5F940018A654 /* AddGroupViewController.swift in Sources */,
 				05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
@@ -1020,15 +1057,18 @@
 				E359EC682928C0C800CE5775 /* LoadChatMessagesUseCase.swift in Sources */,
 				E33A208B2926622000887EC9 /* ChatCoordinator.swift in Sources */,
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
+				A648BB33292F07FA0018A654 /* ChooseLocationViewController.swift in Sources */,
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				FC07DDB9292CA8F200D16FBC /* GroupRepository.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
+				A648BB31292F07E60018A654 /* ChooseCategoryViewController.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
+				A648BB2F292E5FD50018A654 /* AddGroupViewModel.swift in Sources */,
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */,
