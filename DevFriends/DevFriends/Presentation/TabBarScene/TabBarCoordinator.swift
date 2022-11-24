@@ -10,6 +10,7 @@ import UIKit
 protocol TabBarFlowCoordinatorDependencies {
     func makeTabBarController() -> UITabBarController
     func makeChatSceneDIContainer() -> ChatSceneDIContainer
+    func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -25,15 +26,25 @@ final class TabBarCoordinator: Coordinator {
     func start() {
         let tabBarController = dependencies.makeTabBarController()
         let chatSceneNavigationController = UINavigationController()
-        tabBarController.viewControllers = [chatSceneNavigationController]
+        let myPageNavigationController = UINavigationController()
+        tabBarController.viewControllers = [chatSceneNavigationController, myPageNavigationController]
         navigationController?.pushViewController(tabBarController, animated: false)
         startChatScene(chatSceneNavigationController: chatSceneNavigationController)
+        startMyPageScene(myPageNavigationController: myPageNavigationController)
     }
     
     func startChatScene(chatSceneNavigationController: UINavigationController) {
         chatSceneNavigationController.tabBarItem.image = UIImage(systemName: "message")
         let chatSceneDIContainer = dependencies.makeChatSceneDIContainer()
         let flow = chatSceneDIContainer.makeChatFlowCoordinator(navigationController: chatSceneNavigationController)
+        flow.start()
+        childCoordinators.append(flow)
+    }
+    
+    func startMyPageScene(myPageNavigationController: UINavigationController) {
+        myPageNavigationController.tabBarItem.image = UIImage(systemName: "person")
+        let myPageSceneDIContainer = dependencies.makeMyPageSceneDIContainer()
+        let flow = myPageSceneDIContainer.makeMyPageCoordinator(navigationController: myPageNavigationController)
         flow.start()
         childCoordinators.append(flow)
     }
