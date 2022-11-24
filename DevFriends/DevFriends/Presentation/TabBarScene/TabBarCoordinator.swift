@@ -47,7 +47,7 @@ final class TabBarCoordinator: Coordinator {
     }
     
     func startGroupScene(groupSceneNavigationController: UINavigationController) {
-        groupSceneNavigationController.tabBarItem.image = UIImage(systemName: "message")
+        groupSceneNavigationController.tabBarItem.image = UIImage(systemName: "text.book.closed.fill")
         let groupSceneDIContainer = dependencies.makeGroupSceneDIContainer()
         let flow = groupSceneDIContainer.makeGroupFlowCoordinator(navigationController: groupSceneNavigationController)
         flow.start()
