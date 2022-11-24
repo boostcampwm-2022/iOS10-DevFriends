@@ -24,13 +24,13 @@ final class TabBarCoordinator: Coordinator {
     }
     
     func start() {
-        let actions = TabBarViewModelActions(setChat: showChatViewController)
+        let actions = TabBarViewModelActions(setChat: showChatScene)
         let tabBarController = dependencies.makeTabBarController(actions: actions)
         tabBarController.viewControllers = [chatSceneNavigationController]
         navigationController?.pushViewController(tabBarController, animated: false)
     }
     
-    func showChatViewController() {
+    func showChatScene() {
         chatSceneNavigationController.tabBarItem.image = UIImage(systemName: "message")
         let chatSceneDIContainer = dependencies.makeChatSceneDIContainer()
         let flow = chatSceneDIContainer.makeChatFlowCoordinator(navigationController: chatSceneNavigationController)
