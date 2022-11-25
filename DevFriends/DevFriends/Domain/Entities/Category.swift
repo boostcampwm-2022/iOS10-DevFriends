@@ -8,6 +8,5 @@
 import Foundation
 
 struct Category: Hashable {
-    let id: String
     let name: String
 }

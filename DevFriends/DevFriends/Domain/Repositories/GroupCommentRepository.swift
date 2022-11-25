@@ -9,4 +9,5 @@ import Foundation
 
 protocol GroupCommentRepository: ContainsFirestore {
     func fetch(_ groupId: String) async throws -> [Comment]
+    func post(_ comment: Comment, to groupId: String)
 }

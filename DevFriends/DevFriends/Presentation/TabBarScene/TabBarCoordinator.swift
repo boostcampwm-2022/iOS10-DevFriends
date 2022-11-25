@@ -11,6 +11,8 @@ protocol TabBarFlowCoordinatorDependencies {
     func makeTabBarController() -> UITabBarController
     func makeGroupSceneDIContainer() -> GroupSceneDIContainer
     func makeChatSceneDIContainer() -> ChatSceneDIContainer
+    func makeMogakcoSceneDIContainer() -> MogakcoSceneDIContainer
+    func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer
 }
 
 final class TabBarCoordinator: Coordinator {
@@ -25,14 +27,23 @@ final class TabBarCoordinator: Coordinator {
     
     func start() {
         let tabBarController = dependencies.makeTabBarController()
+        navigationController?.pushViewController(tabBarController, animated: false)
+
         let chatSceneNavigationController = UINavigationController()
         let groupSceneNavigationController = UINavigationController()
+        let mogakcoSceneNavigationController = UINavigationController()
+        let myPageNavigationController = UINavigationController()
         tabBarController.viewControllers = [
+            mogakcoSceneNavigationController,
             groupSceneNavigationController,
-            chatSceneNavigationController]
-        navigationController?.pushViewController(tabBarController, animated: false)
+            chatSceneNavigationController,
+            myPageNavigationController
+        ]
+        
         startGroupScene(groupSceneNavigationController: groupSceneNavigationController)
         startChatScene(chatSceneNavigationController: chatSceneNavigationController)
+        startMogakcoScene(navigationController: mogakcoSceneNavigationController)
+        startMyPageScene(myPageNavigationController: myPageNavigationController)
     }
     
     func startGroupScene(groupSceneNavigationController: UINavigationController) {
@@ -47,6 +58,22 @@ final class TabBarCoordinator: Coordinator {
         chatSceneNavigationController.tabBarItem.image = UIImage(systemName: "message")
         let chatSceneDIContainer = dependencies.makeChatSceneDIContainer()
         let flow = chatSceneDIContainer.makeChatFlowCoordinator(navigationController: chatSceneNavigationController)
+        flow.start()
+        childCoordinators.append(flow)
+    }
+    
+    func startMogakcoScene(navigationController: UINavigationController) {
+        navigationController.tabBarItem.image = UIImage(systemName: "map.fill")
+        let mogakcoSceneDIContainer = dependencies.makeMogakcoSceneDIContainer()
+        let flow = mogakcoSceneDIContainer.makeChatFlowCoordinator(navigationController: navigationController)
+        flow.start()
+        childCoordinators.append(flow)
+    }
+        
+    func startMyPageScene(myPageNavigationController: UINavigationController) {
+        myPageNavigationController.tabBarItem.image = UIImage(systemName: "person")
+        let myPageSceneDIContainer = dependencies.makeMyPageSceneDIContainer()
+        let flow = myPageSceneDIContainer.makeMyPageCoordinator(navigationController: myPageNavigationController)
         flow.start()
         childCoordinators.append(flow)
     }
