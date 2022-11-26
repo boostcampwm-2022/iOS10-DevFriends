@@ -11,8 +11,16 @@ import UIKit
 
 
 final class ChooseCategoryViewController: DefaultViewController {
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 30)
+        label.text = "카테고리 선택"
+        return label
+    }()
+    
     private lazy var categoryTableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -40,10 +48,16 @@ final class ChooseCategoryViewController: DefaultViewController {
     }
     
     override func layout() {
-        view.addSubview(categoryTableView)
-        categoryTableView.snp.makeConstraints { make in
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.left.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
+        
+        view.addSubview(categoryTableView)
+        categoryTableView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.left.equalTo(titleLabel)
             make.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-100)
         }
