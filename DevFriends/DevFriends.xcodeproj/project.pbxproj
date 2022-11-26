@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050B613E2931FD540033ADCC /* MogakcoModalCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050B613D2931FD530033ADCC /* MogakcoModalCoordinator.swift */; };
 		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
 		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
 		05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */; };
@@ -169,6 +170,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		050B613D2931FD530033ADCC /* MogakcoModalCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoModalCoordinator.swift; sourceTree = "<group>"; };
 		05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPostDetailUserRepository.swift; sourceTree = "<group>"; };
 		05781366292C948D003DA919 /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
 		0578136A292CEB46003DA919 /* UserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 			children = (
 				05F22B9E292F5757002B7B74 /* MogakcoCoordinator.swift */,
 				05F22BA4292F646B002B7B74 /* GroupDetailCoordinator.swift */,
+				050B613D2931FD530033ADCC /* MogakcoModalCoordinator.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -1290,6 +1293,7 @@
 				A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */,
 				E3752EC8292F5D08003C8E17 /* NotificationSceneDIContainer.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
+				050B613E2931FD540033ADCC /* MogakcoModalCoordinator.swift in Sources */,
 				E3752EB5292F5449003C8E17 /* SendNotificationToParticipantUseCase.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				A66C7BC2292E19A60008B6FD /* LoadChatGroupsUseCase.swift in Sources */,

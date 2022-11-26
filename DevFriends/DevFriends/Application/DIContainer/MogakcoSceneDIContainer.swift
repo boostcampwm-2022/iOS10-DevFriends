@@ -66,6 +66,13 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return MogakcoViewController(viewModel: makeMogakcoViewModel(actions: actions))
     }
     
+    func makeMogakcoModalViewController(actions: MogakcoModalViewActions, mogakcos: [Group]) -> MogakcoModalViewController {
+        let mogakcoModalViewController = MogakcoModalViewController(actions: actions)
+        mogakcoModalViewController.populateSnapshot(data: mogakcos)
+        
+        return mogakcoModalViewController
+    }
+    
     // MARK: PostDetail
     private func makePostDetailViewModel(group: Group) -> PostDetailViewModel {
         return DefaultPostDetailViewModel(
