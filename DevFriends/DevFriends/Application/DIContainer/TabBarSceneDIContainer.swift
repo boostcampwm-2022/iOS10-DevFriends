@@ -22,6 +22,10 @@ extension TabBarSceneDIContainer: TabBarFlowCoordinatorDependencies {
         return ChatSceneDIContainer()
     }
     
+    func makeGroupSceneDIContainer() -> GroupSceneDIContainer {
+        return GroupSceneDIContainer()
+    }
+    
     func makeMogakcoSceneDIContainer() -> MogakcoSceneDIContainer {
         return MogakcoSceneDIContainer()
     }

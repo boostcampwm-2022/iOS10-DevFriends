@@ -8,8 +8,13 @@
 import Foundation
 import Combine
 
+struct GroupFilterViewModelActions {
+    let didDisappearFilterView: (Filter) -> Void
+}
+
 protocol GroupFilterViewModelInput {
     func loadCategories()
+    func sendFilter(filter: Filter)
     func initFilter(filter: Filter)
     func setAlignFilter(type: AlignType)
     func setGroupFilter(type: GroupType)
@@ -40,9 +45,11 @@ final class DefaultGroupFilterViewModel: GroupFilterViewModel {
     var categoryFilter: [String] = []
     
     private let fetchCategoryUseCase: FetchCategoryUseCase
+    private let actions: GroupFilterViewModelActions?
     
-    init(fetchCategoryUseCase: FetchCategoryUseCase) {
+    init(fetchCategoryUseCase: FetchCategoryUseCase, actions: GroupFilterViewModelActions) {
         self.fetchCategoryUseCase = fetchCategoryUseCase
+        self.actions = actions
     }
     
     // MARK: OUTPUT
@@ -57,6 +64,9 @@ extension DefaultGroupFilterViewModel {
             self.categoryType = categories.map { return $0.name }
             didUpdateFilterSubject.send()
         }
+    }
+    func sendFilter(filter: Filter) {
+        actions?.didDisappearFilterView(filter)
     }
     func initFilter(filter: Filter) {
         self.alignFilter = filter.alignFilter

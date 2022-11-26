@@ -9,6 +9,7 @@ import UIKit
 
 protocol TabBarFlowCoordinatorDependencies {
     func makeTabBarController() -> UITabBarController
+    func makeGroupSceneDIContainer() -> GroupSceneDIContainer
     func makeChatSceneDIContainer() -> ChatSceneDIContainer
     func makeMogakcoSceneDIContainer() -> MogakcoSceneDIContainer
     func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer
@@ -29,17 +30,28 @@ final class TabBarCoordinator: Coordinator {
         navigationController?.pushViewController(tabBarController, animated: false)
 
         let chatSceneNavigationController = UINavigationController()
+        let groupSceneNavigationController = UINavigationController()
         let mogakcoSceneNavigationController = UINavigationController()
         let myPageNavigationController = UINavigationController()
         tabBarController.viewControllers = [
             mogakcoSceneNavigationController,
+            groupSceneNavigationController,
             chatSceneNavigationController,
             myPageNavigationController
         ]
         
+        startGroupScene(groupSceneNavigationController: groupSceneNavigationController)
         startChatScene(chatSceneNavigationController: chatSceneNavigationController)
         startMogakcoScene(navigationController: mogakcoSceneNavigationController)
         startMyPageScene(myPageNavigationController: myPageNavigationController)
+    }
+    
+    func startGroupScene(groupSceneNavigationController: UINavigationController) {
+        groupSceneNavigationController.tabBarItem.image = UIImage(systemName: "text.book.closed.fill")
+        let groupSceneDIContainer = dependencies.makeGroupSceneDIContainer()
+        let flow = groupSceneDIContainer.makeGroupFlowCoordinator(navigationController: groupSceneNavigationController)
+        flow.start()
+        childCoordinators.append(flow)
     }
     
     func startChatScene(chatSceneNavigationController: UINavigationController) {
