@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let navigationController = UINavigationController()
-        window?.rootViewController = AddGroupViewController(groupType: .mogakco)
+        window?.rootViewController = AddGroupViewController(groupType: .project)
         window?.makeKeyAndVisible()
         appFlowCoordinator = AppFlowCoordinator(
             navigationController: navigationController,

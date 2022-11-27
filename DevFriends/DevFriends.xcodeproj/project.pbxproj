@@ -27,6 +27,7 @@
 		A648BB3C293340900018A654 /* CommonPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB3B293340900018A654 /* CommonPaddingLabel.swift */; };
 		A648BB3E293344740018A654 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB3D293344740018A654 /* ChooseCategoryView.swift */; };
 		A648BB4029338D7E0018A654 /* ChooseLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB3F29338D7E0018A654 /* ChooseLocationView.swift */; };
+		A648BB42293394930018A654 /* CommonTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB41293394930018A654 /* CommonTextView.swift */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -175,6 +176,7 @@
 		A648BB3B293340900018A654 /* CommonPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPaddingLabel.swift; sourceTree = "<group>"; };
 		A648BB3D293344740018A654 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
 		A648BB3F29338D7E0018A654 /* ChooseLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseLocationView.swift; sourceTree = "<group>"; };
+		A648BB41293394930018A654 /* CommonTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextView.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 			children = (
 				E33A20B9292665BC00887EC9 /* CommonButton.swift */,
 				E33A20BA292665BC00887EC9 /* CommonTextField.swift */,
+				A648BB41293394930018A654 /* CommonTextView.swift */,
 				A648BB3B293340900018A654 /* CommonPaddingLabel.swift */,
 				E33A20BC292665BC00887EC9 /* DividerView.swift */,
 				E33A20BB292665BC00887EC9 /* FilledRoundTextLabel.swift */,
@@ -1088,6 +1091,7 @@
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
+				A648BB42293394930018A654 /* CommonTextView.swift in Sources */,
 				FC07DDB5292C93B000D16FBC /* Location.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,

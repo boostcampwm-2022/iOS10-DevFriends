@@ -60,12 +60,14 @@ final class AddGroupViewController: DefaultViewController {
     
     private lazy var limitPeopleStepper: UIStepper = {
         let stepper = UIStepper()
+        stepper.value = 1
+        stepper.minimumValue = 1
+        stepper.maximumValue = 10
         return stepper
     }()
     
     private lazy var descriptionTextView: UITextView = {
-        let textView = UITextView()
-        textView.text = "텍스트뷰 플레이스홀더 어떻게 하지"
+        let textView = CommonTextView(placeHolder: "게시글 내용을 작성해주세요.")
         return textView
     }()
     
@@ -134,9 +136,14 @@ final class AddGroupViewController: DefaultViewController {
         
         view.addSubview(limitPeopleStepper)
         limitPeopleStepper.snp.makeConstraints { make in
-            make.top.equalTo(limitPeopleLabel)
             make.centerY.equalTo(limitPeopleLabel)
             make.right.equalTo(chooseLocationView)
+        }
+        
+        view.addSubview(peopleNumberLabel)
+        peopleNumberLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(limitPeopleStepper)
+            make.right.equalTo(limitPeopleStepper.snp.left).offset(-20)
         }
         
         view.addSubview(submitButton)
@@ -167,6 +174,12 @@ final class AddGroupViewController: DefaultViewController {
                 self?.showChooseLocationView()
             }
             .store(in: &cancellables)
+        
+        limitPeopleStepper.publisher(for: .valueChanged)
+            .sink { [weak self] _ in
+                self?.setStepperValue()
+            }
+            .store(in: &cancellables)
     }
     
     private func showChooseCategoryView() {
@@ -177,5 +190,9 @@ final class AddGroupViewController: DefaultViewController {
     private func showChooseLocationView() {
         let chooseLocationView = ChooseLocationViewController()
         self.present(chooseLocationView, animated: true)
+    }
+    
+    private func setStepperValue() {
+        peopleNumberLabel.text = Int(limitPeopleStepper.value).description
     }
 }
