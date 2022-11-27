@@ -74,6 +74,13 @@ final class ChooseLocationViewController: DefaultViewController {
     
     override func configureUI() {
         view.backgroundColor = .white
+        self.setupTapGesture()
+    }
+    
+    private func setupTapGesture() {
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        tapGestureRecognizer.delegate = self
+        self.mapView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func bind() {
@@ -144,17 +151,6 @@ extension ChooseLocationViewController: CLLocationManagerDelegate, MKMapViewDele
     
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         print("willchangeanimated")
-        if !isFirstLoadingMap {
-            // 처음 맵이 띄워지고(isFirstLoadingMap), 유저 위치로 처음 이동할 때(isFirstMovingMap)는 infoLabel이 보여야 하고,
-            // 사용자가 직접 화면을 이동시키는 두번째 이동부터 infoLabel을 숨겨야 합니다.
-            if isFirstMovingMap {
-                isFirstMovingMap = false
-            } else {
-                if !infomationLabel.isHidden {
-                    infomationLabel.isHidden = true
-                }
-            }
-        }
     }
     
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
@@ -168,5 +164,15 @@ extension ChooseLocationViewController: CLLocationManagerDelegate, MKMapViewDele
     func setUserLocation() {
         // TODO: 뭔가 애니메이션 효과가 있으면 좋을 듯
         locationManager.startUpdatingLocation()
+    }
+}
+
+extension ChooseLocationViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        print("gestureRecognizer")
+        if !self.infomationLabel.isHidden {
+            self.infomationLabel.isHidden = true
+        }
+        return true
     }
 }
