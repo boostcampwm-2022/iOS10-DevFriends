@@ -48,10 +48,13 @@ final class ChooseLocationViewController: DefaultViewController {
     }()
     
     private lazy var infomationLabel: UILabel = {
-        let label = UILabel()
+        let padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let label = CommonPaddingLabel(padding: padding)
         label.backgroundColor = .black
         label.textColor = .white
         label.text = "지도를 움직여서 선택해보세요."
+        label.clipsToBounds = true // cornerRadius 전에 해줘야 합니다
+        label.layer.cornerRadius = 10
         return label
     }()
     
