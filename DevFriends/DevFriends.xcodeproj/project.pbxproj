@@ -25,6 +25,8 @@
 		A648BB31292F07E60018A654 /* ChooseCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB30292F07E60018A654 /* ChooseCategoryViewController.swift */; };
 		A648BB33292F07FA0018A654 /* ChooseLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB32292F07FA0018A654 /* ChooseLocationViewController.swift */; };
 		A648BB3C293340900018A654 /* CommonPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB3B293340900018A654 /* CommonPaddingLabel.swift */; };
+		A648BB3E293344740018A654 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB3D293344740018A654 /* ChooseCategoryView.swift */; };
+		A648BB4029338D7E0018A654 /* ChooseLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB3F29338D7E0018A654 /* ChooseLocationView.swift */; };
 		A6ED8B9D29228299003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -171,6 +173,8 @@
 		A648BB30292F07E60018A654 /* ChooseCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryViewController.swift; sourceTree = "<group>"; };
 		A648BB32292F07FA0018A654 /* ChooseLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseLocationViewController.swift; sourceTree = "<group>"; };
 		A648BB3B293340900018A654 /* CommonPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPaddingLabel.swift; sourceTree = "<group>"; };
+		A648BB3D293344740018A654 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
+		A648BB3F29338D7E0018A654 /* ChooseLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseLocationView.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -320,6 +324,8 @@
 				A648BB2C292E5F940018A654 /* AddGroupViewController.swift */,
 				A648BB30292F07E60018A654 /* ChooseCategoryViewController.swift */,
 				A648BB32292F07FA0018A654 /* ChooseLocationViewController.swift */,
+				A648BB3D293344740018A654 /* ChooseCategoryView.swift */,
+				A648BB3F29338D7E0018A654 /* ChooseLocationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1062,10 +1068,12 @@
 				E33A204329262B6B00887EC9 /* GroupFilterViewModelType.swift in Sources */,
 				A648BB33292F07FA0018A654 /* ChooseLocationViewController.swift in Sources */,
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
+				A648BB4029338D7E0018A654 /* ChooseLocationView.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				FC07DDB9292CA8F200D16FBC /* GroupRepository.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
+				A648BB3E293344740018A654 /* ChooseCategoryView.swift in Sources */,
 				A648BB31292F07E60018A654 /* ChooseCategoryViewController.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,

@@ -18,23 +18,43 @@ final class AddGroupViewController: DefaultViewController {
         return textField
     }()
     
-    private lazy var categoryButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("카테고리 선택", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        return button
+    private lazy var separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray5
+        return view
     }()
     
-    private lazy var locationButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("위치 선택", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        return button
+    private lazy var chooseCategoryView: ChooseCategoryView = {
+        let view = ChooseCategoryView()
+        return view
+    }()
+    
+    private lazy var separator2: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray5
+        return view
+    }()
+    
+    private lazy var chooseLocationView: ChooseLocationView = {
+        let view = ChooseLocationView()
+        return view
+    }()
+    
+    private lazy var separator3: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray5
+        return view
     }()
     
     private lazy var limitPeopleLabel: UILabel = {
         let label = UILabel()
         label.text = "인원수"
+        return label
+    }()
+    
+    private lazy var peopleNumberLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1"
         return label
     }()
     
@@ -69,7 +89,6 @@ final class AddGroupViewController: DefaultViewController {
     
     override func layout() {
         view.addSubview(titleTextField)
-        titleTextField.backgroundColor = .green
         titleTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
             make.left.equalTo(view.safeAreaLayoutGuide).offset(30)
@@ -77,38 +96,52 @@ final class AddGroupViewController: DefaultViewController {
             make.height.equalTo(40)
         }
         
-        view.addSubview(categoryButton)
-        categoryButton.backgroundColor = .blue
-        categoryButton.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(20)
-            make.left.right.equalTo(titleTextField)
-            make.height.equalTo(40)
+        view.addSubview(separator)
+        separator.snp.makeConstraints { make in
+            make.left.right.bottom.equalTo(titleTextField)
+            make.height.equalTo(1)
         }
         
-        view.addSubview(locationButton)
-        locationButton.backgroundColor = .red
-        locationButton.snp.makeConstraints { make in
-            make.top.equalTo(categoryButton.snp.bottom).offset(20)
-            make.left.right.equalTo(categoryButton)
-            make.height.equalTo(40)
+        view.addSubview(chooseCategoryView)
+        chooseCategoryView.snp.makeConstraints { make in
+            make.top.equalTo(titleTextField.snp.bottom)
+            make.left.right.equalTo(titleTextField)
+        }
+        
+        view.addSubview(separator2)
+        separator2.snp.makeConstraints { make in
+            make.left.right.bottom.equalTo(chooseCategoryView)
+            make.height.equalTo(1)
+        }
+        
+        view.addSubview(chooseLocationView)
+        chooseLocationView.snp.makeConstraints { make in
+            make.top.equalTo(chooseCategoryView.snp.bottom)
+            make.left.right.equalTo(chooseCategoryView)
+        }
+        
+        view.addSubview(separator3)
+        separator3.snp.makeConstraints { make in
+            make.left.right.bottom.equalTo(chooseLocationView)
+            make.height.equalTo(1)
         }
         
         view.addSubview(limitPeopleLabel)
         limitPeopleLabel.snp.makeConstraints { make in
-            make.top.equalTo(locationButton.snp.bottom).offset(20)
-            make.left.equalTo(locationButton)
+            make.top.equalTo(chooseLocationView.snp.bottom).offset(20)
+            make.left.equalTo(chooseLocationView)
         }
         
         view.addSubview(limitPeopleStepper)
         limitPeopleStepper.snp.makeConstraints { make in
             make.top.equalTo(limitPeopleLabel)
             make.centerY.equalTo(limitPeopleLabel)
-            make.right.equalTo(locationButton)
+            make.right.equalTo(chooseLocationView)
         }
         
         view.addSubview(submitButton)
         submitButton.snp.makeConstraints { make in
-            make.left.right.equalTo(locationButton)
+            make.left.right.equalTo(chooseLocationView)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
             make.height.equalTo(60)
         }
@@ -123,13 +156,13 @@ final class AddGroupViewController: DefaultViewController {
     }
     
     override func bind() {
-        categoryButton.publisher(for: .touchUpInside)
+        chooseCategoryView.didTouchViewSubject
             .sink { [weak self] _ in
                 self?.showChooseCategoryView()
             }
             .store(in: &cancellables)
-        
-        locationButton.publisher(for: .touchUpInside)
+
+        chooseLocationView.didTouchViewSubject
             .sink { [weak self] _ in
                 self?.showChooseLocationView()
             }
