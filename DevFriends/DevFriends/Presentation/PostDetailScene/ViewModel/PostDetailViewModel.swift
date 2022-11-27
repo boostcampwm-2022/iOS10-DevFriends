@@ -33,6 +33,7 @@ protocol PostDetailViewModelOutput {
 protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutput {}
 
 final class DefaultPostDetailViewModel: PostDetailViewModel {
+    private var localUser: User
     private let group: Group
     private let fetchUserUseCase: FetchUserUseCase
     private let fetchCategoryUseCase: FetchCategoryUseCase
@@ -40,6 +41,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let applyGroupUseCase: ApplyGroupUseCase
     private let postCommentUseCase: PostCommentUseCase
     private let sendCommentNotificationUseCase: SendCommentNotificationUseCase
+    private let sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase
     
     // MARK: - OUTPUT
     var postWriterInfoSubject = CurrentValueSubject<PostWriterInfo, Never>(.init(name: "", job: "", image: nil))
@@ -64,6 +66,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         fetchCategoryUseCase: FetchCategoryUseCase,
         fetchCommentsUseCase: FetchCommentsUseCase,
         applyGroupUseCase: ApplyGroupUseCase,
+        sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase,
         postCommentUseCase: PostCommentUseCase,
         sendCommentNotificationUseCase: SendCommentNotificationUseCase
     ) {
@@ -72,6 +75,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.fetchCommentsUseCase = fetchCommentsUseCase
         self.applyGroupUseCase = applyGroupUseCase
+        self.sendGroupApplyNotificationUseCase = sendGroupApplyNotificationUseCase
         self.postCommentUseCase = postCommentUseCase
         self.sendCommentNotificationUseCase = sendCommentNotificationUseCase
         
@@ -91,8 +95,28 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             currentParticipantCount: group.participantIDs.count
         )
         
-        // 이 부분에서 유저가 해당 모임에 가입 or 신청했는지 판단하여 분기
-        groupApplyButtonStateSubject.value = .available
+        // 테스트 유저
+        localUser = User(
+            id: "nqQW9nOes6UPXRCjBuCy",
+            nickname: "흥민 손",
+            job: "EPL득점왕",
+            profileImagePath: "",
+            categoryIDs: [],
+            groupIDs: [],
+            appliedGroupIDs: []
+        )
+        
+        // 강남구청에서 모각코 id : CMUPNkEns4Pg9ez7fXvg
+        
+        if localUser.groupIDs.contains(group.id) {
+            groupApplyButtonStateSubject.value = .joined
+        } else if group.limitedNumberPeople == group.participantIDs.count {
+            groupApplyButtonStateSubject.value = .closed
+        } else if localUser.appliedGroupIDs.contains(group.id) {
+            groupApplyButtonStateSubject.value = .applied
+        } else {
+            groupApplyButtonStateSubject.value = .available
+        }
     }
     
     private func loadUser(id: String) async -> User? {
@@ -172,9 +196,9 @@ extension DefaultPostDetailViewModel {
     }
     
     func didTapApplyButton() {
-//        let localUser = User(로컬 유저 정보 업데이트)
-//        applyGroupUseCase.execute(user: localUser)
-//      그룹장이 가입승인을 했을떄 localUser를 업데이트 해야하는데 어떻게 하지?
+        localUser.appliedGroupIDs.append(group.id)
+        applyGroupUseCase.execute(user: localUser)
+        sendGroupApplyNotificationUseCase.execute(from: localUser, to: group)
         
         groupApplyButtonStateSubject.value = .applied
     }

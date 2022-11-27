@@ -57,6 +57,10 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return DefaultApplyGroupUseCase(userRepository: makeUserRepository())
     }
     
+    private func makeSendGroupApplyNotificationUseCase() -> SendGroupApplyNotificationUseCase {
+        return DefaultSendGroupApplyNotificationUseCase(notificationRepository: makeNotificationRepository())
+    }
+    
     private func makePostCommentUseCase() -> PostCommentUseCase {
         return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
     }
@@ -89,6 +93,7 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
             fetchCategoryUseCase: makeFetchCategoryUseCase(),
             fetchCommentsUseCase: makeFetchCommentsUseCase(),
             applyGroupUseCase: makeApplyGroupUseCase(),
+            sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
             sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
         )
