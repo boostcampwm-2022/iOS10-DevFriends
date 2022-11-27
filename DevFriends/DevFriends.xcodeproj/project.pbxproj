@@ -19,6 +19,7 @@
 		05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */; };
 		05CB4A3D292DF17C00A97531 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A3B292DF17B00A97531 /* Category.swift */; };
 		05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A3C292DF17C00A97531 /* Comment.swift */; };
+		05D9256629337B3B0090A6B1 /* SendCommentNotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D9256529337B3B0090A6B1 /* SendCommentNotificationUseCase.swift */; };
 		05EAC535292E68100067D63E /* PostCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EAC534292E68100067D63E /* PostCommentUseCase.swift */; };
 		05F22B9F292F5757002B7B74 /* MogakcoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F22B9E292F5757002B7B74 /* MogakcoCoordinator.swift */; };
 		05F22BA5292F646B002B7B74 /* GroupDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F22BA4292F646B002B7B74 /* GroupDetailCoordinator.swift */; };
@@ -193,6 +194,7 @@
 		05CB4A37292DF16900A97531 /* FetchCommentsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCommentsUseCase.swift; sourceTree = "<group>"; };
 		05CB4A3B292DF17B00A97531 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		05CB4A3C292DF17C00A97531 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		05D9256529337B3B0090A6B1 /* SendCommentNotificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCommentNotificationUseCase.swift; sourceTree = "<group>"; };
 		05EAC534292E68100067D63E /* PostCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentUseCase.swift; sourceTree = "<group>"; };
 		05F22B99292F52BA002B7B74 /* ApplyGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyGroupUseCase.swift; sourceTree = "<group>"; };
 		05F22B9B292F5350002B7B74 /* MogakcoSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoSceneDIContainer.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */,
 				05EAC534292E68100067D63E /* PostCommentUseCase.swift */,
 				05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */,
+				05D9256529337B3B0090A6B1 /* SendCommentNotificationUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1317,6 +1320,7 @@
 				A66C7BDA292E1A9B0008B6FD /* GroupFilterViewModelType.swift in Sources */,
 				E3752EB7292F5449003C8E17 /* DeleteNotificationUseCase.swift in Sources */,
 				FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */,
+				05D9256629337B3B0090A6B1 /* SendCommentNotificationUseCase.swift in Sources */,
 				E33A20842926622000887EC9 /* MessageLabel.swift in Sources */,
 				A66C7BBA292E19210008B6FD /* ContainsFirestore.swift in Sources */,
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,

@@ -39,6 +39,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let fetchCommentsUseCase: FetchCommentsUseCase
     private let applyGroupUseCase: ApplyGroupUseCase
     private let postCommentUseCase: PostCommentUseCase
+    private let sendCommentNotificationUseCase: SendCommentNotificationUseCase
     
     // MARK: - OUTPUT
     var postWriterInfoSubject = CurrentValueSubject<PostWriterInfo, Never>(.init(name: "", job: "", image: nil))
@@ -63,7 +64,8 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         fetchCategoryUseCase: FetchCategoryUseCase,
         fetchCommentsUseCase: FetchCommentsUseCase,
         applyGroupUseCase: ApplyGroupUseCase,
-        postCommentUseCase: PostCommentUseCase
+        postCommentUseCase: PostCommentUseCase,
+        sendCommentNotificationUseCase: SendCommentNotificationUseCase
     ) {
         self.group = group
         self.fetchUserUseCase = fetchUserUseCase
@@ -71,6 +73,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.fetchCommentsUseCase = fetchCommentsUseCase
         self.applyGroupUseCase = applyGroupUseCase
         self.postCommentUseCase = postCommentUseCase
+        self.sendCommentNotificationUseCase = sendCommentNotificationUseCase
         
         postDetailContentsSubject.value = .init(
             title: group.title,
@@ -183,6 +186,7 @@ extension DefaultPostDetailViewModel {
             userID: "ac3yRAAR9TKVZKrofpbi"
         )
         postCommentUseCase.execute(comment: comment, groupId: self.group.id)
+        sendCommentNotificationUseCase.execute(group: self.group, comment: comment)
         
         Task {
             let comments = await loadComments()
