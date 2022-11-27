@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-struct PostWriterInfo {
+struct PostWriterInfo: Equatable, Hashable {
     let name: String
     let job: String
     let image: UIImage?

@@ -17,13 +17,27 @@ final class PostDetailViewController: DefaultViewController {
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
         tableView.delegate = self
-        tableView.dataSource = self
         tableView.register(
             CommentTableViewCell.self,
             forCellReuseIdentifier: CommentTableViewCell.reuseIdentifier
         )
         return tableView
     }()
+    private lazy var tableViewDataSource = UITableViewDiffableDataSource<Int, CommentInfo>(
+        tableView: self.commentTableView
+    ) { tableView, indexPath, _ in
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CommentTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? CommentTableViewCell
+        else {
+            return UITableViewCell()
+        }
+        
+        cell.set(info: self.viewModel.commentsSubject.value[indexPath.row])
+        
+        return cell
+    }
     private lazy var commentTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: "댓글을 입력해주세요")
         return textField
@@ -136,8 +150,11 @@ final class PostDetailViewController: DefaultViewController {
         
         viewModel.commentsSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.commentTableView.reloadData()
+            .sink { [weak self] comments in
+                var snapshot = NSDiffableDataSourceSnapshot<Int, CommentInfo>()
+                snapshot.appendSections([0])
+                snapshot.appendItems(comments)
+                self?.tableViewDataSource.apply(snapshot)
             }
             .store(in: &cancellables)
         
@@ -270,27 +287,9 @@ extension PostDetailViewController {
 
 // MARK: - UITableView
 
-extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
+extension PostDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = createHeaderView()
         return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.commentsSubject.value.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CommentTableViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? CommentTableViewCell
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.set(info: viewModel.commentsSubject.value[indexPath.row])
-        
-        return cell
     }
 }
