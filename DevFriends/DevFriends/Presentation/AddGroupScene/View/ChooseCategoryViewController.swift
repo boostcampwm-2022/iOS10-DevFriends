@@ -72,9 +72,9 @@ final class ChooseCategoryViewController: DefaultViewController {
     
     private func setupTableView() {
         categoryTableViewSnapShot.appendSections([.main])
-        let data = [Category(id: "", name: "C언어"),
-                    Category(id: "", name: "Swift"),
-                    Category(id: "", name: "Java")]
+        let data = [Category(name: "C언어"),
+                    Category(name: "Swift"),
+                    Category(name: "Java")]
         populateSnapshot(data: data)
     }
     
