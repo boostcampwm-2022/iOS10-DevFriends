@@ -295,7 +295,6 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     func showMogakcoModal() {
-        
         mogakcoModalViewController.modalPresentationStyle = .pageSheet
         if let sheet = mogakcoModalViewController.sheetPresentationController {
             sheet.detents = [.medium()]

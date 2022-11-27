@@ -38,5 +38,6 @@ extension MogakcoCoordinator: GroupDetailCoordinator {
     func showGroupDetailViewController(group: Group) {
         let postDetailViewController = dependencies.makeGroupDetailViewController(group: group)
         navigationController.pushViewController(postDetailViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
 }
