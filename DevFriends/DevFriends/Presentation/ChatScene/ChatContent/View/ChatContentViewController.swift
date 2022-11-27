@@ -69,6 +69,8 @@ class ChatContentViewController: DefaultViewController {
     }
     
     override func layout() {
+        setupNavigation()
+        
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
@@ -105,6 +107,10 @@ class ChatContentViewController: DefaultViewController {
     private func setupTableView() {
         self.messageTableViewSnapShot.appendSections([.main])
         viewModel.didLoadMessages()
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.title = "\(viewModel.group.title)"
     }
     
     private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {

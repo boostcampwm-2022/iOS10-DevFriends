@@ -10,6 +10,14 @@ import SnapKit
 import UIKit
 
 final class PostDetailViewController: DefaultViewController {
+    private lazy var settingButton: UIBarButtonItem = {
+        let item = UIBarButtonItem()
+        item.image = UIImage(systemName: "ellipsis")
+        item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapSettingButton)
+        return item
+    }()
     private lazy var commentTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
@@ -83,6 +91,7 @@ final class PostDetailViewController: DefaultViewController {
     // MARK: - Setting
     
     override func layout() {
+        setupNavigation()
         view.addSubview(commentTableView)
         commentTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -117,6 +126,10 @@ final class PostDetailViewController: DefaultViewController {
         postAttentionView.set(info: viewModel.postAttentionInfo)
         
         viewModel.didLoadGroup()
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.rightBarButtonItems = [settingButton]
     }
     
     override func bind() {
@@ -292,5 +305,13 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
         cell.set(info: viewModel.commentsSubject.value[indexPath.row])
         
         return cell
+    }
+}
+
+// MARK: - Actions
+
+extension PostDetailViewController {
+    @objc func didTapSettingButton(_ sender: UIButton) {
+        // MARK: 동작을 넣어주세요
     }
 }

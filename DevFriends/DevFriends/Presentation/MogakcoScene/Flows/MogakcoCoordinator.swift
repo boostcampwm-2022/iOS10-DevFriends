@@ -29,6 +29,7 @@ final class MogakcoCoordinator: Coordinator {
     func start() {
         let actions = MogakcoViewModelActions(showGroupDetail: showGroupDetailViewController)
         let mogakcoViewController = dependencies.makeMogakcoViewController(actions: actions)
+        navigationController.navigationBar.topItem?.title = "모각코"
         navigationController.pushViewController(mogakcoViewController, animated: false)
     }
 }

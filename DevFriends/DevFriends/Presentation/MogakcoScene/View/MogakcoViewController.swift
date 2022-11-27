@@ -11,6 +11,31 @@ import SnapKit
 import UIKit
 
 final class MogakcoViewController: DefaultViewController {
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "모각코"
+        label.font = .systemFont(ofSize: 25, weight: .bold)
+        return label
+    }()
+    
+    private lazy var groupAddButton: UIBarButtonItem = {
+        let item = UIBarButtonItem()
+        item.image = UIImage(systemName: "plus")
+        item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapMogakcoAddButton)
+        return item
+    }()
+    
+    private lazy var notificationButton: UIBarButtonItem = {
+        let item = UIBarButtonItem()
+        item.image = UIImage(systemName: "bell")
+        item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapNotificationButton)
+        return item
+    }()
+    
     private lazy var mogakcoMapView: MKMapView = {
         let mapView = MKMapView(frame: .zero)
         mapView.delegate = self
@@ -143,6 +168,7 @@ final class MogakcoViewController: DefaultViewController {
     }
     
     override func layout() {
+        setupNavigation()
         view.addSubview(mogakcoMapView)
         mogakcoMapView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -219,6 +245,11 @@ final class MogakcoViewController: DefaultViewController {
                 self?.moveMogakcoLocation(group: group)
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
     private func moveMogakcoLocation(group: Group) {
@@ -367,5 +398,17 @@ extension MogakcoViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.didSelectNowMogakco()
+    }
+}
+
+// MARK: - Actions
+
+extension MogakcoViewController {
+    @objc func didTapMogakcoAddButton(_ sender: UIButton) {
+        // MARK: 동작을 넣어주세요
+    }
+    
+    @objc func didTapNotificationButton(_ sender: UIButton) {
+        print("알림 버튼 클릭")
     }
 }
