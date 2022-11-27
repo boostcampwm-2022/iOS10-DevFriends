@@ -49,8 +49,14 @@ final class NotificationViewController: UITableViewController {
         super.viewDidLoad()
         self.tableView.rowHeight = 72
         self.setupTableView()
+        self.setupNavigation()
         self.bind()
         self.viewModel.didLoadNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
     private func bind() {
@@ -65,6 +71,10 @@ final class NotificationViewController: UITableViewController {
                 self.viewModel.didDeleteNotification(of: $0)
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.title = "알림"
     }
     
     private func setupTableView() {

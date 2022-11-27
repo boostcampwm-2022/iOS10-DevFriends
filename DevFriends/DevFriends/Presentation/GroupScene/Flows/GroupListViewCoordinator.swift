@@ -9,4 +9,5 @@ import Foundation
 
 protocol GroupListViewCoordinator: AnyObject {
     func showGroupFilterViewController(filter: Filter)
+    func showNotificationViewController()
 }

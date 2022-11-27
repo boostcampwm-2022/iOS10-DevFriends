@@ -50,7 +50,7 @@ final class TabBarCoordinator: Coordinator {
         mogakcoSceneNavigationController.tabBarItem.image = UIImage(systemName: "map.fill")
         mogakcoSceneNavigationController.tabBarItem.title = "모각코"
         let mogakcoSceneDIContainer = dependencies.makeMogakcoSceneDIContainer()
-        let flow = mogakcoSceneDIContainer.makeChatFlowCoordinator(
+        let flow = mogakcoSceneDIContainer.makeMogakcoFlowCoordinator(
             navigationController: mogakcoSceneNavigationController
         )
         flow.start()

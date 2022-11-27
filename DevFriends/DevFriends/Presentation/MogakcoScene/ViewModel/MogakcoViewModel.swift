@@ -9,6 +9,7 @@ import Combine
 
 struct MogakcoViewModelActions {
     let showGroupDetail: (Group) -> Void
+    let showNotifications: () -> Void
 }
 
 protocol MogakcoViewModelInput {
@@ -17,6 +18,7 @@ protocol MogakcoViewModelInput {
     func nowMogakco(index: Int)
     func nowMogakcoWithAllList(index: Int, distance: Double)
     func didSelectNowMogakco()
+    func didSelectNotifications()
 }
 
 protocol MogakcoViewModelOutput {
@@ -80,5 +82,9 @@ final class MogakcoViewModel: MogakcoViewModelType {
     func didSelectNowMogakco() {
         guard let nowMogakco = self.nowMogakco else { return }
         actions?.showGroupDetail(nowMogakco)
+    }
+    
+    func didSelectNotifications() {
+        actions?.showNotifications()
     }
 }

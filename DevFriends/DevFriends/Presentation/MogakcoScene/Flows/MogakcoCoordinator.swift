@@ -27,7 +27,10 @@ final class MogakcoCoordinator: Coordinator {
     }
     
     func start() {
-        let actions = MogakcoViewModelActions(showGroupDetail: showGroupDetailViewController)
+        let actions = MogakcoViewModelActions(
+            showGroupDetail: showGroupDetailViewController,
+            showNotifications: showNotificationViewController
+        )
         let mogakcoViewController = dependencies.makeMogakcoViewController(actions: actions)
         navigationController.navigationBar.topItem?.title = "모각코"
         navigationController.pushViewController(mogakcoViewController, animated: false)
@@ -39,5 +42,15 @@ extension MogakcoCoordinator: GroupDetailCoordinator {
         let postDetailViewController = dependencies.makeGroupDetailViewController(group: group)
         navigationController.pushViewController(postDetailViewController, animated: true)
         navigationController.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func showNotificationViewController() {
+        let notificationSceneDIContainer = NotificationSceneDIContainer()
+        let notificationCoordinator = NotificationCoordinator(
+            navigationController: navigationController,
+            dependencies: notificationSceneDIContainer
+        )
+        childCoordinators.append(notificationCoordinator)
+        notificationCoordinator.start()
     }
 }

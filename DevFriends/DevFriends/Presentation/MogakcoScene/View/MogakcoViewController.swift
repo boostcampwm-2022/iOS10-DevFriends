@@ -408,6 +408,6 @@ extension MogakcoViewController {
     }
     
     @objc func didTapNotificationButton(_ sender: UIButton) {
-        print("알림 버튼 클릭")
+        viewModel.didSelectNotifications()
     }
 }

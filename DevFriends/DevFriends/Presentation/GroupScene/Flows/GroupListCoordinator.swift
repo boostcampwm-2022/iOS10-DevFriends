@@ -24,7 +24,10 @@ final class GroupListCoordinator: Coordinator {
     }
     
     func start() {
-        let actions = GroupListViewModelActions(showGroupFilterView: showGroupFilterViewController)
+        let actions = GroupListViewModelActions(
+            showGroupFilterView: showGroupFilterViewController,
+            showNotifications: showNotificationViewController
+        )
         let groupListViewController = dependencies.makeGroupListViewController(actions: actions)
         navigationController.pushViewController(groupListViewController, animated: false)
     }
@@ -41,5 +44,15 @@ extension GroupListCoordinator: GroupListViewCoordinator {
     func updateFilterGroup(updatedFilter: Filter) {
         guard let groupListViewController = navigationController.viewControllers.last as? GroupListViewController else { return }
         groupListViewController.didSelectFilter(filter: updatedFilter)
+    }
+    
+    func showNotificationViewController() {
+        let notificationSceneDIContainer = NotificationSceneDIContainer()
+        let notificationCoordinator = NotificationCoordinator(
+            navigationController: navigationController,
+            dependencies: notificationSceneDIContainer
+        )
+        childCoordinators.append(notificationCoordinator)
+        notificationCoordinator.start()
     }
 }

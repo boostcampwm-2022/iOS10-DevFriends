@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: GroupDetailCoordinator가 필요할까?
 protocol GroupDetailCoordinator {
     func showGroupDetailViewController(group: Group)
+    func showNotificationViewController()
 }

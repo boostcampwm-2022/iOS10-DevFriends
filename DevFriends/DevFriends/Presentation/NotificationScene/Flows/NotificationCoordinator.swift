@@ -24,5 +24,6 @@ final class NotificationCoordinator: Coordinator {
         let actions = NotificationViewModelActions()
         let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
         navigationController.pushViewController(notificationViewController, animated: false)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
 }
