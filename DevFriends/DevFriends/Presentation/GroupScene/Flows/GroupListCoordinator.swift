@@ -33,7 +33,7 @@ final class GroupListCoordinator: Coordinator {
     }
 }
 
-extension GroupListCoordinator: GroupListViewCoordinator {
+extension GroupListCoordinator {
     func showGroupFilterViewController(filter: Filter) {
         let actions = GroupFilterViewModelActions(didDisappearFilterView: updateFilterGroup)
         let groupFilterViewController = dependencies.makeGroupFilterViewController(filter: filter, actions: actions)

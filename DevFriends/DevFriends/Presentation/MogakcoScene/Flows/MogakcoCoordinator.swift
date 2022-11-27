@@ -37,7 +37,7 @@ final class MogakcoCoordinator: Coordinator {
     }
 }
 
-extension MogakcoCoordinator: GroupDetailCoordinator {
+extension MogakcoCoordinator {
     func showGroupDetailViewController(group: Group) {
         let postDetailViewController = dependencies.makeGroupDetailViewController(group: group)
         navigationController.pushViewController(postDetailViewController, animated: true)
