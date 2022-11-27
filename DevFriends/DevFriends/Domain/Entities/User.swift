@@ -6,13 +6,13 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 
-struct User: Codable {
+struct User {
     let id: String
     let nickname: String
     let job: String
     let profileImagePath: String
-    let categories: [String]
-    let groups: [String]
+    let categoryIDs: [String]
+    var groupIDs: [String]
+    var appliedGroupIDs: [String]
 }

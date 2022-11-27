@@ -21,6 +21,19 @@ final class DefaultCategoryRepository: CategoryRepository {
         }
     }
     
+    func fetch() async throws -> [Category] {
+        var categories: [Category] = []
+        let snapshot = try await firestore.collection("Category").getDocuments()
+        
+        for document in snapshot.documents {
+            let categoryData = document.data()
+            if let categoryString = categoryData["name"] as? String {
+                categories.append(Category(name: categoryString))
+            }
+        }
+        return categories
+    }
+    
     private func fetchCategory(_ id: String) async throws -> Category {
         let snapshot = try await firestore.collection("Category").document(id).getDocument()
         

@@ -25,8 +25,9 @@ final class AppFlowCoordinator: Coordinator {
     }
 
     func start() {
-        let chatSceneDIContainer = appDIContainer.makeChatSceneDIContainer()
-        let flow = chatSceneDIContainer.makeChatFlowCoordinator(navigationController: navigationController)
+        navigationController.isNavigationBarHidden = true
+        let tabBarSceneDIContainer = appDIContainer.tabBarSceneDIContainer()
+        let flow = tabBarSceneDIContainer.makeTabBarFlowCoordinator(navigationController: navigationController)
         flow.start()
         childCoordinators.append(flow)
     }

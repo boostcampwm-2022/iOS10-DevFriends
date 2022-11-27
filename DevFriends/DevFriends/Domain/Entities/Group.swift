@@ -9,10 +9,10 @@ import Foundation
 
 struct Group: Hashable {
     let id: String
-    let participantIDs: [String]
+    var participantIDs: [String]
     let title: String
     let chatID: String
-    let categories: [String]
+    let categoryIDs: [String]
     let location: Location
     let description: String
     let time: Date

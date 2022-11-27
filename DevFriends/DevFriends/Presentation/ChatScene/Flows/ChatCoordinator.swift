@@ -13,7 +13,7 @@ protocol ChatFlowCoordinatorDependencies {
 }
 
 final class ChatCoordinator: Coordinator {
-    private weak var navigationController: UINavigationController?
+    let navigationController: UINavigationController
     let dependencies: ChatFlowCoordinatorDependencies
 
     var childCoordinators: [Coordinator] = []
@@ -29,13 +29,13 @@ final class ChatCoordinator: Coordinator {
     func start() {
         let actions = ChatViewModelActions(showChatContent: showChatContentViewController)
         let chatViewController = dependencies.makeChatViewController(actions: actions)
-        navigationController?.pushViewController(chatViewController, animated: false)
+        navigationController.pushViewController(chatViewController, animated: false)
     }
 }
 
-extension ChatCoordinator: ChatViewCoordinator {
+extension ChatCoordinator {
     func showChatContentViewController(group: Group) {
         let chatContentViewController = dependencies.makeChatContentViewController(group: group)
-        navigationController?.pushViewController(chatContentViewController, animated: true)
+        navigationController.pushViewController(chatContentViewController, animated: true)
     }
 }
