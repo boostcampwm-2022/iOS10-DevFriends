@@ -124,6 +124,7 @@
 		E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */; };
 		E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */; };
 		E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */; };
+		E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54962934A8AB00E63898 /* LoginViewController.swift */; };
 		FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */; };
 		FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */; };
 		FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */; };
@@ -304,6 +305,7 @@
 		E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailContentsView.swift; sourceTree = "<group>"; };
 		E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueDisplayView.swift; sourceTree = "<group>"; };
 		E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		E3DE54962934A8AB00E63898 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Address.swift"; sourceTree = "<group>"; };
 		FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
 		FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -771,6 +773,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		E3DE54952934A89B00E63898 /* AuthScene */ = {
+			isa = PBXGroup;
+			children = (
+				E3DE54962934A8AB00E63898 /* LoginViewController.swift */,
+			);
+			path = AuthScene;
+			sourceTree = "<group>";
+		};
 		FC5D0191292F4E6200292D33 /* TabBarScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -821,6 +831,7 @@
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				E3DE54952934A89B00E63898 /* AuthScene */,
 				E3752EA1292F53BE003C8E17 /* NotificationScene */,
 				FC5D0191292F4E6200292D33 /* TabBarScene */,
 				E394C49D292231D80064ADA7 /* PostDetailScene */,
@@ -1238,7 +1249,6 @@
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
 				FC5D01A7292F54EE00292D33 /* MyPageViewModel.swift in Sources */,
-				A66C7BD8292E1A9B0008B6FD /* GroupFilterViewControllerDelegate.swift in Sources */,
 				E3752ECC292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				E3752EAB292F53BE003C8E17 /* NotificationDiffableDataSource.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
@@ -1327,6 +1337,7 @@
 				E3752EAD292F53BE003C8E17 /* NotificationViewController.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
 				A66C7BDA292E1A9B0008B6FD /* GroupFilterViewModelType.swift in Sources */,
+				E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */,
 				E3752EB7292F5449003C8E17 /* DeleteNotificationUseCase.swift in Sources */,
 				FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */,
 				E33A20842926622000887EC9 /* MessageLabel.swift in Sources */,
