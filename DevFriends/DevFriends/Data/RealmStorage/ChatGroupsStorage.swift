@@ -14,7 +14,7 @@ protocol ChatGroupsStorage {
 
 final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
     func fetch() -> [Group] {
-        let groups = realm?.objects(AcceptedGroupResponseDTO.self)
+        let groups = realm?.objects(AcceptedGroupResponseEntity.self)
         guard let groups = groups else { return [] }
         return groups.map{ $0.toDomain() }
     }
@@ -27,8 +27,8 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
         }
     }
     
-    private func toGroupRealmResponse(group: Group) -> AcceptedGroupResponseDTO {
-        let realmGroup = AcceptedGroupResponseDTO()
+    private func toGroupRealmResponse(group: Group) -> AcceptedGroupResponseEntity {
+        let realmGroup = AcceptedGroupResponseEntity()
         realmGroup.id = group.id
         realmGroup.participantIDs.append(objectsIn: group.participantIDs)
         realmGroup.title = group.title

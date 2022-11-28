@@ -145,6 +145,9 @@
 		FC5D01AC292F54EE00292D33 /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D01A4292F54EE00292D33 /* MyPageCoordinator.swift */; };
 		FC5D01AE292F553200292D33 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D01AD292F553200292D33 /* PopupViewController.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
+		FCB94CD02934B6F900DD17CD /* ChatGroupsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */; };
+		FCB94CD12934B6F900DD17CD /* ContainsRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CCF2934B6F900DD17CD /* ContainsRealm.swift */; };
+		FCB94CD32934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CD22934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
 		FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */; };
 		FCD8AEEE291CCE9600CCE5D3 /* DevFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEED291CCE9600CCE5D3 /* DevFriendsTests.swift */; };
@@ -329,6 +332,9 @@
 		FC5D01AD292F553200292D33 /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
+		FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupsStorage.swift; sourceTree = "<group>"; };
+		FCB94CCF2934B6F900DD17CD /* ContainsRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainsRealm.swift; sourceTree = "<group>"; };
+		FCB94CD22934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AcceptedGroupResponseEntity+Mapping.swift"; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCD8AEE2291CCE9600CCE5D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -679,6 +685,9 @@
 		E359EC80292C6BA000CE5775 /* RealmStorage */ = {
 			isa = PBXGroup;
 			children = (
+				FCB94CD42934B79500DD17CD /* EntityMapping */,
+				FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */,
+				FCB94CCF2934B6F900DD17CD /* ContainsRealm.swift */,
 			);
 			path = RealmStorage;
 			sourceTree = "<group>";
@@ -910,6 +919,14 @@
 				FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FCB94CD42934B79500DD17CD /* EntityMapping */ = {
+			isa = PBXGroup;
+			children = (
+				FCB94CD22934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift */,
+			);
+			path = EntityMapping;
 			sourceTree = "<group>";
 		};
 		FCD8AECA291CCE9300CCE5D3 = {
@@ -1309,9 +1326,11 @@
 				A66C7BBC292E19450008B6FD /* GroupRepository.swift in Sources */,
 				A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */,
 				A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */,
+				FCB94CD02934B6F900DD17CD /* ChatGroupsStorage.swift in Sources */,
 				A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */,
 				E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */,
 				E3752EC8292F5D08003C8E17 /* NotificationSceneDIContainer.swift in Sources */,
+				FCB94CD32934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
 				E3752EB5292F5449003C8E17 /* SendNotificationToParticipantUseCase.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
@@ -1341,6 +1360,7 @@
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				A66C7BD9292E1A9B0008B6FD /* GroupFilterViewController.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
+				FCB94CD12934B6F900DD17CD /* ContainsRealm.swift in Sources */,
 				FC5D01AA292F54EE00292D33 /* MyPageViewController.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
 				FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */,

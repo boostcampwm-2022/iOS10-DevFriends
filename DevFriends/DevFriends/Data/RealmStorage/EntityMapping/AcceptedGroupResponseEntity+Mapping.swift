@@ -1,5 +1,5 @@
 //
-//  AcceptedGroupResponseDTO+Mapping.swift
+//  AcceptedGroupResponseEntity+Mapping.swift
 //  DevFriends
 //
 //  Created by 심주미 on 2022/11/26.
@@ -7,7 +7,7 @@
 
 import RealmSwift
 
-class AcceptedGroupResponseDTO: Object {
+class AcceptedGroupResponseEntity: Object {
     @objc dynamic var id: String = ""
     dynamic var participantIDs: List<String> = List<String>()
     @objc dynamic var title: String = ""
@@ -23,7 +23,7 @@ class AcceptedGroupResponseDTO: Object {
     @objc dynamic var type: String = ""
 }
 
-extension AcceptedGroupResponseDTO {
+extension AcceptedGroupResponseEntity {
     func toDomain() -> Group {
         return Group(
             id: id,
