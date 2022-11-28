@@ -112,7 +112,6 @@
 		E3752EB9292F5449003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EB3292F5448003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift */; };
 		E3752EBB292F5467003C8E17 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EBA292F5467003C8E17 /* NotificationRepository.swift */; };
 		E3752EBD292F548E003C8E17 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EBC292F548E003C8E17 /* Notification.swift */; };
-		E3752EC6292F5B45003C8E17 /* NotificationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EC5292F5B45003C8E17 /* NotificationCoordinator.swift */; };
 		E3752EC8292F5D08003C8E17 /* NotificationSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EC7292F5D08003C8E17 /* NotificationSceneDIContainer.swift */; };
 		E3752ECA292F5DD2003C8E17 /* DefaultNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EC9292F5DD2003C8E17 /* DefaultNotificationRepository.swift */; };
 		E3752ECC292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752ECB292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift */; };
@@ -290,7 +289,6 @@
 		E3752EB3292F5448003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateGroupParticipantIDsToAddUseCase.swift; sourceTree = "<group>"; };
 		E3752EBA292F5467003C8E17 /* NotificationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
 		E3752EBC292F548E003C8E17 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
-		E3752EC5292F5B45003C8E17 /* NotificationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCoordinator.swift; sourceTree = "<group>"; };
 		E3752EC7292F5D08003C8E17 /* NotificationSceneDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSceneDIContainer.swift; sourceTree = "<group>"; };
 		E3752EC9292F5DD2003C8E17 /* DefaultNotificationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNotificationRepository.swift; sourceTree = "<group>"; };
 		E3752ECB292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -699,7 +697,6 @@
 			children = (
 				E3752EA2292F53BE003C8E17 /* ViewModel */,
 				E3752EA4292F53BE003C8E17 /* View */,
-				E3752EC4292F5A7C003C8E17 /* Flows */,
 			);
 			path = NotificationScene;
 			sourceTree = "<group>";
@@ -721,14 +718,6 @@
 				E3752EA8292F53BE003C8E17 /* NotificationViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		E3752EC4292F5A7C003C8E17 /* Flows */ = {
-			isa = PBXGroup;
-			children = (
-				E3752EC5292F5B45003C8E17 /* NotificationCoordinator.swift */,
-			);
-			path = Flows;
 			sourceTree = "<group>";
 		};
 		E394C49D292231D80064ADA7 /* PostDetailScene */ = {
@@ -1251,7 +1240,6 @@
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */,
 				E33A20EA2927BB1000887EC9 /* User.swift in Sources */,
-				E3752EC6292F5B45003C8E17 /* NotificationCoordinator.swift in Sources */,
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,
