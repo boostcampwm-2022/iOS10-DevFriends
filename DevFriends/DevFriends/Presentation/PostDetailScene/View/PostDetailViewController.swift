@@ -25,7 +25,7 @@ final class PostDetailViewController: DefaultViewController {
     }()
     private lazy var tableViewDataSource = UITableViewDiffableDataSource<Int, CommentInfo>(
         tableView: self.commentTableView
-    ) { tableView, indexPath, _ in
+    ) { tableView, indexPath, data in
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CommentTableViewCell.reuseIdentifier,
             for: indexPath
@@ -33,9 +33,8 @@ final class PostDetailViewController: DefaultViewController {
         else {
             return UITableViewCell()
         }
-        
-        cell.set(info: self.viewModel.commentsSubject.value[indexPath.row])
-        
+        cell.set(info: data)
+
         return cell
     }
     private lazy var commentTextField: CommonTextField = {

@@ -276,7 +276,7 @@ final class MogakcoViewController: DefaultViewController {
         mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
     
-    func setNowMogackoWithAllList(index: Int) {
+    func setNowMogakcoWithAllList(index: Int) {
         viewModel.nowMogakcoWithAllList(index: index, distance: mapViewDistance())
     }
 }

@@ -41,7 +41,7 @@ final class MogakcoModalViewController: DefaultViewController {
     }
     
     private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
-    private let actions: MogakcoModalViewActions?
+    private let actions: MogakcoModalViewActions
 
     init(actions: MogakcoModalViewActions) {
         self.actions = actions
@@ -77,7 +77,6 @@ final class MogakcoModalViewController: DefaultViewController {
 
 extension MogakcoModalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        actions?.didSelectMogakcoCell(indexPath.item)
-        self.dismiss(animated: true)
+        actions.didSelectMogakcoCell(indexPath.item)
     }
 }

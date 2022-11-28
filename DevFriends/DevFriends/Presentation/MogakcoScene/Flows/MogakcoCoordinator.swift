@@ -62,6 +62,7 @@ extension MogakcoCoordinator {
             return
         }
         mogakcoViewController.showMogakcoCollectionView()
-        mogakcoViewController.setNowMogackoWithAllList(index: index)
+        mogakcoViewController.setNowMogakcoWithAllList(index: index)
+        mogakcoViewController.presentedViewController?.dismiss(animated: true)
     }
 }
