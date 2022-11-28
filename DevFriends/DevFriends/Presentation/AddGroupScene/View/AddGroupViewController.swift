@@ -87,6 +87,12 @@ final class AddGroupViewController: DefaultViewController {
     
     override func configureUI() {
         titleTextField.placeholder = "\(groupType.rawValue) 제목"
+        hideKeyboardWhenTapped()
+        adjustViewToKeyboard()
+        // TODO: Navigation bar 위로 불투명하게 만들고 싶다...
+        // 키보드땜에 뷰가 위로 올라갈 때 문제가 있음
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = .green
     }
     
     override func layout() {
