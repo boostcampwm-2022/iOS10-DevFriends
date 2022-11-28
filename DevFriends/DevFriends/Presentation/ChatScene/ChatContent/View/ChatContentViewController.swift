@@ -74,7 +74,6 @@ class ChatContentViewController: DefaultViewController {
     }
     
     override func layout() {
-        setupNavigation()
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
@@ -107,6 +106,7 @@ class ChatContentViewController: DefaultViewController {
     override func configureUI() {
         self.view.backgroundColor = .white
         self.setupTableView()
+        self.setupNavigation()
     }
     
     private func setupTableView() {

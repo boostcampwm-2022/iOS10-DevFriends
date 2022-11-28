@@ -53,11 +53,10 @@ final class ChatViewController: DefaultViewController {
     
     override func configureUI() {
         self.setupTableView()
+        self.setupNavigation()
     }
     
     override func layout() {
-        setupNavigation()
-        
         self.view.addSubview(chatTableView)
         chatTableView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)

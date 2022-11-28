@@ -60,6 +60,10 @@ final class MyPageViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func configureUI() {
+        self.setupNavigation()
+    }
+    
     override func bind() {
         makedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
@@ -120,8 +124,6 @@ final class MyPageViewController: DefaultViewController {
     }
     
     override func layout() {
-        setupNavigation()
-        
         let spacing = 25
         view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in

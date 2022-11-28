@@ -167,8 +167,11 @@ final class MogakcoViewController: DefaultViewController {
         }
     }
     
+    override func configureUI() {
+        self.setupNavigation()
+    }
+    
     override func layout() {
-        setupNavigation()
         view.addSubview(mogakcoMapView)
         mogakcoMapView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)

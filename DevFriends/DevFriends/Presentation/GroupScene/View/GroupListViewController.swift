@@ -145,12 +145,11 @@ final class GroupListViewController: DefaultViewController {
         self.view.backgroundColor = .systemGray6
         self.setupCollectionView()
         self.setupCollectionViewHeader()
+        self.setupNavigation()
         self.viewModel.loadGroupList()
     }
     
     override func layout() {
-        setupNavigation()
-        
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
