@@ -18,6 +18,7 @@ struct CommentResponseDTO: Codable {
 extension CommentResponseDTO {
     func toDomain() -> Comment {
         return Comment(
+            id: uid ?? "",
             content: content,
             time: time,
             userID: userID

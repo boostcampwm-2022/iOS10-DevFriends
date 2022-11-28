@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SendCommentNotificationUseCase {
-    func execute(group: Group, comment: Comment)
+    func execute(sender: User, group: Group, comment: Comment, commentID: String)
 }
 
 final class DefaultSendCommentNotificationUseCase: SendCommentNotificationUseCase {
@@ -18,13 +18,15 @@ final class DefaultSendCommentNotificationUseCase: SendCommentNotificationUseCas
         self.notificationRepository = notificationRepository
     }
     
-    func execute(group: Group, comment: Comment) {
+    func execute(sender: User, group: Group, comment: Comment, commentID: String) {
         notificationRepository.send(
             to: group.managerID,
             notification: Notification(
                 groupID: group.id,
                 groupTitle: group.title,
-                senderID: comment.userID,
+                senderID: sender.id,
+                senderNickname: sender.nickname,
+                commentID: commentID,
                 comment: comment.content,
                 type: .comment
             )

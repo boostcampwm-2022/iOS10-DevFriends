@@ -196,8 +196,7 @@ extension DefaultPostDetailViewModel {
     }
     
     func didTapApplyButton() {
-        localUser.appliedGroupIDs.append(group.id)
-        applyGroupUseCase.execute(user: localUser)
+        applyGroupUseCase.execute(groupID: group.id, user: localUser)
         sendGroupApplyNotificationUseCase.execute(from: localUser, to: group)
         
         groupApplyButtonStateSubject.value = .applied
@@ -205,12 +204,19 @@ extension DefaultPostDetailViewModel {
     
     func didTapCommentPostButton(content: String) {
         let comment = Comment(
+            id: "",
             content: content,
             time: Date(),
-            userID: "ac3yRAAR9TKVZKrofpbi"
+            userID: localUser.id
         )
-        postCommentUseCase.execute(comment: comment, groupId: self.group.id)
-        sendCommentNotificationUseCase.execute(group: self.group, comment: comment)
+        let commentID = postCommentUseCase.execute(comment: comment, groupId: self.group.id)
+        
+        sendCommentNotificationUseCase.execute(
+            sender: self.localUser,
+            group: self.group,
+            comment: comment,
+            commentID: commentID
+        )
         
         Task {
             let comments = await loadComments()
