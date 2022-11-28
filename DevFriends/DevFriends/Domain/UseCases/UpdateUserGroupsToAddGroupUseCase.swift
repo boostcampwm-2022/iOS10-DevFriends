@@ -29,12 +29,9 @@ final class DefaultUpdateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroup
 extension DefaultUpdateUserGroupsToAddGroupUseCase {
     private func removeGroupIDInAppliedGroups(user: User, groupID: String) -> User {
         var user = user
-        
-        var tempAppliedGroups = user.appliedGroupIDs
-        guard let index = tempAppliedGroups.firstIndex(of: groupID)
+        guard let index = user.appliedGroupIDs.firstIndex(of: groupID)
         else { fatalError("group update logic is strange.") }
-        tempAppliedGroups.remove(at: index)
-        user.appliedGroupIDs = tempAppliedGroups
+        user.appliedGroupIDs.remove(at: index)
         
         return user
     }
