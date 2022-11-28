@@ -53,23 +53,8 @@ extension DefaultUserRepository: UserRepository {
         }
     }
     
-    func fetchUserGroup(of uid: String) async throws -> [UserGroup] {
-        let snapshot = try await firestore
-            .collection("User")
-            .document(uid)
-            .collection("Group")
-            .getDocuments()
-        let groups = try snapshot.documents
-            .map { try $0.data(as: UserGroupResponseDTO.self) }
-            .map { $0.toDomain() }
-        
-        return groups
-    }
-    
     func addUserToGroup(userID: String, groupID: String) {
-        let userGroup = UserGroup(groupID: groupID, time: Date())
-        let userGroupResponseDTO = makeUserGroupResponseDTO(userGroup: userGroup)
-        
+        let userGroupResponseDTO = UserGroupResponseDTO(groupID: groupID, time: .now)
         do {
             _ = try firestore
                 .collection("User")
@@ -92,9 +77,5 @@ extension DefaultUserRepository {
             categories: user.categoryIDs,
             appliedGroups: user.appliedGroupIDs
         )
-    }
-    
-    private func makeUserGroupResponseDTO(userGroup: UserGroup) -> UserGroupResponseDTO {
-        return UserGroupResponseDTO(groupID: userGroup.groupID, time: userGroup.time)
     }
 }

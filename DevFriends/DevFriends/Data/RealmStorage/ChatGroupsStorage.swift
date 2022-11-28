@@ -8,43 +8,47 @@
 import RealmSwift
 
 protocol ChatGroupsStorage {
-    func fetch() -> [Group]
-    func save(groups: [Group]) throws
+    func fetch() -> [AcceptedGroup]
+    func save(acceptedGroups: [AcceptedGroup]) throws
 }
 
 final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
-    func fetch() -> [Group] {
-        let groups = realm?.objects(AcceptedGroupResponseEntity.self)
+    func fetch() -> [AcceptedGroup] {
+        let groups = realm?
+            .objects(AcceptedGroupResponseEntity.self)
+            .sorted(byKeyPath: "acceptedTime", ascending: false)
         guard let groups = groups else { return [] }
         return groups.map{ $0.toDomain() }
     }
     
-    func save(groups: [Group]) throws {
+    func save(acceptedGroups: [AcceptedGroup]) throws {
         try realm?.write {
-            for group in groups {
-                realm?.add(toGroupRealmResponse(group: group))
+            for group in acceptedGroups {
+                realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: group))
             }
         }
     }
     
-    private func toGroupRealmResponse(group: Group) -> AcceptedGroupResponseEntity {
+    private func toAcceptedGroupResponseEntity(acceptedGroup: AcceptedGroup) -> AcceptedGroupResponseEntity {
+        let group = acceptedGroup.group
         let realmGroup = AcceptedGroupResponseEntity()
         realmGroup.id = group.id
         realmGroup.participantIDs.append(objectsIn: group.participantIDs)
         realmGroup.title = group.title
         realmGroup.chatID = group.chatID
         realmGroup.categories.append(objectsIn: group.categoryIDs)
-        let location = LocationResponseDTO()
+        let location = LocationResponseEntity()
         location.latitude = group.location.latitude
         location.longitude = group.location.longitude
         realmGroup.location = location
         realmGroup.groupDescription = group.description
-        realmGroup.time = group.time
+        realmGroup.postTime = group.time
         realmGroup.like = group.like
         realmGroup.hit = group.hit
         realmGroup.limitedNumberPeople = group.limitedNumberPeople
         realmGroup.managerID = group.managerID
         realmGroup.type = group.type
+        realmGroup.acceptedTime = acceptedGroup.time
         return realmGroup
     }
 }

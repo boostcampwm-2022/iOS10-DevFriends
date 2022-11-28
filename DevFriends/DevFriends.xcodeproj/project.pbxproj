@@ -124,7 +124,6 @@
 		E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */; };
 		E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */; };
 		E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */; };
-		E3DE5492293481FC00E63898 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE5491293481FC00E63898 /* UserGroup.swift */; };
 		E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */; };
 		FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */; };
 		FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */; };
@@ -148,6 +147,7 @@
 		FCB94CD02934B6F900DD17CD /* ChatGroupsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */; };
 		FCB94CD12934B6F900DD17CD /* ContainsRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CCF2934B6F900DD17CD /* ContainsRealm.swift */; };
 		FCB94CD32934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CD22934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift */; };
+		FCB94CD82934CD1200DD17CD /* AcceptedGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CD72934CD1200DD17CD /* AcceptedGroup.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
 		FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */; };
 		FCD8AEEE291CCE9600CCE5D3 /* DevFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEED291CCE9600CCE5D3 /* DevFriendsTests.swift */; };
@@ -309,7 +309,6 @@
 		E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailContentsView.swift; sourceTree = "<group>"; };
 		E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueDisplayView.swift; sourceTree = "<group>"; };
 		E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
-		E3DE5491293481FC00E63898 /* UserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroup.swift; sourceTree = "<group>"; };
 		E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserGroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Address.swift"; sourceTree = "<group>"; };
 		FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
@@ -335,6 +334,7 @@
 		FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupsStorage.swift; sourceTree = "<group>"; };
 		FCB94CCF2934B6F900DD17CD /* ContainsRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainsRealm.swift; sourceTree = "<group>"; };
 		FCB94CD22934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AcceptedGroupResponseEntity+Mapping.swift"; sourceTree = "<group>"; };
+		FCB94CD72934CD1200DD17CD /* AcceptedGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedGroup.swift; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCD8AEE2291CCE9600CCE5D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -880,7 +880,7 @@
 				05CB4A3C292DF17C00A97531 /* Comment.swift */,
 				E3752EBC292F548E003C8E17 /* Notification.swift */,
 				A648BB24292E1D6F0018A654 /* Filter.swift */,
-				E3DE5491293481FC00E63898 /* UserGroup.swift */,
+				FCB94CD72934CD1200DD17CD /* AcceptedGroup.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1297,12 +1297,12 @@
 				A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */,
 				05F22BA5292F646B002B7B74 /* GroupDetailCoordinator.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
+				FCB94CD82934CD1200DD17CD /* AcceptedGroup.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
-				E3DE5492293481FC00E63898 /* UserGroup.swift in Sources */,
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				FC5D01A8292F54EE00292D33 /* SubtitleButton.swift in Sources */,

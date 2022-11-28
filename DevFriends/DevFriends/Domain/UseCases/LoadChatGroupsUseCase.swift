@@ -12,11 +12,9 @@ protocol LoadChatGroupsUseCase {
 }
 
 final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
-    private let userRepository: UserRepository
     private let chatGroupsRepository: ChatGroupsRepository
     
     init(userRepository: UserRepository, chatGroupsRepository: ChatGroupsRepository) {
-        self.userRepository = userRepository
         self.chatGroupsRepository = chatGroupsRepository
     }
     
@@ -24,8 +22,6 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
         // MARK: user를 나중에 어떻게 가져올지 논의해보기
         guard let uid = UserDefaults.standard.object(forKey: "uid") as? String
         else { fatalError("UID was not stored!!") }
-        let groups = try await self.userRepository.fetchUserGroup(of: uid)
-        let groupIDs = groups.map { $0.groupID }
-        return try await self.chatGroupsRepository.fetch(uids: groupIDs)
+        return try await chatGroupsRepository.fetch(userID: uid)
     }
 }

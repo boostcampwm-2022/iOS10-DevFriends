@@ -13,19 +13,20 @@ class AcceptedGroupResponseEntity: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var chatID: String = ""
     dynamic var categories: List<String> = List<String>()
-    @objc dynamic var location: LocationResponseDTO? = LocationResponseDTO()
+    @objc dynamic var location: LocationResponseEntity? = LocationResponseEntity()
     @objc dynamic var groupDescription: String = ""
-    @objc dynamic var time: Date = .now
+    @objc dynamic var postTime: Date = .now
     @objc dynamic var like: Int = 0
     @objc dynamic var hit: Int = 0
     @objc dynamic var limitedNumberPeople: Int = 0
     @objc dynamic var managerID: String = ""
     @objc dynamic var type: String = ""
+    @objc dynamic var acceptedTime: Date = .now
 }
 
 extension AcceptedGroupResponseEntity {
-    func toDomain() -> Group {
-        return Group(
+    func toDomain() -> AcceptedGroup {
+        let group = Group(
             id: id,
             participantIDs: participantIDs.map{ $0 },
             title: title,
@@ -33,22 +34,27 @@ extension AcceptedGroupResponseEntity {
             categoryIDs: categories.map{ $0 },
             location: location?.toDomain() ?? Location(latitude: 0, longitude: 0),
             description: groupDescription,
-            time: time,
+            time: postTime,
             like: like,
             hit: hit,
             limitedNumberPeople: limitedNumberPeople,
             managerID: managerID,
             type: type
         )
+        
+        return AcceptedGroup(
+            group: group,
+            time: acceptedTime
+        )
     }
 }
 
-class LocationResponseDTO: Object {
+class LocationResponseEntity: Object {
     @objc dynamic var latitude: Double = 0.0
     @objc dynamic var longitude: Double = 0.0
 }
 
-extension LocationResponseDTO {
+extension LocationResponseEntity {
     func toDomain() -> Location {
         return Location(
             latitude: latitude,
