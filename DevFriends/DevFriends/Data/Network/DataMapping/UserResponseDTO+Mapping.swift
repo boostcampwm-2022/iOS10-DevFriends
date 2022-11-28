@@ -14,7 +14,6 @@ struct UserResponseDTO: Codable {
     let job: String
     let profileImagePath: String
     let categories: [String]
-    let groups: [String]
     let appliedGroups: [String]
 }
 
@@ -26,7 +25,6 @@ extension UserResponseDTO {
             job: job,
             profileImagePath: profileImagePath,
             categoryIDs: categories,
-            groupIDs: groups,
             appliedGroupIDs: appliedGroups
         )
     }
