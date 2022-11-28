@@ -18,33 +18,9 @@ final class AddGroupViewController: DefaultViewController {
         return textField
     }()
     
-    private lazy var separator: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray5
-        return view
-    }()
+    private lazy var chooseCategoryView = ChooseCategoryView()
     
-    private lazy var chooseCategoryView: ChooseCategoryView = {
-        let view = ChooseCategoryView()
-        return view
-    }()
-    
-    private lazy var separator2: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray5
-        return view
-    }()
-    
-    private lazy var chooseLocationView: ChooseLocationView = {
-        let view = ChooseLocationView()
-        return view
-    }()
-    
-    private lazy var separator3: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray5
-        return view
-    }()
+    private lazy var chooseLocationView = ChooseLocationView()
     
     private lazy var limitPeopleLabel: UILabel = {
         let label = UILabel()
@@ -60,21 +36,15 @@ final class AddGroupViewController: DefaultViewController {
     
     private lazy var limitPeopleStepper: UIStepper = {
         let stepper = UIStepper()
-        stepper.value = 1
-        stepper.minimumValue = 1
+        stepper.value = 2
+        stepper.minimumValue = 2
         stepper.maximumValue = 10
         return stepper
     }()
     
-    private lazy var descriptionTextView: UITextView = {
-        let textView = CommonTextView(placeHolder: "게시글 내용을 작성해주세요.")
-        return textView
-    }()
+    private lazy var descriptionTextView = CommonTextView(placeHolder: "게시글 내용을 작성해주세요.")
     
-    private lazy var submitButton: CommonButton = {
-        let commonButton = CommonButton(text: "작성 완료")
-        return commonButton
-    }()
+    private lazy var submitButton = CommonButton(text: "작성 완료")
     
     init(groupType: GroupType) {
         self.groupType = groupType
@@ -104,8 +74,9 @@ final class AddGroupViewController: DefaultViewController {
             make.height.equalTo(40)
         }
         
-        view.addSubview(separator)
-        separator.snp.makeConstraints { make in
+        let divider1 = DividerView()
+        view.addSubview(divider1)
+        divider1.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(titleTextField)
             make.height.equalTo(1)
         }
@@ -116,8 +87,9 @@ final class AddGroupViewController: DefaultViewController {
             make.left.right.equalTo(titleTextField)
         }
         
-        view.addSubview(separator2)
-        separator2.snp.makeConstraints { make in
+        let divider2 = DividerView()
+        view.addSubview(divider2)
+        divider2.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(chooseCategoryView)
             make.height.equalTo(1)
         }
@@ -128,8 +100,9 @@ final class AddGroupViewController: DefaultViewController {
             make.left.right.equalTo(chooseCategoryView)
         }
         
-        view.addSubview(separator3)
-        separator3.snp.makeConstraints { make in
+        let divider3 = DividerView()
+        view.addSubview(divider3)
+        divider3.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(chooseLocationView)
             make.height.equalTo(1)
         }

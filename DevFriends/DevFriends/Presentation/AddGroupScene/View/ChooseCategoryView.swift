@@ -31,7 +31,7 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
     
     private lazy var disclosureIndicator: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.image = UIImage.disclosure
         imageView.tintColor = .black
         return imageView
     }()
@@ -56,7 +56,7 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
     
     private func createInterestLabel(_ text: String) -> FilledRoundTextLabel {
         let text = "# " + text
-        let defaultColor = UIColor(red: 0.907, green: 0.947, blue: 0.876, alpha: 1)
+        let defaultColor = UIColor.devFriendsLightGray
         let interestLabel = FilledRoundTextLabel(text: text, backgroundColor: defaultColor, textColor: .black)
         
         return interestLabel
@@ -94,7 +94,6 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
 
 extension ChooseCategoryView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("gestureRecognizer")
         didTouchViewSubject.send()
         return true
     }

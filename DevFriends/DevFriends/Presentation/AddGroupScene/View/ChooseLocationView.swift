@@ -30,7 +30,7 @@ final class ChooseLocationView: UIView, ChooseLocationOutput {
     
     private lazy var disclosureIndicator: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.image = UIImage.disclosure
         imageView.tintColor = .black
         return imageView
     }()
