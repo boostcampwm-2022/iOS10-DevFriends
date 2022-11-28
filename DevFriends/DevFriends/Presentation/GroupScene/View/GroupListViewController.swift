@@ -10,9 +10,6 @@ import SnapKit
 import UIKit
 
 final class GroupListViewController: DefaultViewController {
-    private let viewModel = DefaultGroupListViewModel(
-        fetchGroupUseCase: DefaultFetchGroupUseCase(groupRepository: DefaultGroupRepository()))
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모임"
@@ -131,6 +128,17 @@ final class GroupListViewController: DefaultViewController {
         return layout
     }()
     
+    // MARK: - Init
+    private let viewModel: GroupListViewModel
+    init(viewModel: GroupListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Setting
     
     override func configureUI() {
@@ -205,10 +213,7 @@ final class GroupListViewController: DefaultViewController {
 
 extension GroupListViewController {
     @objc func didTapFilterButton(_ sender: UIButton) {
-        let filterVC = GroupFilterViewController()
-        filterVC.delegate = self
-        filterVC.initialFilter = self.viewModel.groupFilter
-        present(filterVC, animated: true)
+        viewModel.didSelectFilter()
     }
     
     @objc func didTapGroupAddButton(_ sender: UIButton) {
@@ -247,8 +252,8 @@ extension GroupListViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - GroupFilterViewController Delegate
-extension GroupListViewController: GroupFilterViewControllerDelegate {
+extension GroupListViewController {
+    // 필터 닫혔을 때 아래 함수 실행
     func didSelectFilter(filter: Filter) {
         self.viewModel.updateFilter(filter: filter)
         self.viewModel.loadGroupList()

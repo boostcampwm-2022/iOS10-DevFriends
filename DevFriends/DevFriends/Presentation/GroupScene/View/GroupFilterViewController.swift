@@ -15,10 +15,7 @@ final class GroupFilterViewController: DefaultViewController {
         case group = 1
         case category = 2
     }
-    private let viewModel = DefaultGroupFilterViewModel(
-        fetchCategoryUseCase: DefaultFetchCategoryUseCase(
-            categoryRepository: DefaultCategoryRepository()))
-    weak var delegate: GroupFilterViewControllerDelegate?
+
     var initialFilter: Filter?
     
     lazy var collectionView: UICollectionView = {
@@ -46,6 +43,18 @@ final class GroupFilterViewController: DefaultViewController {
     }()
     
     // MARK: - Initializer
+    
+    private let viewModel: GroupFilterViewModel
+    
+    init(viewModel: GroupFilterViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let initialFilter = initialFilter {
@@ -58,9 +67,9 @@ final class GroupFilterViewController: DefaultViewController {
         print(self.viewModel.groupFilter)
         print(self.viewModel.categoryFilter)
         super.viewWillDisappear(animated)
-        delegate?.didSelectFilter(filter: Filter(alignFilter: self.viewModel.alignFilter,
-                                                 groupFilter: self.viewModel.groupFilter,
-                                                 categoryFilter: self.viewModel.categoryFilter))
+        viewModel.sendFilter(filter: Filter(alignFilter: self.viewModel.alignFilter,
+                                            groupFilter: self.viewModel.groupFilter,
+                                            categoryFilter: self.viewModel.categoryFilter))
     }
     // MARK: - Setting
     
