@@ -41,9 +41,6 @@ class DefaultViewController: UIViewController {
                     let keyboardRectangle = keyboardFrame.cgRectValue
                     let keyboardHeight = keyboardRectangle.height
                     self?.view.frame.origin.y -= keyboardHeight
-                    if let navigationbar = self?.navigationController?.navigationBar {
-                        self?.view.bringSubviewToFront(navigationbar)
-                    }
                 }
             }.store(in: &cancellables)
         
