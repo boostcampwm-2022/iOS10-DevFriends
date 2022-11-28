@@ -37,14 +37,14 @@ final class MogakcoCoordinator: Coordinator {
     }
 }
 
-extension MogakcoCoordinator: GroupDetailCoordinator {
+extension MogakcoCoordinator {
     func showGroupDetailViewController(group: Group) {
         let postDetailViewController = dependencies.makeGroupDetailViewController(group: group)
         navigationController.pushViewController(postDetailViewController, animated: true)
     }
 }
 
-extension MogakcoCoordinator: MogakcoModalCoordinator {
+extension MogakcoCoordinator {
     func showMogakcoModal(mogakcos: [Group]) {
         let actions = MogakcoModalViewActions(didSelectMogakcoCell: selectMogakco)
         let modalViewController = dependencies.makeMogakcoModalViewController(actions: actions, mogakcos: mogakcos)
