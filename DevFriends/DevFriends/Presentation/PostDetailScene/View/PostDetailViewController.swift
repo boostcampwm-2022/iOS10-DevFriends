@@ -83,7 +83,7 @@ final class PostDetailViewController: DefaultViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-         self.tabBarController?.tabBar.isHidden = false // TODO: 뒤로가기 관련하여 Coordinator에서 설정한다면 그 곳에서 사용하자
+         self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
         removeKeyboardObserver()
     }
     
