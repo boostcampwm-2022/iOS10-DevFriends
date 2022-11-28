@@ -437,7 +437,6 @@
 				A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */,
 				A648BB49293399D10018A654 /* ChooseLocationViewController.swift */,
 				A648BB4A293399D10018A654 /* AddGroupViewController.swift */,
-				A648BB4B293399D10018A654 /* ChooseCategoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -619,6 +618,7 @@
 				FC5D01AD292F553200292D33 /* PopupViewController.swift */,
 				E33A20B9292665BC00887EC9 /* CommonButton.swift */,
 				E33A20BA292665BC00887EC9 /* CommonTextField.swift */,
+				A648BB4B293399D10018A654 /* ChooseCategoryView.swift */,
 				E33A20BC292665BC00887EC9 /* DividerView.swift */,
 				E33A20BB292665BC00887EC9 /* FilledRoundTextLabel.swift */,
 				E33A20AF292665A700887EC9 /* GroupCollectionViewCell.swift */,
