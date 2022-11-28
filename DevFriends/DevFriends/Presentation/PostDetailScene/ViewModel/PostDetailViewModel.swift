@@ -102,15 +102,12 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             job: "EPL득점왕",
             profileImagePath: "",
             categoryIDs: [],
-            groupIDs: [],
             appliedGroupIDs: []
         )
         
         // 강남구청에서 모각코 id : CMUPNkEns4Pg9ez7fXvg
         
-        if localUser.groupIDs.contains(group.id) {
-            groupApplyButtonStateSubject.value = .joined
-        } else if group.limitedNumberPeople == group.participantIDs.count {
+        if group.limitedNumberPeople == group.participantIDs.count {
             groupApplyButtonStateSubject.value = .closed
         } else if localUser.appliedGroupIDs.contains(group.id) {
             groupApplyButtonStateSubject.value = .applied

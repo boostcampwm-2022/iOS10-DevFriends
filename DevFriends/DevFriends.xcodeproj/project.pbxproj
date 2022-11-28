@@ -1281,11 +1281,8 @@
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
-<<<<<<< HEAD
-=======
 				A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */,
 				05F22BA5292F646B002B7B74 /* GroupDetailCoordinator.swift in Sources */,
->>>>>>> 7355067495f5db43fe22abc111ca7514641584d2
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */,
