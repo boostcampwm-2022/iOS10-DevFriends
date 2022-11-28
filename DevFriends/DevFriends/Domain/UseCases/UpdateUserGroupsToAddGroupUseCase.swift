@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UpdateUserGroupsToAddGroupUseCase {
-    func execute(groupID: String, senderID: String) async throws
+    func execute(groupID: String, userID: String) async throws
 }
 
 final class DefaultUpdateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroupUseCase {
@@ -18,12 +18,21 @@ final class DefaultUpdateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroup
         self.userRepository = userRepository
     }
     
-    func execute(groupID: String, senderID: String) async throws {
-        var user = try await self.userRepository.fetch(uid: senderID)
-        var tempGroups = user.groupIDs
-        tempGroups.append(groupID)
-        user.groupIDs = tempGroups
+    func execute(groupID: String, userID: String) async throws {
+        let user = try await self.userRepository.fetch(uid: userID)
+        let updatedUser = self.removeGroupIDInAppliedGroups(user: user, groupID: groupID)
+        self.userRepository.update(userID: userID, user: updatedUser)
+        self.userRepository.addUserToGroup(userID: userID, groupID: groupID)
+    }
+}
+
+extension DefaultUpdateUserGroupsToAddGroupUseCase {
+    private func removeGroupIDInAppliedGroups(user: User, groupID: String) -> User {
+        var user = user
+        guard let index = user.appliedGroupIDs.firstIndex(of: groupID)
+        else { fatalError("group update logic is strange.") }
+        user.appliedGroupIDs.remove(at: index)
         
-        self.userRepository.update(userID: senderID, user: user)
+        return user
     }
 }
