@@ -10,6 +10,7 @@ import UIKit
 protocol GroupFlowCoordinatorDependencies {
     func makeGroupListViewController(actions: GroupListViewModelActions) -> GroupListViewController
     func makeGroupFilterViewController(filter: Filter, actions: GroupFilterViewModelActions) -> GroupFilterViewController
+    func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
 }
 
 final class GroupListCoordinator: Coordinator {
@@ -47,12 +48,8 @@ extension GroupListCoordinator {
     }
     
     func showNotificationViewController() {
-        let notificationSceneDIContainer = NotificationSceneDIContainer()
-        let notificationCoordinator = NotificationCoordinator(
-            navigationController: navigationController,
-            dependencies: notificationSceneDIContainer
-        )
-        childCoordinators.append(notificationCoordinator)
-        notificationCoordinator.start()
+        let actions = NotificationViewModelActions() // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
+        let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
+        navigationController.pushViewController(notificationViewController, animated: true)
     }
 }

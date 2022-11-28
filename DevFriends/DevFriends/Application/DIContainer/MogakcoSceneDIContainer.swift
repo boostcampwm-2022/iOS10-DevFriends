@@ -82,3 +82,5 @@ extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
         return PostDetailViewController(viewModel: makePostDetailViewModel(group: group))
     }
 }
+
+extension MogakcoSceneDIContainer: NotificationSceneDIContainer {}

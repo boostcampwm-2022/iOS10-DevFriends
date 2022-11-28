@@ -7,54 +7,49 @@
 
 import UIKit
 
-struct NotificationSceneDIContainer {
-    // MARK: Flow Coordinators
-    func makeNotificationCoordinator(navigationController: UINavigationController) -> NotificationCoordinator {
-        return NotificationCoordinator(navigationController: navigationController, dependencies: self)
-    }
-}
+protocol NotificationSceneDIContainer {}
 
-extension NotificationSceneDIContainer: NotificationCoordinatorDependencies {
+extension NotificationSceneDIContainer {
     // MARK: Repositories
-    func makeUserRepository() -> UserRepository {
+    private func makeUserRepository() -> UserRepository {
         return DefaultUserRepository()
     }
     
-    func makeNotificationRepository() -> NotificationRepository {
+    private func makeNotificationRepository() -> NotificationRepository {
         return DefaultNotificationRepository()
     }
     
-    func makeGroupRepository() -> GroupRepository {
+    private func makeGroupRepository() -> GroupRepository {
         return DefaultGroupRepository()
     }
     
     // MARK: UseCases
-    func makeLoadNotificationsUseCase() -> LoadNotificationsUseCase {
+    private func makeLoadNotificationsUseCase() -> LoadNotificationsUseCase {
         return DefaultLoadNotificationsUseCase(notificationRepository: makeNotificationRepository())
     }
     
-    func makeUpdateNotificationIsAcceptedToTrueUseCase() -> UpdateNotificationIsAcceptedToTrueUseCase {
+    private func makeUpdateNotificationIsAcceptedToTrueUseCase() -> UpdateNotificationIsAcceptedToTrueUseCase {
         return DefaultUpdateNotificationIsAcceptedToTrueUseCase(notificationRepository: makeNotificationRepository())
     }
     
-    func makeSendNotificationToParticipantUseCase() -> SendNotificationToParticipantUseCase {
+    private func makeSendNotificationToParticipantUseCase() -> SendNotificationToParticipantUseCase {
         return DefaultSendNotificationToParticipantUseCase(notificationRepository: makeNotificationRepository())
     }
     
-    func makeUpdateGroupParticipantIDsToAddUseCase() -> UpdateGroupParticipantIDsToAddUseCase {
+    private func makeUpdateGroupParticipantIDsToAddUseCase() -> UpdateGroupParticipantIDsToAddUseCase {
         return DefaultUpdateGroupParticipantIDsToAddUseCase(groupRepository: makeGroupRepository())
     }
     
-    func makeUpdateUserGroupsToAddGroupUseCase() -> UpdateUserGroupsToAddGroupUseCase {
+    private func makeUpdateUserGroupsToAddGroupUseCase() -> UpdateUserGroupsToAddGroupUseCase {
         return DefaultUpdateUserGroupsToAddGroupUseCase(userRepository: makeUserRepository())
     }
     
-    func makeDeleteNotificationUseCase() -> DeleteNotificationUseCase {
+    private func makeDeleteNotificationUseCase() -> DeleteNotificationUseCase {
         return DefaultDeleteNotificationUseCase(notificationRepository: makeNotificationRepository())
     }
     
     // MARK: Notification
-    func makeNotificationViewModel(actions: NotificationViewModelActions) -> NotificationViewModel {
+    private func makeNotificationViewModel(actions: NotificationViewModelActions) -> NotificationViewModel {
         return DefaultNotificationViewModel(
             loadNotificationsUseCase: makeLoadNotificationsUseCase(),
             updateNotificationIsAcceptedToTrueUseCase: makeUpdateNotificationIsAcceptedToTrueUseCase(),

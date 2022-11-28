@@ -39,4 +39,6 @@ extension ChatCoordinator {
         navigationController.pushViewController(chatContentViewController, animated: true)
         navigationController.tabBarController?.tabBar.isHidden = true
     }
+    
+    // TODO: 뒤로가기도 구현하자(각자 하기)
 }
