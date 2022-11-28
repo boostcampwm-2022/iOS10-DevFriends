@@ -63,7 +63,7 @@ final class LoginViewController: DefaultViewController {
             make.top.equalTo(logoImageView.snp.bottom).offset(54)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.7)
-            make.height.equalTo(mainImageView.snp.width)
+            make.height.equalTo(mainImageView.snp.width).dividedBy(2)
         }
         
         view.addSubview(highlightLabel)

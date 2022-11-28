@@ -127,6 +127,8 @@
 		E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54962934A8AB00E63898 /* LoginViewController.swift */; };
 		E3DE549A2934DCD400E63898 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54992934DCD400E63898 /* SignUpViewController.swift */; };
 		E3DE549C2934E6F800E63898 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */; };
+		E3DE549F2935095400E63898 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549E2935095400E63898 /* AuthCoordinator.swift */; };
+		E3DE54A1293509CD00E63898 /* AuthSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */; };
 		FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */; };
 		FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */; };
 		FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */; };
@@ -310,6 +312,8 @@
 		E3DE54962934A8AB00E63898 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3DE54992934DCD400E63898 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
+		E3DE549E2935095400E63898 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSceneDIContainer.swift; sourceTree = "<group>"; };
 		FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Address.swift"; sourceTree = "<group>"; };
 		FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
 		FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -568,6 +572,7 @@
 				A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */,
 				05F22BA6292F6883002B7B74 /* MogakcoSceneDIContainer.swift */,
 				E3752EC7292F5D08003C8E17 /* NotificationSceneDIContainer.swift */,
+				E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -781,6 +786,7 @@
 		E3DE54952934A89B00E63898 /* AuthScene */ = {
 			isa = PBXGroup;
 			children = (
+				E3DE549D2935094400E63898 /* Flows */,
 				E3DE54982934DCC300E63898 /* View */,
 			);
 			path = AuthScene;
@@ -793,6 +799,14 @@
 				E3DE54992934DCD400E63898 /* SignUpViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		E3DE549D2935094400E63898 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				E3DE549E2935095400E63898 /* AuthCoordinator.swift */,
+			);
+			path = Flows;
 			sourceTree = "<group>";
 		};
 		FC5D0191292F4E6200292D33 /* TabBarScene */ = {
@@ -1253,6 +1267,7 @@
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
 				E3752EAA292F53BE003C8E17 /* NotificationTypes.swift in Sources */,
 				FC5D01AE292F553200292D33 /* PopupViewController.swift in Sources */,
+				E3DE549F2935095400E63898 /* AuthCoordinator.swift in Sources */,
 				05CB4A39292DF16900A97531 /* FetchUserUseCase.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
@@ -1361,6 +1376,7 @@
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				A66C7BD9292E1A9B0008B6FD /* GroupFilterViewController.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
+				E3DE54A1293509CD00E63898 /* AuthSceneDIContainer.swift in Sources */,
 				FC5D01AA292F54EE00292D33 /* MyPageViewController.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
 				FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */,
