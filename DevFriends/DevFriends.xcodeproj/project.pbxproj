@@ -141,6 +141,10 @@
 		FC5D01AC292F54EE00292D33 /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D01A4292F54EE00292D33 /* MyPageCoordinator.swift */; };
 		FC5D01AE292F553200292D33 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D01AD292F553200292D33 /* PopupViewController.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
+		FCB94CCB2934B49500DD17CD /* AcceptedGroupInfoResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CCA2934B49500DD17CD /* AcceptedGroupInfoResponseDTO+Mapping.swift */; };
+		FCC3F04B29323DD4002822A5 /* ChatGroupsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC3F04A29323DD4002822A5 /* ChatGroupsStorage.swift */; };
+		FCC3F04D29323EAF002822A5 /* ContainsRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC3F04C29323EAF002822A5 /* ContainsRealm.swift */; };
+		FCC3F04F2932564C002822A5 /* AcceptedGroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC3F04E2932564C002822A5 /* AcceptedGroupResponseDTO+Mapping.swift */; };
 		FCD8AEE0291CCE9600CCE5D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */; };
 		FCD8AEE3291CCE9600CCE5D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AEE1291CCE9600CCE5D3 /* LaunchScreen.storyboard */; };
 		FCD8AEEE291CCE9600CCE5D3 /* DevFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEED291CCE9600CCE5D3 /* DevFriendsTests.swift */; };
@@ -321,6 +325,10 @@
 		FC5D01AD292F553200292D33 /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
+		FCB94CCA2934B49500DD17CD /* AcceptedGroupInfoResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AcceptedGroupInfoResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		FCC3F04A29323DD4002822A5 /* ChatGroupsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupsStorage.swift; sourceTree = "<group>"; };
+		FCC3F04C29323EAF002822A5 /* ContainsRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsRealm.swift; sourceTree = "<group>"; };
+		FCC3F04E2932564C002822A5 /* AcceptedGroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AcceptedGroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FCD8AED3291CCE9300CCE5D3 /* DevFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD8AEDF291CCE9600CCE5D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCD8AEE2291CCE9600CCE5D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -662,6 +670,8 @@
 		E359EC80292C6BA000CE5775 /* RealmStorage */ = {
 			isa = PBXGroup;
 			children = (
+				FCC3F04C29323EAF002822A5 /* ContainsRealm.swift */,
+				FCC3F04A29323DD4002822A5 /* ChatGroupsStorage.swift */,
 			);
 			path = RealmStorage;
 			sourceTree = "<group>";
@@ -683,6 +693,8 @@
 				FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */,
 				FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */,
 				A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */,
+				FCC3F04E2932564C002822A5 /* AcceptedGroupResponseDTO+Mapping.swift */,
+				FCB94CCA2934B49500DD17CD /* AcceptedGroupInfoResponseDTO+Mapping.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -1248,6 +1260,7 @@
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,
+				FCB94CCB2934B49500DD17CD /* AcceptedGroupInfoResponseDTO+Mapping.swift in Sources */,
 				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
 				E3752ECA292F5DD2003C8E17 /* DefaultNotificationRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
@@ -1263,7 +1276,9 @@
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
+				FCC3F04B29323DD4002822A5 /* ChatGroupsStorage.swift in Sources */,
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
+				FCC3F04F2932564C002822A5 /* AcceptedGroupResponseDTO+Mapping.swift in Sources */,
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
@@ -1313,6 +1328,7 @@
 				A66C7BDA292E1A9B0008B6FD /* GroupFilterViewModelType.swift in Sources */,
 				E3752EB7292F5449003C8E17 /* DeleteNotificationUseCase.swift in Sources */,
 				FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */,
+				FCC3F04D29323EAF002822A5 /* ContainsRealm.swift in Sources */,
 				E33A20842926622000887EC9 /* MessageLabel.swift in Sources */,
 				A66C7BBA292E19210008B6FD /* ContainsFirestore.swift in Sources */,
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,

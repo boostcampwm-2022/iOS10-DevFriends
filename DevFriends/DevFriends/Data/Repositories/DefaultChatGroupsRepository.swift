@@ -8,11 +8,17 @@
 import Foundation
 import FirebaseFirestore
 
-final class DefaultChatGroupsRepository: ContainsFirestore {}
+final class DefaultChatGroupsRepository: ContainsFirestore {
+    let storage: ChatGroupsStorage
+    
+    init(storage: ChatGroupsStorage) {
+        self.storage = storage
+    }
+}
 
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
     func fetch(uids: [String]) async throws -> [Group] {
-        return try await withThrowingTaskGroup(of: Group.self) { taskGroup in
+        let groups: [Group] = try await withThrowingTaskGroup(of: Group.self) { taskGroup in
             for uid in uids {
                 taskGroup.addTask {
                     try await self.fetchGroup(uid: uid)
@@ -21,6 +27,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
             
             return try await taskGroup.reduce(into: []) { $0.append($1) }
         }
+        return groups
     }
     
     private func fetchGroup(uid: String) async throws -> Group {

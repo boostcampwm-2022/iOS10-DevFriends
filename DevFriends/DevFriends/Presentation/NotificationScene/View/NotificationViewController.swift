@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 final class NotificationViewController: UITableViewController {
-    private lazy var notificationDiffableDataSource = {
+    private lazy var notificationDiffableDataSource: NotificationDiffableDataSource = {
         let diffableDataSource = NotificationDiffableDataSource(
             tableView: self.tableView
         ) { tableView, indexPath, data in
