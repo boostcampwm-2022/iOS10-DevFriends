@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05A220682935EA39003632B6 /* FixMyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A220672935EA39003632B6 /* FixMyInfoViewModel.swift */; };
+		05A2206A293612E5003632B6 /* UpdateUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A22069293612E5003632B6 /* UpdateUserInfoUseCase.swift */; };
+		05A2206C29361623003632B6 /* DefaultImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A2206B29361623003632B6 /* DefaultImageRepository.swift */; };
+		05A2206E29361664003632B6 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A2206D29361664003632B6 /* ImageRepository.swift */; };
+		05A2207029362B65003632B6 /* UploadProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A2206F29362B65003632B6 /* UploadProfileImageUseCase.swift */; };
+		05A220722936376D003632B6 /* FetchProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A220712936376D003632B6 /* FetchProfileImageUseCase.swift */; };
 		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
 		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
 		05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */; };
@@ -181,6 +187,12 @@
 		0578136E292CF0F4003DA919 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		05781372292CF26D003DA919 /* CategoryResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		058DD04829291EB600784AAC /* PostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailUserRepository.swift; sourceTree = "<group>"; };
+		05A220672935EA39003632B6 /* FixMyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixMyInfoViewModel.swift; sourceTree = "<group>"; };
+		05A22069293612E5003632B6 /* UpdateUserInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserInfoUseCase.swift; sourceTree = "<group>"; };
+		05A2206B29361623003632B6 /* DefaultImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageRepository.swift; sourceTree = "<group>"; };
+		05A2206D29361664003632B6 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		05A2206F29362B65003632B6 /* UploadProfileImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProfileImageUseCase.swift; sourceTree = "<group>"; };
+		05A220712936376D003632B6 /* FetchProfileImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProfileImageUseCase.swift; sourceTree = "<group>"; };
 		05A8DEC0292B71C200497902 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		05A8DEC6292BBF7B00497902 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		05A8DECC292BDFEA00497902 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
@@ -661,6 +673,9 @@
 				05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */,
 				05D9256529337B3B0090A6B1 /* SendCommentNotificationUseCase.swift */,
 				05D9256729338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift */,
+				05A22069293612E5003632B6 /* UpdateUserInfoUseCase.swift */,
+				05A2206F29362B65003632B6 /* UploadProfileImageUseCase.swift */,
+				05A220712936376D003632B6 /* FetchProfileImageUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -675,6 +690,7 @@
 				05CB4A31292DF15100A97531 /* CategoryRepository.swift */,
 				05CB4A30292DF15100A97531 /* GroupCommentRepository.swift */,
 				E3752EBA292F5467003C8E17 /* NotificationRepository.swift */,
+				05A2206D29361664003632B6 /* ImageRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -803,6 +819,7 @@
 				FC5D019B292F54EE00292D33 /* MyGroupsType.swift */,
 				FC5D019C292F54EE00292D33 /* MyGroupsViewModel.swift */,
 				FC5D019D292F54EE00292D33 /* MyPageViewModel.swift */,
+				05A220672935EA39003632B6 /* FixMyInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -900,6 +917,7 @@
 				A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */,
 				E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */,
 				E3752EC9292F5DD2003C8E17 /* DefaultNotificationRepository.swift */,
+				05A2206B29361623003632B6 /* DefaultImageRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1242,6 +1260,7 @@
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
+				05A2206C29361623003632B6 /* DefaultImageRepository.swift in Sources */,
 				A66C7BC0292E19830008B6FD /* ChatMessagesRepository.swift in Sources */,
 				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
@@ -1262,6 +1281,7 @@
 				E3752EB8292F5449003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
 				A66C7BD7292E1A9B0008B6FD /* GroupListViewController.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
+				05A2207029362B65003632B6 /* UploadProfileImageUseCase.swift in Sources */,
 				E3752EAC292F53BE003C8E17 /* NotificationTableViewCell.swift in Sources */,
 				E3752EBB292F5467003C8E17 /* NotificationRepository.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
@@ -1273,6 +1293,7 @@
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,
 				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
 				E3752ECA292F5DD2003C8E17 /* DefaultNotificationRepository.swift in Sources */,
+				05A220682935EA39003632B6 /* FixMyInfoViewModel.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				A66C7BCA292E1A460008B6FD /* Location.swift in Sources */,
 				E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */,
@@ -1282,7 +1303,6 @@
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
 				A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */,
-				05F22BA5292F646B002B7B74 /* GroupDetailCoordinator.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */,
@@ -1308,6 +1328,7 @@
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
+				05A2206E29361664003632B6 /* ImageRepository.swift in Sources */,
 				E33A20AC2926639400887EC9 /* AppFlowCoordinator.swift in Sources */,
 				E33A20832926622000887EC9 /* FriendMessageTableViewCell.swift in Sources */,
 				A66C7BBC292E19450008B6FD /* GroupRepository.swift in Sources */,
@@ -1357,10 +1378,12 @@
 				FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */,
 				05F22BA7292F6883002B7B74 /* MogakcoSceneDIContainer.swift in Sources */,
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,
+				05A2206A293612E5003632B6 /* UpdateUserInfoUseCase.swift in Sources */,
 				E33A20A5292662E500887EC9 /* AppDIContainer.swift in Sources */,
 				A648BB38292F534F0018A654 /* GroupListCoordinator.swift in Sources */,
 				A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */,
 				A6ED8B9D29228299003105E2 /* (null) in Sources */,
+				05A220722936376D003632B6 /* FetchProfileImageUseCase.swift in Sources */,
 				E3752EB4292F5449003C8E17 /* LoadNotificationsUseCase.swift in Sources */,
 				E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */,
 				A66C7BC8292E1A160008B6FD /* SendChatMessagesUseCase.swift in Sources */,
