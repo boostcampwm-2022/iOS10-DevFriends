@@ -8,22 +8,36 @@
 import Foundation
 import FirebaseFirestore
 
-final class DefaultChatMessagesRepository: ContainsFirestore {}
+final class DefaultChatMessagesRepository: ContainsFirestore {
+    let storage: ChatMessagesStorage
+    
+    init(storage: ChatMessagesStorage) {
+        self.storage = storage
+    }
+}
 
 extension DefaultChatMessagesRepository: ChatMessagesRepository {
     func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws {
-        _ = firestore
-            .collection("Chat")
+        let messages = storage.fetch(groupID: chatUID)
+        
+        var query: Query = firestore
+            .collection("chat")
             .document(chatUID)
             .collection("Message")
-            .order(by: "time", descending: false)
-            .addSnapshotListener { snapshot, error in
+        
+        if let lastMessageTime = messages.last?.time {
+            query = query.whereField("time", isGreaterThan: lastMessageTime)
+        }
+        
+        query = query.order(by: "time", descending: false)
+        query.addSnapshotListener { [weak self] snapshot, error in
                 guard let snapshot = snapshot, error == nil else { fatalError("message snapshot error occured!!") }
                 
                 let messages = snapshot.documentChanges
                     .compactMap { try? $0.document.data(as: MessageResponseDTO.self) }
-                
-                completion(messages.map { $0.toDomain() })
+                    .map{ $0.toDomain()}
+                completion(messages)
+                self?.storage.save(groupID: chatUID, messages: messages)
             }
     }
     

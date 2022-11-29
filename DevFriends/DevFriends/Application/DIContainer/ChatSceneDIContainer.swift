@@ -14,17 +14,26 @@ struct ChatSceneDIContainer {
 }
 
 extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
+    
+    func makeChatGroupsStorage() -> ChatGroupsStorage {
+        return DefaultChatGroupsStorage()
+    }
+    
+    func makeChatMessagesStorage() -> ChatMessagesStorage {
+        return DefaultChatMessagesStorage()
+    }
+    
     // MARK: Repositories
     func makeUserRepository() -> UserRepository {
         return DefaultUserRepository()
     }
     
     func makeChatGroupsRepository() -> ChatGroupsRepository {
-        return DefaultChatGroupsRepository(storage: DefaultChatGroupsStorage())
+        return DefaultChatGroupsRepository(storage: makeChatGroupsStorage())
     }
     
     func makeChatMessagesRepository() -> ChatMessagesRepository {
-        return DefaultChatMessagesRepository()
+        return DefaultChatMessagesRepository(storage: makeChatMessagesStorage())
     }
     
     // MARK: UseCases

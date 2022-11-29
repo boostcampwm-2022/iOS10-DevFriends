@@ -9,7 +9,7 @@ import Foundation
 
 protocol ChatMessagesStorage {
     func fetch(groupID: String) -> [Message]
-    func save(groupID: String, messages: [Message]) throws
+    func save(groupID: String, messages: [Message])
 }
 
 struct DefaultChatMessagesStorage: ChatMessagesStorage, ContainsRealm {
@@ -22,11 +22,15 @@ struct DefaultChatMessagesStorage: ChatMessagesStorage, ContainsRealm {
         return messages.map{ $0.toDomain() }
     }
     
-    func save(groupID: String, messages: [Message]) throws {
-        try realm?.write {
-            for message in messages {
-                realm?.add(toMessageResponseEntity(groupID: groupID, message: message))
+    func save(groupID: String, messages: [Message]) {
+        do {
+            try realm?.write {
+                for message in messages {
+                    realm?.add(toMessageResponseEntity(groupID: groupID, message: message))
+                }
             }
+        } catch {
+            print(error)
         }
     }
     
@@ -39,5 +43,4 @@ struct DefaultChatMessagesStorage: ChatMessagesStorage, ContainsRealm {
         realmMessage.time = message.time
         return realmMessage
     }
-    
 }
