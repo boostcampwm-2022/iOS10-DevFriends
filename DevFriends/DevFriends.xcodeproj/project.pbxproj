@@ -130,6 +130,8 @@
 		FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */; };
 		FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */; };
 		FC1545302923630500A40FD8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15452F2923630500A40FD8 /* Message.swift */; };
+		FC3C35992935F32700C5BFE3 /* ChatMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C35982935F32700C5BFE3 /* ChatMessagesStorage.swift */; };
+		FC3C359B2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */; };
 		FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */; };
 		FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D0192292F4E6200292D33 /* TabBarCoordinator.swift */; };
 		FC5D0195292F512300292D33 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D0194292F512300292D33 /* UIColor+Custom.swift */; };
@@ -316,6 +318,8 @@
 		FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		FC15452D2923581300A40FD8 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		FC15452F2923630500A40FD8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		FC3C35982935F32700C5BFE3 /* ChatMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessagesStorage.swift; sourceTree = "<group>"; };
+		FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseEntity+Mapping.swift"; sourceTree = "<group>"; };
 		FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarSceneDIContainer.swift; sourceTree = "<group>"; };
 		FC5D0192292F4E6200292D33 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		FC5D0194292F512300292D33 /* UIColor+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
@@ -687,6 +691,7 @@
 			children = (
 				FCB94CD42934B79500DD17CD /* EntityMapping */,
 				FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */,
+				FC3C35982935F32700C5BFE3 /* ChatMessagesStorage.swift */,
 				FCB94CCF2934B6F900DD17CD /* ContainsRealm.swift */,
 			);
 			path = RealmStorage;
@@ -925,6 +930,7 @@
 			isa = PBXGroup;
 			children = (
 				FCB94CD22934B74800DD17CD /* AcceptedGroupResponseEntity+Mapping.swift */,
+				FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */,
 			);
 			path = EntityMapping;
 			sourceTree = "<group>";
@@ -1266,6 +1272,7 @@
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				FC5D0197292F540A00292D33 /* MyPageSceneDIContainer.swift in Sources */,
 				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,
+				FC3C35992935F32700C5BFE3 /* ChatMessagesStorage.swift in Sources */,
 				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
 				05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */,
@@ -1343,6 +1350,7 @@
 				05F22B9F292F5757002B7B74 /* MogakcoCoordinator.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
+				FC3C359B2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift in Sources */,
 				E3752EB9292F5449003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */,
 				05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */,
 				FC5D01A6292F54EE00292D33 /* MyGroupsViewModel.swift in Sources */,
