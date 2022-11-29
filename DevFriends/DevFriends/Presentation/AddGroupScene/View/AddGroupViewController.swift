@@ -46,7 +46,10 @@ final class AddGroupViewController: DefaultViewController {
     
     private lazy var submitButton = CommonButton(text: "작성 완료")
     
-    init(groupType: GroupType) {
+    // MARK: - Init
+    private let viewModel: AddGroupViewModel
+    init(viewModel: AddGroupViewModel, groupType: GroupType) {
+        self.viewModel = viewModel
         self.groupType = groupType
         super.init(nibName: nil, bundle: nil)
     }

@@ -232,14 +232,18 @@ extension GroupListViewController {
         
         let actionProject = UIAlertAction(title: "프로젝트", style: .default) { _ in
             print("프로젝트 모임 생성")
-            let addGroupViewController = AddGroupViewController(groupType: .project)
+            // TODO: DIContainer
+            let vm = DefaultAddGroupViewModel()
+            let addGroupViewController = AddGroupViewController( viewModel: vm, groupType: .project)
             addGroupViewController.view.backgroundColor = .white
             self.navigationController?.pushViewController(addGroupViewController, animated: true)
         }
         
         let actionStudy = UIAlertAction(title: "스터디", style: .default) { _ in
             print("스터디 모임 생성")
-            let addGroupViewController = AddGroupViewController(groupType: .study)
+            // TODO: DIContainer
+            let vm = DefaultAddGroupViewModel()
+            let addGroupViewController = AddGroupViewController( viewModel: vm, groupType: .study)
             addGroupViewController.view.backgroundColor = .white
             self.navigationController?.pushViewController(addGroupViewController, animated: true)
         }
