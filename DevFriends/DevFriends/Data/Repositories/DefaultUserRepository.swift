@@ -25,6 +25,16 @@ extension DefaultUserRepository: UserRepository {
             print(error)
         }
     }
+    
+    func isExist(uid: String) async throws -> Bool {
+        let document = try await firestore.collection("User").document(uid).getDocument()
+        
+        if document.exists {
+            return true
+        }
+        
+        return false
+    }
 }
 
 // MARK: Private
