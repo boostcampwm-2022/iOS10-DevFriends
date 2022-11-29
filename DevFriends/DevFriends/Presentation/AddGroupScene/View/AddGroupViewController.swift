@@ -30,7 +30,7 @@ final class AddGroupViewController: DefaultViewController {
     
     private lazy var peopleNumberLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
+        label.text = "2"
         return label
     }()
     
