@@ -44,6 +44,7 @@
 		A648BB5529339A4E0018A654 /* CommonPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5329339A4E0018A654 /* CommonPaddingLabel.swift */; };
 		A648BB5A293600240018A654 /* AddGroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB59293600240018A654 /* AddGroupCoordinator.swift */; };
 		A648BB5C293604AD0018A654 /* AddGroupSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5B293604AD0018A654 /* AddGroupSceneDIContainer.swift */; };
+		A648BB5E293642A00018A654 /* ChooseCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5D293642A00018A654 /* ChooseCategoryViewModel.swift */; };
 		A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */; };
 		A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */; };
 		A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */; };
@@ -241,6 +242,7 @@
 		A648BB5329339A4E0018A654 /* CommonPaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonPaddingLabel.swift; sourceTree = "<group>"; };
 		A648BB59293600240018A654 /* AddGroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupCoordinator.swift; sourceTree = "<group>"; };
 		A648BB5B293604AD0018A654 /* AddGroupSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupSceneDIContainer.swift; sourceTree = "<group>"; };
+		A648BB5D293642A00018A654 /* ChooseCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryViewModel.swift; sourceTree = "<group>"; };
 		A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 			isa = PBXGroup;
 			children = (
 				A648BB45293399D10018A654 /* AddGroupViewModel.swift */,
+				A648BB5D293642A00018A654 /* ChooseCategoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1416,6 +1419,7 @@
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				A66C7BD9292E1A9B0008B6FD /* GroupFilterViewController.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
+				A648BB5E293642A00018A654 /* ChooseCategoryViewModel.swift in Sources */,
 				FC5D01AA292F54EE00292D33 /* MyPageViewController.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
 				FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */,

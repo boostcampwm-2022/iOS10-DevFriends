@@ -21,6 +21,7 @@ final class ChooseCategoryViewController: DefaultViewController {
     private lazy var categoryTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
+        tableView.delegate = self
         return tableView
     }()
     
@@ -45,6 +46,23 @@ final class ChooseCategoryViewController: DefaultViewController {
     override func configureUI() {
         view.backgroundColor = .white
         self.setupTableView()
+    }
+    
+    // MARK: - Initializer
+    private let viewModel: ChooseCategoryViewModel
+    
+    init(viewModel: ChooseCategoryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel.sendCategorySelection()
     }
     
     override func layout() {
@@ -83,5 +101,18 @@ final class ChooseCategoryViewController: DefaultViewController {
         newItems.append("전체")
         categoryTableViewSnapShot.appendItems(newItems)
         categoryTableViewDiffableDataSource.apply(categoryTableViewSnapShot)
+    }
+    
+    override func bind() {
+        submitButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancellables)
+    }
+}
+
+extension ChooseCategoryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 }

@@ -143,13 +143,13 @@ final class AddGroupViewController: DefaultViewController {
     override func bind() {
         chooseCategoryView.didTouchViewSubject
             .sink { [weak self] _ in
-                self?.showChooseCategoryView()
+                self?.viewModel.didCategorySelect()
             }
             .store(in: &cancellables)
 
         chooseLocationView.didTouchViewSubject
             .sink { [weak self] _ in
-                self?.showChooseLocationView()
+                self?.viewModel.didLocationSelect()
             }
             .store(in: &cancellables)
         
@@ -158,16 +158,6 @@ final class AddGroupViewController: DefaultViewController {
                 self?.setStepperValue()
             }
             .store(in: &cancellables)
-    }
-    
-    private func showChooseCategoryView() {
-        let chooseCategoryView = ChooseCategoryViewController()
-        self.present(chooseCategoryView, animated: true)
-    }
-    
-    private func showChooseLocationView() {
-        let chooseLocationView = ChooseLocationViewController()
-        self.present(chooseLocationView, animated: true)
     }
     
     private func setStepperValue() {

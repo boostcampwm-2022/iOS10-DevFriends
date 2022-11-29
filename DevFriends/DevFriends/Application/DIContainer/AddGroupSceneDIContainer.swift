@@ -9,8 +9,8 @@ import UIKit
 
 struct AddGroupSceneDIContainer {
     // MARK: Flow Coordinators
-    func makeAddGroupFlowCoordinator(navigationController: UINavigationController) -> AddGroupCoordinator {
-        return AddGroupCoordinator(navigationController: navigationController, dependencies: self)
+    func makeAddGroupFlowCoordinator(navigationController: UINavigationController, groupType: GroupType) -> AddGroupCoordinator {
+        return AddGroupCoordinator(navigationController: navigationController, dependencies: self, groupType: groupType)
     }
 }
 
@@ -27,13 +27,11 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     
     // MARK: CategoryView
     func makeCategoryViewController() -> ChooseCategoryViewController {
-        <#code#>
+        return ChooseCategoryViewController()
     }
     
     // MARK: LocationView
     func makeLocationViewController() -> ChooseLocationViewController {
-        <#code#>
+        return ChooseLocationViewController()
     }
-    
-    
 }

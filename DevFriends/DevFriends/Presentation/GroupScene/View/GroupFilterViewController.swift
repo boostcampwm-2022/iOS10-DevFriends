@@ -18,7 +18,7 @@ final class GroupFilterViewController: DefaultViewController {
 
     var initialFilter: Filter?
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
@@ -63,9 +63,6 @@ final class GroupFilterViewController: DefaultViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print(self.viewModel.alignFilter)
-        print(self.viewModel.groupFilter)
-        print(self.viewModel.categoryFilter)
         super.viewWillDisappear(animated)
         viewModel.sendFilter(filter: Filter(alignFilter: self.viewModel.alignFilter,
                                             groupFilter: self.viewModel.groupFilter,

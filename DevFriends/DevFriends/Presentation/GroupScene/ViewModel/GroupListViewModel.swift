@@ -10,11 +10,13 @@ import Foundation
 
 struct GroupListViewModelActions {
     let showGroupFilterView: (Filter) -> Void
+    let startAddGroupScene: (GroupType) -> Void
 }
 
 protocol GroupListViewModelInput {
     func loadGroupList()
     func didSelectFilter()
+    func didSelectAdd(groupType: GroupType)
     func updateFilter(filter: Filter)
 }
 
@@ -65,6 +67,10 @@ extension DefaultGroupListViewModel {
     
     func didSelectFilter() {
         actions?.showGroupFilterView(groupFilter)
+    }
+    
+    func didSelectAdd(groupType: GroupType) {
+        actions?.startAddGroupScene(groupType)
     }
     
     func updateFilter(filter: Filter) {

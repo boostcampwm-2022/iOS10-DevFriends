@@ -16,22 +16,25 @@ protocol AddGroupFlowCoordinatorDependencies {
 final class AddGroupCoordinator: Coordinator {
     let navigationController: UINavigationController
     let dependencies: AddGroupFlowCoordinatorDependencies
+    let groupType: GroupType
     
     var childCoordinators: [Coordinator] = []
     
     init(
         navigationController: UINavigationController,
-        dependencies: AddGroupFlowCoordinatorDependencies
+        dependencies: AddGroupFlowCoordinatorDependencies,
+        groupType: GroupType
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
+        self.groupType = groupType
     }
     
-    func start(_ groupType: GroupType) {
+    func start() {
         let actions = AddGroupViewModelActions(
             showCategoryView: showCategoryViewController,
             showLocationView: showLocationViewController)
-        let addGroupViewController = dependencies.makeAddGroupViewController(groupType: groupType, actions: actions)
+        let addGroupViewController = dependencies.makeAddGroupViewController(groupType: self.groupType, actions: actions)
         navigationController.pushViewController(addGroupViewController, animated: false)
     }
 }
