@@ -20,6 +20,10 @@ class ChatContentViewController: DefaultViewController {
             MyMessageTableViewCell.self,
             forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier
         )
+        tableView.register(
+            DateTableViewCell.self,
+            forCellReuseIdentifier: DateTableViewCell.reuseIdentifier
+        )
         return tableView
     }()
     
