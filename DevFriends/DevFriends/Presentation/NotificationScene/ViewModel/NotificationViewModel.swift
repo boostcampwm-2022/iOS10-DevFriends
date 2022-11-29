@@ -106,7 +106,7 @@ extension DefaultNotificationViewModel {
                 // 4. 참여 대기자의 User 정보의 Group에 참가할 GroupID를 넣어야 함.
                 try await self.updateUserGroupsToAddGroupUseCase.execute(
                     groupID: notification.groupID,
-                    senderID: senderID
+                    userID: senderID
                 )
             } catch {
                 print(error)

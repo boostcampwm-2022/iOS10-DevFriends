@@ -21,16 +21,20 @@ final class DefaultGroupCommentRepository: GroupCommentRepository {
         return comments.map { $0.toDomain() }
     }
     
-    func post(_ comment: Comment, to groupId: String) {
+    func post(_ comment: Comment, to groupId: String) -> String {
         do {
             let reference = try firestore
                 .collection("Group")
                 .document(groupId)
                 .collection("Comment")
                 .addDocument(from: makeCommentResponseDTO(comment: comment))
+            
+            return reference.documentID
         } catch {
             print(error)
         }
+        
+        return ""
     }
     
     private func makeCommentResponseDTO(comment: Comment) -> CommentResponseDTO {

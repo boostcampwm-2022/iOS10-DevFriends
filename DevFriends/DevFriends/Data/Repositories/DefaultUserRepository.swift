@@ -25,20 +25,6 @@ extension DefaultUserRepository: UserRepository {
             print(error)
         }
     }
-}
-
-// MARK: Private
-extension DefaultUserRepository {
-    private func makeUserResponseDTO(user: User) -> UserResponseDTO {
-        return UserResponseDTO(
-            nickname: user.nickname,
-            job: user.job,
-            profileImagePath: user.profileImagePath,
-            categories: user.categoryIDs,
-            groups: user.groupIDs,
-            appliedGroups: user.appliedGroupIDs
-        )
-    }
     
     func fetch(uids: [String]) async throws -> [User] {
         return try await withThrowingTaskGroup(of: User.self) { taskGroup in
@@ -61,20 +47,54 @@ extension DefaultUserRepository {
             try firestore
                 .collection("User")
                 .document(user.id)
-                .setData(from: makeUserResponseDTO(user))
+                .setData(from: makeUserResponseDTO(user: user))
         } catch {
             print(error)
         }
     }
     
-    private func makeUserResponseDTO(_ user: User) -> UserResponseDTO {
+    func fetchUserGroup(of uid: String) async throws -> [UserGroup] {
+        let snapshot = try await firestore
+            .collection("User")
+            .document(uid)
+            .collection("Group")
+            .getDocuments()
+        let groups = try snapshot.documents
+            .map { try $0.data(as: UserGroupResponseDTO.self) }
+            .map { $0.toDomain() }
+        
+        return groups
+    }
+    
+    func addUserToGroup(userID: String, groupID: String) {
+        let userGroup = UserGroup(groupID: groupID, time: Date())
+        let userGroupResponseDTO = makeUserGroupResponseDTO(userGroup: userGroup)
+        
+        do {
+            _ = try firestore
+                .collection("User")
+                .document(userID)
+                .collection("Group")
+                .addDocument(from: userGroupResponseDTO)
+        } catch {
+            print(error)
+        }
+    }
+}
+
+// MARK: Private
+extension DefaultUserRepository {
+    private func makeUserResponseDTO(user: User) -> UserResponseDTO {
         return UserResponseDTO(
             nickname: user.nickname,
             job: user.job,
             profileImagePath: user.profileImagePath,
             categories: user.categoryIDs,
-            groups: user.groupIDs,
             appliedGroups: user.appliedGroupIDs
         )
+    }
+    
+    private func makeUserGroupResponseDTO(userGroup: UserGroup) -> UserGroupResponseDTO {
+        return UserGroupResponseDTO(groupID: userGroup.groupID, time: userGroup.time)
     }
 }

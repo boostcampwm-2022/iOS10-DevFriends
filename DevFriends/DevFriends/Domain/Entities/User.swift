@@ -13,6 +13,5 @@ struct User {
     let job: String
     let profileImagePath: String
     let categoryIDs: [String]
-    var groupIDs: [String]
     var appliedGroupIDs: [String]
 }
