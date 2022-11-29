@@ -124,11 +124,14 @@
 		E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */; };
 		E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */; };
 		E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */; };
+		E3B53BF72935D5B1006675E0 /* CheckUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */; };
+		E3B53BF92935DB0A006675E0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */; };
 		E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54962934A8AB00E63898 /* LoginViewController.swift */; };
 		E3DE549A2934DCD400E63898 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54992934DCD400E63898 /* SignUpViewController.swift */; };
 		E3DE549C2934E6F800E63898 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */; };
 		E3DE549F2935095400E63898 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549E2935095400E63898 /* AuthCoordinator.swift */; };
 		E3DE54A1293509CD00E63898 /* AuthSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */; };
+		E3DE54A429350D3700E63898 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54A329350D3700E63898 /* LoginViewModel.swift */; };
 		FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */; };
 		FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */; };
 		FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */; };
@@ -309,11 +312,15 @@
 		E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailContentsView.swift; sourceTree = "<group>"; };
 		E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueDisplayView.swift; sourceTree = "<group>"; };
 		E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserUseCase.swift; sourceTree = "<group>"; };
+		E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		E3DE54962934A8AB00E63898 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3DE54992934DCD400E63898 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
 		E3DE549E2935095400E63898 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSceneDIContainer.swift; sourceTree = "<group>"; };
+		E3DE54A329350D3700E63898 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		E3DE54A52935120F00E63898 /* DevFriends.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevFriends.entitlements; sourceTree = "<group>"; };
 		FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Address.swift"; sourceTree = "<group>"; };
 		FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
 		FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -666,6 +673,7 @@
 				05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */,
 				05EAC534292E68100067D63E /* PostCommentUseCase.swift */,
 				05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */,
+				E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -786,6 +794,7 @@
 		E3DE54952934A89B00E63898 /* AuthScene */ = {
 			isa = PBXGroup;
 			children = (
+				E3DE54A229350D2900E63898 /* ViewModel */,
 				E3DE549D2935094400E63898 /* Flows */,
 				E3DE54982934DCC300E63898 /* View */,
 			);
@@ -807,6 +816,15 @@
 				E3DE549E2935095400E63898 /* AuthCoordinator.swift */,
 			);
 			path = Flows;
+			sourceTree = "<group>";
+		};
+		E3DE54A229350D2900E63898 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E3DE54A329350D3700E63898 /* LoginViewModel.swift */,
+				E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		FC5D0191292F4E6200292D33 /* TabBarScene */ = {
@@ -972,6 +990,7 @@
 		FCD8AED5291CCE9300CCE5D3 /* DevFriends */ = {
 			isa = PBXGroup;
 			children = (
+				E3DE54A52935120F00E63898 /* DevFriends.entitlements */,
 				E33A209D292662E500887EC9 /* Application */,
 				FC79AEBB292223D90077AE5C /* Data */,
 				FC79AEB72922239F0077AE5C /* Domain */,
@@ -1271,6 +1290,7 @@
 				05CB4A39292DF16900A97531 /* FetchUserUseCase.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
+				E3B53BF92935DB0A006675E0 /* SignUpViewModel.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
 				A66C7BC0292E19830008B6FD /* ChatMessagesRepository.swift in Sources */,
@@ -1285,6 +1305,7 @@
 				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,
 				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
+				E3DE54A429350D3700E63898 /* LoginViewModel.swift in Sources */,
 				05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
@@ -1321,6 +1342,7 @@
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
 				E3DE549C2934E6F800E63898 /* ChooseCategoryView.swift in Sources */,
 				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
+				E3B53BF72935D5B1006675E0 /* CheckUserUseCase.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				FC5D01A8292F54EE00292D33 /* SubtitleButton.swift in Sources */,
 				FC5D0195292F512300292D33 /* UIColor+Custom.swift in Sources */,
@@ -1563,10 +1585,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DevFriends/DevFriends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도 권한 필요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1576,7 +1601,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tadpole.DevFriends;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.boostcamp.devFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1590,10 +1615,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DevFriends/DevFriends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도 권한 필요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1603,7 +1631,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tadpole.DevFriends;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.boostcamp.devFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
