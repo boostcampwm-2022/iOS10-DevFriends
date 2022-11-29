@@ -14,11 +14,32 @@ struct AuthSceneDIContainer {
 }
 
 extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
-    func makeLoginViewController() -> LoginViewController {
-        return LoginViewController()
+    private func makeUserRepository() -> UserRepository {
+        return DefaultUserRepository()
     }
     
-    func makeSignUpViewController() -> SignUpViewController {
-        return SignUpViewController()
+    private func makeCheckUserUseCase() -> CheckUserUseCase {
+        return DefaultCheckUserUseCase(userRepository: makeUserRepository())
+    }
+    
+    private func makeLoginViewModel(actions: LoginViewModelActions) -> LoginViewModel {
+        return DefaultLoginViewModel(actions: actions, checkUserUseCase: makeCheckUserUseCase())
+    }
+    
+    private func makeSignUpViewModel(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewModel {
+        return DefaultSignUpViewModel(actions: actions, uid: uid, email: email, name: name)
+    }
+    
+    func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController {
+        return LoginViewController(loginViewModel: makeLoginViewModel(actions: actions))
+    }
+    
+    func makeSignUpViewController(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewController {
+        return SignUpViewController(signUpViewModel: makeSignUpViewModel(
+            actions: actions,
+            uid: uid,
+            email: email,
+            name: name
+        ))
     }
 }

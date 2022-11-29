@@ -8,8 +8,8 @@
 import UIKit
 
 protocol AuthFlowCoordinatorDependencies {
-    func makeLoginViewController() -> LoginViewController
-    func makeSignUpViewController() -> SignUpViewController
+    func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController
+    func makeSignUpViewController(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewController
 }
 
 final class AuthCoordinator: Coordinator {
@@ -22,12 +22,19 @@ final class AuthCoordinator: Coordinator {
     }
     
     func start() {
-        let loginViewController = dependencies.makeLoginViewController()
+        let actions = LoginViewModelActions(showSignUp: showSignUpViewController)
+        let loginViewController = dependencies.makeLoginViewController(actions: actions)
         navigationController?.pushViewController(loginViewController, animated: false)
     }
     
-    func showSignUpViewController() {
-        let signUpViewController = dependencies.makeSignUpViewController()
-        navigationController?.pushViewController(signUpViewController, animated: true)
+    func showSignUpViewController(_ uid: String, _ email: String?, _ name: String?) {
+        let actions = SignUpViewModelActions()
+        let signUpViewController = dependencies.makeSignUpViewController(
+            actions: actions,
+            uid: uid,
+            email: email,
+            name: name
+        )
+        navigationController?.pushViewController(signUpViewController, animated: false)
     }
 }

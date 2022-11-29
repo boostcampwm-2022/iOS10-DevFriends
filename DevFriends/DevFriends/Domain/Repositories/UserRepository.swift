@@ -12,4 +12,5 @@ protocol UserRepository {
     func update(userID: String, user: User)
     func fetch(uids: [String]) async throws -> [User]
     func update(_ user: User)
+    func isExist(uid: String) async throws -> Bool
 }
