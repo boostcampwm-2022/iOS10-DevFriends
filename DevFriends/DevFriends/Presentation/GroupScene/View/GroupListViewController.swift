@@ -187,7 +187,6 @@ final class GroupListViewController: DefaultViewController {
     }
     
     private func populateSnapShot(data: [GroupCellInfo], to section: GroupListSection) {
-        print("populate", section)
         let oldItem = self.collectionViewSnapShot.itemIdentifiers(inSection: section)
         self.collectionViewSnapShot.deleteItems(oldItem)
         self.collectionViewSnapShot.appendItems(data, toSection: section)

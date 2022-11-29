@@ -48,7 +48,7 @@ extension DefaultChooseCategoryViewModel {
     func loadCategories() {
         Task {
             let categories: [Category] = try await fetchCategoryUseCase.execute()
-            self.categoryType = categories.map { return $0 }
+            self.categoryType = categories
             didUpdateSelectionSubject.send()
         }
     }

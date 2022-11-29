@@ -15,6 +15,15 @@ struct AddGroupSceneDIContainer {
 }
 
 extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
+    // MARK: Repositories
+    func makeCategoryRepository() -> CategoryRepository {
+        return DefaultCategoryRepository()
+    }
+    
+    // MARK: UseCases
+    func makeFetchCategoryUseCase() -> FetchCategoryUseCase {
+        return DefaultFetchCategoryUseCase(categoryRepository: makeCategoryRepository())
+    }
     
     // MARK: AddGroupView
     func makeAddGroupViewController(groupType: GroupType, actions: AddGroupViewModelActions) -> AddGroupViewController {
@@ -26,9 +35,15 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     }
     
     // MARK: CategoryView
-    func makeCategoryViewController() -> ChooseCategoryViewController {
-        return ChooseCategoryViewController()
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController {
+        return ChooseCategoryViewController(viewModel: makeCategoryViewModel(actions: actions))
     }
+    
+    func makeCategoryViewModel(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewModel {
+        return DefaultChooseCategoryViewModel(fetchCategoryUseCase: makeFetchCategoryUseCase(), actions: actions)
+    }
+    
+    
     
     // MARK: LocationView
     func makeLocationViewController() -> ChooseLocationViewController {

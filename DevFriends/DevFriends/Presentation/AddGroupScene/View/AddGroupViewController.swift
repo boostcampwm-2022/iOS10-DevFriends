@@ -158,9 +158,23 @@ final class AddGroupViewController: DefaultViewController {
                 self?.setStepperValue()
             }
             .store(in: &cancellables)
+        
+        viewModel.didUpdateCategorySubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedCategories in
+                self?.chooseCategoryView.set(categories: updatedCategories)
+            }
+            .store(in: &cancellables)
     }
     
     private func setStepperValue() {
         peopleNumberLabel.text = Int(limitPeopleStepper.value).description
+    }
+}
+
+// CategoryView에서 가져온 Category 정보 업데이트
+extension AddGroupViewController {
+    func updateCategories(categories: [Category]) {
+        self.viewModel.updateCategory(categories: categories)
     }
 }

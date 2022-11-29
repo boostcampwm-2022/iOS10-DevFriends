@@ -98,4 +98,3 @@ extension ChooseLocationView: UIGestureRecognizerDelegate {
         return true
     }
 }
-

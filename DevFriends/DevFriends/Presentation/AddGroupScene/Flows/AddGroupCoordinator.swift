@@ -9,7 +9,7 @@ import UIKit
 
 protocol AddGroupFlowCoordinatorDependencies {
     func makeAddGroupViewController(groupType: GroupType, actions: AddGroupViewModelActions) -> AddGroupViewController
-    func makeCategoryViewController() -> ChooseCategoryViewController
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
     func makeLocationViewController() -> ChooseLocationViewController
 }
 
@@ -41,12 +41,18 @@ final class AddGroupCoordinator: Coordinator {
 
 extension AddGroupCoordinator {
     func showCategoryViewController() {
-        let categoryViewController = dependencies.makeCategoryViewController()
+        let actions = ChooseCategoryViewModelActions(didDisappearCategoryView: updateCategorySelection)
+        let categoryViewController = dependencies.makeCategoryViewController(actions: actions)
         navigationController.pushViewController(categoryViewController, animated: true)
     }
     
     func showLocationViewController() {
         let locationViewController = dependencies.makeLocationViewController()
         navigationController.pushViewController(locationViewController, animated: true)
+    }
+    
+    func updateCategorySelection(updatedCategories: [Category]) {
+        guard let addGroupViewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
+        addGroupViewController.updateCategories(categories: updatedCategories)
     }
 }
