@@ -42,8 +42,8 @@ class DefaultViewController: UIViewController {
                     let keyboardHeight = keyboardRectangle.height
                     self?.view.frame.origin.y -= keyboardHeight
                 }
-            }.store(in: &cancellables)
-        
+            }
+            .store(in: &cancellables)
     
         NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification, object: nil)
             .receive(on: DispatchQueue.main)
@@ -54,6 +54,7 @@ class DefaultViewController: UIViewController {
                     let keyboardHeight = keyboardRectangle.height
                     self?.view.frame.origin.y += keyboardHeight
                 }
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 }

@@ -143,6 +143,7 @@ final class GroupListViewController: DefaultViewController {
     
     override func configureUI() {
         self.view.backgroundColor = .systemGray6
+        self.setupNavigationBar()
         self.setupCollectionView()
         self.setupCollectionViewHeader()
         self.viewModel.loadGroupList()
@@ -156,6 +157,12 @@ final class GroupListViewController: DefaultViewController {
             make.leading.trailing.equalToSuperview()
             make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setupNavigationBar() {
+        let navigationAppearence = UINavigationBarAppearance()
+        navigationAppearence.configureWithDefaultBackground()
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearence
     }
     
     private func setupCollectionView() {
