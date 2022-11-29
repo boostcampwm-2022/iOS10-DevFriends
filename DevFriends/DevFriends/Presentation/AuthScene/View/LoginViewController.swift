@@ -45,6 +45,18 @@ final class LoginViewController: DefaultViewController {
         return label
     }()
     
+    let viewModel: LoginViewModel
+    
+    init(loginViewModel: LoginViewModel) {
+        self.viewModel = loginViewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func configureUI() {
         
     }
@@ -89,6 +101,53 @@ final class LoginViewController: DefaultViewController {
         highlightLabel.adjustsFontSizeToFitWidth = true
     }
     override func bind() {
-        
+        appleLoginButton
+            .publisher(for: .touchUpInside)
+            .sink {
+                self.didSelectLoginButton()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func didSelectLoginButton() {
+        Task {
+            await self.viewModel.didLoginCompleted(uid: "asdgawehr3", email: nil, name: "유승원")
+        }
+//        let appleIDProvider = ASAuthorizationAppleIDProvider()
+//        let request = appleIDProvider.createRequest()
+//        request.requestedScopes = [.fullName, .email]
+//
+//        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+//        authorizationController.delegate = self
+//        authorizationController.presentationContextProvider = self
+//        authorizationController.performRequests()
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            
+            print("User ID : \(userIdentifier)")
+            print("User Email : \(email ?? "")")
+            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+            
+        default:
+            break
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print(error)
     }
 }
