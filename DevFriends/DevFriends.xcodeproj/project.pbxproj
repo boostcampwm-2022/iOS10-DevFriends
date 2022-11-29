@@ -34,6 +34,14 @@
 		A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */; };
 		A648BB38292F534F0018A654 /* GroupListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB37292F534F0018A654 /* GroupListCoordinator.swift */; };
 		A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB39292F590C0018A654 /* GroupListViewCoordinator.swift */; };
+		A648BB4C293399D10018A654 /* AddGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB45293399D10018A654 /* AddGroupViewModel.swift */; };
+		A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB47293399D10018A654 /* ChooseLocationView.swift */; };
+		A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */; };
+		A648BB4F293399D10018A654 /* ChooseLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB49293399D10018A654 /* ChooseLocationViewController.swift */; };
+		A648BB50293399D10018A654 /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB4A293399D10018A654 /* AddGroupViewController.swift */; };
+		A648BB51293399D10018A654 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB4B293399D10018A654 /* ChooseCategoryView.swift */; };
+		A648BB5429339A4E0018A654 /* CommonTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5229339A4E0018A654 /* CommonTextView.swift */; };
+		A648BB5529339A4E0018A654 /* CommonPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5329339A4E0018A654 /* CommonPaddingLabel.swift */; };
 		A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */; };
 		A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */; };
 		A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */; };
@@ -221,6 +229,14 @@
 		A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSceneDIContainer.swift; sourceTree = "<group>"; };
 		A648BB37292F534F0018A654 /* GroupListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCoordinator.swift; sourceTree = "<group>"; };
 		A648BB39292F590C0018A654 /* GroupListViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewCoordinator.swift; sourceTree = "<group>"; };
+		A648BB45293399D10018A654 /* AddGroupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupViewModel.swift; sourceTree = "<group>"; };
+		A648BB47293399D10018A654 /* ChooseLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLocationView.swift; sourceTree = "<group>"; };
+		A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCategoryViewController.swift; sourceTree = "<group>"; };
+		A648BB49293399D10018A654 /* ChooseLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLocationViewController.swift; sourceTree = "<group>"; };
+		A648BB4A293399D10018A654 /* AddGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
+		A648BB4B293399D10018A654 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
+		A648BB5229339A4E0018A654 /* CommonTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTextView.swift; sourceTree = "<group>"; };
+		A648BB5329339A4E0018A654 /* CommonPaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonPaddingLabel.swift; sourceTree = "<group>"; };
 		A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
@@ -402,6 +418,34 @@
 			path = Flows;
 			sourceTree = "<group>";
 		};
+		A648BB43293399D10018A654 /* AddGroupScene */ = {
+			isa = PBXGroup;
+			children = (
+				A648BB44293399D10018A654 /* ViewModel */,
+				A648BB46293399D10018A654 /* View */,
+			);
+			path = AddGroupScene;
+			sourceTree = "<group>";
+		};
+		A648BB44293399D10018A654 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A648BB45293399D10018A654 /* AddGroupViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A648BB46293399D10018A654 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A648BB47293399D10018A654 /* ChooseLocationView.swift */,
+				A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */,
+				A648BB49293399D10018A654 /* ChooseLocationViewController.swift */,
+				A648BB4A293399D10018A654 /* AddGroupViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A66C7BCC292E1A9B0008B6FD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,9 +618,12 @@
 		E33A20AE292665A700887EC9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A648BB5329339A4E0018A654 /* CommonPaddingLabel.swift */,
+				A648BB5229339A4E0018A654 /* CommonTextView.swift */,
 				FC5D01AD292F553200292D33 /* PopupViewController.swift */,
 				E33A20B9292665BC00887EC9 /* CommonButton.swift */,
 				E33A20BA292665BC00887EC9 /* CommonTextField.swift */,
+				A648BB4B293399D10018A654 /* ChooseCategoryView.swift */,
 				E33A20BC292665BC00887EC9 /* DividerView.swift */,
 				E33A20BB292665BC00887EC9 /* FilledRoundTextLabel.swift */,
 				E33A20AF292665A700887EC9 /* GroupCollectionViewCell.swift */,
@@ -829,6 +876,7 @@
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				A648BB43293399D10018A654 /* AddGroupScene */,
 				E3752EA1292F53BE003C8E17 /* NotificationScene */,
 				FC5D0191292F4E6200292D33 /* TabBarScene */,
 				E394C49D292231D80064ADA7 /* PostDetailScene */,
@@ -1228,6 +1276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
+				A648BB51293399D10018A654 /* ChooseCategoryView.swift in Sources */,
 				05CB4A33292DF15200A97531 /* GroupCommentRepository.swift in Sources */,
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
@@ -1241,6 +1290,7 @@
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
+				A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
 				A66C7BC0292E19830008B6FD /* ChatMessagesRepository.swift in Sources */,
 				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
@@ -1259,6 +1309,7 @@
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
+				A648BB4F293399D10018A654 /* ChooseLocationViewController.swift in Sources */,
 				E3752EB8292F5449003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
 				A66C7BD7292E1A9B0008B6FD /* GroupListViewController.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
@@ -1284,6 +1335,7 @@
 				A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */,
 				05F22BA5292F646B002B7B74 /* GroupDetailCoordinator.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
+				A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
@@ -1300,10 +1352,13 @@
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
 				FC5D01AC292F54EE00292D33 /* MyPageCoordinator.swift in Sources */,
+				A648BB5529339A4E0018A654 /* CommonPaddingLabel.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
 				A648BB1D292E1B1C0018A654 /* CLLocation+Distance.swift in Sources */,
 				FC5D01A9292F54EE00292D33 /* FixMyInfoViewController.swift in Sources */,
+				A648BB50293399D10018A654 /* AddGroupViewController.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
+				A648BB5429339A4E0018A654 /* CommonTextView.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
 				E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */,
@@ -1312,6 +1367,7 @@
 				E33A20832926622000887EC9 /* FriendMessageTableViewCell.swift in Sources */,
 				A66C7BBC292E19450008B6FD /* GroupRepository.swift in Sources */,
 				A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */,
+				A648BB4C293399D10018A654 /* AddGroupViewModel.swift in Sources */,
 				A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */,
 				A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */,
 				E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */,
@@ -1534,6 +1590,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1561,6 +1618,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
