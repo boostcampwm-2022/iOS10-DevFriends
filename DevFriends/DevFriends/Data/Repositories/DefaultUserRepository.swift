@@ -17,27 +17,6 @@ extension DefaultUserRepository: UserRepository {
         return user.toDomain()
     }
     
-    func update(userID: String, user: User) {
-        do {
-            let userResponseDTO = makeUserResponseDTO(user: user)
-            try firestore.collection("User").document(userID).setData(from: userResponseDTO)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func isExist(uid: String) async throws -> Bool {
-        let document = try await firestore.collection("User").document(uid).getDocument()
-        
-        if document.exists {
-            return true
-        }
-        
-        return false
-    }
-}
-
-extension DefaultUserRepository {
     func fetch(uids: [String]) async throws -> [User] {
         return try await withThrowingTaskGroup(of: User.self) { taskGroup in
             uids.forEach { id in
@@ -54,6 +33,15 @@ extension DefaultUserRepository {
         }
     }
     
+    func update(userID: String, user: User) {
+        do {
+            let userResponseDTO = makeUserResponseDTO(user: user)
+            try firestore.collection("User").document(userID).setData(from: userResponseDTO)
+        } catch {
+            print(error)
+        }
+    }
+    
     func update(_ user: User) {
         do {
             try firestore
@@ -65,6 +53,27 @@ extension DefaultUserRepository {
         }
     }
     
+    func isExist(uid: String) async throws -> Bool {
+        let document = try await firestore.collection("User").document(uid).getDocument()
+        
+        if document.exists {
+            return true
+        }
+        
+        return false
+    }
+    
+    func create(uid: String?, user: User) throws {
+        let userResponseDTO = makeUserResponseDTO(user: user)
+        if let uid = uid {
+            try firestore.collection("User").document(uid).setData(from: userResponseDTO)
+        } else {
+            try firestore.collection("User").addDocument(from: userResponseDTO)
+        }
+    }
+}
+
+extension DefaultUserRepository {
     func fetchUserGroup(of uid: String) async throws -> [UserGroup] {
         let snapshot = try await firestore
             .collection("User")
@@ -100,6 +109,7 @@ extension DefaultUserRepository {
         return UserResponseDTO(
             nickname: user.nickname,
             job: user.job,
+            email: user.email,
             profileImagePath: user.profileImagePath,
             categories: user.categoryIDs,
             appliedGroups: user.appliedGroupIDs

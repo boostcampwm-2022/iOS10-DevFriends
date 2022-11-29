@@ -22,12 +22,22 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
         return DefaultCheckUserUseCase(userRepository: makeUserRepository())
     }
     
+    private func makeCreateUserUseCase() -> CreateUserUseCase {
+        return DefaultCreateUserUseCase(userRepository: makeUserRepository())
+    }
+    
     private func makeLoginViewModel(actions: LoginViewModelActions) -> LoginViewModel {
         return DefaultLoginViewModel(actions: actions, checkUserUseCase: makeCheckUserUseCase())
     }
     
     private func makeSignUpViewModel(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewModel {
-        return DefaultSignUpViewModel(actions: actions, uid: uid, email: email, name: name)
+        return DefaultSignUpViewModel(
+            actions: actions,
+            createUserUseCase: makeCreateUserUseCase(),
+            uid: uid,
+            email: email,
+            name: name
+        )
     }
     
     func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController {

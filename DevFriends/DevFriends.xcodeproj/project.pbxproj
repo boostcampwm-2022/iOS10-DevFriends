@@ -137,6 +137,7 @@
 		E3B53BF92935DB0A006675E0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */; };
 		E3DE5492293481FC00E63898 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE5491293481FC00E63898 /* UserGroup.swift */; };
 		E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */; };
+		E3B53BFB29365827006675E0 /* CreateUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */; };
 		E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54962934A8AB00E63898 /* LoginViewController.swift */; };
 		E3DE549A2934DCD400E63898 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54992934DCD400E63898 /* SignUpViewController.swift */; };
 		E3DE549C2934E6F800E63898 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */; };
@@ -336,6 +337,7 @@
 		E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		E3DE5491293481FC00E63898 /* UserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroup.swift; sourceTree = "<group>"; };
 		E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserGroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserUseCase.swift; sourceTree = "<group>"; };
 		E3DE54962934A8AB00E63898 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3DE54992934DCD400E63898 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
@@ -728,6 +730,7 @@
 				E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */,
 				05D9256529337B3B0090A6B1 /* SendCommentNotificationUseCase.swift */,
 				05D9256729338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift */,
+				E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1438,6 +1441,7 @@
 				E3752EB5292F5449003C8E17 /* SendNotificationToParticipantUseCase.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				A66C7BC2292E19A60008B6FD /* LoadChatGroupsUseCase.swift in Sources */,
+				E3B53BFB29365827006675E0 /* CreateUserUseCase.swift in Sources */,
 				E3DE549A2934DCD400E63898 /* SignUpViewController.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
 				05F22BA9292F6987002B7B74 /* ApplyGroupUseCase.swift in Sources */,

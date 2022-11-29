@@ -59,7 +59,7 @@ final class SignUpViewController: DefaultViewController {
     override func configureUI() {
         
     }
-
+    
     override func layout() {
         let emailLabel = makeTitleLabel(text: "이메일")
         view.addSubview(emailLabel)
@@ -167,6 +167,17 @@ final class SignUpViewController: DefaultViewController {
         viewModel.nameSubject
             .sink {
                 self.nicknameTextField.text = $0
+            }
+            .store(in: &cancellables)
+        
+        signUpButton.publisher(for: .touchUpInside)
+            .sink {
+                // TODO: job은 어떻게 입력받을지 토의해보기
+                self.viewModel.didTouchedSignUp(
+                    nickname: self.nicknameTextField.text ?? "",
+                    job: "iOS Developer",
+                    email: self.emailTextField.text ?? ""
+                )
             }
             .store(in: &cancellables)
     }

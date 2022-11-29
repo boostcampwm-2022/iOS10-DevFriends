@@ -11,6 +11,7 @@ struct User {
     let id: String
     let nickname: String
     let job: String
+    let email: String
     let profileImagePath: String
     let categoryIDs: [String]
     var appliedGroupIDs: [String]
