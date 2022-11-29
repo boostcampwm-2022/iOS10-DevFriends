@@ -121,19 +121,19 @@ final class AddGroupViewController: DefaultViewController {
             make.right.equalTo(limitPeopleStepper.snp.left).offset(-20)
         }
         
-        view.addSubview(submitButton)
-        submitButton.snp.makeConstraints { make in
-            make.left.right.equalTo(chooseLocationView)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
-            make.height.equalTo(60)
-        }
-        
         view.addSubview(descriptionTextView)
         descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(limitPeopleLabel.snp.bottom).offset(20)
             make.left.equalTo(limitPeopleLabel)
             make.right.equalTo(limitPeopleStepper)
-            make.bottom.equalTo(submitButton.snp.top).offset(-20)
+            make.height.equalTo(250)
+        }
+        
+        view.addSubview(submitButton)
+        submitButton.snp.makeConstraints { make in
+            make.left.right.equalTo(chooseLocationView)
+            make.top.equalTo(descriptionTextView.snp.bottom).offset(20)
+            make.height.equalTo(60)
         }
     }
     

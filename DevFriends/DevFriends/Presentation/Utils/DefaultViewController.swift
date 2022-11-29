@@ -40,7 +40,7 @@ class DefaultViewController: UIViewController {
                 if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                     let keyboardRectangle = keyboardFrame.cgRectValue
                     let keyboardHeight = keyboardRectangle.height
-                    self?.view.frame.origin.y -= keyboardHeight
+                    self?.view.frame.origin.y -= (keyboardHeight-(self?.tabBarController?.tabBar.frame.size.height ?? 0))
                 }
             }
             .store(in: &cancellables)
@@ -52,7 +52,7 @@ class DefaultViewController: UIViewController {
                 if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                     let keyboardRectangle = keyboardFrame.cgRectValue
                     let keyboardHeight = keyboardRectangle.height
-                    self?.view.frame.origin.y += keyboardHeight
+                    self?.view.frame.origin.y += (keyboardHeight-(self?.tabBarController?.tabBar.frame.size.height ?? 0))
                 }
             }
             .store(in: &cancellables)
