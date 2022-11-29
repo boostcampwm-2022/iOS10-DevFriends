@@ -21,8 +21,10 @@ final class DefaultChatGroupsRepository: ContainsFirestore {
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
     func fetch(userID: String) async throws -> [Group] {
         let localAcceptedGroups = storage.fetch()
-        let userGroupInfos = try await fetchUserGroupInfo(of: userID,
-                                                          lastAcceptedTime: localAcceptedGroups.first?.time)
+        let userGroupInfos = try await fetchUserGroupInfo(
+            of: userID,
+            lastAcceptedTime: localAcceptedGroups.first?.time
+        )
         var newAcceptedGroups: [AcceptedGroup] = []
         for groupInfo in userGroupInfos {
             do {
@@ -32,8 +34,6 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                 print(error)
             }
         }
-        print("lcoal", localAcceptedGroups)
-        print("NEW", userGroupInfos)
         try storage.save(acceptedGroups: newAcceptedGroups)
         return (localAcceptedGroups + newAcceptedGroups).map{ $0.group }
     }
@@ -45,7 +45,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
             .collection("Group")
             
         if let lastAcceptedTime = lastAcceptedTime {
-            query = query.whereField("time", isLessThan: lastAcceptedTime)
+            query = query.whereField("time", isGreaterThan: lastAcceptedTime)
         }
         
         let groups = try await query.getDocuments().documents
