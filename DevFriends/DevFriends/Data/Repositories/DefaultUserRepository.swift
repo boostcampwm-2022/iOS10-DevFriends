@@ -37,19 +37,7 @@ extension DefaultUserRepository: UserRepository {
     }
 }
 
-// MARK: Private
 extension DefaultUserRepository {
-    private func makeUserResponseDTO(user: User) -> UserResponseDTO {
-        return UserResponseDTO(
-            nickname: user.nickname,
-            job: user.job,
-            profileImagePath: user.profileImagePath,
-            categories: user.categoryIDs,
-            groups: user.groupIDs,
-            appliedGroups: user.appliedGroupIDs
-        )
-    }
-    
     func fetch(uids: [String]) async throws -> [User] {
         return try await withThrowingTaskGroup(of: User.self) { taskGroup in
             uids.forEach { id in
