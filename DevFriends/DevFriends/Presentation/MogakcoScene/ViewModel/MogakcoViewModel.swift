@@ -8,6 +8,7 @@
 import Combine
 
 struct MogakcoViewModelActions {
+    let showMogakcoModal: ([Group]) -> Void
     let showGroupDetail: (Group) -> Void
 }
 
@@ -75,6 +76,10 @@ final class MogakcoViewModel: MogakcoViewModelType {
             nowMogakcoSubject.send(allMogakcoList[index])
             fetchMogakco(location: allMogakcoList[index].location, distance: distance)
         }
+    }
+    
+    func didSelectViewModeButton() {
+        actions?.showMogakcoModal(allMogakcoList)
     }
     
     func didSelectNowMogakco() {

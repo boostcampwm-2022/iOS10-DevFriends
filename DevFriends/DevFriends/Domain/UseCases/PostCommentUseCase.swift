@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PostCommentUseCase {
-    func execute(comment: Comment, groupId: String)
+    func execute(comment: Comment, groupId: String) -> String
 }
 
 final class DefaultPostCommentUseCase: PostCommentUseCase {
@@ -18,7 +18,7 @@ final class DefaultPostCommentUseCase: PostCommentUseCase {
         self.commentRepository = commentRepository
     }
     
-    func execute(comment: Comment, groupId: String) {
+    func execute(comment: Comment, groupId: String) -> String {
         return self.commentRepository.post(comment, to: groupId)
     }
 }
