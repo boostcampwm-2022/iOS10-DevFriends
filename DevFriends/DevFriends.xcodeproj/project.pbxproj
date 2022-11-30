@@ -45,6 +45,7 @@
 		A648BB5A293600240018A654 /* AddGroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB59293600240018A654 /* AddGroupCoordinator.swift */; };
 		A648BB5C293604AD0018A654 /* AddGroupSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5B293604AD0018A654 /* AddGroupSceneDIContainer.swift */; };
 		A648BB5E293642A00018A654 /* ChooseCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5D293642A00018A654 /* ChooseCategoryViewModel.swift */; };
+		A648BB60293779740018A654 /* UITextView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5F293779740018A654 /* UITextView+Combine.swift */; };
 		A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */; };
 		A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */; };
 		A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */; };
@@ -243,6 +244,7 @@
 		A648BB59293600240018A654 /* AddGroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupCoordinator.swift; sourceTree = "<group>"; };
 		A648BB5B293604AD0018A654 /* AddGroupSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupSceneDIContainer.swift; sourceTree = "<group>"; };
 		A648BB5D293642A00018A654 /* ChooseCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryViewModel.swift; sourceTree = "<group>"; };
+		A648BB5F293779740018A654 /* UITextView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Combine.swift"; sourceTree = "<group>"; };
 		A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 				E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */,
 				A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */,
 				FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */,
+				A648BB5F293779740018A654 /* UITextView+Combine.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1423,6 +1426,7 @@
 				FC5D01AA292F54EE00292D33 /* MyPageViewController.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
 				FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */,
+				A648BB60293779740018A654 /* UITextView+Combine.swift in Sources */,
 				A6ED8BA72924E44A003105E2 /* (null) in Sources */,
 				A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */,
 				FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */,

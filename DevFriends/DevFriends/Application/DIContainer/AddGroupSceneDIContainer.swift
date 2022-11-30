@@ -27,11 +27,11 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     
     // MARK: AddGroupView
     func makeAddGroupViewController(groupType: GroupType, actions: AddGroupViewModelActions) -> AddGroupViewController {
-        return AddGroupViewController(viewModel: makeAddGroupViewModel(actions: actions), groupType: groupType)
+        return AddGroupViewController(viewModel: makeAddGroupViewModel(actions: actions, groupType: groupType))
     }
     
-    func makeAddGroupViewModel(actions: AddGroupViewModelActions) -> AddGroupViewModel {
-        return DefaultAddGroupViewModel(actions: actions)
+    func makeAddGroupViewModel(actions: AddGroupViewModelActions, groupType: GroupType) -> AddGroupViewModel {
+        return DefaultAddGroupViewModel(actions: actions, groupType: groupType)
     }
     
     // MARK: CategoryView

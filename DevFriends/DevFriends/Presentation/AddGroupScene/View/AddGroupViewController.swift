@@ -10,8 +10,6 @@ import SnapKit
 import UIKit
 
 final class AddGroupViewController: DefaultViewController {
-    private let groupType: GroupType
-    
     private lazy var titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
@@ -48,9 +46,8 @@ final class AddGroupViewController: DefaultViewController {
     
     // MARK: - Init
     private let viewModel: AddGroupViewModel
-    init(viewModel: AddGroupViewModel, groupType: GroupType) {
+    init(viewModel: AddGroupViewModel) {
         self.viewModel = viewModel
-        self.groupType = groupType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,9 +56,9 @@ final class AddGroupViewController: DefaultViewController {
     }
     
     override func configureUI() {
-        titleTextField.placeholder = "\(groupType.rawValue) 제목"
         hideKeyboardWhenTapped()
         adjustViewToKeyboard()
+        viewModel.didConfigureView()
     }
     
     override func layout() {
@@ -141,6 +138,14 @@ final class AddGroupViewController: DefaultViewController {
     }
     
     override func bind() {
+        titleTextField.publisher(for: .editingDidEnd)
+            .sink { [weak self] _ in
+                if let title = self?.titleTextField.text {
+                    self?.viewModel.didTitleEdited(title: title)
+                }
+            }
+            .store(in: &cancellables)
+        
         chooseCategoryView.didTouchViewSubject
             .sink { [weak self] _ in
                 self?.viewModel.didCategorySelect()
@@ -159,6 +164,21 @@ final class AddGroupViewController: DefaultViewController {
             }
             .store(in: &cancellables)
         
+        descriptionTextView.textPublisher
+            .sink { [weak self] text in
+                if let text = text {
+                    self?.viewModel.didDescriptionChanged(text: text)
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didUpdateGroupTypeSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] groupType in
+                self?.titleTextField.placeholder = "\(groupType.rawValue) 제목"
+            }
+            .store(in: &cancellables)
+        
         viewModel.didUpdateCategorySubject
             .receive(on: RunLoop.main)
             .sink { [weak self] updatedCategories in
@@ -172,10 +192,17 @@ final class AddGroupViewController: DefaultViewController {
                 self?.chooseLocationView.set(location: updatedLocation)
             }
             .store(in: &cancellables)
+        
+        submitButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.didSendGroupInfo()
+            }
+            .store(in: &cancellables)
     }
     
     private func setStepperValue() {
         peopleNumberLabel.text = Int(limitPeopleStepper.value).description
+        self.viewModel.didLimitPeopleChanged(limit: Int(limitPeopleStepper.value))
     }
 }
 
