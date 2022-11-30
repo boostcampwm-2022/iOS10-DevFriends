@@ -14,7 +14,7 @@ struct MogakcoSceneDIContainer {
     }
 }
 
-extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
+extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     // MARK: Repositories
     private func makeGroupRepository() -> GroupRepository {
         return DefaultGroupRepository()
@@ -30,6 +30,10 @@ extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
     
     private func makeGroupCommentRepository() -> GroupCommentRepository {
         return DefaultGroupCommentRepository()
+    }
+    
+    private func makeNotificationRepository() -> NotificationRepository {
+        return DefaultNotificationRepository()
     }
 
     // MARK: UseCases
@@ -53,8 +57,16 @@ extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
         return DefaultApplyGroupUseCase(userRepository: makeUserRepository())
     }
     
+    private func makeSendGroupApplyNotificationUseCase() -> SendGroupApplyNotificationUseCase {
+        return DefaultSendGroupApplyNotificationUseCase(notificationRepository: makeNotificationRepository())
+    }
+    
     private func makePostCommentUseCase() -> PostCommentUseCase {
         return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
+    }
+    
+    private func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
+        return DefaultSendCommentNotificationUseCase(notificationRepository: makeNotificationRepository())
     }
     
     // MARK: Mogakco
@@ -66,6 +78,13 @@ extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
         return MogakcoViewController(viewModel: makeMogakcoViewModel(actions: actions))
     }
     
+    func makeMogakcoModalViewController(actions: MogakcoModalViewActions, mogakcos: [Group]) -> MogakcoModalViewController {
+        let mogakcoModalViewController = MogakcoModalViewController(actions: actions)
+        mogakcoModalViewController.populateSnapshot(data: mogakcos)
+        
+        return mogakcoModalViewController
+    }
+    
     // MARK: PostDetail
     private func makePostDetailViewModel(group: Group) -> PostDetailViewModel {
         return DefaultPostDetailViewModel(
@@ -74,7 +93,9 @@ extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
             fetchCategoryUseCase: makeFetchCategoryUseCase(),
             fetchCommentsUseCase: makeFetchCommentsUseCase(),
             applyGroupUseCase: makeApplyGroupUseCase(),
-            postCommentUseCase: makePostCommentUseCase()
+            sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
+            postCommentUseCase: makePostCommentUseCase(),
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
         )
     }
     

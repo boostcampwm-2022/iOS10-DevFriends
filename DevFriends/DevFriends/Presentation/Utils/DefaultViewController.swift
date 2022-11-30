@@ -31,4 +31,30 @@ class DefaultViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
+    
+    func adjustViewToKeyboard() {
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification, object: nil)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] noti in
+                // 키보드의 높이만큼 화면을 올려준다.
+                if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                    let keyboardRectangle = keyboardFrame.cgRectValue
+                    let keyboardHeight = keyboardRectangle.height
+                    self?.view.frame.origin.y -= (keyboardHeight-(self?.tabBarController?.tabBar.frame.size.height ?? 0))
+                }
+            }
+            .store(in: &cancellables)
+    
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification, object: nil)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] noti in
+                // 키보드의 높이만큼 화면을 내려준다.
+                if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                    let keyboardRectangle = keyboardFrame.cgRectValue
+                    let keyboardHeight = keyboardRectangle.height
+                    self?.view.frame.origin.y += (keyboardHeight-(self?.tabBarController?.tabBar.frame.size.height ?? 0))
+                }
+            }
+            .store(in: &cancellables)
+    }
 }

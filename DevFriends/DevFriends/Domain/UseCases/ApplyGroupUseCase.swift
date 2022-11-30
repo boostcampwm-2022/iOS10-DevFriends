@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ApplyGroupUseCase {
-    func execute(user: User)
+    func execute(groupID: String, user: User)
 }
 
 final class DefaultApplyGroupUseCase: ApplyGroupUseCase {
@@ -18,7 +18,9 @@ final class DefaultApplyGroupUseCase: ApplyGroupUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(user: User) {
-        userRepository.update(user)
+    func execute(groupID: String, user: User) {
+        var tempUser = user
+        tempUser.appliedGroupIDs.append(groupID)
+        userRepository.update(tempUser)
     }
 }

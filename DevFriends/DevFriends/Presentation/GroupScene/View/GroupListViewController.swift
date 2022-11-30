@@ -143,6 +143,7 @@ final class GroupListViewController: DefaultViewController {
     
     override func configureUI() {
         self.view.backgroundColor = .systemGray6
+        self.setupNavigationBar()
         self.setupCollectionView()
         self.setupCollectionViewHeader()
         self.setupNavigation()
@@ -155,6 +156,12 @@ final class GroupListViewController: DefaultViewController {
             make.leading.trailing.equalToSuperview()
             make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setupNavigationBar() {
+        let navigationAppearence = UINavigationBarAppearance()
+        navigationAppearence.configureWithDefaultBackground()
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearence
     }
     
     private func setupCollectionView() {
@@ -224,10 +231,16 @@ extension GroupListViewController {
         
         let actionProject = UIAlertAction(title: "프로젝트", style: .default) { _ in
             print("프로젝트 모임 생성")
+            let addGroupViewController = AddGroupViewController(groupType: .project)
+            addGroupViewController.view.backgroundColor = .white
+            self.navigationController?.pushViewController(addGroupViewController, animated: true)
         }
         
         let actionStudy = UIAlertAction(title: "스터디", style: .default) { _ in
             print("스터디 모임 생성")
+            let addGroupViewController = AddGroupViewController(groupType: .study)
+            addGroupViewController.view.backgroundColor = .white
+            self.navigationController?.pushViewController(addGroupViewController, animated: true)
         }
         
         let actionCancel = UIAlertAction(title: "취소", style: .cancel)

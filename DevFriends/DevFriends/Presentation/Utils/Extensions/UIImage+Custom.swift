@@ -10,4 +10,5 @@ import UIKit
 extension UIImage {
     static var profile = UIImage(systemName: "person")
     static var sendable = UIImage(systemName: "arrow.up.circle.fill")
+    static var disclosure = UIImage(systemName: "chevron.right")
 }

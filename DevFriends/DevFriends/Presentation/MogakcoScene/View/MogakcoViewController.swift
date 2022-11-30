@@ -99,16 +99,19 @@ final class MogakcoViewController: DefaultViewController {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
-        collectionView.register(GroupCollectionViewCell.self,
-                                forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.register(
+            GroupCollectionViewCell.self,
+            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier
+        )
         return collectionView
     }()
     
     private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoCollectionView) { collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-                                                            for: indexPath) as? GroupCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        
         cell.set(data)
         return cell
     }
@@ -118,13 +121,7 @@ final class MogakcoViewController: DefaultViewController {
     private var nowCollectionViewCellIndex = 0
     
     private var isFirstLoadingMap = true
-    
-    lazy var mogakcoModalViewController: MogakcoModalViewController = {
-        let mogakcoModelViewController = MogakcoModalViewController()
-        mogakcoModelViewController.delegate = self
-        return mogakcoModelViewController
-    }()
-    
+        
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -138,6 +135,7 @@ final class MogakcoViewController: DefaultViewController {
     
     init(viewModel: MogakcoViewModel) {
         self.viewModel = viewModel
+        viewModel.fetchAllMogakco()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -209,7 +207,7 @@ final class MogakcoViewController: DefaultViewController {
         viewModeButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.deselectAllAnnotations()
-                self?.showMogakcoModal()
+                self?.viewModel.didSelectViewModeButton()
             }
             .store(in: &cancellables)
         
@@ -230,7 +228,6 @@ final class MogakcoViewController: DefaultViewController {
             .sink { [weak self] groups in
                 self?.deselectAllAnnotations()
                 self?.setMogakcoPin(groups: groups)
-                self?.mogakcoModalViewController.populateSnapshot(data: groups)
             }
             .store(in: &cancellables)
         
@@ -297,28 +294,24 @@ final class MogakcoViewController: DefaultViewController {
         }
     }
     
-    func showMogakcoModal() {
-        mogakcoModalViewController.modalPresentationStyle = .pageSheet
-        if let sheet = mogakcoModalViewController.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-            sheet.largestUndimmedDetentIdentifier = .medium
-        }
-        present(mogakcoModalViewController, animated: true, completion: nil)
-        viewModel.fetchAllMogakco()
-    }
-    
     func mapViewDistance() -> Double {
         let span = mogakcoMapView.region.span
         let center = mogakcoMapView.region.center
         let centerLocation = CLLocation(latitude: center.latitude, longitude: center.longitude)
-        let to = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude + span.longitudeDelta * 0.5)
-        return to.distance(from: centerLocation)
+        let destination = CLLocation(
+            latitude: center.latitude + span.latitudeDelta * 0.5,
+            longitude: center.longitude + span.longitudeDelta * 0.5
+        )
+        return destination.distance(from: centerLocation)
     }
     
     func setUserLocation() {
         locationManager.startUpdatingLocation()
         mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
+    }
+    
+    func setNowMogakcoWithAllList(index: Int) {
+        viewModel.nowMogakcoWithAllList(index: index, distance: mapViewDistance())
     }
 }
 
@@ -327,8 +320,10 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             manager.stopUpdatingLocation()
-            let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                    longitude: location.coordinate.longitude)
+            let coordinate = CLLocationCoordinate2D(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
             let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: coordinate, span: span)
             mogakcoMapView.setRegion(region, animated: false)
@@ -359,13 +354,6 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 }
 
-extension MogakcoViewController: MogakcoModalViewControllerDelegate {
-    func tapCell(index: Int) {
-        showMogakcoCollectionView()
-        viewModel.nowMogakcoWithAllList(index: index, distance: mapViewDistance())
-    }
-}
-
 extension MogakcoViewController: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let cellWidthIncludingSpacing = view.frame.width - 30
@@ -379,7 +367,10 @@ extension MogakcoViewController: UICollectionViewDelegate {
             roundedIndex = ceil(index)
         }
         
-        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        offset = CGPoint(
+            x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left,
+            y: -scrollView.contentInset.top
+        )
         targetContentOffset.pointee = offset
         
         if scrollView.contentOffset.x > targetContentOffset.pointee.x {
