@@ -16,7 +16,6 @@ protocol MyPageFlowCoordinatorDependencies {
     func makeFixMyInfoViewController() -> FixMyInfoViewController
 }
 
-
 final class MyPageCoordinator: Coordinator {
     private weak var navigationController: UINavigationController?
     let dependencies: MyPageFlowCoordinatorDependencies
@@ -27,11 +26,13 @@ final class MyPageCoordinator: Coordinator {
     }
     
     func start() {
-        let actions = MyPageViewModelActions(showMakedGroup: showMakedGroupViewController,
-                                             showParticipatedGroup: showParticipatedGroupViewController,
-                                             showLikedGroup: showLikedGroupViewController,
-                                             showFixMyInfo: showFixMyInfoViewController,
-                                             showPopup: showPopupViewController)
+        let actions = MyPageViewModelActions(
+            showMakedGroup: showMakedGroupViewController,
+            showParticipatedGroup: showParticipatedGroupViewController,
+            showLikedGroup: showLikedGroupViewController,
+            showFixMyInfo: showFixMyInfoViewController,
+            showPopup: showPopupViewController
+        )
         let myPageViewController = dependencies.makeMyPageViewController(actions: actions)
         navigationController?.pushViewController(myPageViewController, animated: false)
     }

@@ -52,6 +52,7 @@ extension UIView {
         }
         
         private func configureGesture(_ gestureType: GestureType) {
+            view.isUserInteractionEnabled = true
             let gesture = gestureType.get()
             gesture.addTarget(self, action: #selector(handler))
             view.addGestureRecognizer(gesture)

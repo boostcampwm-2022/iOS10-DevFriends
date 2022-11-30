@@ -9,7 +9,7 @@ import UIKit
 
 struct MogakcoSceneDIContainer {
     // MARK: Flow Coordinators
-    func makeChatFlowCoordinator(navigationController: UINavigationController) -> MogakcoCoordinator {
+    func makeMogakcoFlowCoordinator(navigationController: UINavigationController) -> MogakcoCoordinator {
         return MogakcoCoordinator(navigationController: navigationController, dependencies: self)
     }
 }
@@ -108,3 +108,5 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return PostDetailViewController(viewModel: makePostDetailViewModel(group: group))
     }
 }
+
+extension MogakcoSceneDIContainer: NotificationSceneDIContainer {}

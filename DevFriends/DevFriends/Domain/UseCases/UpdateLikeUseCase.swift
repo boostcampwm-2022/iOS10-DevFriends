@@ -24,8 +24,6 @@ final class DefaultUpdateLikeUseCase: UpdateLikeUseCase {
         var tempUser = user
         var tempGroup = group
         
-        print(execute)
-        
         if like == true {
             tempUser.likeGroupIDs.append(group.id)
             tempGroup.like += 1

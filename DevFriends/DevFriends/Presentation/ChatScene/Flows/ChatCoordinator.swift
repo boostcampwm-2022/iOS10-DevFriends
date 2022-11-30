@@ -37,5 +37,8 @@ extension ChatCoordinator {
     func showChatContentViewController(group: Group) {
         let chatContentViewController = dependencies.makeChatContentViewController(group: group)
         navigationController.pushViewController(chatContentViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
+    
+    // TODO: 뒤로가기도 구현하자(각자 하기)
 }
