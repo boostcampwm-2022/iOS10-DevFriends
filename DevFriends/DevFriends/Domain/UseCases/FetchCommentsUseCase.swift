@@ -8,7 +8,7 @@
 import Foundation
 
 protocol FetchCommentsUseCase {
-    func execute(groupId: String) async throws -> [Comment]
+    func execute(groupId: String, limit: Int) async throws -> [Comment]
 }
 
 final class DefaultFetchCommentsUseCase: FetchCommentsUseCase {
@@ -18,7 +18,7 @@ final class DefaultFetchCommentsUseCase: FetchCommentsUseCase {
         self.commentRepository = commentRepository
     }
     
-    func execute(groupId: String) async throws -> [Comment] {
-        return try await self.commentRepository.fetch(groupId)
+    func execute(groupId: String, limit: Int) async throws -> [Comment] {
+        return try await self.commentRepository.fetch(groupId, limit: limit)
     }
 }

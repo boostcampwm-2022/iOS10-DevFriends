@@ -29,12 +29,13 @@ final class PostDetailViewController: DefaultViewController {
             CommentTableViewCell.self,
             forCellReuseIdentifier: CommentTableViewCell.reuseIdentifier
         )
+        tableView.sectionHeaderTopPadding = 10.0
         return tableView
     }()
     private lazy var tableViewDataSource = UITableViewDiffableDataSource<Int, CommentInfo>(
         tableView: self.commentTableView
-    ) { tableView, indexPath, data in
-        guard let cell = tableView.dequeueReusableCell(
+    ) { commentTableView, indexPath, data in
+        guard let cell = commentTableView.dequeueReusableCell(
             withIdentifier: CommentTableViewCell.reuseIdentifier,
             for: indexPath
         ) as? CommentTableViewCell
@@ -45,6 +46,23 @@ final class PostDetailViewController: DefaultViewController {
 
         return cell
     }
+    private lazy var footerView: UIView = {
+        let view = UIView()
+        
+        view.addSubview(self.spinner)
+        spinner.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
+        
+        return view
+    }()
+    private lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = UIColor.darkGray
+        spinner.hidesWhenStopped = true
+        return spinner
+    }()
     private lazy var commentTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: "댓글을 입력해주세요")
         return textField
@@ -177,15 +195,15 @@ final class PostDetailViewController: DefaultViewController {
                 self?.tableViewDataSource.apply(snapshot)
             }
             .store(in: &cancellables)
-        
-        viewModel.scrollToBottomSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let commentCount = self?.viewModel.commentsSubject.value.count else { return }
-                let bottomIndex = IndexPath(row: commentCount - 1, section: 0)
-                self?.commentTableView.scrollToRow(at: bottomIndex, at: .top, animated: true)
-            }
-            .store(in: &cancellables)
+//        
+//        viewModel.scrollToBottomSubject
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                guard let commentCount = self?.viewModel.commentsSubject.value.count else { return }
+//                let bottomIndex = IndexPath(row: commentCount - 1, section: 0)
+//                self?.commentTableView.scrollToRow(at: bottomIndex, at: .top, animated: true)
+//            }
+//            .store(in: &cancellables)
         
         viewModel.groupApplyButtonStateSubject
             .receive(on: DispatchQueue.main)
@@ -214,6 +232,7 @@ final class PostDetailViewController: DefaultViewController {
                
                 self?.commentTextField.text = ""
                 self?.viewModel.didTapCommentPostButton(content: comment)
+                self?.commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             }
             .store(in: &cancellables)
     }
@@ -317,6 +336,24 @@ extension PostDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = createHeaderView()
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return self.footerView
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+
+        if maximumOffset < currentOffset {
+            viewModel.didScrollToBottom()
+            spinner.startAnimating()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.spinner.stopAnimating()
+            }
+        }
     }
 }
 

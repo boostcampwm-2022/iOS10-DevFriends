@@ -19,6 +19,7 @@ protocol PostDetailViewModelInput {
     func didLoadGroup()
     func didTapApplyButton()
     func didTapLikeButton()
+    func didScrollToBottom()
     func didTapCommentPostButton(content: String)
 }
 
@@ -158,11 +159,11 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         return result
     }
     
-    private func loadComments() async -> [Comment] {
+    private func loadComments(limit: Int = 5) async -> [Comment] {
         var result: [Comment] = []
         do {
             result = try await Task {
-                try await fetchCommentsUseCase.execute(groupId: group.id)
+                try await fetchCommentsUseCase.execute(groupId: group.id, limit: commentsSubject.value.count + limit)
             }.result.get()
         } catch {
             print(error)
@@ -226,22 +227,7 @@ extension DefaultPostDetailViewModel {
         }
     }
     
-    func didTapCommentPostButton(content: String) {
-        let comment = Comment(
-            id: "",
-            content: content,
-            time: Date(),
-            userID: localUser.id
-        )
-        let commentID = postCommentUseCase.execute(comment: comment, groupId: self.group.id)
-        
-        sendCommentNotificationUseCase.execute(
-            sender: self.localUser,
-            group: self.group,
-            comment: comment,
-            commentID: commentID
-        )
-        
+    func didScrollToBottom() {
         Task {
             let comments = await loadComments()
             postAttentionInfoSubject.value.commentsCount = comments.count
@@ -259,7 +245,43 @@ extension DefaultPostDetailViewModel {
                     contents: comment.content
                 )
             }
-            scrollToBottomSubject.send()
+        }
+    }
+    
+    func didTapCommentPostButton(content: String) {
+        let comment = Comment(
+            id: "",
+            content: content,
+            time: Date(),
+            userID: localUser.id
+        )
+        let commentID = postCommentUseCase.execute(comment: comment, groupId: self.group.id)
+        
+        sendCommentNotificationUseCase.execute(
+            sender: self.localUser,
+            group: self.group,
+            comment: comment,
+            commentID: commentID
+        )
+        
+        Task {
+            let comments = await loadComments(limit: 1)
+            postAttentionInfoSubject.value.commentsCount = comments.count
+            
+            let commentUsers = await loadUsers(ids: comments.map { $0.userID })
+            commentsSubject.value = comments.map { comment in
+                guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
+                    return CommentInfo(
+                        writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
+                        contents: comment.content
+                    )
+                }
+                return CommentInfo(
+                    writerInfo: .init(name: user.nickname, job: user.job, image: nil),
+                    contents: comment.content
+                )
+            }
+//            scrollToBottomSubject.send()
         }
     }
 }
