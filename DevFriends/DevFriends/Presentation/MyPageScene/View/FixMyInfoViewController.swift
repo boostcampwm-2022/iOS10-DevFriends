@@ -63,6 +63,7 @@ final class FixMyInfoViewController: DefaultViewController {
         super.viewDidLoad()
         
         setupViews()
+        setupKeyboard()
     }
     
     override func layout() {
@@ -125,7 +126,7 @@ final class FixMyInfoViewController: DefaultViewController {
             .sink { [weak self] _ in
                 if let nicknameEditing = self?.nicknameTextField.isEditing,
                    let jobEditing = self?.jobTextField.isEditing,
-                   nicknameEditing && jobEditing == true {
+                   nicknameEditing || jobEditing == true {
                     self?.view.endEditing(true)
                     return
                 }
@@ -207,5 +208,50 @@ extension FixMyInfoViewController: PHPickerViewControllerDelegate {
                 }
             }
         }
+    }
+}
+
+// MARK: Keyboard
+
+extension FixMyInfoViewController: UITextFieldDelegate {
+    func setupKeyboard() {
+        nicknameTextField.delegate = self
+        jobTextField.delegate = self
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let currentYPosition: CGFloat
+        
+        switch textField {
+        case nicknameTextField:
+            currentYPosition = UIScreen.main.bounds.height - nicknameTextField.frame.origin.y
+        case jobTextField:
+            currentYPosition = UIScreen.main.bounds.height - jobTextField.frame.origin.y
+        default:
+            currentYPosition = 0
+        }
+        
+        let keyboardHeight = 375.0
+        if keyboardHeight > currentYPosition {
+            self.view.frame.origin.y = -(keyboardHeight - currentYPosition)
+        } else {
+            self.view.frame.origin.y = 0
+        }
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view.frame.origin.y = 0
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case nicknameTextField:
+            jobTextField.becomeFirstResponder()
+        case jobTextField:
+            jobTextField.resignFirstResponder()
+        default:
+            return false
+        }
+        return true
     }
 }
