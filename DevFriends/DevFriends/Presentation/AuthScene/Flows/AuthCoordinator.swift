@@ -12,9 +12,14 @@ protocol AuthFlowCoordinatorDependencies {
     func makeSignUpViewController(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewController
 }
 
+protocol AuthCoordinatorDelegate: AnyObject {
+    func showTabBar()
+}
+
 final class AuthCoordinator: Coordinator {
     private weak var navigationController: UINavigationController?
     let dependencies: AuthFlowCoordinatorDependencies
+    weak var delegate: AuthCoordinatorDelegate?
     
     init(navigationController: UINavigationController, dependencies: AuthFlowCoordinatorDependencies) {
         self.navigationController = navigationController
@@ -22,13 +27,18 @@ final class AuthCoordinator: Coordinator {
     }
     
     func start() {
-        let actions = LoginViewModelActions(showSignUp: showSignUpViewController)
+        guard let showTabBarController = delegate?.showTabBar else { fatalError("Auth Delegate is not linked.") }
+        let actions = LoginViewModelActions(
+            showSignUp: showSignUpViewController,
+            showTabBarController: showTabBarController
+        )
         let loginViewController = dependencies.makeLoginViewController(actions: actions)
         navigationController?.pushViewController(loginViewController, animated: false)
     }
     
     func showSignUpViewController(_ uid: String, _ email: String?, _ name: String?) {
-        let actions = SignUpViewModelActions()
+        guard let showTabBarController = delegate?.showTabBar else { fatalError("Auth Delegate is not linked.") }
+        let actions = SignUpViewModelActions(showTabBarController: showTabBarController)
         let signUpViewController = dependencies.makeSignUpViewController(
             actions: actions,
             uid: uid,

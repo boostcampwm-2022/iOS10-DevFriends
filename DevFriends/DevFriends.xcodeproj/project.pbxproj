@@ -134,9 +134,10 @@
 		E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */; };
 		E3B53BF72935D5B1006675E0 /* CheckUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */; };
 		E3B53BF92935DB0A006675E0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */; };
+		E3B53BFB29365827006675E0 /* CreateUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */; };
+		E3B53BFD2936E662006675E0 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BFC2936E662006675E0 /* UserManager.swift */; };
 		E3DE5492293481FC00E63898 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE5491293481FC00E63898 /* UserGroup.swift */; };
 		E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */; };
-		E3B53BFB29365827006675E0 /* CreateUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */; };
 		E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54962934A8AB00E63898 /* LoginViewController.swift */; };
 		E3DE549A2934DCD400E63898 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54992934DCD400E63898 /* SignUpViewController.swift */; };
 		E3DE549C2934E6F800E63898 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */; };
@@ -333,9 +334,10 @@
 		E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
 		E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserUseCase.swift; sourceTree = "<group>"; };
 		E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserUseCase.swift; sourceTree = "<group>"; };
+		E3B53BFC2936E662006675E0 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		E3DE5491293481FC00E63898 /* UserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroup.swift; sourceTree = "<group>"; };
 		E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserGroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
-		E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserUseCase.swift; sourceTree = "<group>"; };
 		E3DE54962934A8AB00E63898 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3DE54992934DCD400E63898 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
@@ -981,6 +983,7 @@
 				E359EC81292C6BC300CE5775 /* Network */,
 				E359EC80292C6BA000CE5775 /* RealmStorage */,
 				FC79AEBC292223DF0077AE5C /* Repositories */,
+				E3B53BFC2936E662006675E0 /* UserManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1347,6 +1350,7 @@
 				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
+				E3B53BFD2936E662006675E0 /* UserManager.swift in Sources */,
 				FC5D01A7292F54EE00292D33 /* MyPageViewModel.swift in Sources */,
 				E3752ECC292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				05D9256829338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift in Sources */,

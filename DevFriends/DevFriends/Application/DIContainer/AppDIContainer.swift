@@ -8,6 +8,10 @@
 import Foundation
 
 final class AppDIContainer {
+    func authSceneDIContainer() -> AuthSceneDIContainer {
+        return AuthSceneDIContainer()
+    }
+    
     func tabBarSceneDIContainer() -> TabBarSceneDIContainer {
         return TabBarSceneDIContainer()
     }

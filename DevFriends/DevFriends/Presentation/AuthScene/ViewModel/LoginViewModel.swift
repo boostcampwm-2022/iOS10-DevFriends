@@ -10,7 +10,7 @@ import UIKit
 
 struct LoginViewModelActions {
     let showSignUp: (_ uid: String, _ email: String?, _ name: String?) -> Void
-    // let showTabBar: () -> Void
+    let showTabBarController: () -> Void
 }
 
 protocol LoginViewModelInput {
@@ -55,8 +55,10 @@ extension DefaultLoginViewModel {
         do {
             let isExist = try result.get()
             if isExist {
-                // TODO: user를 이용해서 UserManager를 만들 예정(showTabBar에 User 인자를 전달해도 좋을듯?)
-//                actions?.showTabBar() // 2. 있으면 -> 탭 바로 이동
+                UserManager.shared.login(uid: uid)
+                DispatchQueue.main.async {
+                    self.actions?.showTabBarController() // 2. 있으면 -> 탭 바로 이동
+                }
             } else {
                 DispatchQueue.main.async {
                     self.actions?.showSignUp(uid, email, name) // 2. 없으면 -> SignUp VC로 이동
