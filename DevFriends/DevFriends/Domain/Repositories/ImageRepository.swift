@@ -14,5 +14,5 @@ enum ImageType: String {
 
 protocol ImageRepository {
     func fetch(_ type: ImageType, path: String) async throws -> Data
-    func upload(_ type: ImageType, uid: String, image: Data) async throws
+    func upload(_ type: ImageType, uid: String, image: Data)
 }

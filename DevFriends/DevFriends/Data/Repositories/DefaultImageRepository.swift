@@ -17,7 +17,7 @@ final class DefaultImageRepository: ImageRepository {
         return try NSData(contentsOf: url) as Data
     }
     
-    func upload(_ type: ImageType, uid: String, image: Data) async throws {
+    func upload(_ type: ImageType, uid: String, image: Data) {
         let metaData = StorageMetadata()
         metaData.contentType = "image/png"
         

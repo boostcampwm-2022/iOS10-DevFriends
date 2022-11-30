@@ -45,7 +45,7 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
             id: "nqQW9nOes6UPXRCjBuCy",
             nickname: "흥민 손",
             job: "EPL득점왕",
-            profileImagePath: "",
+            profileImagePath: "nqQW9nOes6UPXRCjBuCy",
             categoryIDs: [],
             appliedGroupIDs: []
         )
@@ -68,14 +68,18 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
         return image
     }
     
-    private func uploadImage() async {
-        guard let data = profileImageSubject.value?.jpegData(compressionQuality: 0.8) else { return }
+    private func uploadImage() {
+        guard let image = profileImageSubject.value else { return }
         
-        do {
-            try await uploadProfileImageUseCase.execute(uid: localUser.id, image: data)
-        } catch {
-            print(error)
-        }
+        guard
+            let originData = image.jpegData(compressionQuality: 0.8),
+            let thumbnailData = image.resize(newWidth: 100.0).jpegData(compressionQuality: 0.8) else { return }
+        
+        uploadProfileImageUseCase.execute(
+            uid: localUser.id,
+            originImage: originData,
+            thumbnailImage: thumbnailData
+        )
     }
     
     private func updateUser(nickname: String, job: String) {
@@ -96,9 +100,7 @@ extension DefaultFixMyInfoViewModel {
     }
     
     func didTapDoneButton(nickname: String, job: String) {
-        Task {
-            await uploadImage()
-        }
+        uploadImage()
         updateUser(nickname: nickname, job: job)
     }
 }
