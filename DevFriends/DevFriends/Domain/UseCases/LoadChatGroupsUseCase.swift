@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoadChatGroupsUseCase {
-    func execute() async throws -> [Group]
+    func execute(uid: String) async throws -> [Group]
 }
 
 final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
@@ -20,10 +20,7 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
         self.chatGroupsRepository = chatGroupsRepository
     }
     
-    func execute() async throws -> [Group] {
-        // MARK: user를 나중에 어떻게 가져올지 논의해보기
-        guard let uid = UserDefaults.standard.object(forKey: "uid") as? String
-        else { fatalError("UID was not stored!!") }
+    func execute(uid: String) async throws -> [Group] {
         let groups = try await self.userRepository.fetchUserGroup(of: uid)
         let groupIDs = groups.map { $0.groupID }
         return try await self.chatGroupsRepository.fetch(uids: groupIDs)
