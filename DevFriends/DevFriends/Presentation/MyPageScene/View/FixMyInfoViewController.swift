@@ -169,7 +169,25 @@ final class FixMyInfoViewController: DefaultViewController {
         
         self.present(sheet, animated: true)
     }
+    
+    private func makeDisableImageAlert() {
+        let alert = UIAlertController(
+            title: "선택할 수 없는 이미지입니다",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            alert.dismiss(animated: true)
+        }
+    }
 }
+
+// MARK: Image
 
 extension FixMyInfoViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
@@ -180,20 +198,7 @@ extension FixMyInfoViewController: PHPickerViewControllerDelegate {
         if itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
                 guard let image = image as? UIImage else {
-                    let alert = UIAlertController(
-                        title: "선택할 수 없는 이미지입니다",
-                        message: nil,
-                        preferredStyle: .alert
-                    )
-                    
-                    DispatchQueue.main.async {
-                        self?.present(alert, animated: true)
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                        alert.dismiss(animated: true)
-                    }
-                    
+                    self?.makeDisableImageAlert()
                     return
                 }
                 
