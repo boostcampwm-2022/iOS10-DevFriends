@@ -15,12 +15,13 @@ protocol ChatContentViewModelInput {
 
 protocol ChatContentViewModelOutput {
     var messagesSubject: CurrentValueSubject<[Message], Never> { get }
+    var group: Group { get }
 }
 
 protocol ChatContentViewModel: ChatContentViewModelInput, ChatContentViewModelOutput {}
 
 final class DefaultChatContentViewModel: ChatContentViewModel {
-    private let group: Group
+    let group: Group
     private let loadChatMessagesUseCase: LoadChatMessagesUseCase
     private let sendChatMessagesUseCase: SendChatMessagesUseCase
     
