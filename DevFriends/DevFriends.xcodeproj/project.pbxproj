@@ -26,6 +26,8 @@
 		05F22BA9292F6987002B7B74 /* ApplyGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */; };
 		4809720EDCD7BADB2BBB038E /* Pods_DevFriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DCCC336F94BF94419174FD /* Pods_DevFriendsTests.framework */; };
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
+		A63C96F22937A31300517516 /* DefaultChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F12937A31300517516 /* DefaultChatRepository.swift */; };
+		A63C96F42937A32A00517516 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F32937A32A00517516 /* ChatRepository.swift */; };
 		A648BB1D292E1B1C0018A654 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */; };
 		A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1E292E1B930018A654 /* ChatViewModel.swift */; };
 		A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB22292E1C060018A654 /* ChatContentViewModel.swift */; };
@@ -46,6 +48,9 @@
 		A648BB5C293604AD0018A654 /* AddGroupSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5B293604AD0018A654 /* AddGroupSceneDIContainer.swift */; };
 		A648BB5E293642A00018A654 /* ChooseCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5D293642A00018A654 /* ChooseCategoryViewModel.swift */; };
 		A648BB60293779740018A654 /* UITextView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB5F293779740018A654 /* UITextView+Combine.swift */; };
+		A648BB63293795FE0018A654 /* ChatResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB62293795FE0018A654 /* ChatResponseDTO+Mapping.swift */; };
+		A648BB652937966D0018A654 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB642937966D0018A654 /* Chat.swift */; };
+		A648BB67293799060018A654 /* SaveChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB66293799060018A654 /* SaveChatUseCase.swift */; };
 		A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */; };
 		A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */; };
 		A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */; };
@@ -225,6 +230,8 @@
 		837D31618E31BF1C7C65D48C /* Pods-DevFriendsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriendsTests.release.xcconfig"; path = "Target Support Files/Pods-DevFriendsTests/Pods-DevFriendsTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A479E087E3E3E0E8DFBFF7B /* Pods-DevFriends-DevFriendsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; path = "Target Support Files/Pods-DevFriends-DevFriendsUITests/Pods-DevFriends-DevFriendsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C8D73A43F6124E9E2A99737 /* Pods-DevFriends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.release.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.release.xcconfig"; sourceTree = "<group>"; };
+		A63C96F12937A31300517516 /* DefaultChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatRepository.swift; sourceTree = "<group>"; };
+		A63C96F32937A32A00517516 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 		A648BB1E292E1B930018A654 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		A648BB22292E1C060018A654 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
@@ -245,6 +252,9 @@
 		A648BB5B293604AD0018A654 /* AddGroupSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupSceneDIContainer.swift; sourceTree = "<group>"; };
 		A648BB5D293642A00018A654 /* ChooseCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryViewModel.swift; sourceTree = "<group>"; };
 		A648BB5F293779740018A654 /* UITextView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Combine.swift"; sourceTree = "<group>"; };
+		A648BB62293795FE0018A654 /* ChatResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		A648BB642937966D0018A654 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		A648BB66293799060018A654 /* SaveChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveChatUseCase.swift; sourceTree = "<group>"; };
 		A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
@@ -717,6 +727,7 @@
 				E3752EB0292F5448003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift */,
 				E3752EB2292F5448003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift */,
 				A66C7BC1292E19A60008B6FD /* LoadChatGroupsUseCase.swift */,
+				A648BB66293799060018A654 /* SaveChatUseCase.swift */,
 				FC07DDBC292CA90400D16FBC /* FetchGroupUseCase.swift */,
 				A66C7BC3292E19C70008B6FD /* SaveGroupUseCase.swift */,
 				A66C7BC5292E19F60008B6FD /* LoadChatMessagesUseCase.swift */,
@@ -737,6 +748,7 @@
 			children = (
 				E33A20E72927BADE00887EC9 /* UserRepository.swift */,
 				A66C7BBB292E19450008B6FD /* GroupRepository.swift */,
+				A63C96F32937A32A00517516 /* ChatRepository.swift */,
 				A66C7BBD292E19660008B6FD /* ChatGroupsRepository.swift */,
 				A66C7BBF292E19830008B6FD /* ChatMessagesRepository.swift */,
 				05CB4A31292DF15100A97531 /* CategoryRepository.swift */,
@@ -771,6 +783,7 @@
 				FC07DDC0292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift */,
 				A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */,
 				E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */,
+				A648BB62293795FE0018A654 /* ChatResponseDTO+Mapping.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -943,6 +956,7 @@
 				E3752EBC292F548E003C8E17 /* Notification.swift */,
 				A648BB24292E1D6F0018A654 /* Filter.swift */,
 				E3DE5491293481FC00E63898 /* UserGroup.swift */,
+				A648BB642937966D0018A654 /* Chat.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -964,6 +978,7 @@
 				05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */,
 				05CB4A2A292DF13500A97531 /* DefaultGroupCommentRepository.swift */,
 				FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */,
+				A63C96F12937A31300517516 /* DefaultChatRepository.swift */,
 				A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */,
 				A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */,
 				E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */,
@@ -1301,6 +1316,7 @@
 				E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */,
 				FC79AEC52922494F0077AE5C /* Group.swift in Sources */,
 				E33A20B7292665A700887EC9 /* GroupFilterCollectionHeaderView.swift in Sources */,
+				A648BB67293799060018A654 /* SaveChatUseCase.swift in Sources */,
 				A66C7BBE292E19660008B6FD /* ChatGroupsRepository.swift in Sources */,
 				A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
@@ -1309,6 +1325,7 @@
 				05CB4A39292DF16900A97531 /* FetchUserUseCase.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
+				A63C96F22937A31300517516 /* DefaultChatRepository.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
@@ -1330,6 +1347,7 @@
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
 				FC1545302923630500A40FD8 /* Message.swift in Sources */,
 				A648BB4F293399D10018A654 /* ChooseLocationViewController.swift in Sources */,
+				A648BB63293795FE0018A654 /* ChatResponseDTO+Mapping.swift in Sources */,
 				E3752EB8292F5449003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
 				A66C7BD7292E1A9B0008B6FD /* GroupListViewController.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
@@ -1342,6 +1360,7 @@
 				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,
+				A648BB652937966D0018A654 /* Chat.swift in Sources */,
 				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
 				E3752ECA292F5DD2003C8E17 /* DefaultNotificationRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
@@ -1376,6 +1395,7 @@
 				A648BB1D292E1B1C0018A654 /* CLLocation+Distance.swift in Sources */,
 				FC5D01A9292F54EE00292D33 /* FixMyInfoViewController.swift in Sources */,
 				A648BB50293399D10018A654 /* AddGroupViewController.swift in Sources */,
+				A63C96F42937A32A00517516 /* ChatRepository.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
 				A648BB5429339A4E0018A654 /* CommonTextView.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,

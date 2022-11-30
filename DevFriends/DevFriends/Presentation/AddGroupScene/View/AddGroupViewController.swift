@@ -58,6 +58,10 @@ final class AddGroupViewController: DefaultViewController {
     override func configureUI() {
         hideKeyboardWhenTapped()
         adjustViewToKeyboard()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         viewModel.didConfigureView()
     }
     
@@ -196,6 +200,7 @@ final class AddGroupViewController: DefaultViewController {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.didSendGroupInfo()
+                self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancellables)
     }

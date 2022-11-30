@@ -20,9 +20,25 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
         return DefaultCategoryRepository()
     }
     
+    func makeChatRepository() -> ChatRepository {
+        return DefaultChatRepository()
+    }
+    
+    func makeGroupRepository() -> GroupRepository {
+        return DefaultGroupRepository()
+    }
+    
     // MARK: UseCases
     func makeFetchCategoryUseCase() -> FetchCategoryUseCase {
         return DefaultFetchCategoryUseCase(categoryRepository: makeCategoryRepository())
+    }
+    
+    func makeSaveChatUseCase() -> SaveChatUseCase {
+        return DefaultSaveChatUseCase(chatRepository: makeChatRepository())
+    }
+    
+    func makeSaveGroupUseCase() -> SaveGroupUseCase {
+        return DefaultSaveGroupUseCase(groupRepository: makeGroupRepository())
     }
     
     // MARK: AddGroupView
@@ -31,7 +47,11 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     }
     
     func makeAddGroupViewModel(actions: AddGroupViewModelActions, groupType: GroupType) -> AddGroupViewModel {
-        return DefaultAddGroupViewModel(actions: actions, groupType: groupType)
+        return DefaultAddGroupViewModel(
+            groupType: groupType,
+            actions: actions,
+            saveChatUseCase: makeSaveChatUseCase(),
+            saveGroupUseCase: makeSaveGroupUseCase())
     }
     
     // MARK: CategoryView

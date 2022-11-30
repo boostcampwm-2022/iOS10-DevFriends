@@ -36,22 +36,31 @@ protocol AddGroupViewModel: AddGroupViewModelInput, AddGroupViewModelOutput {
     var categorySelection: [Category]? { get set }
     var locationSelection: Location? { get set }
     var title: String? { get set }
-    var limit: Int? { get set }
+    var limit: Int { get set }
     var description: String? { get set }
 }
 
 final class DefaultAddGroupViewModel: AddGroupViewModel {
     private let actions: AddGroupViewModelActions?
+    private let saveChatUseCase: SaveChatUseCase
+    private let saveGroupUseCase: SaveGroupUseCase
     var groupType: GroupType
     var categorySelection: [Category]?
     var locationSelection: Location?
     var title: String?
-    var limit: Int?
+    var limit: Int = 2
     var description: String?
     
-    init(actions: AddGroupViewModelActions, groupType: GroupType) {
-        self.actions = actions
+    init(
+        groupType: GroupType,
+        actions: AddGroupViewModelActions,
+        saveChatUseCase: SaveChatUseCase,
+        saveGroupUseCase: SaveGroupUseCase
+    ) {
         self.groupType = groupType
+        self.actions = actions
+        self.saveChatUseCase = saveChatUseCase
+        self.saveGroupUseCase = saveGroupUseCase
     }
     
     // MARK: OUTPUT
@@ -103,24 +112,26 @@ extension DefaultAddGroupViewModel {
                           profileImagePath: "",
                           categoryIDs: [],
                           appliedGroupIDs: [])
-
         guard let title = self.title,
               let categories = self.categorySelection,
               let location = self.locationSelection,
-              let limit = self.limit,
               let description = self.description else { return }
-//        let group = Group(id: son.id,
-//                          participantIDs: [son.id],
-//                          title: title,
-//                          chatID: <#T##String#>,
-//                          categoryIDs: categories,
-//                          location: location,
-//                          description: description,
-//                          time: <#T##Date#>,
-//                          like: 0,
-//                          hit: 0,
-//                          limitedNumberPeople: limit,
-//                          managerID: son.id,
-//                          type: groupType.rawValue)
+        let newChat = Chat(id: "", groupID: "")
+        let newChatID = saveChatUseCase.execute(chat: newChat)
+        let newGroup = Group(
+            id: son.id,
+            participantIDs: [son.id],
+            title: title,
+            chatID: newChatID,
+            categoryIDs: categories.map { $0.id },
+            location: location,
+            description: description,
+            time: Date(),
+            like: 0,
+            hit: 0,
+            limitedNumberPeople: limit,
+            managerID: son.id,
+            type: groupType.rawValue)
+        saveGroupUseCase.execute(group: newGroup)
     }
 }
