@@ -8,42 +8,102 @@
 import Combine
 import Foundation
 
-struct SignUpViewModelActions {}
+struct SignUpViewModelActions {
+    let showTabBarController: () -> Void
+}
 
 protocol SignUpViewModelInput {
-    func didTouchedSignUp(nickname: String, job: String, email: String)
+    func viewDidLoad()
+    func didTouchedSignUp(nickname: String, job: String?, email: String)
+    func didChangedTextInEmailTextField(text: String?)
+    func didChangedTextInNicknameTextField(text: String?)
 }
 
 protocol SignUpViewModelOutput {
-    var emailSubject: CurrentValueSubject<String?, Never> { get }
-    var nameSubject: CurrentValueSubject<String?, Never> { get }
+    var email: String? { get }
+    var name: String? { get }
+    var isProcessEnabled: PassthroughSubject<Bool, Never> { get }
 }
 
 protocol SignUpViewModel: SignUpViewModelInput, SignUpViewModelOutput {}
 
 final class DefaultSignUpViewModel: SignUpViewModel {
+    private var cancellables = Set<AnyCancellable>()
+    
     private let actions: SignUpViewModelActions?
     private let createUserUseCase: CreateUserUseCase
     
     private let uid: String
-    var emailSubject = CurrentValueSubject<String?, Never>(nil)
-    var nameSubject = CurrentValueSubject<String?, Never>(nil)
+    let email: String?
+    let name: String?
+    
+    let isProcessEnabled = PassthroughSubject<Bool, Never>()
+    let isEmailValidated = PassthroughSubject<Bool, Never>()
+    let isNicknameValidated = PassthroughSubject<Bool, Never>()
     
     init(actions: SignUpViewModelActions?, createUserUseCase: CreateUserUseCase, uid: String, email: String? = nil, name: String? = nil) {
         self.actions = actions
         self.createUserUseCase = createUserUseCase
         self.uid = uid
-        self.emailSubject.send(email)
-        self.nameSubject.send(name)
+        self.email = email
+        self.name = name
     }
 }
 
 // MARK: INPUT
 extension DefaultSignUpViewModel {
-    func didTouchedSignUp(nickname: String, job: String, email: String) {
-        // 1. CreateUserUseCase를 통해 Firestore 쪽에 document를 만든다
-        self.createUserUseCase.execute(uid: self.uid, nickname: nickname, job: job, email: email)
-        // 2. UserManager에게 User를 전달하고 UserManager에서는 해당 document를 Listen한다
-        // 3. UserManager를 필요로하는 곳에 의존성을 주입한다
+    func viewDidLoad() {
+        Publishers.CombineLatest(isEmailValidated, isNicknameValidated)
+            .map {
+                $0 && $1
+            }
+            .subscribe(isProcessEnabled)
+            .store(in: &cancellables)
+    }
+    
+    func didTouchedSignUp(nickname: String, job: String?, email: String) {
+        self.createUserUseCase.execute(
+            uid: self.uid,
+            nickname: nickname,
+            job: job ?? "",
+            email: email
+        ) { error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            UserManager.shared.login(uid: self.uid)
+            self.actions?.showTabBarController()
+        }
+    }
+    
+    func didChangedTextInEmailTextField(text: String?) {
+        guard let text = text else { return }
+        if isValidEmail(of: text) {
+            self.isEmailValidated.send(true)
+        } else {
+            self.isEmailValidated.send(false)
+        }
+    }
+    
+    func didChangedTextInNicknameTextField(text: String?) {
+        guard let text = text else { return }
+        // TODO: 닉네임 유효성 검사 진행하기
+        if !text.isEmpty {
+            self.isNicknameValidated.send(true)
+        } else {
+            self.isNicknameValidated.send(false)
+        }
+    }
+}
+
+// MARK: Private
+extension DefaultSignUpViewModel {
+    private func isValidEmail(of email: String?) -> Bool {
+        guard let email = email else { return false }
+        let emailRegEx = "[0-9a-z._%+-]+@[a-z0-9.-]+\\.[a-z]{2,64}"
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: email)
     }
 }

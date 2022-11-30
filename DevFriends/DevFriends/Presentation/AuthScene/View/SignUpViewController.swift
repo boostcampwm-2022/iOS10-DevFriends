@@ -34,6 +34,13 @@ final class SignUpViewController: DefaultViewController {
         label.font = .systemFont(ofSize: 14)
         return label
     }()
+    let jobTextField: CommonTextField = {
+        let textField = CommonTextField(placeHolder: "ex: iOS Developer")
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1).cgColor
+        textField.layer.cornerRadius = 10
+        return textField
+    }()
     let categorySelectionView: ChooseCategoryView = {
         let categorySelectionView = ChooseCategoryView()
         return categorySelectionView
@@ -56,8 +63,13 @@ final class SignUpViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        viewModel.viewDidLoad()
+        super.viewDidLoad()
+    }
+    
     override func configureUI() {
-        
+        hideKeyboardWhenTapped()
     }
     
     override func layout() {
@@ -101,9 +113,23 @@ final class SignUpViewController: DefaultViewController {
             make.left.equalToSuperview().offset(21)
         }
         
+        let jobLabel = makeTitleLabel(text: "직업")
+        view.addSubview(jobLabel)
+        jobLabel.snp.makeConstraints { make in
+            make.top.equalTo(nicknameTextField.snp.bottom).offset(32)
+            make.left.equalToSuperview().offset(21)
+        }
+        
+        view.addSubview(jobTextField)
+        jobTextField.snp.makeConstraints { make in
+            make.top.equalTo(jobLabel.snp.bottom).offset(6)
+            make.left.right.equalToSuperview().inset(12)
+            make.height.equalTo(38)
+        }
+        
         view.addSubview(categorySelectionView)
         categorySelectionView.snp.makeConstraints { make in
-            make.top.equalTo(nicknameTextField.snp.bottom).offset(27)
+            make.top.equalTo(jobTextField.snp.bottom).offset(12)
             make.left.right.equalToSuperview().inset(20)
         }
         
@@ -116,37 +142,19 @@ final class SignUpViewController: DefaultViewController {
     }
     
     override func bind() {
-        let isProcessEnabled = PassthroughSubject<Bool, Never>()
-        let isEmailEntered = PassthroughSubject<Bool, Never>()
-        let isNicknameEntered = PassthroughSubject<Bool, Never>()
-        
         emailTextField.publisher(for: \.text)
-            .print()
-            .map { self.isValidEmail(of: $0) }
-            .handleEvents(receiveOutput: {
-                switch $0 {
-                case true:
-                    self.emailValidationLabel.text = "사용할 수 있는 이메일입니다."
-                    self.emailValidationLabel.textColor = .systemGreen
-                case false:
-                    self.emailValidationLabel.text = "이메일 형식이 올바르지 않습니다."
-                    self.emailValidationLabel.textColor = .systemRed
-                }
-            })
-            .subscribe(isEmailEntered)
+            .sink {
+                self.viewModel.didChangedTextInEmailTextField(text: $0)
+            }
             .store(in: &cancellables)
         
         nicknameTextField.publisher(for: \.text)
-            .map { !($0?.isEmpty ?? true) }
-            .subscribe(isNicknameEntered)
+            .sink {
+                self.viewModel.didChangedTextInNicknameTextField(text: $0)
+            }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(isEmailEntered, isNicknameEntered)
-            .map { $0 && $1 }
-            .subscribe(isProcessEnabled)
-            .store(in: &cancellables)
-        
-        isProcessEnabled
+        viewModel.isProcessEnabled
             .sink {
                 switch $0 {
                 case true:
@@ -157,29 +165,18 @@ final class SignUpViewController: DefaultViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.emailSubject
-            .compactMap { $0 }
-            .sink {
-                self.emailTextField.text = $0
-            }
-            .store(in: &cancellables)
-        
-        viewModel.nameSubject
-            .sink {
-                self.nicknameTextField.text = $0
-            }
-            .store(in: &cancellables)
-        
         signUpButton.publisher(for: .touchUpInside)
             .sink {
-                // TODO: job은 어떻게 입력받을지 토의해보기
                 self.viewModel.didTouchedSignUp(
                     nickname: self.nicknameTextField.text ?? "",
-                    job: "iOS Developer",
+                    job: self.jobTextField.text,
                     email: self.emailTextField.text ?? ""
                 )
             }
             .store(in: &cancellables)
+        
+        self.emailTextField.text = self.viewModel.email
+        self.nicknameTextField.text = self.viewModel.name
     }
     
     private func makeTitleLabel(text: String) -> UILabel {
@@ -187,12 +184,5 @@ final class SignUpViewController: DefaultViewController {
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.text = text
         return label
-    }
-    
-    func isValidEmail(of email: String?) -> Bool {
-        guard let email = email else { return false }
-        let emailRegEx = "[0-9a-z._%+-]+@[a-z0-9.-]+\\.[a-z]{2,64}"
-        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: email)
     }
 }
