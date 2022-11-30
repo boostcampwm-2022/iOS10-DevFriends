@@ -10,6 +10,14 @@ import SnapKit
 import UIKit
 
 final class PostDetailViewController: DefaultViewController {
+    private lazy var settingButton: UIBarButtonItem = {
+        let item = UIBarButtonItem()
+        item.image = UIImage(systemName: "ellipsis")
+        item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapSettingButton)
+        return item
+    }()
     private lazy var commentTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
@@ -77,23 +85,27 @@ final class PostDetailViewController: DefaultViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
         hideKeyboardWhenTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         addKeyboardObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+         self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
         removeKeyboardObserver()
     }
     
     // MARK: - Setting
+    
+    override func configureUI() {
+        self.setupViews()
+        self.setupNavigation()
+    }
     
     override func layout() {
         view.addSubview(commentTableView)
@@ -130,6 +142,10 @@ final class PostDetailViewController: DefaultViewController {
         postAttentionView.set(info: viewModel.postAttentionInfo)
         
         viewModel.didLoadGroup()
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.rightBarButtonItems = [settingButton]
     }
     
     override func bind() {
@@ -290,5 +306,13 @@ extension PostDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = createHeaderView()
         return headerView
+    }
+}
+
+// MARK: - Actions
+
+extension PostDetailViewController {
+    @objc func didTapSettingButton(_ sender: UIButton) {
+        // MARK: 동작을 넣어주세요
     }
 }

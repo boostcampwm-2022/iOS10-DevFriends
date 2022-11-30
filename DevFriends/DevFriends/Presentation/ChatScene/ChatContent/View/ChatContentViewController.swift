@@ -68,6 +68,11 @@ class ChatContentViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
+    }
+    
     override func layout() {
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
@@ -99,12 +104,18 @@ class ChatContentViewController: DefaultViewController {
     }
     
     override func configureUI() {
+        self.view.backgroundColor = .white
         self.setupTableView()
+        self.setupNavigation()
     }
     
     private func setupTableView() {
         self.messageTableViewSnapShot.appendSections([.main])
         viewModel.didLoadMessages()
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.title = "\(viewModel.group.title)"
     }
     
     private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {
