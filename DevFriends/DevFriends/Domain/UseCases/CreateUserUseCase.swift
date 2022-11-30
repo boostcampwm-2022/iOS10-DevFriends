@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CreateUserUseCase {
-    func execute(uid: String?, nickname: String, job: String, email: String)
+    func execute(uid: String?, nickname: String, job: String, email: String, completion: @escaping (Error?) -> Void)
 }
 
 final class DefaultCreateUserUseCase: CreateUserUseCase {
@@ -18,7 +18,7 @@ final class DefaultCreateUserUseCase: CreateUserUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(uid: String?, nickname: String, job: String, email: String) {
+    func execute(uid: String?, nickname: String, job: String, email: String, completion: @escaping (Error?) -> Void) {
         let user = User(
             id: "",
             nickname: nickname,
@@ -30,7 +30,9 @@ final class DefaultCreateUserUseCase: CreateUserUseCase {
         )
         
         do {
-            try userRepository.create(uid: uid, user: user)
+            try userRepository.create(uid: uid, user: user) { error in
+                completion(error)
+            }
         } catch {
             print(error)
         }

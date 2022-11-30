@@ -33,6 +33,22 @@ extension DefaultUserRepository: UserRepository {
         }
     }
     
+    func fetch(uid: String, completion: @escaping (_ user: User) -> Void) {
+        _ = firestore
+            .collection("User")
+            .document(uid)
+            .addSnapshotListener { snapshot, error in
+                guard let snapshot = snapshot, error == nil else { fatalError("user snapshot error occured!!") }
+                
+                do {
+                    let user = try snapshot.data(as: UserResponseDTO.self)
+                    completion(user.toDomain())
+                } catch {
+                    fatalError("\(error)")
+                }
+            }
+    }
+    
     func update(userID: String, user: User) {
         do {
             let userResponseDTO = makeUserResponseDTO(user: user)
@@ -63,12 +79,16 @@ extension DefaultUserRepository: UserRepository {
         return false
     }
     
-    func create(uid: String?, user: User) throws {
+    func create(uid: String?, user: User, completion: @escaping (Error?) -> Void) throws {
         let userResponseDTO = makeUserResponseDTO(user: user)
         if let uid = uid {
-            try firestore.collection("User").document(uid).setData(from: userResponseDTO)
+            try firestore.collection("User").document(uid).setData(from: userResponseDTO) { error in
+                completion(error)
+            }
         } else {
-            try firestore.collection("User").addDocument(from: userResponseDTO)
+            try firestore.collection("User").addDocument(from: userResponseDTO) { error in
+                completion(error)
+            }
         }
     }
 }
