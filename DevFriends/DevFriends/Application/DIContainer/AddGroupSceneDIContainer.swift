@@ -43,10 +43,8 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
         return DefaultChooseCategoryViewModel(fetchCategoryUseCase: makeFetchCategoryUseCase(), actions: actions)
     }
     
-    
-    
     // MARK: LocationView
-    func makeLocationViewController() -> ChooseLocationViewController {
-        return ChooseLocationViewController()
+    func makeLocationViewController(actions: ChooseLocationViewActions) -> ChooseLocationViewController {
+        return ChooseLocationViewController(actions: actions)
     }
 }

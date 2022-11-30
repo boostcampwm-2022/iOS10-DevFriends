@@ -165,6 +165,13 @@ final class AddGroupViewController: DefaultViewController {
                 self?.chooseCategoryView.set(categories: updatedCategories)
             }
             .store(in: &cancellables)
+        
+        viewModel.didUpdateLocationSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedLocation in
+                self?.chooseLocationView.set(location: updatedLocation)
+            }
+            .store(in: &cancellables)
     }
     
     private func setStepperValue() {
@@ -176,5 +183,9 @@ final class AddGroupViewController: DefaultViewController {
 extension AddGroupViewController {
     func updateCategories(categories: [Category]) {
         self.viewModel.updateCategory(categories: categories)
+    }
+    
+    func updateLocation(location: Location) {
+        self.viewModel.updateLocation(location: location)
     }
 }

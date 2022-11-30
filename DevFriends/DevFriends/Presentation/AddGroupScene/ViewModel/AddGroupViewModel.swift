@@ -17,19 +17,23 @@ protocol AddGroupViewModelInput {
     func didCategorySelect()
     func didLocationSelect()
     func updateCategory(categories: [Category])
+    func updateLocation(location: Location)
 }
 
 protocol AddGroupViewModelOutput {
     var didUpdateCategorySubject: PassthroughSubject<[Category], Never> { get }
+    var didUpdateLocationSubject: PassthroughSubject<Location, Never> { get }
 }
 
 protocol AddGroupViewModel: AddGroupViewModelInput, AddGroupViewModelOutput {
     var categorySelection: [Category]? { get set }
+    var locationSelection: Location? { get set }
 }
 
 final class DefaultAddGroupViewModel: AddGroupViewModel {
     private let actions: AddGroupViewModelActions?
     var categorySelection: [Category]?
+    var locationSelection: Location?
     
     init(actions: AddGroupViewModelActions) {
         self.actions = actions
@@ -37,6 +41,7 @@ final class DefaultAddGroupViewModel: AddGroupViewModel {
     
     // MARK: OUTPUT
     var didUpdateCategorySubject = PassthroughSubject<[Category], Never>()
+    var didUpdateLocationSubject = PassthroughSubject<Location, Never>()
 }
 
 // MARK: INPUT
@@ -52,5 +57,10 @@ extension DefaultAddGroupViewModel {
     func updateCategory(categories: [Category]) {
         self.categorySelection = categories
         didUpdateCategorySubject.send(categories)
+    }
+    
+    func updateLocation(location: Location) {
+        self.locationSelection = location
+        didUpdateLocationSubject.send(location)
     }
 }
