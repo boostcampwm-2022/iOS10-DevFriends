@@ -73,15 +73,16 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     }
     
     // MARK: FixMyInfoView
-    private func makeFixMyInfoViewModel() -> FixMyInfoViewModel {
+    private func makeFixMyInfoViewModel(actions: FixMyInfoViewModelActions) -> FixMyInfoViewModel {
         return DefaultFixMyInfoViewModel(
+            actions: actions,
             updateUserInfoUseCase: makeUpdateUserInfoUseCase(),
             uploadProfileImageUseCase: makeUploadProfileImageUseCase(),
             fetchProfileImageUseCase: makeFetchProfileImageUseCase()
         )
     }
     
-    func makeFixMyInfoViewController() -> FixMyInfoViewController {
-        return FixMyInfoViewController(viewModel: makeFixMyInfoViewModel())
+    func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController {
+        return FixMyInfoViewController(viewModel: makeFixMyInfoViewModel(actions: actions))
     }
 }

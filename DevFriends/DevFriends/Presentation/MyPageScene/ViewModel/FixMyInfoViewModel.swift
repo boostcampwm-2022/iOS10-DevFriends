@@ -8,6 +8,11 @@
 import Combine
 import UIKit
 
+struct FixMyInfoViewModelActions {
+    let showCategoryChoice: () -> Void
+    let popFixMyInfo: () -> Void
+}
+
 protocol FixMyInfoViewModelInput {
     func didLoadUser()
     func didTapDoneButton(nickname: String, job: String)
@@ -22,6 +27,7 @@ protocol FixMyInfoViewModelOutput {
 protocol FixMyInfoViewModel: FixMyInfoViewModelInput, FixMyInfoViewModelOutput {}
 
 final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
+    private let actions: FixMyInfoViewModelActions
     private let updateUserInfoUseCase: UpdateUserInfoUseCase
     private let uploadProfileImageUseCase: UploadProfileImageUseCase
     private let fetchProfileImageUseCase: FetchProfileImageUseCase
@@ -33,10 +39,12 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
     var userJob: String
     
     init(
+        actions: FixMyInfoViewModelActions,
         updateUserInfoUseCase: UpdateUserInfoUseCase,
         uploadProfileImageUseCase: UploadProfileImageUseCase,
         fetchProfileImageUseCase: FetchProfileImageUseCase
     ) {
+        self.actions = actions
         self.updateUserInfoUseCase = updateUserInfoUseCase
         self.uploadProfileImageUseCase = uploadProfileImageUseCase
         self.fetchProfileImageUseCase = fetchProfileImageUseCase
@@ -102,5 +110,7 @@ extension DefaultFixMyInfoViewModel {
     func didTapDoneButton(nickname: String, job: String) {
         uploadImage()
         updateUser(nickname: nickname, job: job)
+        
+        actions.popFixMyInfo()
     }
 }

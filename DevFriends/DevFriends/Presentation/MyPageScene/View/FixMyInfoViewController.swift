@@ -35,14 +35,11 @@ final class FixMyInfoViewController: DefaultViewController {
     
     private lazy var fixDoneButton = CommonButton(text: "수정 완료")
     
-    private lazy var imageConfiguration: PHPickerConfiguration = {
+    private lazy var imagePicker: PHPickerViewController = {
         var config = PHPickerConfiguration()
         config.filter = .any(of: [.images])
-        return config
-    }()
-    
-    private lazy var imagePicker: PHPickerViewController = {
-        let picker = PHPickerViewController(configuration: self.imageConfiguration)
+        
+        let picker = PHPickerViewController(configuration: config)
         picker.delegate = self
         return picker
     }()
@@ -57,13 +54,6 @@ final class FixMyInfoViewController: DefaultViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupViews()
-        setupKeyboard()
     }
     
     override func layout() {
@@ -111,12 +101,14 @@ final class FixMyInfoViewController: DefaultViewController {
         }
     }
     
-    private func setupViews() {
+    override func configureUI() {
         self.view.backgroundColor = .white
         
         nicknameTextField.text = viewModel.userNickName
         jobTextField.text = viewModel.userJob
         viewModel.didLoadUser()
+        
+        setKeyboard()
     }
     
     override func bind() {
@@ -131,19 +123,7 @@ final class FixMyInfoViewController: DefaultViewController {
                     return
                 }
                 
-                let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                sheet.addAction(UIAlertAction(title: "앨범에서 선택", style: .default) {_ in
-                    guard let imagePicker = self?.imagePicker else { return }
-                    self?.present(imagePicker, animated: true)
-                })
-                sheet.addAction(UIAlertAction(title: "기본 이미지", style: .default) { _ in
-                    DispatchQueue.main.async {
-                        self?.viewModel.profileImageSubject.value = nil
-                    }
-                })
-                sheet.addAction(UIAlertAction(title: "취소", style: .cancel))
-                
-                self?.present(sheet, animated: true)
+                self?.makeImageAlertSheet()
             }
             .store(in: &cancellables)
         
@@ -152,8 +132,6 @@ final class FixMyInfoViewController: DefaultViewController {
                 guard let nickname = self?.nicknameTextField.text else { return }
                 guard let job = self?.jobTextField.text else { return }
                 self?.viewModel.didTapDoneButton(nickname: nickname, job: job)
-                
-                self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancellables)
         
@@ -174,6 +152,22 @@ final class FixMyInfoViewController: DefaultViewController {
         label.font = .systemFont(ofSize: 18, weight: .medium)
         label.text = text
         return label
+    }
+    
+    private func makeImageAlertSheet() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "앨범에서 선택", style: .default) {[weak self] _ in
+            guard let imagePicker = self?.imagePicker else { return }
+            self?.present(imagePicker, animated: true)
+        })
+        sheet.addAction(UIAlertAction(title: "기본 이미지", style: .default) {[weak self] _ in
+            DispatchQueue.main.async {
+                self?.viewModel.profileImageSubject.value = nil
+            }
+        })
+        sheet.addAction(UIAlertAction(title: "취소", style: .cancel))
+        
+        self.present(sheet, animated: true)
     }
 }
 
@@ -214,7 +208,7 @@ extension FixMyInfoViewController: PHPickerViewControllerDelegate {
 // MARK: Keyboard
 
 extension FixMyInfoViewController: UITextFieldDelegate {
-    func setupKeyboard() {
+    func setKeyboard() {
         nicknameTextField.delegate = self
         jobTextField.delegate = self
     }
