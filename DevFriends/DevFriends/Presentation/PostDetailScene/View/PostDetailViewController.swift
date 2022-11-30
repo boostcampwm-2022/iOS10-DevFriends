@@ -138,9 +138,7 @@ final class PostDetailViewController: DefaultViewController {
             postWriterInfo: viewModel.postWriterInfoSubject.value,
             postDetailContents: viewModel.postDetailContentsSubject.value
         )
-        
-        postAttentionView.set(info: viewModel.postAttentionInfo)
-        
+    
         viewModel.didLoadGroup()
     }
     
@@ -163,6 +161,13 @@ final class PostDetailViewController: DefaultViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.postAttentionInfoSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] info in
+                self?.postAttentionView.set(info: info)
+            }
+            .store(in: &cancellables)
+         
         viewModel.commentsSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] comments in
@@ -192,6 +197,12 @@ final class PostDetailViewController: DefaultViewController {
         self.postRequestButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.didTapApplyButton()
+            }
+            .store(in: &cancellables)
+        
+        self.postAttentionView.likeButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.didTapLikeButton()
             }
             .store(in: &cancellables)
         

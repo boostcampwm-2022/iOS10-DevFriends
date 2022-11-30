@@ -16,7 +16,7 @@ struct Group: Hashable {
     let location: Location
     let description: String
     let time: Date
-    let like: Int
+    var like: Int
     let hit: Int
     let limitedNumberPeople: Int
     let managerID: String
