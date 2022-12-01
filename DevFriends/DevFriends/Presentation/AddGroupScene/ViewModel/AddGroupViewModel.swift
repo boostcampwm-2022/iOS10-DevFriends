@@ -115,11 +115,12 @@ extension DefaultAddGroupViewModel {
         guard let title = self.title,
               let categories = self.categorySelection,
               let location = self.locationSelection,
-              let description = self.description else { return }
+              let description = self.description else { return } // TODO: alert 띄우기
+        // Group을 먼저 만들고, Chat은 groupID를 ID로 이후에 만들기
         let newChat = Chat(id: "", groupID: "")
         let newChatID = saveChatUseCase.execute(chat: newChat)
         let newGroup = Group(
-            id: son.id,
+            id: "",
             participantIDs: [son.id],
             title: title,
             chatID: newChatID,
@@ -133,5 +134,6 @@ extension DefaultAddGroupViewModel {
             managerID: son.id,
             type: groupType.rawValue)
         saveGroupUseCase.execute(group: newGroup)
+        // TODO: User - Group 컬렉션에 해당 그룹 추가해줘야 함
     }
 }

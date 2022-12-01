@@ -41,24 +41,27 @@ final class AddGroupCoordinator: Coordinator {
 
 extension AddGroupCoordinator {
     func showCategoryViewController() {
-        let actions = ChooseCategoryViewModelActions(didDisappearCategoryView: updateCategorySelection)
+        let actions = ChooseCategoryViewModelActions(didSubmitCategory: didSubmitCategorySelection)
         let categoryViewController = dependencies.makeCategoryViewController(actions: actions)
         navigationController.pushViewController(categoryViewController, animated: true)
     }
     
     func showLocationViewController() {
-        let actions = ChooseLocationViewActions(didDisappearLocationView: updateLocationSelection)
+        let actions = ChooseLocationViewActions(didSubmitLocation: didSubmitLocationSelection)
         let locationViewController = dependencies.makeLocationViewController(actions: actions)
         navigationController.pushViewController(locationViewController, animated: true)
     }
     
-    func updateCategorySelection(updatedCategories: [Category]) {
+    func didSubmitCategorySelection(updatedCategories: [Category]) {
+        navigationController.popViewController(animated: true)
         guard let addGroupViewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
         addGroupViewController.updateCategories(categories: updatedCategories)
     }
     
-    func updateLocationSelection(updatedLocation: Location) {
+    func didSubmitLocationSelection(updatedLocation: Location) {
+        navigationController.popViewController(animated: true)
         guard let addGroupViewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
         addGroupViewController.updateLocation(location: updatedLocation)
+
     }
 }

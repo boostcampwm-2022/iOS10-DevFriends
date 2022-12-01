@@ -61,11 +61,6 @@ final class ChooseCategoryViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.viewModel.sendCategorySelection()
-    }
-    
     override func layout() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
@@ -102,7 +97,7 @@ final class ChooseCategoryViewController: DefaultViewController {
     override func bind() {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.viewModel.sendCategorySelection()
             }
             .store(in: &cancellables)
         

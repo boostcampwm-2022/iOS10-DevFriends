@@ -83,10 +83,10 @@ final class ChooseLocationView: UIView, ChooseLocationOutput {
     }
     
     func set(location: Location) {
-        Task {
+        Task { [weak self] in
             let placemark = try await CLLocation(latitude: location.latitude, longitude: location.longitude)
                 .placemark()
-            self.locationLabel.text = placemark
+            self?.locationLabel.text = placemark
         }
     }
 }

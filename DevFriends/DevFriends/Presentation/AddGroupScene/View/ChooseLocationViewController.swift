@@ -11,7 +11,7 @@ import SnapKit
 import UIKit
 
 struct ChooseLocationViewActions {
-    let didDisappearLocationView: (Location) -> Void
+    let didSubmitLocation: (Location) -> Void
 }
 
 final class ChooseLocationViewController: DefaultViewController {
@@ -96,11 +96,6 @@ final class ChooseLocationViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.actions.didDisappearLocationView(self.centerLocation)
-    }
-    
     override func configureUI() {
         view.backgroundColor = .white
         self.setupTapGesture()
@@ -120,7 +115,9 @@ final class ChooseLocationViewController: DefaultViewController {
             .store(in: &cancellables)
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                if let location = self?.centerLocation {
+                    self?.actions.didSubmitLocation(location)
+                }
             }
             .store(in: &cancellables)
     }

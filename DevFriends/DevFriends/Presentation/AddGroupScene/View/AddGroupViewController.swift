@@ -10,6 +10,7 @@ import SnapKit
 import UIKit
 
 final class AddGroupViewController: DefaultViewController {
+    // TODO: 뷰 전체 스크롤뷰로 한번 감싸기
     private lazy var titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
@@ -169,10 +170,9 @@ final class AddGroupViewController: DefaultViewController {
             .store(in: &cancellables)
         
         descriptionTextView.textPublisher
+            .compactMap { $0 }
             .sink { [weak self] text in
-                if let text = text {
-                    self?.viewModel.didDescriptionChanged(text: text)
-                }
+                self?.viewModel.didDescriptionChanged(text: text)
             }
             .store(in: &cancellables)
         

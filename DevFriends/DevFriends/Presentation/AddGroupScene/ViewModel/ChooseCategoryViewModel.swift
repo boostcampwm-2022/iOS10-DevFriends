@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 struct ChooseCategoryViewModelActions {
-    let didDisappearCategoryView: ([Category]) -> Void
+    let didSubmitCategory: ([Category]) -> Void
 }
 
 protocol ChooseCategoryViewModelInput {
@@ -54,7 +54,7 @@ extension DefaultChooseCategoryViewModel {
     }
     
     func sendCategorySelection() {
-        actions?.didDisappearCategoryView(self.categoryFilter)
+        actions?.didSubmitCategory(self.categoryFilter)
     }
     
     func addCategory(category: Category) {
