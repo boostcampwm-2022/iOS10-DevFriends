@@ -106,12 +106,15 @@ extension DefaultAddGroupViewModel {
     }
     
     func didSendGroupInfo() {
-        let son = User(id: "nqQW9nOes6UPXRCjBuCy",
-                          nickname: "흥민 손",
-                          job: "EPL득점왕",
-                          profileImagePath: "",
-                          categoryIDs: [],
-                          appliedGroupIDs: [])
+        let son = User(
+            id: "nqQW9nOes6UPXRCjBuCy",
+            nickname: "흥민 손",
+            job: "EPL득점왕",
+            profileImagePath: "",
+            categoryIDs: [],
+            appliedGroupIDs: [],
+            likeGroupIDs: []
+        )
         guard let title = self.title,
               let categories = self.categorySelection,
               let location = self.locationSelection,
