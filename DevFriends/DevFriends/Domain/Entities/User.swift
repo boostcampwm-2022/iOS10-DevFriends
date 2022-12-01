@@ -9,9 +9,9 @@ import Foundation
 
 struct User {
     let id: String
-    let nickname: String
-    let job: String
-    let profileImagePath: String
+    var nickname: String
+    var job: String
+    var profileImagePath: String
     let categoryIDs: [String]
     var appliedGroupIDs: [String]
     var likeGroupIDs: [String]
