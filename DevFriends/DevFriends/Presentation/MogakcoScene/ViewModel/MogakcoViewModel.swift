@@ -40,9 +40,9 @@ final class MogakcoViewModel: MogakcoViewModelType {
     private var nowMogakco: Group?
     
     private let fetchGroupUseCase: FetchGroupUseCase
-    private let actions: MogakcoViewModelActions?
+    private let actions: MogakcoViewModelActions
     
-    init(fetchGroupUseCase: FetchGroupUseCase, actions: MogakcoViewModelActions? = nil) {
+    init(fetchGroupUseCase: FetchGroupUseCase, actions: MogakcoViewModelActions) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.actions = actions
     }
@@ -86,10 +86,10 @@ final class MogakcoViewModel: MogakcoViewModelType {
     
     func didSelectNowMogakco() {
         guard let nowMogakco = self.nowMogakco else { return }
-        actions?.showGroupDetail(nowMogakco)
+        actions.showGroupDetail(nowMogakco)
     }
     
     func didSelectNotifications() {
-        actions?.showNotifications()
+        actions.showNotifications()
     }
 }

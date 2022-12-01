@@ -11,7 +11,7 @@ import SnapKit
 import UIKit
 
 final class MogakcoViewController: DefaultViewController {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모각코"
         label.font = .systemFont(ofSize: 25, weight: .bold)
@@ -20,7 +20,7 @@ final class MogakcoViewController: DefaultViewController {
     
     private lazy var groupAddButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "plus")
+        item.image = .plus
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapMogakcoAddButton)
@@ -29,7 +29,7 @@ final class MogakcoViewController: DefaultViewController {
     
     private lazy var notificationButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "bell")
+        item.image = .bell
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapNotificationButton)
@@ -43,9 +43,9 @@ final class MogakcoViewController: DefaultViewController {
         return mapView
     }()
     
-    private lazy var currentLocationButton: UIButton = {
+    private let currentLocationButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "scope")
+        configuration.image = .scope
         configuration.baseForegroundColor = .black
         configuration.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
         let button = UIButton(configuration: configuration, primaryAction: nil)
@@ -59,9 +59,9 @@ final class MogakcoViewController: DefaultViewController {
         return button
     }()
     
-    private lazy var viewModeButton: UIButton = {
+    private let viewModeButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "line.3.horizontal")
+        configuration.image = .viewMode
         configuration.baseForegroundColor = .black
         configuration.imagePlacement = .leading
         configuration.imagePadding = 5
@@ -78,7 +78,7 @@ final class MogakcoViewController: DefaultViewController {
         return button
     }()
     
-    private lazy var searchOnCurrentLocationButton: UIButton = {
+    private let searchOnCurrentLocationButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.title = "현 지도에서 검색"
         configuration.baseForegroundColor = .orange
@@ -262,7 +262,8 @@ final class MogakcoViewController: DefaultViewController {
                 latitudeValue: group.location.latitude,
                 longitudeValue: group.location.longitude,
                 delta: 0.1,
-                title: group.title)
+                title: group.title
+            )
         }
     }
     
