@@ -53,10 +53,7 @@ final class GroupListViewController: DefaultViewController {
     }()
     
     private lazy var collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo> (
-        collectionView: self.collectionView) {
-            collectionView,
-            indexPath,
-            data -> UICollectionViewCell? in
+        collectionView: self.collectionView) { collectionView, indexPath, data -> UICollectionViewCell? in
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }

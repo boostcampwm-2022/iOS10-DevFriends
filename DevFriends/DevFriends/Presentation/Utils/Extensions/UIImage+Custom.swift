@@ -13,4 +13,6 @@ extension UIImage {
     static var disclosure = UIImage(systemName: "chevron.right")
     static var plus = UIImage(systemName: "plus")
     static var bell = UIImage(systemName: "bell")
+    static var scope = UIImage(systemName: "scope")
+    static var viewMode = UIImage(systemName: "line.3.horizontal")
 }
