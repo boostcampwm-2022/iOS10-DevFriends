@@ -10,8 +10,7 @@ import SnapKit
 import UIKit
 
 final class AddGroupViewController: DefaultViewController {
-    private let groupType: GroupType
-    
+    // TODO: 뷰 전체 스크롤뷰로 한번 감싸기
     private lazy var titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
@@ -46,8 +45,10 @@ final class AddGroupViewController: DefaultViewController {
     
     private lazy var submitButton = CommonButton(text: "작성 완료")
     
-    init(groupType: GroupType) {
-        self.groupType = groupType
+    // MARK: - Init
+    private let viewModel: AddGroupViewModel
+    init(viewModel: AddGroupViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,9 +57,13 @@ final class AddGroupViewController: DefaultViewController {
     }
     
     override func configureUI() {
-        titleTextField.placeholder = "\(groupType.rawValue) 제목"
         hideKeyboardWhenTapped()
         adjustViewToKeyboard()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.didConfigureView()
     }
     
     override func layout() {
@@ -138,15 +143,23 @@ final class AddGroupViewController: DefaultViewController {
     }
     
     override func bind() {
+        titleTextField.publisher(for: .editingDidEnd)
+            .sink { [weak self] _ in
+                if let title = self?.titleTextField.text {
+                    self?.viewModel.didTitleEdited(title: title)
+                }
+            }
+            .store(in: &cancellables)
+        
         chooseCategoryView.didTouchViewSubject
             .sink { [weak self] _ in
-                self?.showChooseCategoryView()
+                self?.viewModel.didCategorySelect()
             }
             .store(in: &cancellables)
 
         chooseLocationView.didTouchViewSubject
             .sink { [weak self] _ in
-                self?.showChooseLocationView()
+                self?.viewModel.didLocationSelect()
             }
             .store(in: &cancellables)
         
@@ -155,19 +168,56 @@ final class AddGroupViewController: DefaultViewController {
                 self?.setStepperValue()
             }
             .store(in: &cancellables)
-    }
-    
-    private func showChooseCategoryView() {
-        let chooseCategoryView = ChooseCategoryViewController()
-        self.present(chooseCategoryView, animated: true)
-    }
-    
-    private func showChooseLocationView() {
-        let chooseLocationView = ChooseLocationViewController()
-        self.present(chooseLocationView, animated: true)
+        
+        descriptionTextView.textPublisher
+            .compactMap { $0 }
+            .sink { [weak self] text in
+                self?.viewModel.didDescriptionChanged(text: text)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didUpdateGroupTypeSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] groupType in
+                self?.titleTextField.placeholder = "\(groupType.rawValue) 제목"
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didUpdateCategorySubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedCategories in
+                self?.chooseCategoryView.set(categories: updatedCategories)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didUpdateLocationSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedLocation in
+                self?.chooseLocationView.set(location: updatedLocation)
+            }
+            .store(in: &cancellables)
+        
+        submitButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.didSendGroupInfo()
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancellables)
     }
     
     private func setStepperValue() {
         peopleNumberLabel.text = Int(limitPeopleStepper.value).description
+        self.viewModel.didLimitPeopleChanged(limit: Int(limitPeopleStepper.value))
+    }
+}
+
+// CategoryView에서 가져온 Category 정보 업데이트
+extension AddGroupViewController {
+    func updateCategories(categories: [Category]) {
+        self.viewModel.updateCategory(categories: categories)
+    }
+    
+    func updateLocation(location: Location) {
+        self.viewModel.updateLocation(location: location)
     }
 }

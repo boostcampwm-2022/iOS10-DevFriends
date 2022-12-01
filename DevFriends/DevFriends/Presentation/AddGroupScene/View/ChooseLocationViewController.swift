@@ -10,6 +10,10 @@ import MapKit
 import SnapKit
 import UIKit
 
+struct ChooseLocationViewActions {
+    let didSubmitLocation: (Location) -> Void
+}
+
 final class ChooseLocationViewController: DefaultViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -75,6 +79,23 @@ final class ChooseLocationViewController: DefaultViewController {
     private var isFirstLoadingMap = true
     private var isFirstMovingMap = true
     
+    var centerLocation: Location {
+        get {
+            return Location(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+        }
+    }
+
+    private let actions: ChooseLocationViewActions
+
+    init(actions: ChooseLocationViewActions) {
+        self.actions = actions
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func configureUI() {
         view.backgroundColor = .white
         self.setupTapGesture()
@@ -90,6 +111,13 @@ final class ChooseLocationViewController: DefaultViewController {
         currentLocationButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.setUserLocation()
+            }
+            .store(in: &cancellables)
+        submitButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                if let location = self?.centerLocation {
+                    self?.actions.didSubmitLocation(location)
+                }
             }
             .store(in: &cancellables)
     }
@@ -144,8 +172,9 @@ extension ChooseLocationViewController: CLLocationManagerDelegate, MKMapViewDele
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             manager.stopUpdatingLocation()
-            let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                    longitude: location.coordinate.longitude)
+            let coordinate = CLLocationCoordinate2D(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude)
             let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: coordinate, span: span)
             mapView.setRegion(region, animated: false)
@@ -165,6 +194,7 @@ extension ChooseLocationViewController: CLLocationManagerDelegate, MKMapViewDele
     }
     
     func setUserLocation() {
+        print(mapView.centerCoordinate)
         // TODO: 뭔가 애니메이션 효과가 있으면 좋을 듯
         locationManager.startUpdatingLocation()
     }

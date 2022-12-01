@@ -186,7 +186,6 @@ final class GroupListViewController: DefaultViewController {
     }
     
     private func populateSnapShot(data: [GroupCellInfo], to section: GroupListSection) {
-        print("populate", section)
         let oldItem = self.collectionViewSnapShot.itemIdentifiers(inSection: section)
         self.collectionViewSnapShot.deleteItems(oldItem)
         self.collectionViewSnapShot.appendItems(data, toSection: section)
@@ -229,18 +228,13 @@ extension GroupListViewController {
             preferredStyle: .actionSheet
         )
         
+        // DH: weak self
         let actionProject = UIAlertAction(title: "프로젝트", style: .default) { _ in
-            print("프로젝트 모임 생성")
-            let addGroupViewController = AddGroupViewController(groupType: .project)
-            addGroupViewController.view.backgroundColor = .white
-            self.navigationController?.pushViewController(addGroupViewController, animated: true)
+            self.viewModel.didSelectAdd(groupType: .project)
         }
         
         let actionStudy = UIAlertAction(title: "스터디", style: .default) { _ in
-            print("스터디 모임 생성")
-            let addGroupViewController = AddGroupViewController(groupType: .study)
-            addGroupViewController.view.backgroundColor = .white
-            self.navigationController?.pushViewController(addGroupViewController, animated: true)
+            self.viewModel.didSelectAdd(groupType: .study)
         }
         
         let actionCancel = UIAlertAction(title: "취소", style: .cancel)
