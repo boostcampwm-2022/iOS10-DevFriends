@@ -15,4 +15,5 @@ extension UIImage {
     static var bell = UIImage(systemName: "bell")
     static var scope = UIImage(systemName: "scope")
     static var viewMode = UIImage(systemName: "line.3.horizontal")
+    static var gearshape = UIImage(systemName: "gearshape")
 }
