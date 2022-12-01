@@ -90,7 +90,8 @@ extension DefaultUserRepository {
             job: user.job,
             profileImagePath: user.profileImagePath,
             categories: user.categoryIDs,
-            appliedGroups: user.appliedGroupIDs
+            appliedGroups: user.appliedGroupIDs,
+            likeGroups: user.likeGroupIDs
         )
     }
     

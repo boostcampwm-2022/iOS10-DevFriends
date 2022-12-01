@@ -14,4 +14,5 @@ struct User {
     var profileImagePath: String
     let categoryIDs: [String]
     var appliedGroupIDs: [String]
+    var likeGroupIDs: [String]
 }

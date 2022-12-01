@@ -9,7 +9,7 @@ import UIKit
 
 struct MogakcoSceneDIContainer {
     // MARK: Flow Coordinators
-    func makeChatFlowCoordinator(navigationController: UINavigationController) -> MogakcoCoordinator {
+    func makeMogakcoFlowCoordinator(navigationController: UINavigationController) -> MogakcoCoordinator {
         return MogakcoCoordinator(navigationController: navigationController, dependencies: self)
     }
 }
@@ -53,6 +53,10 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return DefaultFetchCommentsUseCase(commentRepository: makeGroupCommentRepository())
     }
     
+    private func makeUpdateLikeUseCase() -> UpdateLikeUseCase {
+        return DefaultUpdateLikeUseCase(userRepository: makeUserRepository(), groupRepository: makeGroupRepository())
+    }
+    
     private func makeApplyGroupUseCase() -> ApplyGroupUseCase {
         return DefaultApplyGroupUseCase(userRepository: makeUserRepository())
     }
@@ -94,6 +98,7 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
             fetchCommentsUseCase: makeFetchCommentsUseCase(),
             applyGroupUseCase: makeApplyGroupUseCase(),
             sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
+            updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
             sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
         )
@@ -103,3 +108,5 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return PostDetailViewController(viewModel: makePostDetailViewModel(group: group))
     }
 }
+
+extension MogakcoSceneDIContainer: NotificationSceneDIContainer {}

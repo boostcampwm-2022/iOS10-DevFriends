@@ -53,3 +53,5 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultGroupFilterViewModel(fetchCategoryUseCase: makeFetchCategoryUseCase(), actions: actions)
     }
 }
+
+extension GroupSceneDIContainer: NotificationSceneDIContainer {}

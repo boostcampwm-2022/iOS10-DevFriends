@@ -10,6 +10,13 @@ import SnapKit
 import UIKit
 
 final class ChatViewController: DefaultViewController {
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "채팅"
+        label.font = .systemFont(ofSize: 25, weight: .bold)
+        return label
+    }()
+    
     private lazy var chatTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
@@ -46,6 +53,7 @@ final class ChatViewController: DefaultViewController {
     
     override func configureUI() {
         self.setupTableView()
+        self.setupNavigation()
     }
     
     override func layout() {
@@ -76,6 +84,10 @@ final class ChatViewController: DefaultViewController {
     private func populateSnapshot(data: [Group]) {
         self.chatTableViewSnapShot.appendItems(data)
         self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
 }
 

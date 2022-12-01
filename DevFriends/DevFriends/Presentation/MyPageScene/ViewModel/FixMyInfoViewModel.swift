@@ -55,7 +55,8 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
             job: "EPL득점왕",
             profileImagePath: "nqQW9nOes6UPXRCjBuCy",
             categoryIDs: [],
-            appliedGroupIDs: []
+            appliedGroupIDs: [],
+            likeGroupIDs: []
         )
         
         userNickName = localUser.nickname
