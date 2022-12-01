@@ -76,7 +76,7 @@ extension DefaultGroupListViewModel {
     }
     
     func updateFilter(filter: Filter) {
-        self.groupFilter = filter
+        groupFilter = filter
     }
     
     func didSelectNotifications() {

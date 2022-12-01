@@ -8,8 +8,8 @@
 import Combine
 import UIKit
 
-class ChatContentViewController: DefaultViewController {
-    private lazy var messageTableView: UITableView = {
+final class ChatContentViewController: DefaultViewController {
+    private let messageTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.register(
@@ -26,9 +26,9 @@ class ChatContentViewController: DefaultViewController {
     private lazy var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message> = {
         let diffableDataSource = UITableViewDiffableDataSource<Section, Message>(
             tableView: messageTableView
-        ) { tableView, indexPath, data -> UITableViewCell in
+        ) { [weak self] tableView, indexPath, data -> UITableViewCell in
             if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
-                let cell = self.createMyMessageTableViewCell(
+                let cell = self?.createMyMessageTableViewCell(
                     tableView: tableView,
                     indexPath: indexPath,
                     data: data
@@ -36,7 +36,7 @@ class ChatContentViewController: DefaultViewController {
                 cell.selectionStyle = .none
                 return cell
             } else {
-                let cell = self.createFriendMessageTableViewCell(
+                let cell = self?.createFriendMessageTableViewCell(
                     tableView: tableView,
                     indexPath: indexPath,
                     data: data
@@ -92,12 +92,12 @@ class ChatContentViewController: DefaultViewController {
         self.hideKeyboardWhenTappedAround()
         viewModel.messagesSubject
             .receive(on: RunLoop.main)
-            .sink { messages in
-                self.populateSnapshot(data: messages)
+            .sink { [weak self] messages in
+                self?.populateSnapshot(data: messages)
                 
                 if !messages.isEmpty {
                     let indexPath = IndexPath(row: messages.count - 1, section: 0)
-                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    self?.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)
