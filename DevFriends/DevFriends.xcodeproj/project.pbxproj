@@ -121,7 +121,6 @@
 		E33A20D52926665E00887EC9 /* UIImage+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20CA2926665E00887EC9 /* UIImage+Custom.swift */; };
 		E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20CB2926665E00887EC9 /* UIView+Combine.swift */; };
 		E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20CD2926665E00887EC9 /* ReusableType.swift */; };
-		E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */; };
 		E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E72927BADE00887EC9 /* UserRepository.swift */; };
 		E33A20EA2927BB1000887EC9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E92927BB1000887EC9 /* User.swift */; };
 		E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */; };
@@ -326,7 +325,6 @@
 		E33A20CA2926665E00887EC9 /* UIImage+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Custom.swift"; sourceTree = "<group>"; };
 		E33A20CB2926665E00887EC9 /* UIView+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
 		E33A20CD2926665E00887EC9 /* ReusableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableType.swift; sourceTree = "<group>"; };
-		E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
 		E33A20E72927BADE00887EC9 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		E33A20E92927BB1000887EC9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
@@ -694,7 +692,6 @@
 				FC5D0194292F512300292D33 /* UIColor+Custom.swift */,
 				E33A20CA2926665E00887EC9 /* UIImage+Custom.swift */,
 				E33A20CB2926665E00887EC9 /* UIView+Combine.swift */,
-				E33A20D9292667CB00887EC9 /* UIViewController+HideKeyboard.swift */,
 				A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */,
 				FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */,
 				A648BB5F293779740018A654 /* UITextView+Combine.swift */,
@@ -1364,7 +1361,6 @@
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */,
 				E33A20EA2927BB1000887EC9 /* User.swift in Sources */,
-				E33A20DA292667CB00887EC9 /* UIViewController+HideKeyboard.swift in Sources */,
 				E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,
 				A648BB652937966D0018A654 /* Chat.swift in Sources */,
@@ -1379,7 +1375,6 @@
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
-				A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,

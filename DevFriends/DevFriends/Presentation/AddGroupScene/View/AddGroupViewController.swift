@@ -57,7 +57,7 @@ final class AddGroupViewController: DefaultViewController {
     }
     
     override func configureUI() {
-        hideKeyboardWhenTapped()
+        hideKeyboardWhenTappedAround()
         adjustViewToKeyboard()
     }
     

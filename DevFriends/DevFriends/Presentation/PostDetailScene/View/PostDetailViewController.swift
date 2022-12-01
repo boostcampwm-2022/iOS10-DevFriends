@@ -103,7 +103,7 @@ final class PostDetailViewController: DefaultViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hideKeyboardWhenTapped()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
