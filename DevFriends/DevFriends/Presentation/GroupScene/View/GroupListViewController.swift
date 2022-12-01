@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 final class GroupListViewController: DefaultViewController {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모임"
         label.font = .systemFont(ofSize: 25, weight: .bold)
@@ -19,7 +19,7 @@ final class GroupListViewController: DefaultViewController {
     
     private lazy var groupAddButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "plus")
+        item.image = .plus
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapGroupAddButton)
@@ -28,7 +28,7 @@ final class GroupListViewController: DefaultViewController {
     
     private lazy var notificationButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "bell")
+        item.image = .bell
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapNotificationButton)
@@ -52,8 +52,11 @@ final class GroupListViewController: DefaultViewController {
         return collectionView
     }()
     
-    private lazy var collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo>(
-        collectionView: self.collectionView) { collectionView, indexPath, data -> UICollectionViewCell? in
+    private lazy var collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo> (
+        collectionView: self.collectionView) {
+            collectionView,
+            indexPath,
+            data -> UICollectionViewCell? in
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
@@ -61,15 +64,15 @@ final class GroupListViewController: DefaultViewController {
         return cell
     }
     
-    private lazy var collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()
+    private var collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()
                                                                                            
-    private lazy var compositionalLayout: UICollectionViewCompositionalLayout = {
+    private let compositionalLayout: UICollectionViewCompositionalLayout = {
         let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             
             let screenSize = UIScreen.main.bounds.size
             let padding = screenSize.width * 0.05
             
-            if sectionNumber == 0 {
+            if sectionNumber == GroupListSection.recommand.rawValue {
                 let item = NSCollectionLayoutItem(
                     layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 )
@@ -169,15 +172,20 @@ final class GroupListViewController: DefaultViewController {
     }
     
     private func setupCollectionViewHeader() {
-        self.collectionViewDiffableDataSource.supplementaryViewProvider = { (collectionView: UICollectionView, _: String, indexPath: IndexPath) -> UICollectionReusableView? in
+        self.collectionViewDiffableDataSource.supplementaryViewProvider = {
+            [weak self] (collectionView: UICollectionView,
+                         _: String,
+                         indexPath: IndexPath
+            ) -> UICollectionReusableView? in
+            guard let self = self else { return UICollectionReusableView() }
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier,
                 for: indexPath) as? GroupCollectionHeaderView else { return UICollectionReusableView() }
             
-            if indexPath.section == 0 {
+            if indexPath.section == GroupListSection.recommand.rawValue {
                 header.set(title: "추천 모임")
-            } else if indexPath.section == 1 {
+            } else if indexPath.section == GroupListSection.filtered.rawValue {
                 header.set(title: "모집중인 모임", self, #selector(self.didTapFilterButton))
             }
             
@@ -200,15 +208,15 @@ final class GroupListViewController: DefaultViewController {
     override func bind() {
         viewModel.recommandGroupsSubject
             .receive(on: RunLoop.main)
-            .sink { groupList in
-                self.populateSnapShot(data: groupList, to: .recommand)
+            .sink { [weak self] groupList in
+                self?.populateSnapShot(data: groupList, to: .recommand)
             }
             .store(in: &cancellables)
         
         viewModel.filteredGroupsSubject
             .receive(on: RunLoop.main)
-            .sink { groupList in
-                self.populateSnapShot(data: groupList, to: .filtered)
+            .sink { [weak self] groupList in
+                self?.populateSnapShot(data: groupList, to: .filtered)
             }
             .store(in: &cancellables)
     }
@@ -228,13 +236,12 @@ extension GroupListViewController {
             preferredStyle: .actionSheet
         )
         
-        // DH: weak self
-        let actionProject = UIAlertAction(title: "프로젝트", style: .default) { _ in
-            self.viewModel.didSelectAdd(groupType: .project)
+        let actionProject = UIAlertAction(title: "프로젝트", style: .default) { [weak self] _ in
+            self?.viewModel.didSelectAdd(groupType: .project)
         }
         
-        let actionStudy = UIAlertAction(title: "스터디", style: .default) { _ in
-            self.viewModel.didSelectAdd(groupType: .study)
+        let actionStudy = UIAlertAction(title: "스터디", style: .default) { [weak self] _ in
+            self?.viewModel.didSelectAdd(groupType: .study)
         }
         
         let actionCancel = UIAlertAction(title: "취소", style: .cancel)

@@ -47,7 +47,8 @@ extension GroupListCoordinator {
         let addGroupDIContainer = dependencies.makeAddGroupSceneDIContainer()
         let flow = addGroupDIContainer.makeAddGroupFlowCoordinator(
             navigationController: self.navigationController,
-            groupType: groupType)
+            groupType: groupType
+        )
         flow.start()
         childCoordinators.append(flow)
     }

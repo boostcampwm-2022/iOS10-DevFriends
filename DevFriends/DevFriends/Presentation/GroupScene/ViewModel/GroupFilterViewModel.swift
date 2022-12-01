@@ -45,7 +45,7 @@ final class DefaultGroupFilterViewModel: GroupFilterViewModel {
     var categoryFilter: [String] = []
     
     private let fetchCategoryUseCase: FetchCategoryUseCase
-    private let actions: GroupFilterViewModelActions?
+    private let actions: GroupFilterViewModelActions
     
     init(fetchCategoryUseCase: FetchCategoryUseCase, actions: GroupFilterViewModelActions) {
         self.fetchCategoryUseCase = fetchCategoryUseCase
@@ -65,32 +65,39 @@ extension DefaultGroupFilterViewModel {
             didUpdateFilterSubject.send()
         }
     }
+    
     func sendFilter(filter: Filter) {
-        actions?.didDisappearFilterView(filter)
+        actions.didDisappearFilterView(filter)
     }
+    
     func initFilter(filter: Filter) {
         self.alignFilter = filter.alignFilter
         self.groupFilter = filter.groupFilter
         self.categoryFilter = filter.categoryFilter
         didUpdateFilterSubject.send()
     }
+    
     func setAlignFilter(type: AlignType) {
         self.alignFilter = type
         didUpdateFilterSubject.send()
     }
+    
     func setGroupFilter(type: GroupType) {
         self.groupFilter = type
         didUpdateFilterSubject.send()
     }
+    
     func removeAllGroupFilter() {
         self.groupFilter = nil
         didUpdateFilterSubject.send()
     }
+    
     func setCategoryFilter(category: String) {
         guard !self.categoryFilter.contains(category) else { return }
         self.categoryFilter.append(category)
         didUpdateFilterSubject.send()
     }
+    
     func removeCategoryFilter(category: String) {
         if let index = self.categoryFilter.firstIndex(of: category) {
             self.categoryFilter.remove(at: index)
