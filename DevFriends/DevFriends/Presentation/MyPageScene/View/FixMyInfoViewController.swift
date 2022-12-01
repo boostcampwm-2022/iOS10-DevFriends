@@ -23,6 +23,7 @@ final class FixMyInfoViewController: DefaultViewController {
         let textField = UITextField()
         textField.placeholder = "닉네임을 입력해주세요 or 사용자 이름"
         textField.borderStyle = .roundedRect
+        textField.delegate = self
         return textField
     }()
     
@@ -30,10 +31,11 @@ final class FixMyInfoViewController: DefaultViewController {
         let textField = UITextField()
         textField.placeholder = "직업을 입력해주세요"
         textField.borderStyle = .roundedRect
+        textField.delegate = self
         return textField
     }()
     
-    private lazy var fixDoneButton = CommonButton(text: "수정 완료")
+    private let fixDoneButton = CommonButton(text: "수정 완료")
     
     private lazy var imagePicker: PHPickerViewController = {
         var config = PHPickerConfiguration()
@@ -107,8 +109,6 @@ final class FixMyInfoViewController: DefaultViewController {
         nicknameTextField.text = viewModel.userNickName
         jobTextField.text = viewModel.userJob
         viewModel.didLoadUser()
-        
-        setKeyboard()
     }
     
     override func bind() {
@@ -156,11 +156,11 @@ final class FixMyInfoViewController: DefaultViewController {
     
     private func makeImageAlertSheet() {
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        sheet.addAction(UIAlertAction(title: "앨범에서 선택", style: .default) {[weak self] _ in
+        sheet.addAction(UIAlertAction(title: "앨범에서 선택", style: .default) { [weak self] _ in
             guard let imagePicker = self?.imagePicker else { return }
             self?.present(imagePicker, animated: true)
         })
-        sheet.addAction(UIAlertAction(title: "기본 이미지", style: .default) {[weak self] _ in
+        sheet.addAction(UIAlertAction(title: "기본 이미지", style: .default) { [weak self] _ in
             DispatchQueue.main.async {
                 self?.viewModel.profileImageSubject.value = nil
             }
@@ -177,8 +177,8 @@ final class FixMyInfoViewController: DefaultViewController {
             preferredStyle: .alert
         )
         
-        DispatchQueue.main.async {
-            self.present(alert, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
         }
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
@@ -213,11 +213,6 @@ extension FixMyInfoViewController: PHPickerViewControllerDelegate {
 // MARK: Keyboard
 
 extension FixMyInfoViewController: UITextFieldDelegate {
-    func setKeyboard() {
-        nicknameTextField.delegate = self
-        jobTextField.delegate = self
-    }
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let currentYPosition: CGFloat
         

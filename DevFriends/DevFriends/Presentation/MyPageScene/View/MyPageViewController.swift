@@ -19,7 +19,7 @@ final class MyPageViewController: DefaultViewController {
     
     private lazy var settingButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "gearshape")
+        item.image = .gearshape
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapSettingButton)

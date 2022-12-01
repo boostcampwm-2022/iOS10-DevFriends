@@ -17,14 +17,18 @@ final class MyGroupsViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.register(
+            GroupCollectionViewCell.self,
+            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier
+        )
         collectionView.delegate = self
         return collectionView
     }()
     
     private lazy var groupCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: groupCollectionView) { collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-                                                            for: indexPath) as? GroupCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? GroupCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.set(data)
