@@ -8,8 +8,8 @@
 import UIKit
 
 struct PostAttentionInfo {
-    let likeOrNot: Bool
-    let commentsCount: Int
+    var likeOrNot: Bool
+    var commentsCount: Int
     let maxParticipantCount: Int
     let currentParticipantCount: Int
 }
@@ -20,13 +20,13 @@ final class PostAttentionView: UIView {
         stackView.axis = .horizontal
         return stackView
     }()
-    private lazy var likeButton: UIButton = {
+    lazy var likeButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         var titleAttr = AttributedString.init("좋아요")
         titleAttr.font = .systemFont(ofSize: 16)
         titleAttr.foregroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
-        config.image = UIImage(systemName: "hand.thumbsup")
+        config.image = UIImage(systemName: "hand.thumbsup.fill")
         config.imagePlacement = .leading
         config.baseForegroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
         config.imagePadding = 5.0
@@ -99,9 +99,10 @@ final class PostAttentionView: UIView {
     }
     
     func set(info: PostAttentionInfo) {
-        if info.likeOrNot {
-            likeButton.isSelected = true
-        }
+        let tintColor = info.likeOrNot ? .systemOrange : UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        
+        self.likeButton.configuration?.baseForegroundColor = tintColor
+        self.likeButton.configuration?.attributedTitle?.foregroundColor = tintColor
         
         commentsButton.setTitle(String(info.commentsCount), for: .normal)
         participantsButton.setTitle("\(info.currentParticipantCount)/\(info.maxParticipantCount)명", for: .normal)

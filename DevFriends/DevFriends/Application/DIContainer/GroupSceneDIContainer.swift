@@ -58,3 +58,5 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return AddGroupSceneDIContainer()
     }
 }
+
+extension GroupSceneDIContainer: NotificationSceneDIContainer {}

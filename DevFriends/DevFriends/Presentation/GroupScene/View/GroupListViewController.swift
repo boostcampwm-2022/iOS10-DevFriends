@@ -146,12 +146,11 @@ final class GroupListViewController: DefaultViewController {
         self.setupNavigationBar()
         self.setupCollectionView()
         self.setupCollectionViewHeader()
+        self.setupNavigation()
         self.viewModel.loadGroupList()
     }
     
     override func layout() {
-        setupNavigation()
-        
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -248,7 +247,7 @@ extension GroupListViewController {
     }
     
     @objc func didTapNotificationButton(_ sender: UIButton) {
-        print("알림 버튼 클릭")
+        viewModel.didSelectNotifications()
     }
 }
 
