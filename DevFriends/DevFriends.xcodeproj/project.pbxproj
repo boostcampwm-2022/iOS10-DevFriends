@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		052BF68929385BF30037C976 /* FixMyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF68829385BF30037C976 /* FixMyInfoViewModel.swift */; };
+		052BF68D29385C920037C976 /* FetchProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF68A29385C920037C976 /* FetchProfileImageUseCase.swift */; };
+		052BF68E29385C920037C976 /* UpdateUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF68B29385C920037C976 /* UpdateUserInfoUseCase.swift */; };
+		052BF68F29385C920037C976 /* UploadProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF68C29385C920037C976 /* UploadProfileImageUseCase.swift */; };
+		052BF691293861370037C976 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF690293861370037C976 /* ImageRepository.swift */; };
+		052BF693293861C20037C976 /* DefaultImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF692293861C20037C976 /* DefaultImageRepository.swift */; };
 		058520FB293516DC00D3CC4F /* UpdateLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */; };
 		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
 		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
@@ -34,7 +40,6 @@
 		A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB26292E20260018A654 /* GroupCellInfo.swift */; };
 		A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */; };
 		A648BB38292F534F0018A654 /* GroupListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB37292F534F0018A654 /* GroupListCoordinator.swift */; };
-		A648BB3A292F590C0018A654 /* GroupListViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB39292F590C0018A654 /* GroupListViewCoordinator.swift */; };
 		A648BB4C293399D10018A654 /* AddGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB45293399D10018A654 /* AddGroupViewModel.swift */; };
 		A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB47293399D10018A654 /* ChooseLocationView.swift */; };
 		A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */; };
@@ -182,6 +187,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		052BF68829385BF30037C976 /* FixMyInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixMyInfoViewModel.swift; sourceTree = "<group>"; };
+		052BF68A29385C920037C976 /* FetchProfileImageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchProfileImageUseCase.swift; sourceTree = "<group>"; };
+		052BF68B29385C920037C976 /* UpdateUserInfoUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserInfoUseCase.swift; sourceTree = "<group>"; };
+		052BF68C29385C920037C976 /* UploadProfileImageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadProfileImageUseCase.swift; sourceTree = "<group>"; };
+		052BF690293861370037C976 /* ImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		052BF692293861C20037C976 /* DefaultImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultImageRepository.swift; sourceTree = "<group>"; };
 		05781360292C934D003DA919 /* DefaultPostDetailUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPostDetailUserRepository.swift; sourceTree = "<group>"; };
 		05781366292C948D003DA919 /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
 		0578136A292CEB46003DA919 /* UserResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -229,7 +240,6 @@
 		A648BB26292E20260018A654 /* GroupCellInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCellInfo.swift; sourceTree = "<group>"; };
 		A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSceneDIContainer.swift; sourceTree = "<group>"; };
 		A648BB37292F534F0018A654 /* GroupListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCoordinator.swift; sourceTree = "<group>"; };
-		A648BB39292F590C0018A654 /* GroupListViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewCoordinator.swift; sourceTree = "<group>"; };
 		A648BB45293399D10018A654 /* AddGroupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupViewModel.swift; sourceTree = "<group>"; };
 		A648BB47293399D10018A654 /* ChooseLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLocationView.swift; sourceTree = "<group>"; };
 		A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCategoryViewController.swift; sourceTree = "<group>"; };
@@ -689,6 +699,9 @@
 		E33A20E129277A4100887EC9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				052BF68A29385C920037C976 /* FetchProfileImageUseCase.swift */,
+				052BF68B29385C920037C976 /* UpdateUserInfoUseCase.swift */,
+				052BF68C29385C920037C976 /* UploadProfileImageUseCase.swift */,
 				E3752EB1292F5448003C8E17 /* DeleteNotificationUseCase.swift */,
 				E3752EAE292F5448003C8E17 /* LoadNotificationsUseCase.swift */,
 				E3752EAF292F5448003C8E17 /* SendNotificationToParticipantUseCase.swift */,
@@ -722,6 +735,7 @@
 				05CB4A31292DF15100A97531 /* CategoryRepository.swift */,
 				05CB4A30292DF15100A97531 /* GroupCommentRepository.swift */,
 				E3752EBA292F5467003C8E17 /* NotificationRepository.swift */,
+				052BF690293861370037C976 /* ImageRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -841,6 +855,7 @@
 				FC5D019B292F54EE00292D33 /* MyGroupsType.swift */,
 				FC5D019C292F54EE00292D33 /* MyGroupsViewModel.swift */,
 				FC5D019D292F54EE00292D33 /* MyPageViewModel.swift */,
+				052BF68829385BF30037C976 /* FixMyInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -938,6 +953,7 @@
 				A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */,
 				A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */,
 				E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */,
+				052BF692293861C20037C976 /* DefaultImageRepository.swift */,
 				E3752EC9292F5DD2003C8E17 /* DefaultNotificationRepository.swift */,
 			);
 			path = Repositories;
@@ -1290,6 +1306,7 @@
 				FC5D01A7292F54EE00292D33 /* MyPageViewModel.swift in Sources */,
 				E3752ECC292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				05D9256829338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift in Sources */,
+				052BF68F29385C920037C976 /* UploadProfileImageUseCase.swift in Sources */,
 				E3752EAB292F53BE003C8E17 /* NotificationDiffableDataSource.swift in Sources */,
 				E33A20B4292665A700887EC9 /* GroupCollectionViewCell.swift in Sources */,
 				FC5D0197292F540A00292D33 /* MyPageSceneDIContainer.swift in Sources */,
@@ -1313,6 +1330,7 @@
 				E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,
 				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
+				052BF68929385BF30037C976 /* FixMyInfoViewModel.swift in Sources */,
 				E3752ECA292F5DD2003C8E17 /* DefaultNotificationRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				A66C7BCA292E1A460008B6FD /* Location.swift in Sources */,
@@ -1339,6 +1357,7 @@
 				05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */,
 				E33A20B8292665A700887EC9 /* GroupFilterCollectionViewCell.swift in Sources */,
 				E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */,
+				052BF693293861C20037C976 /* DefaultImageRepository.swift in Sources */,
 				FC5D01AC292F54EE00292D33 /* MyPageCoordinator.swift in Sources */,
 				A648BB5529339A4E0018A654 /* CommonPaddingLabel.swift in Sources */,
 				E33A20932926623200887EC9 /* MogakcoViewController.swift in Sources */,
@@ -1375,6 +1394,7 @@
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
 				E3752EB9292F5449003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */,
 				05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */,
+				052BF68D29385C920037C976 /* FetchProfileImageUseCase.swift in Sources */,
 				FC5D01A6292F54EE00292D33 /* MyGroupsViewModel.swift in Sources */,
 				A6ED8BA129239153003105E2 /* (null) in Sources */,
 				05EAC535292E68100067D63E /* PostCommentUseCase.swift in Sources */,
@@ -1398,7 +1418,9 @@
 				A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */,
 				FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */,
 				05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */,
+				052BF691293861370037C976 /* ImageRepository.swift in Sources */,
 				A66C7BDD292E1A9B0008B6FD /* GroupFilterViewModel.swift in Sources */,
+				052BF68E29385C920037C976 /* UpdateUserInfoUseCase.swift in Sources */,
 				FC07DDBD292CA90400D16FBC /* FetchGroupUseCase.swift in Sources */,
 				05F22BA7292F6883002B7B74 /* MogakcoSceneDIContainer.swift in Sources */,
 				E33A20A7292662E500887EC9 /* AppDelegate.swift in Sources */,

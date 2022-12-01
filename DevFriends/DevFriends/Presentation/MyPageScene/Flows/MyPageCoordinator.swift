@@ -13,7 +13,7 @@ protocol MyPageFlowCoordinatorDependencies {
     func makeParticipatedGroupViewController() -> MyGroupsViewController
     func makeLikedGroupViewController() -> MyGroupsViewController
     func makePopupViewController(popup: Popup) -> PopupViewController
-    func makeFixMyInfoViewController() -> FixMyInfoViewController
+    func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
 }
 
 final class MyPageCoordinator: Coordinator {
@@ -53,7 +53,8 @@ final class MyPageCoordinator: Coordinator {
     }
     
     func showFixMyInfoViewController() {
-        let fixMyInfoViewController = dependencies.makeFixMyInfoViewController()
+        let actions = FixMyInfoViewModelActions(showCategoryChoice: showCategoryChoice, popFixMyInfo: popFixMyInfo)
+        let fixMyInfoViewController = dependencies.makeFixMyInfoViewController(actions: actions)
         navigationController?.pushViewController(fixMyInfoViewController, animated: true)
     }
     
@@ -61,5 +62,13 @@ final class MyPageCoordinator: Coordinator {
         let popupViewController = dependencies.makePopupViewController(popup: popup)
         popupViewController.modalPresentationStyle = .overFullScreen
         navigationController?.present(popupViewController, animated: false)
+    }
+}
+
+extension MyPageCoordinator {
+    func showCategoryChoice() { }
+    
+    func popFixMyInfo() {
+        navigationController?.popViewController(animated: true)
     }
 }
