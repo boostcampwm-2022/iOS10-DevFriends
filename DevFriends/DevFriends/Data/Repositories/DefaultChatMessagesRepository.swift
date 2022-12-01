@@ -21,7 +21,7 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
         let messages = storage.fetch(groupID: chatUID)
         
         var query: Query = firestore
-            .collection("chat")
+            .collection("Chat")
             .document(chatUID)
             .collection("Message")
         
