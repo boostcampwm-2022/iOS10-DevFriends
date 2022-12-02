@@ -20,7 +20,7 @@ __개발친구__ 는 위치 기반으로 내 주변에 있는 모임 정보를 �
 
 | S018 박상현 | S027 심주미 | S034 유승원 | S037 이대현 |
 | --- | --- | --- | --- |
-| <img src = "https://user-images.githubusercontent.com/73176655/200266410-ff13afe6-320d-49f4-b9f0-84a72e75ceba.jpg" width=150> | <img src = "https://avatars.githubusercontent.com/u/77629102?v=4" width=150>  | <img src="https://user-images.githubusercontent.com/78123636/200247262-94d75ee8-a278-4813-8779-fb1bb4a9b124.png" width=150> | <img src = "https://user-images.githubusercontent.com/58897339/200350263-12820403-8593-488a-b4b4-98e0cf0ba13c.jpeg" width=150> |
+| <img src = "https://user-images.githubusercontent.com/73176655/200266410-ff13afe6-320d-49f4-b9f0-84a72e75ceba.jpg" width=150> | <img src = "https://avatars.githubusercontent.com/u/77629102?v=4" width=150>  | <img src="https://user-images.githubusercontent.com/78123636/205306289-db29ac17-4e1f-4ffb-b515-10479eb5c0be.jpg" width=150> | <img src = "https://user-images.githubusercontent.com/58897339/200350263-12820403-8593-488a-b4b4-98e0cf0ba13c.jpeg" width=150> |
 |[@Sanghyunn](https://github.com/Sanghyunn)|[@jumi-shim](https://github.com/jumi-shim)|[@seungwon-yoo](https://github.com/seungwon-yoo)|[@eogus4658](https://github.com/eogus4658)|
 
 <br/>
