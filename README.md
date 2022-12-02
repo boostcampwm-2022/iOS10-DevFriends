@@ -40,3 +40,7 @@ __개발친구__ 는 위치 기반으로 내 주변에 있는 모임 정보를 �
 
 ## 아키텍쳐 :triangular_ruler:
 ![Untitled](https://user-images.githubusercontent.com/78123636/205304142-c6ad20e2-2b49-4495-974c-de58574bbee6.png)
+
+<br/>
+
+**[개발친구의 개발 과정 엿보기 :eyes:](https://energetic-hoverfly-15f.notion.site/b7eb70ea24264ca2ad2677bcf72e82b7)**
