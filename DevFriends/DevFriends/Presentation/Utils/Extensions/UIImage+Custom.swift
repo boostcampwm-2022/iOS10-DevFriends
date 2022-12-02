@@ -20,6 +20,10 @@ extension UIImage {
     static var ellipsis = UIImage(systemName: "ellipsis")
     static var defaultProfileImage = UIImage(named: "Image.png")
     static var thumbsup = UIImage(systemName: "hand.thumbsup.fill")
-    static var message = UIImage(systemName: "ellipsis.message")
+    static var comment = UIImage(systemName: "ellipsis.message")
     static var twoPerson = UIImage(systemName: "person.2")
+    static var map = UIImage(systemName: "map.fill")
+    static var book = UIImage(systemName: "text.book.closed.fill")
+    static var person = UIImage(systemName: "person")
+    static var message = UIImage(systemName: "message")
 }
