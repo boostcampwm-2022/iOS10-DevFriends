@@ -26,19 +26,19 @@ final class MyPageViewModel {
 
 extension MyPageViewModel {
     func showMakedGroup() {
-        actions?.showMakedGroup()
+        actions.showMakedGroup()
     }
     
     func showParticipatedGroup() {
-        actions?.showParticipatedGroup()
+        actions.showParticipatedGroup()
     }
     
     func showLikedGroup() {
-        actions?.showLikedGroup()
+        actions.showLikedGroup()
     }
     
     func showFixMyInfo() {
-        actions?.showFixMyInfo()
+        actions.showFixMyInfo()
     }
     
     func showLogout() {

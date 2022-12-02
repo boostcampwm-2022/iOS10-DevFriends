@@ -81,7 +81,7 @@ final class MogakcoViewModel: MogakcoViewModelType {
     }
     
     func didSelectViewModeButton() {
-        actions?.showMogakcoModal(allMogakcoList)
+        actions.showMogakcoModal(allMogakcoList)
     }
     
     func didSelectNowMogakco() {
