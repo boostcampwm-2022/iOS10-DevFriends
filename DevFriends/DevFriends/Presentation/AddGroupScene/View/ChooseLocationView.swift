@@ -15,20 +15,20 @@ protocol ChooseLocationOutput {
 }
 
 final class ChooseLocationView: UIView, ChooseLocationOutput {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "위치 선택"
         return label
     }()
     
-    private lazy var locationLabel: UILabel = {
+    private let locationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.textColor = .lightGray
         return label
     }()
     
-    private lazy var disclosureIndicator: UIImageView = {
+    private let disclosureIndicator: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage.disclosure
         imageView.tintColor = .black
@@ -93,7 +93,6 @@ final class ChooseLocationView: UIView, ChooseLocationOutput {
 
 extension ChooseLocationView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("gestureRecognizer")
         didTouchViewSubject.send()
         return true
     }

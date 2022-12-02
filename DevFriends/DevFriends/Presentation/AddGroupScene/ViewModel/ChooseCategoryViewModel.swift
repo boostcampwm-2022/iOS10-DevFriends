@@ -33,7 +33,7 @@ final class DefaultChooseCategoryViewModel: ChooseCategoryViewModel {
     var categoryFilter: [Category] = []
     
     private let fetchCategoryUseCase: FetchCategoryUseCase
-    private let actions: ChooseCategoryViewModelActions?
+    private let actions: ChooseCategoryViewModelActions
     
     init(fetchCategoryUseCase: FetchCategoryUseCase, actions: ChooseCategoryViewModelActions) {
         self.fetchCategoryUseCase = fetchCategoryUseCase
@@ -54,7 +54,7 @@ extension DefaultChooseCategoryViewModel {
     }
     
     func sendCategorySelection() {
-        actions?.didSubmitCategory(self.categoryFilter)
+        actions.didSubmitCategory(self.categoryFilter)
     }
     
     func addCategory(category: Category) {
