@@ -16,4 +16,9 @@ extension UIImage {
     static var scope = UIImage(systemName: "scope")
     static var viewMode = UIImage(systemName: "line.3.horizontal")
     static var gearshape = UIImage(systemName: "gearshape")
+    static var ellipsis = UIImage(systemName: "ellipsis")
+    static var defaultProfileImage = UIImage(named: "Image.png")
+    static var thumbsup = UIImage(systemName: "hand.thumbsup.fill")
+    static var message = UIImage(systemName: "ellipsis.message")
+    static var twoPerson = UIImage(systemName: "person.2")
 }

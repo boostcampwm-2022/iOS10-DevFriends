@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class CommentTableViewCell: UITableViewCell, ReusableType {
-    private lazy var commentView: PostDetailCommentView = {
+    private let commentView: PostDetailCommentView = {
         let commentView = PostDetailCommentView()
         return commentView
     }()

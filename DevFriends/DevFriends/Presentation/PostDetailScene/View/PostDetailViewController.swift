@@ -12,7 +12,7 @@ import UIKit
 final class PostDetailViewController: DefaultViewController {
     private lazy var settingButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "ellipsis")
+        item.image = .ellipsis
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapSettingButton)
@@ -54,34 +54,33 @@ final class PostDetailViewController: DefaultViewController {
             make.top.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
         }
-        
         return view
     }()
-    private lazy var spinner: UIActivityIndicatorView = {
+    private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .medium)
-        spinner.color = UIColor.darkGray
+        spinner.color = .darkGray
         spinner.hidesWhenStopped = true
         return spinner
     }()
-    private lazy var commentTextField: CommonTextField = {
+    private let commentTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: "댓글을 입력해주세요")
         return textField
     }()
-    private lazy var commentPostButton: UIButton = {
+    private let commentPostButton: UIButton = {
         let button = UIButton()
         button.setTitle("↑", for: .normal)
         button.backgroundColor = .orange
         return button
     }()
-    private lazy var postDetailInfoView: PostDetailInfoView = {
+    private let postDetailInfoView: PostDetailInfoView = {
         let postDetailInfoView = PostDetailInfoView()
         return postDetailInfoView
     }()
-    private lazy var postRequestButton: CommonButton = {
+    private let postRequestButton: CommonButton = {
         let commonButton = CommonButton(text: "모임 신청")
         return commonButton
     }()
-    private lazy var postAttentionView: PostAttentionView = {
+    private let postAttentionView: PostAttentionView = {
         let postAttentionView = PostAttentionView()
         return postAttentionView
     }()
@@ -114,7 +113,7 @@ final class PostDetailViewController: DefaultViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-         self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
+        self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
         removeKeyboardObserver()
     }
     
@@ -195,15 +194,6 @@ final class PostDetailViewController: DefaultViewController {
                 self?.tableViewDataSource.apply(snapshot)
             }
             .store(in: &cancellables)
-//        
-//        viewModel.scrollToBottomSubject
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                guard let commentCount = self?.viewModel.commentsSubject.value.count else { return }
-//                let bottomIndex = IndexPath(row: commentCount - 1, section: 0)
-//                self?.commentTableView.scrollToRow(at: bottomIndex, at: .top, animated: true)
-//            }
-//            .store(in: &cancellables)
         
         viewModel.groupApplyButtonStateSubject
             .receive(on: DispatchQueue.main)
