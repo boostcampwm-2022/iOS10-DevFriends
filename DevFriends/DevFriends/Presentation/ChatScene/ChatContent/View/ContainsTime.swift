@@ -34,7 +34,7 @@ extension ContainsTime {
             switch type {
             case .friend:
                 make.leading.equalTo(messageLabel.snp.trailing).offset(10)
-            case .me:
+            case .myself:
                 make.trailing.equalTo(messageLabel.snp.leading).offset(-10)
             }
             make.bottom.equalTo(messageLabel.snp.bottom)

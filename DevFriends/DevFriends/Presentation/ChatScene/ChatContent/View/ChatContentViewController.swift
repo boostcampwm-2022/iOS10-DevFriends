@@ -54,7 +54,7 @@ class ChatContentViewController: DefaultViewController {
         return textField
     }()
     
-    lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+    private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
     private let viewModel: ChatContentViewModel
     
@@ -92,12 +92,12 @@ class ChatContentViewController: DefaultViewController {
         self.hideKeyboardWhenTappedAround()
         viewModel.messagesSubject
             .receive(on: RunLoop.main)
-            .sink { messages in
-                self.populateSnapshot(data: messages)
+            .sink { [weak self] messages in
+                self?.populateSnapshot(data: messages)
                 
                 if !messages.isEmpty {
                     let indexPath = IndexPath(row: messages.count - 1, section: 0)
-                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    self?.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)
