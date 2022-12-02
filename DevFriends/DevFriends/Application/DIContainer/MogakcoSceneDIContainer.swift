@@ -90,8 +90,9 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     }
     
     // MARK: PostDetail
-    private func makePostDetailViewModel(group: Group) -> PostDetailViewModel {
+    private func makePostDetailViewModel(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewModel {
         return DefaultPostDetailViewModel(
+            actions: actions,
             group: group,
             fetchUserUseCase: makeFetchUserUseCase(),
             fetchCategoryUseCase: makeFetchCategoryUseCase(),
@@ -104,8 +105,8 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         )
     }
     
-    func makeGroupDetailViewController(group: Group) -> PostDetailViewController {
-        return PostDetailViewController(viewModel: makePostDetailViewModel(group: group))
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController {
+        return PostDetailViewController(viewModel: makePostDetailViewModel(actions: actions, group: group))
     }
 }
 

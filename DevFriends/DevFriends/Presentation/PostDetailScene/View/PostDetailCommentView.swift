@@ -18,14 +18,14 @@ struct CommentInfo: Hashable {
 }
 
 final class PostDetailCommentView: UIView {
-    private lazy var stackView: UIStackView = {
+    private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.spacing = 20
         return stackView
     }()
-    private lazy var commentWriterInfoView: PostWriterInfoView = {
+    private let commentWriterInfoView: PostWriterInfoView = {
         let commentWriterInfoView = PostWriterInfoView(
             imageViewRadius: 22.0,
             nameTextSize: 18.0,
@@ -33,7 +33,7 @@ final class PostDetailCommentView: UIView {
         )
         return commentWriterInfoView
     }()
-    private lazy var commentContentsLabel: UILabel = {
+    private let commentContentsLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18)
         label.numberOfLines = 0
