@@ -15,7 +15,7 @@ struct ChooseLocationViewActions {
 }
 
 final class ChooseLocationViewController: DefaultViewController {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모각코할 장소를 선택해주세요."
         label.font = UIFont.boldSystemFont(ofSize: 24)
@@ -28,7 +28,7 @@ final class ChooseLocationViewController: DefaultViewController {
         return mapView
     }()
     
-    private lazy var currentLocationButton: UIButton = {
+    private let currentLocationButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "scope")
         configuration.baseForegroundColor = .black
@@ -44,14 +44,14 @@ final class ChooseLocationViewController: DefaultViewController {
         return button
     }()
     
-    private lazy var locationPin: UIImageView = {
+    private let locationPin: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "mappin.and.ellipse")
         imageView.tintColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
         return imageView
     }()
     
-    private lazy var infomationLabel: UILabel = {
+    private let infomationLabel: UILabel = {
         let padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let label = CommonPaddingLabel(padding: padding)
         label.backgroundColor = .black
@@ -62,7 +62,7 @@ final class ChooseLocationViewController: DefaultViewController {
         return label
     }()
     
-    private lazy var submitButton: CommonButton = {
+    private let submitButton: CommonButton = {
         let button = CommonButton(text: "작성 완료")
         return button
     }()
@@ -79,10 +79,8 @@ final class ChooseLocationViewController: DefaultViewController {
     private var isFirstLoadingMap = true
     private var isFirstMovingMap = true
     
-    var centerLocation: Location {
-        get {
-            return Location(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
-        }
+    private var centerLocation: Location {
+        return Location(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
     }
 
     private let actions: ChooseLocationViewActions
@@ -181,12 +179,7 @@ extension ChooseLocationViewController: CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
-    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        print("willchangeanimated")
-    }
-    
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
-        print("startloading")
         if isFirstLoadingMap {
             setUserLocation()
             isFirstLoadingMap = false
@@ -202,7 +195,6 @@ extension ChooseLocationViewController: CLLocationManagerDelegate, MKMapViewDele
 
 extension ChooseLocationViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("gestureRecognizer")
         if !self.infomationLabel.isHidden {
             self.infomationLabel.isHidden = true
         }

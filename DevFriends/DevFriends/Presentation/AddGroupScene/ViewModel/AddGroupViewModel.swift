@@ -41,7 +41,7 @@ protocol AddGroupViewModel: AddGroupViewModelInput, AddGroupViewModelOutput {
 }
 
 final class DefaultAddGroupViewModel: AddGroupViewModel {
-    private let actions: AddGroupViewModelActions?
+    private let actions: AddGroupViewModelActions
     private let saveChatUseCase: SaveChatUseCase
     private let saveGroupUseCase: SaveGroupUseCase
     var groupType: GroupType
@@ -88,11 +88,11 @@ extension DefaultAddGroupViewModel {
     }
     
     func didCategorySelect() {
-        actions?.showCategoryView()
+        actions.showCategoryView()
     }
     
     func didLocationSelect() {
-        actions?.showLocationView()
+        actions.showLocationView()
     }
     
     func updateCategory(categories: [Category]) {
@@ -135,7 +135,8 @@ extension DefaultAddGroupViewModel {
             hit: 0,
             limitedNumberPeople: limit,
             managerID: son.id,
-            type: groupType.rawValue)
+            type: groupType.rawValue
+        )
         saveGroupUseCase.execute(group: newGroup)
         // TODO: User - Group 컬렉션에 해당 그룹 추가해줘야 함
     }

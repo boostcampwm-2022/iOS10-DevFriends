@@ -56,7 +56,6 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
         let text = "# " + text
         let defaultColor = UIColor.devFriendsLightGray
         let interestLabel = FilledRoundTextLabel(text: text, backgroundColor: defaultColor, textColor: .black)
-        
         return interestLabel
     }
     

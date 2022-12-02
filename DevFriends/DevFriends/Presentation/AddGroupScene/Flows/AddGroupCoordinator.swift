@@ -14,11 +14,11 @@ protocol AddGroupFlowCoordinatorDependencies {
 }
 
 final class AddGroupCoordinator: Coordinator {
-    let navigationController: UINavigationController
-    let dependencies: AddGroupFlowCoordinatorDependencies
-    let groupType: GroupType
+    private let navigationController: UINavigationController
+    private let dependencies: AddGroupFlowCoordinatorDependencies
+    private let groupType: GroupType
     
-    var childCoordinators: [Coordinator] = []
+    private var childCoordinators: [Coordinator] = []
     
     init(
         navigationController: UINavigationController,
@@ -34,7 +34,10 @@ final class AddGroupCoordinator: Coordinator {
         let actions = AddGroupViewModelActions(
             showCategoryView: showCategoryViewController,
             showLocationView: showLocationViewController)
-        let addGroupViewController = dependencies.makeAddGroupViewController(groupType: self.groupType, actions: actions)
+        let addGroupViewController = dependencies.makeAddGroupViewController(
+            groupType: self.groupType,
+            actions: actions
+        )
         navigationController.pushViewController(addGroupViewController, animated: false)
     }
 }
@@ -54,14 +57,13 @@ extension AddGroupCoordinator {
     
     func didSubmitCategorySelection(updatedCategories: [Category]) {
         navigationController.popViewController(animated: true)
-        guard let addGroupViewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
-        addGroupViewController.updateCategories(categories: updatedCategories)
+        guard let viewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
+        viewController.updateCategories(categories: updatedCategories)
     }
     
     func didSubmitLocationSelection(updatedLocation: Location) {
         navigationController.popViewController(animated: true)
-        guard let addGroupViewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
-        addGroupViewController.updateLocation(location: updatedLocation)
-
+        guard let viewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
+        viewController.updateLocation(location: updatedLocation)
     }
 }

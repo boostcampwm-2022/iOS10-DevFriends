@@ -12,31 +12,31 @@ final class ChatTableViewCell: UITableViewCell {
     private lazy var chatImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
-        imageView.layer.cornerRadius = chatImageViewHeight / 2
+        imageView.layer.cornerRadius = self.chatImageViewHeight / 2
         return imageView
     }()
     
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
     
-    private lazy var participantCountLabel: UILabel = {
+    private let participantCountLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = .lightGray
         return label
     }()
     
-    private lazy var lastMessageLabel: UILabel = {
+    private let lastMessageLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textColor = .gray
         return label
     }()
     
-    private lazy var newMessageView: UIView = {
+    private let newMessageView: UIView = {
         let view = UIView()
         view.backgroundColor = .red
         view.layer.cornerRadius = 10

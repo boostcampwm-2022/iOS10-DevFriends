@@ -68,7 +68,7 @@ class PopupViewController: DefaultViewController {
     
     override func bind() {
         doneButton.publisher(for: .touchUpInside)
-            .sink { [weak self] _ in
+            .sink {
                 print("doneButton")
             }
             .store(in: &cancellables)
@@ -123,7 +123,7 @@ class PopupViewController: DefaultViewController {
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn) {
             self.containerView.transform = .identity

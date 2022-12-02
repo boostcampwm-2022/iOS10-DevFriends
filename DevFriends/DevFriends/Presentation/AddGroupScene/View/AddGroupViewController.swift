@@ -11,29 +11,29 @@ import UIKit
 
 final class AddGroupViewController: DefaultViewController {
     // TODO: 뷰 전체 스크롤뷰로 한번 감싸기
-    private lazy var titleTextField: UITextField = {
+    private let titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
         return textField
     }()
     
-    private lazy var chooseCategoryView = ChooseCategoryView()
+    private let chooseCategoryView = ChooseCategoryView()
     
-    private lazy var chooseLocationView = ChooseLocationView()
+    private let chooseLocationView = ChooseLocationView()
     
-    private lazy var limitPeopleLabel: UILabel = {
+    private let limitPeopleLabel: UILabel = {
         let label = UILabel()
         label.text = "인원수"
         return label
     }()
     
-    private lazy var peopleNumberLabel: UILabel = {
+    private let peopleNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "2"
         return label
     }()
     
-    private lazy var limitPeopleStepper: UIStepper = {
+    private let limitPeopleStepper: UIStepper = {
         let stepper = UIStepper()
         stepper.value = 2
         stepper.minimumValue = 2
@@ -41,9 +41,9 @@ final class AddGroupViewController: DefaultViewController {
         return stepper
     }()
     
-    private lazy var descriptionTextView = CommonTextView(placeHolder: "게시글 내용을 작성해주세요.")
+    private let descriptionTextView = CommonTextView(placeHolder: "게시글 내용을 작성해주세요.")
     
-    private lazy var submitButton = CommonButton(text: "작성 완료")
+    private let submitButton = CommonButton(text: "작성 완료")
     
     // MARK: - Init
     private let viewModel: AddGroupViewModel

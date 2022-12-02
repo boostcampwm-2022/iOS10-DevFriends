@@ -11,7 +11,7 @@ import UIKit
 
 enum MessageSenderType {
     case friend
-    case me
+    case myself
 }
 
 enum MessageContentType {

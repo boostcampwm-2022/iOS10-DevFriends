@@ -33,7 +33,7 @@ final class GroupFilterViewController: DefaultViewController {
         collectionView.register(
             GroupFilterCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: GroupFilterCollectionHeaderView.id
+            withReuseIdentifier: GroupFilterCollectionHeaderView.reuseIdentifier
         )
         collectionView.register(
             GroupFilterCollectionViewCell.self,
@@ -113,7 +113,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         
         guard let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
-            withReuseIdentifier: GroupFilterCollectionHeaderView.id,
+            withReuseIdentifier: GroupFilterCollectionHeaderView.reuseIdentifier,
             for: indexPath
         ) as? GroupFilterCollectionHeaderView else { return UICollectionReusableView() }
         

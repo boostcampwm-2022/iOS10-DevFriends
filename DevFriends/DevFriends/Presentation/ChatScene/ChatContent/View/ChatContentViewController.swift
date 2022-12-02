@@ -54,7 +54,7 @@ final class ChatContentViewController: DefaultViewController {
         return textField
     }()
     
-    lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+    private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
     private let viewModel: ChatContentViewModel
     

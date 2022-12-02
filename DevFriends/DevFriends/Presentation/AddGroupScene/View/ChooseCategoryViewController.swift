@@ -9,9 +9,8 @@ import Combine
 import SnapKit
 import UIKit
 
-
 final class ChooseCategoryViewController: DefaultViewController {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 30)
         label.text = "카테고리 선택"
@@ -39,7 +38,7 @@ final class ChooseCategoryViewController: DefaultViewController {
     
     private lazy var categoryTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Category>()
     
-    private lazy var submitButton: CommonButton = {
+    private let submitButton: CommonButton = {
         let button = CommonButton(text: "작성 완료")
         return button
     }()

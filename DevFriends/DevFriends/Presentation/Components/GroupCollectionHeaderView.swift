@@ -9,28 +9,28 @@ import UIKit
 import SnapKit
 
 final class GroupCollectionHeaderView: UICollectionReusableView, ReusableType {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모임 이름"
         label.font = .systemFont(ofSize: 20, weight: .bold)
         return label
     }()
     
-    private lazy var filterStackView: UIStackView = {
+    private let filterStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 15
         stackView.isHidden = true
         return stackView
     }()
     
-    private lazy var filterLabel: UILabel = {
+    private let filterLabel: UILabel = {
         let label = UILabel()
         label.text = "최신순"
         label.font = .systemFont(ofSize: 10)
         return label
     }()
     
-    private lazy var filterButton: UIButton = {
+    private let filterButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
         button.tintColor = .black
@@ -52,7 +52,6 @@ final class GroupCollectionHeaderView: UICollectionReusableView, ReusableType {
     
     func set(title: String?, _ target: Any?, _ didTapFilterButton: Selector) {
         titleLabel.text = title
-        
         filterStackView.isHidden = false
         filterButton.addTarget(target, action: didTapFilterButton, for: .touchUpInside)
     }

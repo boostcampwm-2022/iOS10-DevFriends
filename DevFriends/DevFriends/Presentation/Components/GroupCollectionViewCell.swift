@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
-    private lazy var imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = UIColor(
             red: 242.0 / 255.0,
@@ -21,26 +21,26 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         return view
     }()
     
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "그룹 제목"
         label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
     
-    private lazy var tagStackView: UIStackView = {
+    private let tagStackView: UIStackView = {
         let stackView = UIStackView()
         return stackView
     }()
     
-    private lazy var placeLabel: UILabel = {
+    private let placeLabel: UILabel = {
         let label = UILabel()
         label.text = "📍모임 장소"
         label.font = .systemFont(ofSize: 12, weight: .bold)
         return label
     }()
     
-    private lazy var participantLabel: UILabel = {
+    private let participantLabel: UILabel = {
         let label = UILabel()
         label.text = "👥 0/0"
         label.font = .systemFont(ofSize: 12, weight: .bold)

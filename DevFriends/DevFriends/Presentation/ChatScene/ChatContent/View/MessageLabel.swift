@@ -45,7 +45,7 @@ final class MessageLabel: UILabel {
         case .friend:
             self.backgroundColor = .white
             self.textColor = .black
-        case .me:
+        case .myself:
             self.backgroundColor = .orange
             self.textColor = .white
         }
