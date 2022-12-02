@@ -21,8 +21,8 @@ final class NotificationViewController: UITableViewController {
             cell.updateContent(data: data)
             cell.acceptButton
                 .publisher(for: .touchUpInside)
-                .sink {
-                    self.viewModel.didAcceptedParticipant(index: indexPath.row)
+                .sink { [weak self] in
+                    self?.viewModel.didAcceptedParticipant(index: indexPath.row)
                 }
                 .store(in: &self.cancellables)
             return cell
@@ -62,13 +62,13 @@ final class NotificationViewController: UITableViewController {
     private func bind() {
         self.viewModel.notificationsSubject
             .receive(on: RunLoop.main)
-            .sink {
-                self.populateSnapshot(data: $0)
+            .sink { [weak self] in
+                self?.populateSnapshot(data: $0)
             }
             .store(in: &cancellables)
         self.notificationDiffableDataSource.notificationSubject
-            .sink {
-                self.viewModel.didDeleteNotification(of: $0)
+            .sink { [weak self] in
+                self?.viewModel.didDeleteNotification(of: $0)
             }
             .store(in: &cancellables)
     }
