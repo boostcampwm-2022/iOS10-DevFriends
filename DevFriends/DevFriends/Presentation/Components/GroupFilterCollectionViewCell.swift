@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
-    private lazy var label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.text = "태그"
         label.font = .systemFont(ofSize: 15, weight: .bold)
@@ -18,9 +18,7 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
     }()
     
     var width: CGFloat {
-        get {
-            return label.frame.width
-        }
+        return label.frame.width
     }
     
     override var isSelected: Bool {

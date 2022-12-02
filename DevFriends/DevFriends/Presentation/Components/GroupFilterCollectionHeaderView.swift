@@ -8,11 +8,7 @@
 import UIKit
 
 final class GroupFilterCollectionHeaderView: UICollectionReusableView, ReusableType {
-    func layout() {}
-    
-    static let id = "FilterHeaderView"
-    
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "헤더 이름"
         label.font = .systemFont(ofSize: 20, weight: .bold)
@@ -33,6 +29,8 @@ final class GroupFilterCollectionHeaderView: UICollectionReusableView, ReusableT
     func configure(_ title: String?) {
         titleLabel.text = title
     }
+    
+    func layout() {}
     
     // MARK: - Configure UI
     

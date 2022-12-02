@@ -14,9 +14,7 @@ final class CommonTextField: UITextField {
     
     init(placeHolder: String?) {
         super.init(frame: .zero)
-        
         self.placeholder = placeHolder
-        
         self.style()
     }
     

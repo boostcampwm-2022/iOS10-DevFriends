@@ -15,7 +15,6 @@ final class DividerView: UIView {
     
     init() {
         super.init(frame: .zero)
-        
         self.style()
     }
     
