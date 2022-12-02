@@ -11,6 +11,7 @@ extension UIImage {
     static var profile = UIImage(systemName: "person")
     static var sendable = UIImage(systemName: "arrow.up.circle.fill")
     static var disclosure = UIImage(systemName: "chevron.right")
+    static var chevronLeft = UIImage(systemName: "chevron.left")
     static var plus = UIImage(systemName: "plus")
     static var bell = UIImage(systemName: "bell")
     static var scope = UIImage(systemName: "scope")

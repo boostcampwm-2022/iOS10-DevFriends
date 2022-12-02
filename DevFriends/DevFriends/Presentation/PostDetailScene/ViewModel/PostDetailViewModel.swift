@@ -15,12 +15,17 @@ enum GroupApplyButtonState {
     case closed
 }
 
+struct PostDetailViewModelActions {
+    let backToPrevViewController: () -> Void
+}
+
 protocol PostDetailViewModelInput {
     func didLoadGroup()
     func didTapApplyButton()
     func didTapLikeButton()
     func didScrollToBottom()
     func didTapCommentPostButton(content: String)
+    func didTouchedBackButton()
 }
 
 protocol PostDetailViewModelOutput {
@@ -36,6 +41,7 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localUser: User
+    private let actions: PostDetailViewModelActions
     private var group: Group
     private let fetchUserUseCase: FetchUserUseCase
     private let fetchCategoryUseCase: FetchCategoryUseCase
@@ -71,6 +77,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     var groupApplyButtonStateSubject = CurrentValueSubject<GroupApplyButtonState, Never>(.closed)
     
     init(
+        actions: PostDetailViewModelActions,
         group: Group,
         fetchUserUseCase: FetchUserUseCase,
         fetchCategoryUseCase: FetchCategoryUseCase,
@@ -81,6 +88,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         postCommentUseCase: PostCommentUseCase,
         sendCommentNotificationUseCase: SendCommentNotificationUseCase
     ) {
+        self.actions = actions
         self.group = group
         self.fetchUserUseCase = fetchUserUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
@@ -172,6 +180,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     }
 }
 
+// MARK: INPUT
 extension DefaultPostDetailViewModel {
     func didLoadGroup() {
         Task {
@@ -283,5 +292,9 @@ extension DefaultPostDetailViewModel {
             }
 //            scrollToBottomSubject.send()
         }
+    }
+    
+    func didTouchedBackButton() {
+        actions.backToPrevViewController()
     }
 }

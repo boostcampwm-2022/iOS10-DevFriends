@@ -10,6 +10,16 @@ import SnapKit
 import UIKit
 
 final class PostDetailViewController: DefaultViewController {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(
+            image: .chevronLeft,
+            style: .plain,
+            target: self,
+            action: #selector(didTouchedBackButton)
+        )
+        barButton.tintColor = .black
+        return barButton
+    }()
     private lazy var settingButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
         item.image = .ellipsis
@@ -113,7 +123,7 @@ final class PostDetailViewController: DefaultViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
+        // self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
         removeKeyboardObserver()
     }
     
@@ -160,6 +170,7 @@ final class PostDetailViewController: DefaultViewController {
     }
     
     private func setupNavigation() {
+        self.navigationItem.leftBarButtonItems = [backBarButton]
         self.navigationItem.rightBarButtonItems = [settingButton]
     }
     
@@ -352,5 +363,9 @@ extension PostDetailViewController: UITableViewDelegate {
 extension PostDetailViewController {
     @objc func didTapSettingButton(_ sender: UIButton) {
         // MARK: 동작을 넣어주세요
+    }
+    
+    @objc func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }
