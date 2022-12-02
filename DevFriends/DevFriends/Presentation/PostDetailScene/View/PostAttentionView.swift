@@ -38,7 +38,7 @@ final class PostAttentionView: UIView {
     private let commentsButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
-        config.image = .message
+        config.image = .comment
         config.imagePlacement = .leading
         config.baseForegroundColor = .devFriendsGray
         config.imagePadding = 5.0
