@@ -10,6 +10,8 @@ import SnapKit
 import UIKit
 
 final class GroupListViewController: DefaultViewController {
+    
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모임"

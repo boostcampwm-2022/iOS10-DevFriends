@@ -9,6 +9,16 @@ import Combine
 import UIKit
 
 final class NotificationViewController: UITableViewController {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(
+            image: .chevronLeft,
+            style: .plain,
+            target: self,
+            action: #selector(didTouchedBackButton)
+        )
+        barButton.tintColor = .black
+        return barButton
+    }()
     private lazy var notificationDiffableDataSource = {
         let diffableDataSource = NotificationDiffableDataSource(
             tableView: self.tableView
@@ -54,11 +64,6 @@ final class NotificationViewController: UITableViewController {
         self.viewModel.didLoadNotifications()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
-    }
-    
     private func bind() {
         self.viewModel.notificationsSubject
             .receive(on: RunLoop.main)
@@ -74,6 +79,7 @@ final class NotificationViewController: UITableViewController {
     }
     
     private func setupNavigation() {
+        self.navigationItem.leftBarButtonItems = [backBarButton]
         self.navigationItem.title = "알림"
     }
     
@@ -88,5 +94,11 @@ final class NotificationViewController: UITableViewController {
     private func populateSnapshot(data: [Notification]) {
         self.notificationTableViewSnapShot.appendItems(data)
         self.notificationDiffableDataSource.apply(self.notificationTableViewSnapShot, animatingDifferences: true)
+    }
+}
+
+extension NotificationViewController {
+    @objc func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }

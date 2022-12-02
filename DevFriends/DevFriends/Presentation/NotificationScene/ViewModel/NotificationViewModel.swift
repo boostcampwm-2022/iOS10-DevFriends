@@ -8,12 +8,15 @@
 import Combine
 import Foundation
 
-struct NotificationViewModelActions {} // TODO: 댓글 알림 누르면 댓글로 이동하는 코드 넣기
+struct NotificationViewModelActions {
+    let moveBackToPrevViewController: () -> Void
+} // TODO: 댓글 알림 누르면 댓글로 이동하는 코드 넣기
 
 protocol NotificationViewModelIntput {
     func didLoadNotifications()
     func didAcceptedParticipant(index: Int)
     func didDeleteNotification(of notification: Notification)
+    func didTouchedBackButton()
 }
 
 protocol NotificationViewModelOutput {
@@ -116,5 +119,9 @@ extension DefaultNotificationViewModel {
     
     func didDeleteNotification(of notification: Notification) {
         self.deleteNotificationUseCase.execute(notification: notification)
+    }
+    
+    func didTouchedBackButton() {
+        actions.moveBackToPrevViewController()
     }
 }
