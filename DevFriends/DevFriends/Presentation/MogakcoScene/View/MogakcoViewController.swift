@@ -399,7 +399,7 @@ extension MogakcoViewController: UICollectionViewDelegate {
 
 extension MogakcoViewController {
     @objc func didTapMogakcoAddButton(_ sender: UIButton) {
-        // MARK: 동작을 넣어주세요
+        viewModel.didSelectAddMogakco()
     }
     
     @objc func didTapNotificationButton(_ sender: UIButton) {
