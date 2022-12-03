@@ -108,6 +108,11 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController {
         return PostDetailViewController(viewModel: makePostDetailViewModel(actions: actions, group: group))
     }
+    
+    // MARK: AddGroupScene
+    func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer {
+        return AddGroupSceneDIContainer()
+    }
 }
 
 extension MogakcoSceneDIContainer: NotificationSceneDIContainer {}

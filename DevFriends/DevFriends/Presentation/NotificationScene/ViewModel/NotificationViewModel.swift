@@ -81,10 +81,11 @@ extension DefaultNotificationViewModel {
     
     func didAcceptedParticipant(index: Int) {
         // 1. 호스트의 Notification의 isAccepted를 True로 업데이트해야 함.
-        let notification = self.notificationsSubject.value[index]
-        guard let senderID = notification.senderID else { fatalError("Notification ID is nil") }
+        guard let notification = self.notificationsSubject.value[safe: index],
+            let senderID = notification.senderID else { fatalError("Notification ID is nil") }
+        
         self.updateNotificationIsAcceptedToTrueUseCase.execute(notification: notification)
-
+        
         // 2. 참여 대기자한테 승인되었다는 Notification을 보내야 함.
         self.sendNotificationToParticipantUseCase.execute(
             groupID: notification.groupID,
@@ -92,7 +93,7 @@ extension DefaultNotificationViewModel {
             groupTitle: notification.groupTitle,
             type: .accepted
         )
-
+        
         Task {
             do {
                 // 3. Group의 participantIDs에 참여 대기자의 ID를 넣어야 함.

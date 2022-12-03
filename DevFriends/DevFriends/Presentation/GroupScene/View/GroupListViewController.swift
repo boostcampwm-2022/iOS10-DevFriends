@@ -47,10 +47,7 @@ final class GroupListViewController: DefaultViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(
-            GroupCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
-        
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         return collectionView
     }()
     

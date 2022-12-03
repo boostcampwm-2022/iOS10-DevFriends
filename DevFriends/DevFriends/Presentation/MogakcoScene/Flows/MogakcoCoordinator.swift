@@ -12,6 +12,7 @@ protocol MogakcoCoordinatorDependencies {
     func makeMogakcoModalViewController(actions: MogakcoModalViewActions, mogakcos: [Group]) -> MogakcoModalViewController
     func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
     func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
+    func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer
 }
 
 final class MogakcoCoordinator: Coordinator {
@@ -32,7 +33,8 @@ final class MogakcoCoordinator: Coordinator {
         let actions = MogakcoViewModelActions(
             showMogakcoModal: showMogakcoModal,
             showGroupDetail: showGroupDetailViewController,
-            showNotifications: showNotificationViewController
+            showNotifications: showNotificationViewController,
+            showAddMogakcoScene: startAddMogakcoScene
         )
         let mogakcoViewController = dependencies.makeMogakcoViewController(actions: actions)
         navigationController.navigationBar.topItem?.title = "모각코"
@@ -48,10 +50,21 @@ extension MogakcoCoordinator {
         navigationController.tabBarController?.tabBar.isHidden = true
     }
     
+    func startAddMogakcoScene() {
+        let addGroupDIContainer = dependencies.makeAddGroupSceneDIContainer()
+        let flow = addGroupDIContainer.makeAddGroupFlowCoordinator(
+            navigationController: self.navigationController,
+            groupType: .mogakco
+        )
+        flow.start()
+        childCoordinators.append(flow)
+    }
+    
     func showNotificationViewController() {
         let actions = NotificationViewModelActions(moveBackToPrevViewController: moveBackToMogakcoViewController) // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
         let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
         navigationController.pushViewController(notificationViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
 }
 

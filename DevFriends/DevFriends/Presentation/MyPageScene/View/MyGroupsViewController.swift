@@ -17,15 +17,13 @@ final class MyGroupsViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(
-            GroupCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier
-        )
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         collectionView.delegate = self
         return collectionView
     }()
     
-    private lazy var groupCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: groupCollectionView) { collectionView, indexPath, data in
+    private lazy var groupCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(
+        collectionView: groupCollectionView) { collectionView, indexPath, data in
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath) as? GroupCollectionViewCell else {
@@ -50,6 +48,11 @@ final class MyGroupsViewController: DefaultViewController {
     
     override func configureUI() {
         setupCollectionView()
+        setupTitle()
+    }
+    
+    func setupTitle() {
+        navigationItem.title = viewModel.getMyGroupsTypeName()
     }
     
     func setupCollectionView() {
