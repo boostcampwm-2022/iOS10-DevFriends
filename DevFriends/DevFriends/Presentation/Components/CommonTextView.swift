@@ -8,7 +8,7 @@
 import UIKit
 
 final class CommonTextView: UITextView {
-    var placeholder: String?
+    private var placeholder: String?
     
     required init?(coder: NSCoder) {
         fatalError("Init Error")

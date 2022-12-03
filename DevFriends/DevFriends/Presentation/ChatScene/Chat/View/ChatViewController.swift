@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 final class ChatViewController: DefaultViewController {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "채팅"
         label.font = .systemFont(ofSize: 25, weight: .bold)
@@ -66,11 +66,11 @@ final class ChatViewController: DefaultViewController {
     override func bind() {
         viewModel.groupsSubject
             .receive(on: RunLoop.main)
-            .sink { groups in
-                self.populateSnapshot(data: groups)
+            .sink { [weak self] groups in
+                self?.populateSnapshot(data: groups)
                 if !groups.isEmpty {
                     let indexPath = IndexPath(row: groups.count - 1, section: 0)
-                    self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    self?.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)

@@ -132,7 +132,8 @@ extension DefaultUserRepository {
             email: user.email,
             profileImagePath: user.profileImagePath,
             categories: user.categoryIDs,
-            appliedGroups: user.appliedGroupIDs
+            appliedGroups: user.appliedGroupIDs,
+            likeGroups: user.likeGroupIDs
         )
     }
     

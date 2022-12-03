@@ -10,6 +10,7 @@ import UIKit
 protocol GroupFlowCoordinatorDependencies {
     func makeGroupListViewController(actions: GroupListViewModelActions) -> GroupListViewController
     func makeGroupFilterViewController(filter: Filter, actions: GroupFilterViewModelActions) -> GroupFilterViewController
+    func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer
     func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
 }
 
@@ -27,6 +28,7 @@ final class GroupListCoordinator: Coordinator {
     func start() {
         let actions = GroupListViewModelActions(
             showGroupFilterView: showGroupFilterViewController,
+            startAddGroupScene: startAddGroupScene,
             showNotifications: showNotificationViewController
         )
         let groupListViewController = dependencies.makeGroupListViewController(actions: actions)
@@ -38,8 +40,17 @@ extension GroupListCoordinator {
     func showGroupFilterViewController(filter: Filter) {
         let actions = GroupFilterViewModelActions(didDisappearFilterView: updateFilterGroup)
         let groupFilterViewController = dependencies.makeGroupFilterViewController(filter: filter, actions: actions)
-//        navigationController.pushViewController(groupFilterViewController, animated: true)
         navigationController.present(groupFilterViewController, animated: true)
+    }
+    
+    func startAddGroupScene(groupType: GroupType) {
+        let addGroupDIContainer = dependencies.makeAddGroupSceneDIContainer()
+        let flow = addGroupDIContainer.makeAddGroupFlowCoordinator(
+            navigationController: self.navigationController,
+            groupType: groupType
+        )
+        flow.start()
+        childCoordinators.append(flow)
     }
     
     func updateFilterGroup(updatedFilter: Filter) {
@@ -48,8 +59,13 @@ extension GroupListCoordinator {
     }
     
     func showNotificationViewController() {
-        let actions = NotificationViewModelActions() // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
+        let actions = NotificationViewModelActions(moveBackToPrevViewController: moveBackToGroupListViewController) // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
         let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
         navigationController.pushViewController(notificationViewController, animated: true)
+    }
+    
+    func moveBackToGroupListViewController() {
+        navigationController.tabBarController?.tabBar.isHidden = false
+        navigationController.popViewController(animated: true)
     }
 }

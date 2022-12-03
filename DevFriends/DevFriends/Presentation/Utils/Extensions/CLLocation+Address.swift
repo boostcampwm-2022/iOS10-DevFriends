@@ -8,7 +8,6 @@
 import CoreLocation
 
 extension CLLocation {
-    
     func placemark() async throws -> String? {
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")

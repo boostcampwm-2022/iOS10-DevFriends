@@ -5,6 +5,7 @@
 //  Created by 이대현 on 2022/11/27.
 //
 
+import CoreLocation
 import Combine
 import SnapKit
 import UIKit
@@ -14,21 +15,20 @@ protocol ChooseLocationOutput {
 }
 
 final class ChooseLocationView: UIView, ChooseLocationOutput {
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "위치 선택"
         return label
     }()
     
-    private lazy var locationLabel: UILabel = {
+    private let locationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.textColor = .lightGray
-        label.text = "서울특별시 강남구"
         return label
     }()
     
-    private lazy var disclosureIndicator: UIImageView = {
+    private let disclosureIndicator: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage.disclosure
         imageView.tintColor = .black
@@ -51,14 +51,6 @@ final class ChooseLocationView: UIView, ChooseLocationOutput {
         self.backgroundColor = .white
         self.layout()
         self.setupTapGesture()
-    }
-    
-    private func createInterestLabel(_ text: String) -> FilledRoundTextLabel {
-        let text = "# " + text
-        let defaultColor = UIColor(red: 0.907, green: 0.947, blue: 0.876, alpha: 1)
-        let interestLabel = FilledRoundTextLabel(text: text, backgroundColor: defaultColor, textColor: .black)
-        
-        return interestLabel
     }
     
     private func layout() {
@@ -89,13 +81,19 @@ final class ChooseLocationView: UIView, ChooseLocationOutput {
         tapGestureRecognizer.delegate = self
         self.addGestureRecognizer(tapGestureRecognizer)
     }
+    
+    func set(location: Location) {
+        Task { [weak self] in
+            let placemark = try await CLLocation(latitude: location.latitude, longitude: location.longitude)
+                .placemark()
+            self?.locationLabel.text = placemark
+        }
+    }
 }
 
 extension ChooseLocationView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("gestureRecognizer")
         didTouchViewSubject.send()
         return true
     }
 }
-

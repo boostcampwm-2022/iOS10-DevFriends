@@ -8,54 +8,54 @@
 import UIKit
 
 struct PostAttentionInfo {
-    let likeOrNot: Bool
-    let commentsCount: Int
+    var likeOrNot: Bool
+    var commentsCount: Int
     let maxParticipantCount: Int
     let currentParticipantCount: Int
 }
 
 final class PostAttentionView: UIView {
-    private lazy var mainStackView: UIStackView = {
+    private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         return stackView
     }()
-    private lazy var likeButton: UIButton = {
+    let likeButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         var titleAttr = AttributedString.init("좋아요")
         titleAttr.font = .systemFont(ofSize: 16)
-        titleAttr.foregroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
-        config.image = UIImage(systemName: "hand.thumbsup")
+        titleAttr.foregroundColor = .devFriendsGray
+        config.image = .thumbsup
         config.imagePlacement = .leading
-        config.baseForegroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        config.baseForegroundColor = .devFriendsGray
         config.imagePadding = 5.0
         config.attributedTitle = titleAttr
         button.configuration = config
         button.semanticContentAttribute = .forceLeftToRight
         return button
     }()
-    private lazy var commentsButton: UIButton = {
+    private let commentsButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
-        config.image = UIImage(systemName: "ellipsis.message")
+        config.image = .comment
         config.imagePlacement = .leading
-        config.baseForegroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        config.baseForegroundColor = .devFriendsGray
         config.imagePadding = 5.0
         button.configuration = config
         return button
     }()
-    private lazy var participantsButton: UIButton = {
+    private let participantsButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
-        config.image = UIImage(systemName: "person.2")
+        config.image = .twoPerson
         config.imagePlacement = .leading
-        config.baseForegroundColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        config.baseForegroundColor = .devFriendsGray
         config.imagePadding = 5.0
         button.configuration = config
         return button
     }()
-    private lazy var emptyView: UIView = {
+    private let emptyView: UIView = {
         let view = UIView()
         return view
     }()
@@ -88,7 +88,6 @@ final class PostAttentionView: UIView {
         }
         
         mainStackView.snp.makeConstraints { make in
-            // make.edges.equalToSuperview()
             make.height.equalTo(40)
         }
         
@@ -99,9 +98,10 @@ final class PostAttentionView: UIView {
     }
     
     func set(info: PostAttentionInfo) {
-        if info.likeOrNot {
-            likeButton.isSelected = true
-        }
+        let tintColor: UIColor = info.likeOrNot ? .devFriendsOrange : .devFriendsGray
+        
+        self.likeButton.configuration?.baseForegroundColor = tintColor
+        self.likeButton.configuration?.attributedTitle?.foregroundColor = tintColor
         
         commentsButton.setTitle(String(info.commentsCount), for: .normal)
         participantsButton.setTitle("\(info.currentParticipantCount)/\(info.maxParticipantCount)명", for: .normal)

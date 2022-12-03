@@ -11,24 +11,24 @@ import SnapKit
 final class KeyValueDisplayView: UIView {
     private let fontSize = 12
     
-    private lazy var mainStackView: UIStackView = {
+    private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 5
         return stackView
     }()
-    private lazy var keyTitleLabel: UILabel = {
+    private let keyTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        label.textColor = .devFriendsGray
         label.text = "타이틀"
         label.sizeToFit()
         return label
     }()
-    private lazy var valueLabel: UILabel = {
+    private let valueLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        label.textColor = .devFriendsGray
         label.text = "개수"
         label.sizeToFit()
         return label

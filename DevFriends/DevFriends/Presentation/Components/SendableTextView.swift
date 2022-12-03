@@ -14,17 +14,12 @@ protocol SendableTextViewDelegate: AnyObject {
 }
 
 final class SendableTextView: UIView {
-    private lazy var textField: UITextField = {
-        let textField = UITextField()
-        self.addSubview(textField)
-        return textField
-    }()
+    private let textField = UITextField()
     
-    private lazy var sendButton: UIButton = {
+    private let sendButton: UIButton = {
         let button = UIButton()
         button.setImage(.sendable, for: .normal)
         button.imageView?.tintColor = .orange
-        self.addSubview(button)
         return button
     }()
     
@@ -77,6 +72,7 @@ final class SendableTextView: UIView {
     }
     
     func layout() {
+        self.addSubview(sendButton)
         self.sendButton.snp.makeConstraints { make in
             make.height.equalTo(60)
             make.width.equalTo(0)
@@ -84,6 +80,7 @@ final class SendableTextView: UIView {
             make.trailing.equalToSuperview().offset(-10)
         }
         
+        self.addSubview(textField)
         self.textField.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(20)
             make.top.bottom.equalToSuperview()

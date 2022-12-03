@@ -18,7 +18,7 @@ final class GroupFilterViewController: DefaultViewController {
 
     var initialFilter: Filter?
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
@@ -33,9 +33,12 @@ final class GroupFilterViewController: DefaultViewController {
         collectionView.register(
             GroupFilterCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: GroupFilterCollectionHeaderView.id
+            withReuseIdentifier: GroupFilterCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(GroupFilterCollectionViewCell.self, forCellWithReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier)
+        collectionView.register(
+            GroupFilterCollectionViewCell.self,
+            forCellWithReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier
+        )
         
         collectionView.allowsMultipleSelection = true
         
@@ -63,13 +66,13 @@ final class GroupFilterViewController: DefaultViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print(self.viewModel.alignFilter)
-        print(self.viewModel.groupFilter)
-        print(self.viewModel.categoryFilter)
         super.viewWillDisappear(animated)
-        viewModel.sendFilter(filter: Filter(alignFilter: self.viewModel.alignFilter,
-                                            groupFilter: self.viewModel.groupFilter,
-                                            categoryFilter: self.viewModel.categoryFilter))
+        let filter = Filter(
+            alignFilter: self.viewModel.alignFilter,
+            groupFilter: self.viewModel.groupFilter,
+            categoryFilter: self.viewModel.categoryFilter
+        )
+        viewModel.sendFilter(filter: filter)
     }
     // MARK: - Setting
     
@@ -90,8 +93,8 @@ final class GroupFilterViewController: DefaultViewController {
     override func bind() {
         viewModel.didUpdateFilterSubject
             .receive(on: RunLoop.main)
-            .sink { _ in
-                self.collectionView.reloadData()
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
             }
             .store(in: &cancellables)
     }
@@ -110,7 +113,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         
         guard let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
-            withReuseIdentifier: GroupFilterCollectionHeaderView.id,
+            withReuseIdentifier: GroupFilterCollectionHeaderView.reuseIdentifier,
             for: indexPath
         ) as? GroupFilterCollectionHeaderView else { return UICollectionReusableView() }
         

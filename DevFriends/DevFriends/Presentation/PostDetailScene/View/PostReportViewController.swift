@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class PostReportViewController: UIViewController {
-    private lazy var reportView: ReportView = {
+    private let reportView: ReportView = {
         let reportView = ReportView()
         reportView.setTitleText(title: "게시글을 신고하려는 이유가 무엇인가요?")
         return reportView

@@ -14,7 +14,7 @@ protocol GroupListViewModelType {
     var filteredGroups: [Group] { get set }
     var recommendGroups: [Group] { get set }
     
-    var filterTrigger: Bool { get set } // @Published
+    var filterTrigger: Bool { get set }
     var filterAlignType: AlignType { get set }
     var filterGroupType: GroupType? { get set }
     var filterCategoryTypes: [String] { get set }
@@ -26,24 +26,3 @@ protocol GroupListViewModelType {
     )
     func fetchRecommendGroup(categories: [String])
 }
-
-//final class GroupListViewModel: GroupFilterViewControllerDelegate {
-//
-//    func selectFilter(_ groupFilterViewController: GroupFilterViewController,
-//                      didSelectAlignType alignType: AlignType,
-//                      didSelectGroupType groupType: GroupType,
-//                      didSelectCategoryType categoryTypes: [String])
-//    ) {
-//        self.filterAlignType = alignType
-//        self.filterGroupType = groupType
-//        self.filterCategoryTypes = categoryTypes
-//
-//        self.fetchFilteredGroup(
-//            alignType: alignType,
-//            groupType: groupType,
-//            categoryType: categoryTypes
-//        )
-//
-//        self.filterTrigger = true
-//    }
-//}

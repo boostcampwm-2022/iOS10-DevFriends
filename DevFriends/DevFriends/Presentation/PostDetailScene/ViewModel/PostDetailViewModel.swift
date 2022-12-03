@@ -15,16 +15,23 @@ enum GroupApplyButtonState {
     case closed
 }
 
+struct PostDetailViewModelActions {
+    let backToPrevViewController: () -> Void
+}
+
 protocol PostDetailViewModelInput {
     func didLoadGroup()
     func didTapApplyButton()
+    func didTapLikeButton()
+    func didScrollToBottom()
     func didTapCommentPostButton(content: String)
+    func didTouchedBackButton()
 }
 
 protocol PostDetailViewModelOutput {
     var postWriterInfoSubject: CurrentValueSubject<PostWriterInfo, Never> { get }
     var postDetailContentsSubject: CurrentValueSubject<PostDetailContents, Never> { get }
-    var postAttentionInfo: PostAttentionInfo { get }
+    var postAttentionInfoSubject: CurrentValueSubject<PostAttentionInfo, Never> { get }
     var commentsSubject: CurrentValueSubject<[CommentInfo], Never> { get }
     var scrollToBottomSubject: PassthroughSubject<Void, Never> { get }
     var groupApplyButtonStateSubject: CurrentValueSubject<GroupApplyButtonState, Never> { get }
@@ -34,11 +41,13 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localUser: User
-    private let group: Group
+    private let actions: PostDetailViewModelActions
+    private var group: Group
     private let fetchUserUseCase: FetchUserUseCase
     private let fetchCategoryUseCase: FetchCategoryUseCase
     private let fetchCommentsUseCase: FetchCommentsUseCase
     private let applyGroupUseCase: ApplyGroupUseCase
+    private let updateLikeUseCase: UpdateLikeUseCase
     private let postCommentUseCase: PostCommentUseCase
     private let sendCommentNotificationUseCase: SendCommentNotificationUseCase
     private let sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase
@@ -55,29 +64,51 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             hitsCount: 0
         )
     )
-    var postAttentionInfo: PostAttentionInfo
+    var postAttentionInfoSubject = CurrentValueSubject<PostAttentionInfo, Never>(
+        .init(
+            likeOrNot: false,
+            commentsCount: 0,
+            maxParticipantCount: 0,
+            currentParticipantCount: 0
+        )
+    )
     var commentsSubject = CurrentValueSubject<[CommentInfo], Never>([])
     var scrollToBottomSubject = PassthroughSubject<Void, Never>()
     var groupApplyButtonStateSubject = CurrentValueSubject<GroupApplyButtonState, Never>(.closed)
     
     init(
+        actions: PostDetailViewModelActions,
         group: Group,
         fetchUserUseCase: FetchUserUseCase,
         fetchCategoryUseCase: FetchCategoryUseCase,
         fetchCommentsUseCase: FetchCommentsUseCase,
         applyGroupUseCase: ApplyGroupUseCase,
         sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase,
+        updateLikeUseCase: UpdateLikeUseCase,
         postCommentUseCase: PostCommentUseCase,
         sendCommentNotificationUseCase: SendCommentNotificationUseCase
     ) {
+        self.actions = actions
         self.group = group
         self.fetchUserUseCase = fetchUserUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.fetchCommentsUseCase = fetchCommentsUseCase
         self.applyGroupUseCase = applyGroupUseCase
         self.sendGroupApplyNotificationUseCase = sendGroupApplyNotificationUseCase
+        self.updateLikeUseCase = updateLikeUseCase
         self.postCommentUseCase = postCommentUseCase
         self.sendCommentNotificationUseCase = sendCommentNotificationUseCase
+        
+        // 테스트 유저
+        localUser = User(
+            id: "nqQW9nOes6UPXRCjBuCy",
+            nickname: "흥민 손",
+            job: "EPL득점왕",
+            profileImagePath: "",
+            categoryIDs: [],
+            appliedGroupIDs: [],
+            likeGroupIDs: []
+        )
         
         postDetailContentsSubject.value = .init(
             title: group.title,
@@ -88,21 +119,11 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             hitsCount: group.hit
         )
         
-        postAttentionInfo = .init(
-            likeOrNot: false,
+        postAttentionInfoSubject.value = .init(
+            likeOrNot: localUser.likeGroupIDs.contains(group.id),
             commentsCount: 0,
             maxParticipantCount: group.limitedNumberPeople,
             currentParticipantCount: group.participantIDs.count
-        )
-        
-        // 테스트 유저
-        localUser = User(
-            id: "nqQW9nOes6UPXRCjBuCy",
-            nickname: "흥민 손",
-            job: "EPL득점왕",
-            profileImagePath: "",
-            categoryIDs: [],
-            appliedGroupIDs: []
         )
         
         // 강남구청에서 모각코 id : CMUPNkEns4Pg9ez7fXvg
@@ -146,11 +167,11 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         return result
     }
     
-    private func loadComments() async -> [Comment] {
+    private func loadComments(limit: Int = 5) async -> [Comment] {
         var result: [Comment] = []
         do {
             result = try await Task {
-                try await fetchCommentsUseCase.execute(groupId: group.id)
+                try await fetchCommentsUseCase.execute(groupId: group.id, limit: commentsSubject.value.count + limit)
             }.result.get()
         } catch {
             print(error)
@@ -159,6 +180,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     }
 }
 
+// MARK: INPUT
 extension DefaultPostDetailViewModel {
     func didLoadGroup() {
         Task {
@@ -176,6 +198,8 @@ extension DefaultPostDetailViewModel {
             )
             
             let comments = await loadComments()
+            postAttentionInfoSubject.value.commentsCount = comments.count
+            
             let commentUsers = await loadUsers(ids: comments.map { $0.userID })
             commentsSubject.value = comments.map { comment in
                 guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
@@ -199,6 +223,40 @@ extension DefaultPostDetailViewModel {
         groupApplyButtonStateSubject.value = .applied
     }
     
+    func didTapLikeButton() {
+        postAttentionInfoSubject.value.likeOrNot.toggle()
+        updateLikeUseCase.execute(like: postAttentionInfoSubject.value.likeOrNot, user: localUser, group: group)
+        
+        if postAttentionInfoSubject.value.likeOrNot == true {
+            localUser.likeGroupIDs.append(group.id)
+            group.like += 1
+        } else {
+            localUser.likeGroupIDs.removeAll { $0 == group.id }
+            group.like -= 1
+        }
+    }
+    
+    func didScrollToBottom() {
+        Task {
+            let comments = await loadComments()
+            postAttentionInfoSubject.value.commentsCount = comments.count
+            
+            let commentUsers = await loadUsers(ids: comments.map { $0.userID })
+            commentsSubject.value = comments.map { comment in
+                guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
+                    return CommentInfo(
+                        writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
+                        contents: comment.content
+                    )
+                }
+                return CommentInfo(
+                    writerInfo: .init(name: user.nickname, job: user.job, image: nil),
+                    contents: comment.content
+                )
+            }
+        }
+    }
+    
     func didTapCommentPostButton(content: String) {
         let comment = Comment(
             id: "",
@@ -216,7 +274,9 @@ extension DefaultPostDetailViewModel {
         )
         
         Task {
-            let comments = await loadComments()
+            let comments = await loadComments(limit: 1)
+            postAttentionInfoSubject.value.commentsCount = comments.count
+            
             let commentUsers = await loadUsers(ids: comments.map { $0.userID })
             commentsSubject.value = comments.map { comment in
                 guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
@@ -230,7 +290,11 @@ extension DefaultPostDetailViewModel {
                     contents: comment.content
                 )
             }
-            scrollToBottomSubject.send()
+//            scrollToBottomSubject.send()
         }
+    }
+    
+    func didTouchedBackButton() {
+        actions.backToPrevViewController()
     }
 }

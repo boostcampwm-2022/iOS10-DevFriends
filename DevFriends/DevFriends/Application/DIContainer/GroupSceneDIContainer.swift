@@ -52,6 +52,11 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     func makeGroupFilterViewModel(actions: GroupFilterViewModelActions) -> GroupFilterViewModel {
         return DefaultGroupFilterViewModel(fetchCategoryUseCase: makeFetchCategoryUseCase(), actions: actions)
     }
+    
+    // MARK: AddGroupScene
+    func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer {
+        return AddGroupSceneDIContainer()
+    }
 }
 
 extension GroupSceneDIContainer: NotificationSceneDIContainer {}

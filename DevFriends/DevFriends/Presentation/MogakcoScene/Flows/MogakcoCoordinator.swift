@@ -10,7 +10,7 @@ import UIKit
 protocol MogakcoCoordinatorDependencies {
     func makeMogakcoViewController(actions: MogakcoViewModelActions) -> MogakcoViewController
     func makeMogakcoModalViewController(actions: MogakcoModalViewActions, mogakcos: [Group]) -> MogakcoModalViewController
-    func makeGroupDetailViewController(group: Group) -> PostDetailViewController
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
     func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
 }
 
@@ -42,13 +42,14 @@ final class MogakcoCoordinator: Coordinator {
 
 extension MogakcoCoordinator {
     func showGroupDetailViewController(group: Group) {
-        let postDetailViewController = dependencies.makeGroupDetailViewController(group: group)
+        let actions = PostDetailViewModelActions(backToPrevViewController: moveBackToMogakcoViewController)
+        let postDetailViewController = dependencies.makePostDetailViewController(actions: actions, group: group)
         navigationController.pushViewController(postDetailViewController, animated: true)
         navigationController.tabBarController?.tabBar.isHidden = true
     }
     
     func showNotificationViewController() {
-        let actions = NotificationViewModelActions() // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
+        let actions = NotificationViewModelActions(moveBackToPrevViewController: moveBackToMogakcoViewController) // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
         let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
         navigationController.pushViewController(notificationViewController, animated: true)
     }
@@ -74,5 +75,10 @@ extension MogakcoCoordinator {
         mogakcoViewController.showMogakcoCollectionView()
         mogakcoViewController.setNowMogakcoWithAllList(index: index)
         mogakcoViewController.presentedViewController?.dismiss(animated: true)
+    }
+    
+    func moveBackToMogakcoViewController() {
+        navigationController.tabBarController?.tabBar.isHidden = false
+        navigationController.popViewController(animated: true)
     }
 }

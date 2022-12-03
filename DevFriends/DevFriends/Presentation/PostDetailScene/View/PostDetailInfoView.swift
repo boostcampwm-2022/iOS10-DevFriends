@@ -9,16 +9,16 @@ import UIKit
 import SnapKit
 
 final class PostDetailInfoView: UIView {
-    private lazy var mainStackView: UIStackView = {
+    private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         return stackView
     }()
-    private lazy var postWriterInfoView: PostWriterInfoView = {
+    private let postWriterInfoView: PostWriterInfoView = {
         let postWriterInfoView = PostWriterInfoView()
         return postWriterInfoView
     }()
-    private lazy var postDetailContentsView: PostDetailContentsView = {
+    private let postDetailContentsView: PostDetailContentsView = {
         let postDetailContentsView = PostDetailContentsView()
         return postDetailContentsView
     }()

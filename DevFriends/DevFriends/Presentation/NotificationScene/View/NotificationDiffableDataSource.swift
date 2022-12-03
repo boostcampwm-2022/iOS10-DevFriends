@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 final class NotificationDiffableDataSource: UITableViewDiffableDataSource<Section, Notification> {
-    var notificationSubject = PassthroughSubject<Notification, Never>()
+    let notificationSubject = PassthroughSubject<Notification, Never>()
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true

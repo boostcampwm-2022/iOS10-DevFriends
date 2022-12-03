@@ -24,8 +24,6 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 9
-        stackView.addArrangedSubview(createInterestLabel("C언어"))
-        stackView.addArrangedSubview(createInterestLabel("Swift"))
         return stackView
     }()
     
@@ -58,7 +56,6 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
         let text = "# " + text
         let defaultColor = UIColor.devFriendsLightGray
         let interestLabel = FilledRoundTextLabel(text: text, backgroundColor: defaultColor, textColor: .black)
-        
         return interestLabel
     }
     
@@ -89,6 +86,16 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
         let tapGestureRecognizer = UITapGestureRecognizer()
         tapGestureRecognizer.delegate = self
         self.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func set(categories: [Category]) {
+        categoryStack.subviews.forEach {
+            $0.removeFromSuperview()
+        }
+        
+        categories.forEach {
+            categoryStack.addArrangedSubview(createInterestLabel($0.name))
+        }
     }
 }
 
