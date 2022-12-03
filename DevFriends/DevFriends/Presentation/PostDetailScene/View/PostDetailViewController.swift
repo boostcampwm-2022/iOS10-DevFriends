@@ -45,10 +45,7 @@ final class PostDetailViewController: DefaultViewController {
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
         tableView.delegate = self
-        tableView.register(
-            CommentTableViewCell.self,
-            forCellReuseIdentifier: CommentTableViewCell.reuseIdentifier
-        )
+        tableView.register(cellType: CommentTableViewCell.self)
         tableView.sectionHeaderTopPadding = 10.0
         return tableView
     }()

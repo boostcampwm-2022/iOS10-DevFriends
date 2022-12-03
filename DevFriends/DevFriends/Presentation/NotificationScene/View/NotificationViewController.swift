@@ -89,10 +89,7 @@ final class NotificationViewController: UITableViewController {
     }
     
     private func setupTableView() {
-        self.tableView.register(
-            NotificationTableViewCell.self,
-            forCellReuseIdentifier: NotificationTableViewCell.reuseIdentifier
-        )
+        self.tableView.register(cellType: NotificationTableViewCell.self)
         self.notificationTableViewSnapShot.appendSections([.main])
     }
     

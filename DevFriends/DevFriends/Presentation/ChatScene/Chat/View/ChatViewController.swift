@@ -19,7 +19,7 @@ final class ChatViewController: DefaultViewController {
     
     private lazy var chatTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
+        tableView.register(cellType: ChatTableViewCell.self)
         tableView.delegate = self
         tableView.separatorStyle = .none
         return tableView
