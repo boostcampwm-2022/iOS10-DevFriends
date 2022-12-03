@@ -82,6 +82,7 @@
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D6CEFA459392B61254369D07 /* Pods_DevFriends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D508A33F60F395002118917 /* Pods_DevFriends.framework */; };
 		E31B353B293B7468000386BD /* Array+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B353A293B7468000386BD /* Array+SafeIndex.swift */; };
+		E31B353D293B7645000386BD /* CommentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B353C293B7645000386BD /* CommentInfo.swift */; };
 		E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A2024292319C700887EC9 /* PostDetailCommentView.swift */; };
 		E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202729235A3D00887EC9 /* PostAttentionView.swift */; };
 		E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */; };
@@ -288,6 +289,7 @@
 		A66C7BD4292E1A9B0008B6FD /* GroupListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		A66C7BD5292E1A9B0008B6FD /* GroupFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupFilterViewModel.swift; sourceTree = "<group>"; };
 		E31B353A293B7468000386BD /* Array+SafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SafeIndex.swift"; sourceTree = "<group>"; };
+		E31B353C293B7645000386BD /* CommentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInfo.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -854,6 +856,7 @@
 				E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */,
 				E33A202D2923DADD00887EC9 /* ReportView.swift */,
 				E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */,
+				E31B353C293B7645000386BD /* CommentInfo.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1383,6 +1386,7 @@
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
+				E31B353D293B7645000386BD /* CommentInfo.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
