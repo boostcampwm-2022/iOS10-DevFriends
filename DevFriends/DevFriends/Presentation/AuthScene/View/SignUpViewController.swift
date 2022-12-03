@@ -10,11 +10,23 @@ import SnapKit
 import UIKit
 
 final class SignUpViewController: DefaultViewController {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(
+            image: .chevronLeft,
+            style: .plain,
+            target: self,
+            action: #selector(didTouchedBackButton)
+        )
+        barButton.tintColor = .black
+        return barButton
+    }()
     let emailTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: nil)
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1).cgColor
         textField.layer.cornerRadius = 10
+        textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
         return textField
     }()
     let emailValidationLabel: UILabel = {
@@ -27,6 +39,7 @@ final class SignUpViewController: DefaultViewController {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1).cgColor
         textField.layer.cornerRadius = 10
+        textField.autocapitalizationType = .none
         return textField
     }()
     let nicknameValidationLabel: UILabel = {
@@ -65,6 +78,7 @@ final class SignUpViewController: DefaultViewController {
     
     override func viewDidLoad() {
         viewModel.viewDidLoad()
+        self.setupNavigation()
         super.viewDidLoad()
     }
     
@@ -179,10 +193,21 @@ final class SignUpViewController: DefaultViewController {
         self.nicknameTextField.text = self.viewModel.name
     }
     
+    private func setupNavigation() {
+        self.navigationItem.leftBarButtonItems = [backBarButton]
+        self.navigationItem.title = "회원가입"
+    }
+    
     private func makeTitleLabel(text: String) -> UILabel {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.text = text
         return label
+    }
+}
+
+extension SignUpViewController {
+    @objc func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }

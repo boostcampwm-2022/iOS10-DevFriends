@@ -46,7 +46,10 @@ final class AuthCoordinator: Coordinator {
     
     func showSignUpViewController(_ uid: String, _ email: String?, _ name: String?) {
         guard let showTabBarController = delegate?.showTabBar else { fatalError("Auth Delegate is not linked.") }
-        let actions = SignUpViewModelActions(showTabBarController: showTabBarController)
+        let actions = SignUpViewModelActions(
+            showTabBarController: showTabBarController,
+            moveBackToPrevViewController: moveBackToLoginViewController
+        )
         let signUpViewController = dependencies.makeSignUpViewController(
             actions: actions,
             uid: uid,
@@ -54,5 +57,9 @@ final class AuthCoordinator: Coordinator {
             name: name
         )
         navigationController?.pushViewController(signUpViewController, animated: false)
+    }
+    
+    func moveBackToLoginViewController() {
+        navigationController?.popViewController(animated: true)
     }
 }

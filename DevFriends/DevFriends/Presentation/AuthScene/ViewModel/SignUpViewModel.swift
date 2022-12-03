@@ -10,6 +10,7 @@ import Foundation
 
 struct SignUpViewModelActions {
     let showTabBarController: () -> Void
+    let moveBackToPrevViewController: () -> Void
 }
 
 protocol SignUpViewModelInput {
@@ -17,6 +18,7 @@ protocol SignUpViewModelInput {
     func didTouchedSignUp(nickname: String, job: String?, email: String)
     func didChangedTextInEmailTextField(text: String?)
     func didChangedTextInNicknameTextField(text: String?)
+    func didTouchedBackButton()
 }
 
 protocol SignUpViewModelOutput {
@@ -30,7 +32,7 @@ protocol SignUpViewModel: SignUpViewModelInput, SignUpViewModelOutput {}
 final class DefaultSignUpViewModel: SignUpViewModel {
     private var cancellables = Set<AnyCancellable>()
     
-    private let actions: SignUpViewModelActions?
+    private let actions: SignUpViewModelActions
     private let createUserUseCase: CreateUserUseCase
     
     private let uid: String
@@ -41,7 +43,7 @@ final class DefaultSignUpViewModel: SignUpViewModel {
     let isEmailValidated = PassthroughSubject<Bool, Never>()
     let isNicknameValidated = PassthroughSubject<Bool, Never>()
     
-    init(actions: SignUpViewModelActions?, createUserUseCase: CreateUserUseCase, uid: String, email: String? = nil, name: String? = nil) {
+    init(actions: SignUpViewModelActions, createUserUseCase: CreateUserUseCase, uid: String, email: String? = nil, name: String? = nil) {
         self.actions = actions
         self.createUserUseCase = createUserUseCase
         self.uid = uid
@@ -74,7 +76,7 @@ extension DefaultSignUpViewModel {
             }
             
             UserManager.shared.login(uid: self.uid)
-            self.actions?.showTabBarController()
+            self.actions.showTabBarController()
         }
     }
     
@@ -95,6 +97,10 @@ extension DefaultSignUpViewModel {
         } else {
             self.isNicknameValidated.send(false)
         }
+    }
+    
+    func didTouchedBackButton() {
+        actions.moveBackToPrevViewController()
     }
 }
 
