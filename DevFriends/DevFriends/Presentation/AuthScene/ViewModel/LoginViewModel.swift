@@ -68,4 +68,8 @@ extension DefaultLoginViewModel {
             print(error)
         }
     }
+    
+    func saveUIDToKeyChain(uid: String) {
+        // TODO: 키체인에 uid 저장하기
+    }
 }

@@ -69,7 +69,7 @@ final class SignUpViewController: DefaultViewController {
     }
     
     override func configureUI() {
-        hideKeyboardWhenTapped()
+        hideKeyboardWhenTappedAround()
     }
     
     override func layout() {

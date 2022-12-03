@@ -26,7 +26,8 @@ final class DefaultCreateUserUseCase: CreateUserUseCase {
             email: email,
             profileImagePath: "",
             categoryIDs: [String](),
-            appliedGroupIDs: [String]()
+            appliedGroupIDs: [String](),
+            likeGroupIDs: [String]()
         )
         
         do {

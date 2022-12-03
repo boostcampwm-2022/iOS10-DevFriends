@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.set("YkocW98XPzJAsSDVa5qd", forKey: "uid")
             UserDefaults.standard.set("frogking", forKey: "nickname")
         }
-        
+
         let navigationController = UINavigationController()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
@@ -31,6 +31,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             appDIContainer: appDIContainer
         )
         appFlowCoordinator?.start()
+        
+//        let navigationController = UINavigationController()
+//        window?.rootViewController = navigationController
+//        window?.makeKeyAndVisible()
+//        let authCoordinator = AuthCoordinator(navigationController: navigationController, dependencies: AuthSceneDIContainer())
+//        authCoordinator.start()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

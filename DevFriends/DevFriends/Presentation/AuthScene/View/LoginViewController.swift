@@ -57,10 +57,6 @@ final class LoginViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
-        
-    }
-    
     override func layout() {
         view.addSubview(logoImageView)
         logoImageView.snp.makeConstraints { make in
@@ -110,17 +106,18 @@ final class LoginViewController: DefaultViewController {
     }
     
     func didSelectLoginButton() {
-        Task {
-            await self.viewModel.didLoginCompleted(uid: "asdgawehr3", email: nil, name: "유승원")
-        }
-//        let appleIDProvider = ASAuthorizationAppleIDProvider()
-//        let request = appleIDProvider.createRequest()
-//        request.requestedScopes = [.fullName, .email]
-//
-//        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-//        authorizationController.delegate = self
-//        authorizationController.presentationContextProvider = self
-//        authorizationController.performRequests()
+//        Task {
+//            await self.viewModel.didLoginCompleted(uid: "YkocW98XPzJAsSDVa5qd", email: "abc@def.com", name: "유승원")
+//        }
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
 }
 
@@ -138,10 +135,18 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
             
+            let name = (fullName?.givenName ?? "") + (fullName?.familyName ?? "")
             print("User ID : \(userIdentifier)")
             print("User Email : \(email ?? "")")
-            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+            print("User Name : \(name)")
             
+            Task {
+                await self.viewModel.didLoginCompleted(
+                    uid: userIdentifier,
+                    email: email,
+                    name: name
+                )
+            }
         default:
             break
         }
