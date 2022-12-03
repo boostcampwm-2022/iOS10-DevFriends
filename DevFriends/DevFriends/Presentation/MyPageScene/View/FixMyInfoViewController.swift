@@ -9,7 +9,7 @@ import Combine
 import PhotosUI
 import UIKit
 
-final class FixMyInfoViewController: DefaultViewController {
+final class FixMyInfoViewController: UIViewController {
     private lazy var backBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         barButton.image = .chevronLeft

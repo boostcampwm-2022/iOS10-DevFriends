@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-final class MyGroupsViewController: DefaultViewController {
+final class MyGroupsViewController: UIViewController {
     private lazy var backBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         barButton.image = .chevronLeft
@@ -61,6 +61,7 @@ final class MyGroupsViewController: DefaultViewController {
         super.viewDidLoad()
         self.configureUI()
         self.layout()
+        self.bind()
     }
     
     private func configureUI() {
@@ -68,12 +69,8 @@ final class MyGroupsViewController: DefaultViewController {
         setupNavigation()
     }
     
-<<<<<<< HEAD
     func setupNavigation() {
         navigationItem.leftBarButtonItems = [backBarButton]
-=======
-    private func setupTitle() {
->>>>>>> e010657f2832929aaee45ba56ff7befde8202362
         navigationItem.title = viewModel.getMyGroupsTypeName()
     }
     
@@ -93,7 +90,7 @@ final class MyGroupsViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
+    private func bind() {
         backBarButton.publisher
             .sink { [weak self] _ in
                 self?.didTouchedBackButton()
