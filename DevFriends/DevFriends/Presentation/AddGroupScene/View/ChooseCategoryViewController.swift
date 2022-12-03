@@ -43,7 +43,7 @@ final class ChooseCategoryViewController: UIViewController {
         return button
     }()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Initializer
     private let viewModel: ChooseCategoryViewModel

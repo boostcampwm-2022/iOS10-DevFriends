@@ -39,7 +39,7 @@ final class MyGroupsViewController: UIViewController {
     
     private var groupCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     let viewModel: MyGroupsViewModel
     

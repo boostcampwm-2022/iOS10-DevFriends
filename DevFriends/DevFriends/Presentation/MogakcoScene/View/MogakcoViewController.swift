@@ -131,7 +131,7 @@ final class MogakcoViewController: UIViewController {
         return locationManager
     }()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: MogakcoViewModel
     

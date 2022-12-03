@@ -50,7 +50,7 @@ final class MyPageViewController: UIViewController {
     private let logoutButton = SubtitleButton(text: "로그아웃")
     private let withdrawalButton = SubtitleButton(text: "회원탈퇴")
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: MyPageViewModel
     

@@ -95,7 +95,7 @@ final class PostDetailViewController: UIViewController {
         return postAttentionView
     }()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: PostDetailViewModel
     

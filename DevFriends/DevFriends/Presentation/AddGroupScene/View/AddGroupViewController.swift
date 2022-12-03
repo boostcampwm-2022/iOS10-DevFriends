@@ -45,7 +45,7 @@ final class AddGroupViewController: UIViewController {
     
     private let submitButton = CommonButton(text: "작성 완료")
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     private let viewModel: AddGroupViewModel

@@ -40,7 +40,7 @@ final class ChatViewController: UIViewController {
     
     private lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: ChatViewModel
     

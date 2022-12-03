@@ -56,7 +56,7 @@ class PopupViewController: UIViewController {
         return view
     }()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     func set(popup: Popup) {
         titleLabel.text = popup.title

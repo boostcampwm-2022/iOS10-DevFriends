@@ -128,7 +128,7 @@ final class GroupListViewController: UIViewController {
         return layout
     }()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     private let viewModel: GroupListViewModel

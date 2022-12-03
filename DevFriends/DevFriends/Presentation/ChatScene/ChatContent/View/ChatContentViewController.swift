@@ -68,7 +68,7 @@ final class ChatContentViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()

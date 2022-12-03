@@ -45,7 +45,7 @@ final class GroupFilterViewController: UIViewController {
         return collectionView
     }()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Initializer
     

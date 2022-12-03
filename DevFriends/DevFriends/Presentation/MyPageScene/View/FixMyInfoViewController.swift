@@ -47,7 +47,7 @@ final class FixMyInfoViewController: UIViewController {
         return picker
     }()
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: FixMyInfoViewModel
     

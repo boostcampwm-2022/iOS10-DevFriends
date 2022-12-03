@@ -83,7 +83,7 @@ final class ChooseLocationViewController: UIViewController {
         return Location(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
     }
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     private let actions: ChooseLocationViewActions
 
