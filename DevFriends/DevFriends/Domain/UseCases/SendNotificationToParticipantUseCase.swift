@@ -27,7 +27,7 @@ final class DefaultSendNotificationToParticipantUseCase: SendNotificationToParti
                 type: NotificationType.joinSuccess
             )
             
-            notificationRepository.send(to: senderID, notification: notification)
+            notificationRepository.create(to: senderID, notification: notification)
         case .denied:
             break
             // TODO: 미래의 누군가가 할 것이야..

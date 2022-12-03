@@ -37,20 +37,20 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     }
 
     // MARK: UseCases
-    private func makeFetchGroupUseCase() -> FetchGroupUseCase {
-        return DefaultFetchGroupUseCase(groupRepository: makeGroupRepository())
+    private func makeLoadGroupUseCase() -> LoadGroupUseCase {
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
     }
     
-    private func makeFetchUserUseCase() -> FetchUserUseCase {
-        return DefaultFetchUserUseCase(userRepository: makeUserRepository())
+    private func makeLoadUserUseCase() -> LoadUserUseCase {
+        return DefaultLoadUserUseCase(userRepository: makeUserRepository())
     }
     
-    private func makeFetchCategoryUseCase() -> FetchCategoryUseCase {
-        return DefaultFetchCategoryUseCase(categoryRepository: makeCategoryRepository())
+    private func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
-    private func makeFetchCommentsUseCase() -> FetchCommentsUseCase {
-        return DefaultFetchCommentsUseCase(commentRepository: makeGroupCommentRepository())
+    private func makeLoadCommentsUseCase() -> LoadCommentsUseCase {
+        return DefaultLoadCommentsUseCase(commentRepository: makeGroupCommentRepository())
     }
     
     private func makeUpdateLikeUseCase() -> UpdateLikeUseCase {
@@ -75,7 +75,7 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     
     // MARK: Mogakco
     private func makeMogakcoViewModel(actions: MogakcoViewModelActions) -> MogakcoViewModel {
-        return MogakcoViewModel(fetchGroupUseCase: makeFetchGroupUseCase(), actions: actions)
+        return MogakcoViewModel(fetchGroupUseCase: makeLoadGroupUseCase(), actions: actions)
     }
     
     func makeMogakcoViewController(actions: MogakcoViewModelActions) -> MogakcoViewController {
@@ -94,9 +94,9 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return DefaultPostDetailViewModel(
             actions: actions,
             group: group,
-            fetchUserUseCase: makeFetchUserUseCase(),
-            fetchCategoryUseCase: makeFetchCategoryUseCase(),
-            fetchCommentsUseCase: makeFetchCommentsUseCase(),
+            fetchUserUseCase: makeLoadUserUseCase(),
+            fetchCategoryUseCase: makeLoadCategoryUseCase(),
+            fetchCommentsUseCase: makeLoadCommentsUseCase(),
             applyGroupUseCase: makeApplyGroupUseCase(),
             sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
             updateLikeUseCase: makeUpdateLikeUseCase(),

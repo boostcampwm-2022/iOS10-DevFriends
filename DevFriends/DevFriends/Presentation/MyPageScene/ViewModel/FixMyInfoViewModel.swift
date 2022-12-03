@@ -30,7 +30,7 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
     private let actions: FixMyInfoViewModelActions
     private let updateUserInfoUseCase: UpdateUserInfoUseCase
     private let uploadProfileImageUseCase: UploadProfileImageUseCase
-    private let fetchProfileImageUseCase: FetchProfileImageUseCase
+    private let fetchProfileImageUseCase: LoadProfileImageUseCase
     
     // MARK: - OUTPUT
     private let localUser: User
@@ -42,7 +42,7 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
         actions: FixMyInfoViewModelActions,
         updateUserInfoUseCase: UpdateUserInfoUseCase,
         uploadProfileImageUseCase: UploadProfileImageUseCase,
-        fetchProfileImageUseCase: FetchProfileImageUseCase
+        fetchProfileImageUseCase: LoadProfileImageUseCase
     ) {
         self.actions = actions
         self.updateUserInfoUseCase = updateUserInfoUseCase

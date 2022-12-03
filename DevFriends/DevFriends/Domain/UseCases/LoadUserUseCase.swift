@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol FetchUserUseCase {
+protocol LoadUserUseCase {
     func execute(userId: String) async throws -> User
     func execute(userIds: [String]) async throws -> [User]
 }
 
-final class DefaultFetchUserUseCase: FetchUserUseCase {
+final class DefaultLoadUserUseCase: LoadUserUseCase {
     private let userRepository: UserRepository
     
     init(userRepository: UserRepository) {

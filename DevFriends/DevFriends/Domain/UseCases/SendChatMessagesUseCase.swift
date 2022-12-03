@@ -21,6 +21,6 @@ final class DefaultSendChatMessagesUseCase: SendChatMessagesUseCase {
     }
     
     func execute(message: Message) {
-        self.chatMessagesRepository.send(chatUID: self.chatUID, message: message)
+        self.chatMessagesRepository.create(chatUID: self.chatUID, message: message)
     }
 }

@@ -19,6 +19,6 @@ final class DefaultSaveChatUseCase: SaveChatUseCase {
     }
     
     func execute(chat: Chat) -> String {
-        return self.chatRepository.save(chat: chat)
+        return self.chatRepository.create(chat: chat)
     }
 }

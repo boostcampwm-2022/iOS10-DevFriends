@@ -19,7 +19,7 @@ final class DefaultSendGroupApplyNotificationUseCase: SendGroupApplyNotification
     }
     
     func execute(from user: User, to group: Group) {
-        notificationRepository.send(
+        notificationRepository.create(
             to: group.managerID,
             notification: Notification(
                 groupID: group.id,
