@@ -70,8 +70,6 @@ final class NotificationTableViewCell: UITableViewCell {
 }
 
 extension NotificationTableViewCell: ReusableType {
-    static var reuseIdentifier = String(describing: NotificationTableViewCell.self)
-    
     func layout() {
         self.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in

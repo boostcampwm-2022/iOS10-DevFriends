@@ -17,10 +17,7 @@ final class MyGroupsViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(
-            GroupCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier
-        )
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         collectionView.delegate = self
         return collectionView
     }()
