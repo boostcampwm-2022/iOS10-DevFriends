@@ -11,17 +11,9 @@ import UIKit
 
 final class PostDetailViewController: DefaultViewController {
     private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(
-            image: .chevronLeft,
-            style: .plain,
-            target: self,
-            action: nil
-        )
-        barButton.publisher
-            .sink { [weak self] _ in
-                self?.didTouchedBackButton()
-            }
-            .store(in: &cancellables)
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
         barButton.tintColor = .black
         return barButton
     }()
@@ -180,6 +172,12 @@ final class PostDetailViewController: DefaultViewController {
     }
     
     override func bind() {
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+        
         viewModel.postWriterInfoSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] postWriterInfo in

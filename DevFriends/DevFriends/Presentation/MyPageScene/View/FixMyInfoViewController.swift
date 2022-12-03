@@ -10,12 +10,9 @@ import UIKit
 
 final class FixMyInfoViewController: DefaultViewController {
     private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(
-            image: .chevronLeft,
-            style: .plain,
-            target: self,
-            action: #selector(didTouchedBackButton)
-        )
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
         barButton.tintColor = .black
         return barButton
     }()
@@ -131,6 +128,12 @@ final class FixMyInfoViewController: DefaultViewController {
     override func bind() {
         self.hideKeyboardWhenTappedAround()
         
+        self.backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+        
         self.profileImageView.gesturePublisher()
             .sink { [weak self] _ in
                 if let nicknameEditing = self?.nicknameTextField.isEditing,
@@ -202,7 +205,7 @@ final class FixMyInfoViewController: DefaultViewController {
         }
     }
     
-    @objc func didTouchedBackButton() {
+    private func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
     }
 }

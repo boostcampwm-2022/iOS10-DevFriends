@@ -9,12 +9,9 @@ import UIKit
 
 final class MyGroupsViewController: DefaultViewController {
     private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(
-            image: .chevronLeft,
-            style: .plain,
-            target: self,
-            action: #selector(didTouchedBackButton)
-        )
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
         barButton.tintColor = .black
         return barButton
     }()
@@ -83,7 +80,15 @@ final class MyGroupsViewController: DefaultViewController {
         }
     }
     
-    @objc func didTouchedBackButton() {
+    override func bind() {
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
     }
 }
