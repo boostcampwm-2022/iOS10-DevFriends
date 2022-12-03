@@ -129,13 +129,12 @@ final class FixMyInfoViewController: DefaultViewController {
         
         self.fixDoneButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                guard let nickname = self?.nicknameTextField.text else { return }
-                guard let job = self?.jobTextField.text else { return }
+                guard let nickname = self?.nicknameTextField.text, let job = self?.jobTextField.text else { return }
                 self?.viewModel.didTapDoneButton(nickname: nickname, job: job)
             }
             .store(in: &cancellables)
         
-        viewModel.profileImageSubject
+        self.viewModel.profileImageSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
                 if let image = image {
