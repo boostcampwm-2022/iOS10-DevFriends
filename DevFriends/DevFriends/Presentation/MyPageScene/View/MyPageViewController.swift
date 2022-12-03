@@ -8,9 +8,7 @@
 import UIKit
 
 final class MyPageViewController: DefaultViewController {
-    private let profileImageViewHeight: CGFloat = 100
-    
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "마이페이지"
         label.font = .systemFont(ofSize: 25, weight: .bold)
@@ -26,6 +24,8 @@ final class MyPageViewController: DefaultViewController {
         return item
     }()
     
+    private let profileImageViewHeight: CGFloat = 100
+    
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .profile
@@ -34,7 +34,7 @@ final class MyPageViewController: DefaultViewController {
         return imageView
     }()
     
-    private lazy var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 25, weight: .bold)
         label.text = "사용자"

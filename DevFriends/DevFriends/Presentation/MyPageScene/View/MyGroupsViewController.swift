@@ -25,7 +25,8 @@ final class MyGroupsViewController: DefaultViewController {
         return collectionView
     }()
     
-    private lazy var groupCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: groupCollectionView) { collectionView, indexPath, data in
+    private lazy var groupCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(
+        collectionView: groupCollectionView) { collectionView, indexPath, data in
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath) as? GroupCollectionViewCell else {
