@@ -36,12 +36,15 @@ final class LoginViewController: DefaultViewController {
         button.tintColor = .devFriendsGray
         button.setBackgroundImage(.box, for: .normal)
         button.setBackgroundImage(.checkBox, for: .selected)
+        button.isSelected = UserManager.shared.isEnabledAutoLogin
         button.publisher(for: .touchUpInside)
             .sink {
                 if self.autoLoginCheckButton.isSelected {
                     self.autoLoginCheckButton.isSelected = false
+                    UserManager.shared.isEnabledAutoLogin = false
                 } else {
                     self.autoLoginCheckButton.isSelected = true
+                    UserManager.shared.isEnabledAutoLogin = true
                 }
             }
             .store(in: &cancellables)
@@ -137,10 +140,6 @@ final class LoginViewController: DefaultViewController {
     }
     
     func didSelectLoginButton() {
-//        Task {
-//            await self.viewModel.didLoginCompleted(uid: "YkocW98XPzJAsSDVa5qd", email: "abc@def.com", name: "유승원")
-//        }
-        
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -174,11 +173,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
             
-            let name = (fullName?.givenName ?? "") + (fullName?.familyName ?? "")
-            print("User ID : \(userIdentifier)")
-            print("User Email : \(email ?? "")")
-            print("User Name : \(name)")
-            
+            let name = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+
             Task {
                 await self.viewModel.didLoginCompleted(
                     uid: userIdentifier,

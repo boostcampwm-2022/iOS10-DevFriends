@@ -27,6 +27,14 @@ final class AuthCoordinator: Coordinator {
     }
     
     func start() {
+        if UserManager.shared.isEnabledAutoLogin {
+            delegate?.showTabBar()
+        } else {
+            self.showLoginViewController()
+        }
+    }
+    
+    func showLoginViewController() {
         guard let showTabBarController = delegate?.showTabBar else { fatalError("Auth Delegate is not linked.") }
         let actions = LoginViewModelActions(
             showSignUp: showSignUpViewController,

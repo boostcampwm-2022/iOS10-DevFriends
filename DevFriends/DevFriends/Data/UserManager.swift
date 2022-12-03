@@ -15,6 +15,7 @@ enum UserInfoKey: String {
     case profile = "PROFILE"
     case categoryIDs = "CATEGORYIDS"
     case appliedGroupIDs = "APPLIEDGROUPIDS"
+    case isEnabledAutoLogin = "ISENABLEDAUTOLOGIN"
 }
 
 final class UserManager {
@@ -102,6 +103,21 @@ final class UserManager {
             userDefaults.synchronize()
         }
     }
+    var isEnabledAutoLogin: Bool {
+        get {
+            let isEnabled = UserDefaults.standard.bool(forKey: UserInfoKey.isEnabledAutoLogin.rawValue)
+            if isEnabled, let uid = self.uid {
+                self.login(uid: uid)
+            }
+            return isEnabled
+        }
+        
+        set {
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(newValue, forKey: UserInfoKey.isEnabledAutoLogin.rawValue)
+            userDefaults.synchronize()
+        }
+    }
     
     private let userRepository = DefaultUserRepository()
     
@@ -124,6 +140,7 @@ extension UserManager {
         userDefaults.removeObject(forKey: UserInfoKey.profile.rawValue)
         userDefaults.removeObject(forKey: UserInfoKey.categoryIDs.rawValue)
         userDefaults.removeObject(forKey: UserInfoKey.appliedGroupIDs.rawValue)
+        userDefaults.removeObject(forKey: UserInfoKey.isEnabledAutoLogin.rawValue)
     }
     
     // MARK: Private
