@@ -12,14 +12,8 @@ final class ChatContentViewController: UIViewController {
     private let messageTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.register(
-            FriendMessageTableViewCell.self,
-            forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier
-        )
-        tableView.register(
-            MyMessageTableViewCell.self,
-            forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier
-        )
+        tableView.register(cellType: FriendMessageTableViewCell.self)
+        tableView.register(cellType: MyMessageTableViewCell.self)
         return tableView
     }()
     

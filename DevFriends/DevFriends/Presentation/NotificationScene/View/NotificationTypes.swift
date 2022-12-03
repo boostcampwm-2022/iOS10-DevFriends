@@ -7,7 +7,6 @@
 
 import Foundation
 
-// TODO: 이런 파일은 어디에 놓아야 될지 논의해보기
 enum NotificationType: String {
     case joinRequest
     case joinWait

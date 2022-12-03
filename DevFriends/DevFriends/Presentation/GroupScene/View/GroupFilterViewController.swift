@@ -35,10 +35,7 @@ final class GroupFilterViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupFilterCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(
-            GroupFilterCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier
-        )
+        collectionView.register(cellType: GroupFilterCollectionViewCell.self)
         
         collectionView.allowsMultipleSelection = true
         

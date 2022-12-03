@@ -15,8 +15,13 @@ final class PostDetailViewController: UIViewController {
             image: .chevronLeft,
             style: .plain,
             target: self,
-            action: #selector(didTouchedBackButton)
+            action: nil
         )
+        barButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
         barButton.tintColor = .black
         return barButton
     }()
@@ -25,7 +30,12 @@ final class PostDetailViewController: UIViewController {
         item.image = .ellipsis
         item.tintColor = .black
         item.target = self
-        item.action = #selector(didTapSettingButton)
+        item.action = nil
+        item.publisher
+            .sink { [weak self] _ in
+                self?.didTapSettingButton()
+            }
+            .store(in: &cancellables)
         return item
     }()
     private lazy var commentTableView: UITableView = {
@@ -35,10 +45,7 @@ final class PostDetailViewController: UIViewController {
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
         tableView.delegate = self
-        tableView.register(
-            CommentTableViewCell.self,
-            forCellReuseIdentifier: CommentTableViewCell.reuseIdentifier
-        )
+        tableView.register(cellType: CommentTableViewCell.self)
         tableView.sectionHeaderTopPadding = 10.0
         return tableView
     }()
@@ -365,11 +372,11 @@ extension PostDetailViewController: UITableViewDelegate {
 // MARK: - Actions
 
 extension PostDetailViewController {
-    @objc func didTapSettingButton(_ sender: UIButton) {
+    private func didTapSettingButton() {
         // MARK: 동작을 넣어주세요
     }
     
-    @objc func didTouchedBackButton() {
+    private func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
     }
 }
