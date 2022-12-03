@@ -26,4 +26,6 @@ extension UIImage {
     static var book = UIImage(systemName: "text.book.closed.fill")
     static var person = UIImage(systemName: "person")
     static var message = UIImage(systemName: "message")
+    static var box = UIImage(systemName: "square")
+    static var checkBox = UIImage(systemName: "checkmark.square")
 }

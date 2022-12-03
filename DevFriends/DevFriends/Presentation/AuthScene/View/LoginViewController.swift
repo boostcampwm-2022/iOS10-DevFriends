@@ -10,18 +10,18 @@ import SnapKit
 import UIKit
 
 final class LoginViewController: DefaultViewController {
-    let logoImageView: UIImageView = {
+    private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
         return imageView
     }()
-    let mainImageView: UIImageView = {
+    private let mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "person.3")
         imageView.tintColor = .orange
         return imageView
     }()
-    let highlightLabel: UILabel = {
+    private let highlightLabel: UILabel = {
         let label = UILabel()
         label.text = "나만의 개발친구를 만들어봐요!"
         label.numberOfLines = 1
@@ -31,11 +31,27 @@ final class LoginViewController: DefaultViewController {
         label.textAlignment = .center
         return label
     }()
-    let appleLoginButton: ASAuthorizationAppleIDButton = {
+    private lazy var autoLoginCheckButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .devFriendsGray
+        button.setBackgroundImage(.box, for: .normal)
+        button.setBackgroundImage(.checkBox, for: .selected)
+        button.publisher(for: .touchUpInside)
+            .sink {
+                if self.autoLoginCheckButton.isSelected {
+                    self.autoLoginCheckButton.isSelected = false
+                } else {
+                    self.autoLoginCheckButton.isSelected = true
+                }
+            }
+            .store(in: &cancellables)
+        return button
+    }()
+    private let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
         return button
     }()
-    let termsLabel: UILabel = {
+    private let termsLabel: UILabel = {
         let label = UILabel()
         label.text = "계속 진행하여, DevFriends 서비스 약관 그리고 개인 정보 보호 정책에 동의하세요."
         label.numberOfLines = 0
@@ -45,7 +61,7 @@ final class LoginViewController: DefaultViewController {
         return label
     }()
     
-    let viewModel: LoginViewModel
+    private let viewModel: LoginViewModel
     
     init(loginViewModel: LoginViewModel) {
         self.viewModel = loginViewModel
@@ -79,6 +95,21 @@ final class LoginViewController: DefaultViewController {
             make.top.equalTo(mainImageView.snp.bottom).offset(27)
             make.left.right.equalToSuperview().inset(31)
             make.height.equalTo(highlightLabel.snp.width).dividedBy(11)
+        }
+        
+        view.addSubview(autoLoginCheckButton)
+        autoLoginCheckButton.snp.makeConstraints { make in
+            make.top.equalTo(highlightLabel.snp.bottom).offset(20)
+            make.left.equalToSuperview().inset(20)
+            make.height.equalTo(20)
+            make.width.equalTo(autoLoginCheckButton.snp.height)
+        }
+        
+        let autoLoginLabel = makeTitleLabel(text: "자동 로그인")
+        view.addSubview(autoLoginLabel)
+        autoLoginLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(autoLoginCheckButton)
+            make.left.equalTo(autoLoginCheckButton.snp.right).offset(5)
         }
         
         view.addSubview(appleLoginButton)
@@ -118,6 +149,14 @@ final class LoginViewController: DefaultViewController {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+    }
+    
+    private func makeTitleLabel(text: String) -> UILabel {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .black
+        label.text = text
+        return label
     }
 }
 
