@@ -5,6 +5,7 @@
 //  Created by 상현 on 2022/11/14.
 //
 
+import CoreLocation
 import Combine
 import SnapKit
 import UIKit
@@ -149,6 +150,7 @@ final class GroupListViewController: DefaultViewController {
         self.setupCollectionView()
         self.setupCollectionViewHeader()
         self.setupNavigation()
+        self.setUserLocation()
         self.viewModel.loadGroupList()
     }
     
@@ -158,6 +160,14 @@ final class GroupListViewController: DefaultViewController {
             make.leading.trailing.equalToSuperview()
             make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setUserLocation() {
+        let locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     private func setupNavigationBar() {
@@ -254,6 +264,20 @@ extension GroupListViewController {
     
     @objc func didTapNotificationButton(_ sender: UIButton) {
         viewModel.didSelectNotifications()
+    }
+}
+
+// MARK: - CLLocationManger Delegate
+extension GroupListViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            manager.stopUpdatingLocation()
+            let location = Location(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+            viewModel.didUpdateUserLocation(location: location)
+        }
     }
 }
 

@@ -36,6 +36,8 @@
 		62E0CAA405C03F503EEF9A70 /* Pods_DevFriends_DevFriendsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145B123E59BCFE5B52B1B836 /* Pods_DevFriends_DevFriendsUITests.framework */; };
 		A63C96F22937A31300517516 /* DefaultChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F12937A31300517516 /* DefaultChatRepository.swift */; };
 		A63C96F42937A32A00517516 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F32937A32A00517516 /* ChatRepository.swift */; };
+		A63C96F6293B8BC600517516 /* Location+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F5293B8BC500517516 /* Location+Distance.swift */; };
+		A63C96F8293B8F9800517516 /* SortGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */; };
 		A648BB1D292E1B1C0018A654 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */; };
 		A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1E292E1B930018A654 /* ChatViewModel.swift */; };
 		A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB22292E1C060018A654 /* ChatContentViewModel.swift */; };
@@ -245,6 +247,8 @@
 		9C8D73A43F6124E9E2A99737 /* Pods-DevFriends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFriends.release.xcconfig"; path = "Target Support Files/Pods-DevFriends/Pods-DevFriends.release.xcconfig"; sourceTree = "<group>"; };
 		A63C96F12937A31300517516 /* DefaultChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatRepository.swift; sourceTree = "<group>"; };
 		A63C96F32937A32A00517516 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
+		A63C96F5293B8BC500517516 /* Location+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+Distance.swift"; sourceTree = "<group>"; };
+		A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortGroupUseCase.swift; sourceTree = "<group>"; };
 		A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 		A648BB1E292E1B930018A654 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		A648BB22292E1C060018A654 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
@@ -695,6 +699,7 @@
 				E33A20CA2926665E00887EC9 /* UIImage+Custom.swift */,
 				E33A20CB2926665E00887EC9 /* UIView+Combine.swift */,
 				A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */,
+				A63C96F5293B8BC500517516 /* Location+Distance.swift */,
 				FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */,
 				A648BB5F293779740018A654 /* UITextView+Combine.swift */,
 			);
@@ -751,6 +756,7 @@
 				05D9256529337B3B0090A6B1 /* SendCommentNotificationUseCase.swift */,
 				05D9256729338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift */,
 				058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */,
+				A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1405,6 +1411,7 @@
 				A648BB50293399D10018A654 /* AddGroupViewController.swift in Sources */,
 				A63C96F42937A32A00517516 /* ChatRepository.swift in Sources */,
 				E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */,
+				A63C96F8293B8F9800517516 /* SortGroupUseCase.swift in Sources */,
 				A648BB5429339A4E0018A654 /* CommonTextView.swift in Sources */,
 				E33A20D72926665E00887EC9 /* ReusableType.swift in Sources */,
 				E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */,
@@ -1414,6 +1421,7 @@
 				E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */,
 				E33A20AC2926639400887EC9 /* AppFlowCoordinator.swift in Sources */,
 				E33A20832926622000887EC9 /* FriendMessageTableViewCell.swift in Sources */,
+				A63C96F6293B8BC600517516 /* Location+Distance.swift in Sources */,
 				A66C7BBC292E19450008B6FD /* GroupRepository.swift in Sources */,
 				A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */,
 				A648BB4C293399D10018A654 /* AddGroupViewModel.swift in Sources */,
