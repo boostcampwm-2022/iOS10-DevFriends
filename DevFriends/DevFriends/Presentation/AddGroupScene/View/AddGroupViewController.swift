@@ -9,7 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class AddGroupViewController: DefaultViewController {
+final class AddGroupViewController: UIViewController {
     // TODO: 뷰 전체 스크롤뷰로 한번 감싸기
     private let titleTextField: UITextField = {
         let textField = UITextField()
@@ -45,6 +45,8 @@ final class AddGroupViewController: DefaultViewController {
     
     private let submitButton = CommonButton(text: "작성 완료")
     
+    var cancellables = Set<AnyCancellable>()
+    
     // MARK: - Init
     private let viewModel: AddGroupViewModel
     init(viewModel: AddGroupViewModel) {
@@ -56,9 +58,15 @@ final class AddGroupViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
-        hideKeyboardWhenTappedAround()
-        adjustViewToKeyboard()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func configureUI() {
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +74,7 @@ final class AddGroupViewController: DefaultViewController {
         viewModel.didConfigureView()
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(titleTextField)
         titleTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
@@ -142,7 +150,16 @@ final class AddGroupViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
+    private func bind() {
+        hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
+        
+        upViewByKeyboardHeight()
+            .store(in: &cancellables)
+        
+        downViewByKeyboardHeight()
+            .store(in: &cancellables)
+        
         titleTextField.publisher(for: .editingDidEnd)
             .sink { [weak self] _ in
                 if let title = self?.titleTextField.text {

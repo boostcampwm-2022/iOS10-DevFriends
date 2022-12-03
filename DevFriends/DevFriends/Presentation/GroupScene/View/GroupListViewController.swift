@@ -9,9 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class GroupListViewController: DefaultViewController {
-    
-    
+final class GroupListViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모임"
@@ -130,11 +128,20 @@ final class GroupListViewController: DefaultViewController {
         return layout
     }()
     
+    var cancellables = Set<AnyCancellable>()
+    
     // MARK: - Init
     private let viewModel: GroupListViewModel
     init(viewModel: GroupListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     required init?(coder: NSCoder) {
@@ -143,7 +150,7 @@ final class GroupListViewController: DefaultViewController {
     
     // MARK: - Setting
     
-    override func configureUI() {
+    private func configureUI() {
         self.view.backgroundColor = .systemGray6
         self.setupNavigationBar()
         self.setupCollectionView()
@@ -152,7 +159,7 @@ final class GroupListViewController: DefaultViewController {
         self.viewModel.loadGroupList()
     }
     
-    override func layout() {
+    private func layout() {
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -204,7 +211,7 @@ final class GroupListViewController: DefaultViewController {
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
-    override func bind() {
+    private func bind() {
         viewModel.recommandGroupsSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] groupList in

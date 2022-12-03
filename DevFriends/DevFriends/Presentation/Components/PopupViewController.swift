@@ -5,6 +5,7 @@
 //  Created by 심주미 on 2022/11/22.
 //
 
+import Combine
 import UIKit
 
 struct Popup {
@@ -21,7 +22,7 @@ struct Popup {
     }
 }
 
-class PopupViewController: DefaultViewController {
+class PopupViewController: UIViewController {
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "제목"
@@ -55,6 +56,8 @@ class PopupViewController: DefaultViewController {
         return view
     }()
     
+    var cancellables = Set<AnyCancellable>()
+    
     func set(popup: Popup) {
         titleLabel.text = popup.title
         messageLabel.text = popup.message
@@ -62,11 +65,18 @@ class PopupViewController: DefaultViewController {
         closeButton.setTitle(popup.close, for: .normal)
     }
     
-    override func configureUI() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func configureUI() {
         view.backgroundColor = .black.withAlphaComponent(0.2)
     }
     
-    override func bind() {
+    private func bind() {
         doneButton.publisher(for: .touchUpInside)
             .sink {
                 print("doneButton")
@@ -81,7 +91,7 @@ class PopupViewController: DefaultViewController {
             .store(in: &cancellables)
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
