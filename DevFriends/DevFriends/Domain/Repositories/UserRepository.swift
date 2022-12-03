@@ -12,9 +12,7 @@ protocol UserRepository {
     func update(_ user: User)
     func isExist(uid: String) async throws -> Bool
     func fetchUserGroup(of uid: String) async throws -> [UserGroup]
-    func addUserToGroup(userID: String, groupID: String)
     func create(uid: String?, user: User, completion: @escaping (Error?) -> Void) throws
     func fetch(uid: String, completion: @escaping (_ user: User) -> Void)
     func createUserGroup(userID: String, groupID: String)
-    func fetchUserGroup(of uid: String) async throws -> [UserGroup]
 }
