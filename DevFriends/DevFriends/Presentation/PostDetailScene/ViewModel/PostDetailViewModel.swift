@@ -43,9 +43,9 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localUser: User
     private let actions: PostDetailViewModelActions
     private var group: Group
-    private let fetchUserUseCase: FetchUserUseCase
-    private let fetchCategoryUseCase: FetchCategoryUseCase
-    private let fetchCommentsUseCase: FetchCommentsUseCase
+    private let fetchUserUseCase: LoadUserUseCase
+    private let fetchCategoryUseCase: LoadCategoryUseCase
+    private let fetchCommentsUseCase: LoadCommentsUseCase
     private let applyGroupUseCase: ApplyGroupUseCase
     private let updateLikeUseCase: UpdateLikeUseCase
     private let postCommentUseCase: PostCommentUseCase
@@ -79,9 +79,9 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     init(
         actions: PostDetailViewModelActions,
         group: Group,
-        fetchUserUseCase: FetchUserUseCase,
-        fetchCategoryUseCase: FetchCategoryUseCase,
-        fetchCommentsUseCase: FetchCommentsUseCase,
+        fetchUserUseCase: LoadUserUseCase,
+        fetchCategoryUseCase: LoadCategoryUseCase,
+        fetchCommentsUseCase: LoadCommentsUseCase,
         applyGroupUseCase: ApplyGroupUseCase,
         sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase,
         updateLikeUseCase: UpdateLikeUseCase,

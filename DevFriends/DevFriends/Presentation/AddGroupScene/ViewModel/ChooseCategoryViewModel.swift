@@ -32,10 +32,10 @@ final class DefaultChooseCategoryViewModel: ChooseCategoryViewModel {
     var categoryType: [Category] = []
     var categoryFilter: [Category] = []
     
-    private let fetchCategoryUseCase: FetchCategoryUseCase
+    private let fetchCategoryUseCase: LoadCategoryUseCase
     private let actions: ChooseCategoryViewModelActions
     
-    init(fetchCategoryUseCase: FetchCategoryUseCase, actions: ChooseCategoryViewModelActions) {
+    init(fetchCategoryUseCase: LoadCategoryUseCase, actions: ChooseCategoryViewModelActions) {
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.actions = actions
     }

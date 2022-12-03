@@ -19,6 +19,6 @@ final class DefaultPostCommentUseCase: PostCommentUseCase {
     }
     
     func execute(comment: Comment, groupId: String) -> String {
-        return self.commentRepository.post(comment, to: groupId)
+        return self.commentRepository.create(comment, to: groupId)
     }
 }

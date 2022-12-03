@@ -19,7 +19,7 @@ final class DefaultUploadProfileImageUseCase: UploadProfileImageUseCase {
     }
     
     func execute(uid: String, originImage: Data, thumbnailImage: Data) {
-        imageRepository.upload(.profile, uid: uid, image: originImage)
-        imageRepository.upload(.profile, uid: uid + "_th", image: thumbnailImage)
+        imageRepository.update(.profile, uid: uid, image: originImage)
+        imageRepository.update(.profile, uid: uid + "_th", image: thumbnailImage)
     }
 }

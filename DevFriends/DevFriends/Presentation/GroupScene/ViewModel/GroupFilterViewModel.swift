@@ -44,10 +44,10 @@ final class DefaultGroupFilterViewModel: GroupFilterViewModel {
     var groupFilter: GroupType?
     var categoryFilter: [String] = []
     
-    private let fetchCategoryUseCase: FetchCategoryUseCase
+    private let fetchCategoryUseCase: LoadCategoryUseCase
     private let actions: GroupFilterViewModelActions
     
-    init(fetchCategoryUseCase: FetchCategoryUseCase, actions: GroupFilterViewModelActions) {
+    init(fetchCategoryUseCase: LoadCategoryUseCase, actions: GroupFilterViewModelActions) {
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.actions = actions
     }

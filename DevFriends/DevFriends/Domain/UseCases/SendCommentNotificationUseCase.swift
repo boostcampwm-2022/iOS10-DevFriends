@@ -19,7 +19,7 @@ final class DefaultSendCommentNotificationUseCase: SendCommentNotificationUseCas
     }
     
     func execute(sender: User, group: Group, comment: Comment, commentID: String) {
-        notificationRepository.send(
+        notificationRepository.create(
             to: group.managerID,
             notification: Notification(
                 groupID: group.id,

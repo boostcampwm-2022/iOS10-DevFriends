@@ -1,5 +1,5 @@
 //
-//  FetchGroupUseCase.swift
+//  LoadGroupUseCase.swift
 //  DevFriends
 //
 //  Created by 심주미 on 2022/11/19.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol FetchGroupUseCase {
+protocol LoadGroupUseCase {
     func execute(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group]
     func execute(filter: Filter) async throws -> [Group]
 }
 
-final class DefaultFetchGroupUseCase: FetchGroupUseCase {
+final class DefaultLoadGroupUseCase: LoadGroupUseCase {
     let groupRepository: GroupRepository
     
     init(groupRepository: GroupRepository) {

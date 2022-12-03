@@ -25,12 +25,12 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     }
     
     // MARK: UseCases
-    func makeFetchGroupUseCase() -> FetchGroupUseCase {
-        return DefaultFetchGroupUseCase(groupRepository: makeGroupRepository())
+    func makeFetchGroupUseCase() -> LoadGroupUseCase {
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
     }
     
-    func makeFetchCategoryUseCase() -> FetchCategoryUseCase {
-        return DefaultFetchCategoryUseCase(categoryRepository: makeCategoryRepository())
+    func makeFetchCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
     // MARK: GroupList

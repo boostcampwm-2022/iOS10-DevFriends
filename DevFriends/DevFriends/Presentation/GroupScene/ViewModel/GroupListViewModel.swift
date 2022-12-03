@@ -33,12 +33,12 @@ protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
 }
 
 final class DefaultGroupListViewModel: GroupListViewModel {
-    private let fetchGroupUseCase: FetchGroupUseCase
+    private let fetchGroupUseCase: LoadGroupUseCase
     private let actions: GroupListViewModelActions?
     var recommandFilter: Filter
     var groupFilter: Filter = Filter(alignFilter: .newest, categoryFilter: [])
     
-    init(fetchGroupUseCase: FetchGroupUseCase, actions: GroupListViewModelActions) {
+    init(fetchGroupUseCase: LoadGroupUseCase, actions: GroupListViewModelActions) {
         self.fetchGroupUseCase = fetchGroupUseCase
         // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
         self.recommandFilter = Filter(alignFilter: .newest, categoryFilter: [])
