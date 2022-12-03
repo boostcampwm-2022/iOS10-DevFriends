@@ -26,6 +26,7 @@ protocol GroupListViewModelInput {
 protocol GroupListViewModelOutput {
     var recommandGroupsSubject: CurrentValueSubject<[GroupCellInfo], Never> { get }
     var filteredGroupsSubject: CurrentValueSubject<[GroupCellInfo], Never> { get }
+    var filteredGroupAlignTypeSubject: PassthroughSubject<AlignType, Never> { get }
 }
 
 protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
@@ -56,6 +57,7 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     // MARK: OUTPUT
     var recommandGroupsSubject = CurrentValueSubject<[GroupCellInfo], Never>([])
     var filteredGroupsSubject = CurrentValueSubject<[GroupCellInfo], Never>([])
+    var filteredGroupAlignTypeSubject = PassthroughSubject<AlignType, Never>()
 }
 
 // MARK: INPUT
@@ -95,6 +97,7 @@ extension DefaultGroupListViewModel {
     
     func updateFilter(filter: Filter) {
         groupFilter = filter
+        filteredGroupAlignTypeSubject.send(filter.alignFilter)
     }
     
     func didSelectNotifications() {

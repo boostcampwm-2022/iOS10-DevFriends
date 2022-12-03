@@ -131,6 +131,15 @@ final class GroupListViewController: DefaultViewController {
         return layout
     }()
     
+    private lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        return locationManager
+    }()
+    
     // MARK: - Init
     private let viewModel: GroupListViewModel
     init(viewModel: GroupListViewModel) {
@@ -163,10 +172,6 @@ final class GroupListViewController: DefaultViewController {
     }
     
     private func setUserLocation() {
-        let locationManager = CLLocationManager()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
     
@@ -226,6 +231,13 @@ final class GroupListViewController: DefaultViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] groupList in
                 self?.populateSnapShot(data: groupList, to: .filtered)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.filteredGroupAlignTypeSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedType in
+                // 여기서 최신순 or 거리순 label 세팅
             }
             .store(in: &cancellables)
     }
