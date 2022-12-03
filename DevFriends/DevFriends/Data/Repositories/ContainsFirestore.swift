@@ -5,8 +5,17 @@
 //  Created by 유승원 on 2022/11/19.
 //
 
-import Foundation
 import FirebaseFirestore
+
+enum FirestorePath: String {
+    case category = "Category"
+    case chat = "Chat"
+    case comment = "Comment"
+    case group = "Group"
+    case message = "Message"
+    case notification = "Notifcation"
+    case user = "User"
+}
 
 protocol ContainsFirestore {}
 

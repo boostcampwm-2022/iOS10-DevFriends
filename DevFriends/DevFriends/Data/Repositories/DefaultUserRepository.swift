@@ -5,27 +5,17 @@
 //  Created by 유승원 on 2022/11/22.
 //
 
-import Foundation
 import FirebaseFirestore
 
 final class DefaultUserRepository: ContainsFirestore {}
 
 extension DefaultUserRepository: UserRepository {
     func fetch(uid: String) async throws -> User {
-        let userSnapshot = try await firestore.collection("User").document(uid).getDocument()
+        let userSnapshot = try await firestore.collection(FirestorePath.user.rawValue).document(uid).getDocument()
         let user = try userSnapshot.data(as: UserResponseDTO.self)
         return user.toDomain()
     }
-    
-    func update(userID: String, user: User) {
-        do {
-            let userResponseDTO = makeUserResponseDTO(user: user)
-            try firestore.collection("User").document(userID).setData(from: userResponseDTO)
-        } catch {
-            print(error)
-        }
-    }
-    
+        
     func fetch(uids: [String]) async throws -> [User] {
         return try await withThrowingTaskGroup(of: User.self) { taskGroup in
             uids.forEach { id in
@@ -42,10 +32,19 @@ extension DefaultUserRepository: UserRepository {
         }
     }
     
+    func update(userID: String, user: User) {
+        do {
+            let userResponseDTO = makeUserResponseDTO(user: user)
+            try firestore.collection(FirestorePath.user.rawValue).document(userID).setData(from: userResponseDTO)
+        } catch {
+            print(error)
+        }
+    }
+    
     func update(_ user: User) {
         do {
             try firestore
-                .collection("User")
+                .collection(FirestorePath.user.rawValue)
                 .document(user.id)
                 .setData(from: makeUserResponseDTO(user: user))
         } catch {
@@ -53,32 +52,32 @@ extension DefaultUserRepository: UserRepository {
         }
     }
     
+    func createUserGroup(userID: String, groupID: String) {
+        let userGroup = UserGroup(groupID: groupID, time: Date())
+        let userGroupResponseDTO = makeUserGroupResponseDTO(userGroup: userGroup)
+        
+        do {
+            _ = try firestore
+                .collection(FirestorePath.user.rawValue)
+                .document(userID)
+                .collection(FirestorePath.group.rawValue)
+                .addDocument(from: userGroupResponseDTO)
+        } catch {
+            print(error)
+        }
+    }
+    
     func fetchUserGroup(of uid: String) async throws -> [UserGroup] {
         let snapshot = try await firestore
-            .collection("User")
+            .collection(FirestorePath.user.rawValue)
             .document(uid)
-            .collection("Group")
+            .collection(FirestorePath.group.rawValue)
             .getDocuments()
         let groups = try snapshot.documents
             .map { try $0.data(as: UserGroupResponseDTO.self) }
             .map { $0.toDomain() }
         
         return groups
-    }
-    
-    func addUserToGroup(userID: String, groupID: String) {
-        let userGroup = UserGroup(groupID: groupID, time: Date())
-        let userGroupResponseDTO = makeUserGroupResponseDTO(userGroup: userGroup)
-        
-        do {
-            _ = try firestore
-                .collection("User")
-                .document(userID)
-                .collection("Group")
-                .addDocument(from: userGroupResponseDTO)
-        } catch {
-            print(error)
-        }
     }
 }
 

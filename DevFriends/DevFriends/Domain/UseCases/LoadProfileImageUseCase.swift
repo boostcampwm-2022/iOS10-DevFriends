@@ -1,5 +1,5 @@
 //
-//  FetchProfileImageUseCase.swift
+//  LoadProfileImageUseCase.swift
 //  DevFriends
 //
 //  Created by 상현 on 2022/11/29.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol FetchProfileImageUseCase {
+protocol LoadProfileImageUseCase {
     func execute(path: String) async throws -> Data
 }
 
-final class DefaultFetchProfileImageUseCase: FetchProfileImageUseCase {
+final class DefaultLoadProfileImageUseCase: LoadProfileImageUseCase {
     private let imageRepository: ImageRepository
     
     init(imageRepository: ImageRepository) {

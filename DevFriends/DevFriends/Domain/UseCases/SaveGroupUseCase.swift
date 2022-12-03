@@ -19,6 +19,6 @@ final class DefaultSaveGroupUseCase: SaveGroupUseCase {
     }
     
     func execute(group: Group) {
-        groupRepository.save(group: group)
+        groupRepository.create(group: group)
     }
 }

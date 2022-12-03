@@ -33,8 +33,8 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultUpdateUserInfoUseCase(userRepository: makeUserRepository())
     }
     
-    func makeFetchProfileImageUseCase() -> FetchProfileImageUseCase {
-        return DefaultFetchProfileImageUseCase(imageRepository: makeImageRepository())
+    func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
+        return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
     }
     
     // MARK: MyPageViwe
@@ -78,7 +78,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
             actions: actions,
             updateUserInfoUseCase: makeUpdateUserInfoUseCase(),
             uploadProfileImageUseCase: makeUploadProfileImageUseCase(),
-            fetchProfileImageUseCase: makeFetchProfileImageUseCase()
+            fetchProfileImageUseCase: makeLoadProfileImageUseCase()
         )
     }
     

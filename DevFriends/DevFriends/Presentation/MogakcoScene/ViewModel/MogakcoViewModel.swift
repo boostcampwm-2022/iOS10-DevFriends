@@ -39,10 +39,10 @@ final class MogakcoViewModel: MogakcoViewModelType {
     private var nowMogakcoList: [Group] = []
     private var nowMogakco: Group?
     
-    private let fetchGroupUseCase: FetchGroupUseCase
+    private let fetchGroupUseCase: LoadGroupUseCase
     private let actions: MogakcoViewModelActions
     
-    init(fetchGroupUseCase: FetchGroupUseCase, actions: MogakcoViewModelActions) {
+    init(fetchGroupUseCase: LoadGroupUseCase, actions: MogakcoViewModelActions) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.actions = actions
     }

@@ -1,5 +1,5 @@
 //
-//  FetchCommentsUseCase.swift
+//  LoadCommentsUseCase.swift
 //  DevFriends
 //
 //  Created by 상현 on 2022/11/21.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol FetchCommentsUseCase {
+protocol LoadCommentsUseCase {
     func execute(groupId: String, limit: Int) async throws -> [Comment]
 }
 
-final class DefaultFetchCommentsUseCase: FetchCommentsUseCase {
+final class DefaultLoadCommentsUseCase: LoadCommentsUseCase {
     private let commentRepository: GroupCommentRepository
     
     init(commentRepository: GroupCommentRepository) {

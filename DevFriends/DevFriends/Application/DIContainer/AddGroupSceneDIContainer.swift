@@ -29,8 +29,8 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     }
     
     // MARK: UseCases
-    func makeFetchCategoryUseCase() -> FetchCategoryUseCase {
-        return DefaultFetchCategoryUseCase(categoryRepository: makeCategoryRepository())
+    func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
     func makeSaveChatUseCase() -> SaveChatUseCase {
@@ -60,7 +60,7 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     }
     
     func makeCategoryViewModel(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewModel {
-        return DefaultChooseCategoryViewModel(fetchCategoryUseCase: makeFetchCategoryUseCase(), actions: actions)
+        return DefaultChooseCategoryViewModel(fetchCategoryUseCase: makeLoadCategoryUseCase(), actions: actions)
     }
     
     // MARK: LocationView

@@ -5,11 +5,30 @@
 //  Created by 심주미 on 2022/11/19.
 //
 
-import FirebaseFirestore
-import Foundation
 import CoreLocation
+import FirebaseFirestore
 
-class DefaultGroupRepository: GroupRepository, ContainsFirestore {
+final class DefaultGroupRepository: GroupRepository {
+    func create(group: Group) {
+        do {
+            try firestore.collection(FirestorePath.group.rawValue)
+                .document()
+                .setData(from: makeGroupResponseDTO(group: group))
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetch(groupID: String) async throws -> Group {
+        let group = try await firestore
+            .collection(FirestorePath.group.rawValue)
+            .document(groupID)
+            .getDocument()
+            .data(as: GroupResponseDTO.self)
+        
+        return group.toDomain()
+    }
+    
     func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group] {
         var groups: [Group] = []
         var query: Query
@@ -27,7 +46,7 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             let greaterGeopoint = GeoPoint(latitude: greaterLat, longitude: greaterLon)
             
             query = firestore
-                .collection("Group")
+                .collection(FirestorePath.group.rawValue)
                 .whereField("location", isGreaterThan: lesserGeopoint)
                 .whereField("location", isLessThan: greaterGeopoint)
             if let groupType = groupType {
@@ -35,10 +54,10 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             }
         } else {
             if let groupType = groupType {
-                query = firestore.collection("Group")
+                query = firestore.collection(FirestorePath.group.rawValue)
                     .whereField("type", isEqualTo: groupType.rawValue)
             } else {
-                query = firestore.collection("Group")
+                query = firestore.collection(FirestorePath.group.rawValue)
             }
         }
         
@@ -59,12 +78,12 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
         var groups: [Group] = []
         let snapshot: QuerySnapshot
         if let groupFilter = filter.groupFilter {
-            snapshot = try await firestore.collection("Group")
+            snapshot = try await firestore.collection(FirestorePath.group.rawValue)
                 .whereField("type", isEqualTo: groupFilter.rawValue)
-                /*.whereField()*/
+            /*.whereField()*/
                 .getDocuments()
         } else {
-            snapshot = try await firestore.collection("Group")
+            snapshot = try await firestore.collection(FirestorePath.group.rawValue)
                 .getDocuments()
         }
         
@@ -73,42 +92,25 @@ class DefaultGroupRepository: GroupRepository, ContainsFirestore {
             // 필터 카테고리가 비어있으면 필터링 x
             // 필터 카테고리 중 하나라도 모임 카테고리가 겹쳐야 함
             if filter.categoryFilter.isEmpty ||
-               !group.categoryIDs.filter({ filter.categoryFilter.contains($0) }).isEmpty {
+                !group.categoryIDs.filter({ filter.categoryFilter.contains($0) }).isEmpty {
                 groups.append(group)
             }
         }
         return groups
     }
     
-    func save(group: Group) {
-        do {
-            try firestore.collection("Group")
-                .document()
-                .setData(from: makeGroupResponseDTO(group: group))
-        } catch {
-            print(error)
-        }
-    }
-    
-    func fetch(groupID: String) async throws -> Group {
-        let group = try await firestore
-            .collection("Group")
-            .document(groupID)
-            .getDocument()
-            .data(as: GroupResponseDTO.self)
-        
-        return group.toDomain()
-    }
-    
     func update(groupID: String, group: Group) {
         do {
             let groupResponseDTO = makeGroupResponseDTO(group: group)
-            try firestore.collection("Group").document(groupID).setData(from: groupResponseDTO)
+            try firestore.collection(FirestorePath.group.rawValue).document(groupID).setData(from: groupResponseDTO)
         } catch {
             print(error)
         }
     }
-    
+}
+
+// MARK: Private
+extension DefaultGroupRepository {
     private func makeGroupResponseDTO(group: Group) -> GroupResponseDTO {
         return GroupResponseDTO(
             participantIDs: group.participantIDs,
