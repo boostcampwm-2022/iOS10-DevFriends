@@ -9,7 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class GroupFilterViewController: DefaultViewController {
+final class GroupFilterViewController: UIViewController {
     enum SectionType: Int, CaseIterable {
         case align = 0
         case group = 1
@@ -42,6 +42,8 @@ final class GroupFilterViewController: DefaultViewController {
         return collectionView
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     // MARK: - Initializer
     
     private let viewModel: GroupFilterViewModel
@@ -53,6 +55,13 @@ final class GroupFilterViewController: DefaultViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,12 +82,12 @@ final class GroupFilterViewController: DefaultViewController {
     }
     // MARK: - Setting
     
-    override func configureUI() {
+    private func configureUI() {
         self.view.backgroundColor = .white
         self.viewModel.loadCategories()
     }
     
-    override func layout() {
+    private func layout() {
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
@@ -87,7 +96,7 @@ final class GroupFilterViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
+    private func bind() {
         viewModel.didUpdateFilterSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
