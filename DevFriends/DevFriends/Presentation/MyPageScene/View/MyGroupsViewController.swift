@@ -51,6 +51,11 @@ final class MyGroupsViewController: DefaultViewController {
     
     override func configureUI() {
         setupCollectionView()
+        setupTitle()
+    }
+    
+    func setupTitle() {
+        navigationItem.title = viewModel.getMyGroupsTypeName()
     }
     
     func setupCollectionView() {

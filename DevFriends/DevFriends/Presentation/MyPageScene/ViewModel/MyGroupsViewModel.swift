@@ -13,4 +13,8 @@ final class MyGroupsViewModel {
     init(type: MyGroupsType) {
         self.type = type
     }
+    
+    func getMyGroupsTypeName() -> String {
+        return type.rawValue
+    }
 }
