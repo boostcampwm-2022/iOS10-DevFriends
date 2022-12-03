@@ -99,10 +99,7 @@ final class MogakcoViewController: DefaultViewController {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
-        collectionView.register(
-            GroupCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier
-        )
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         return collectionView
     }()
     

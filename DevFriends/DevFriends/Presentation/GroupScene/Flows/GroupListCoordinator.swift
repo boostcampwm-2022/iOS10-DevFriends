@@ -62,6 +62,7 @@ extension GroupListCoordinator {
         let actions = NotificationViewModelActions(moveBackToPrevViewController: moveBackToGroupListViewController) // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
         let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
         navigationController.pushViewController(notificationViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
     
     func moveBackToGroupListViewController() {
