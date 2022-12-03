@@ -9,6 +9,17 @@ import PhotosUI
 import UIKit
 
 final class FixMyInfoViewController: DefaultViewController {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(
+            image: .chevronLeft,
+            style: .plain,
+            target: self,
+            action: #selector(didTouchedBackButton)
+        )
+        barButton.tintColor = .black
+        return barButton
+    }()
+    
     private lazy var profileImageViewHeight = view.frame.width - 100
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -109,6 +120,12 @@ final class FixMyInfoViewController: DefaultViewController {
         nicknameTextField.text = viewModel.userNickName
         jobTextField.text = viewModel.userJob
         viewModel.didLoadUser()
+        setupNavigation()
+    }
+    
+    func setupNavigation() {
+        navigationItem.leftBarButtonItems = [backBarButton]
+        navigationItem.title = "회원정보 수정"
     }
     
     override func bind() {
@@ -183,6 +200,10 @@ final class FixMyInfoViewController: DefaultViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             alert.dismiss(animated: true)
         }
+    }
+    
+    @objc func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }
 

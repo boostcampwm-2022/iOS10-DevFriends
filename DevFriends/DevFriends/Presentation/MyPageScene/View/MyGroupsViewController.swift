@@ -8,6 +8,17 @@
 import UIKit
 
 final class MyGroupsViewController: DefaultViewController {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(
+            image: .chevronLeft,
+            style: .plain,
+            target: self,
+            action: #selector(didTouchedBackButton)
+        )
+        barButton.tintColor = .black
+        return barButton
+    }()
+    
     private lazy var groupCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -51,10 +62,11 @@ final class MyGroupsViewController: DefaultViewController {
     
     override func configureUI() {
         setupCollectionView()
-        setupTitle()
+        setupNavigation()
     }
     
-    func setupTitle() {
+    func setupNavigation() {
+        navigationItem.leftBarButtonItems = [backBarButton]
         navigationItem.title = viewModel.getMyGroupsTypeName()
     }
     
@@ -72,6 +84,10 @@ final class MyGroupsViewController: DefaultViewController {
         groupCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    @objc func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }
 

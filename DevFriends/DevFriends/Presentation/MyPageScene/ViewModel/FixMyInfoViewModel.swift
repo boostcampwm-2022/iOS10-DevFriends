@@ -16,6 +16,7 @@ struct FixMyInfoViewModelActions {
 protocol FixMyInfoViewModelInput {
     func didLoadUser()
     func didTapDoneButton(nickname: String, job: String)
+    func didTouchedBackButton()
 }
 
 protocol FixMyInfoViewModelOutput {
@@ -112,6 +113,10 @@ extension DefaultFixMyInfoViewModel {
         uploadImage()
         updateUser(nickname: nickname, job: job)
         
+        actions.popFixMyInfo()
+    }
+    
+    func didTouchedBackButton() {
         actions.popFixMyInfo()
     }
 }
