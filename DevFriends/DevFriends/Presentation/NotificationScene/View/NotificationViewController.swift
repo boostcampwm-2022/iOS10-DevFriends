@@ -14,8 +14,13 @@ final class NotificationViewController: UITableViewController {
             image: .chevronLeft,
             style: .plain,
             target: self,
-            action: #selector(didTouchedBackButton)
+            action: nil
         )
+        barButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
         barButton.tintColor = .black
         return barButton
     }()
@@ -98,7 +103,7 @@ final class NotificationViewController: UITableViewController {
 }
 
 extension NotificationViewController {
-    @objc func didTouchedBackButton() {
+    private func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
     }
 }
