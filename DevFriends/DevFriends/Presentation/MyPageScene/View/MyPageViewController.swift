@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Combine
 
-final class MyPageViewController: DefaultViewController {
+final class MyPageViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "마이페이지"
@@ -40,6 +41,8 @@ final class MyPageViewController: DefaultViewController {
     private let logoutButton = SubtitleButton(text: "로그아웃")
     private let withdrawalButton = SubtitleButton(text: "회원탈퇴")
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: MyPageViewModel
     
     init(viewModel: MyPageViewModel) {
@@ -51,11 +54,18 @@ final class MyPageViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func configureUI() {
         self.setupNavigation()
     }
     
-    override func bind() {
+    private func bind() {
         makedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.showMakedGroup()
@@ -114,7 +124,7 @@ final class MyPageViewController: DefaultViewController {
         return stackView
     }
     
-    override func layout() {
+    private func layout() {
         let spacing = 25
         view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in

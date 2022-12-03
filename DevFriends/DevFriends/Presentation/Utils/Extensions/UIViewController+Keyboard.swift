@@ -1,39 +1,25 @@
 //
-//  DefaultViewController.swift
+//  UIViewController+Keyboard.swift
 //  DevFriends
 //
-//  Created by 심주미 on 2022/11/14.
+//  Created by 심주미 on 2022/12/03.
 //
 
-import Combine
 import UIKit
+import Combine
 
-class DefaultViewController: UIViewController {
-    var cancellables = Set<AnyCancellable>()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.configureUI()
-        self.layout()
-        self.bind()
-    }
-    
-    func configureUI() {}
-    func layout() {}
-    func bind() {}
-    
-    func hideKeyboardWhenTappedAround() {
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() -> AnyCancellable {
         let gesture = UITapGestureRecognizer()
-        self.view.gesturePublisher(.tap(gesture))
+        return view.gesturePublisher(.tap(gesture))
             .sink { [weak self] _ in
                 self?.view.endEditing(true)
                 gesture.cancelsTouchesInView = false
             }
-            .store(in: &cancellables)
     }
     
-    func adjustViewToKeyboard() {
-        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification, object: nil)
+    func upViewByKeyboardHeight() -> AnyCancellable {
+        return NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification, object: nil)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] noti in
                 // 키보드의 높이만큼 화면을 올려준다.
@@ -45,9 +31,10 @@ class DefaultViewController: UIViewController {
                     self?.view.frame.origin.y -= offset
                 }
             }
-            .store(in: &cancellables)
+    }
     
-        NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification, object: nil)
+    func downViewByKeyboardHeight() -> AnyCancellable {
+        return NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification, object: nil)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] noti in
                 // 키보드의 높이만큼 화면을 내려준다.
@@ -59,6 +46,5 @@ class DefaultViewController: UIViewController {
                     self?.view.frame.origin.y += offset
                 }
             }
-            .store(in: &cancellables)
     }
 }

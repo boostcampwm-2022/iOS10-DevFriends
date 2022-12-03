@@ -5,6 +5,7 @@
 //  Created by 심주미 on 2022/11/22.
 //
 
+import Combine
 import PhotosUI
 import UIKit
 
@@ -54,6 +55,8 @@ final class FixMyInfoViewController: DefaultViewController {
         return picker
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: FixMyInfoViewModel
     
     init(viewModel: FixMyInfoViewModel) {
@@ -66,7 +69,14 @@ final class FixMyInfoViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layout() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func layout() {
         view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -111,7 +121,7 @@ final class FixMyInfoViewController: DefaultViewController {
         }
     }
     
-    override func configureUI() {
+    private func configureUI() {
         self.view.backgroundColor = .white
         
         nicknameTextField.text = viewModel.userNickName
@@ -125,8 +135,9 @@ final class FixMyInfoViewController: DefaultViewController {
         navigationItem.title = "회원정보 수정"
     }
     
-    override func bind() {
+    private func bind() {
         self.hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
         
         self.backBarButton.publisher
             .sink { [weak self] _ in

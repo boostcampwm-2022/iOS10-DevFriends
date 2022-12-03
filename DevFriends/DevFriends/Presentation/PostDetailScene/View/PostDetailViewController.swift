@@ -9,7 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class PostDetailViewController: DefaultViewController {
+final class PostDetailViewController: UIViewController {
     private lazy var backBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         barButton.image = .chevronLeft
@@ -94,6 +94,8 @@ final class PostDetailViewController: DefaultViewController {
         return postAttentionView
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: PostDetailViewModel
     
     // MARK: - Init & Life Cycles
@@ -110,8 +112,9 @@ final class PostDetailViewController: DefaultViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        hideKeyboardWhenTappedAround()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,12 +129,12 @@ final class PostDetailViewController: DefaultViewController {
     
     // MARK: - Setting
     
-    override func configureUI() {
+    private func configureUI() {
         self.setupViews()
         self.setupNavigation()
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(commentTableView)
         commentTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -171,11 +174,14 @@ final class PostDetailViewController: DefaultViewController {
         self.navigationItem.rightBarButtonItems = [settingButton]
     }
     
-    override func bind() {
+    private func bind() {
         backBarButton.publisher
             .sink { [weak self] _ in
                 self?.didTouchedBackButton()
             }
+            .store(in: &cancellables)
+        
+        hideKeyboardWhenTappedAround()
             .store(in: &cancellables)
         
         viewModel.postWriterInfoSubject

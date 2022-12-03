@@ -5,6 +5,7 @@
 //  Created by 심주미 on 2022/11/23.
 //
 
+import Combine
 import UIKit
 
 final class MyGroupsViewController: DefaultViewController {
@@ -43,6 +44,8 @@ final class MyGroupsViewController: DefaultViewController {
     
     private var groupCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     let viewModel: MyGroupsViewModel
     
     init(viewModel: MyGroupsViewModel) {
@@ -54,26 +57,36 @@ final class MyGroupsViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+    }
+    
+    private func configureUI() {
         setupCollectionView()
         setupNavigation()
     }
     
+<<<<<<< HEAD
     func setupNavigation() {
         navigationItem.leftBarButtonItems = [backBarButton]
+=======
+    private func setupTitle() {
+>>>>>>> e010657f2832929aaee45ba56ff7befde8202362
         navigationItem.title = viewModel.getMyGroupsTypeName()
     }
     
-    func setupCollectionView() {
+    private func setupCollectionView() {
         groupCollectionViewSnapShot.appendSections([.main])
     }
     
-    func populateSnapshot(data: [Group]) {
+    private func populateSnapshot(data: [Group]) {
         groupCollectionViewSnapShot.appendItems(data)
         groupCollectionViewDiffableDataSource.apply(groupCollectionViewSnapShot)
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(groupCollectionView)
         groupCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
