@@ -97,8 +97,10 @@ final class UserManager {
             let isEnabled = UserDefaults.standard.bool(forKey: UserInfoKey.isEnabledAutoLogin.rawValue)
             if isEnabled, let uid = self.uid {
                 self.login(uid: uid)
+                return isEnabled
+            } else {
+                return false
             }
-            return isEnabled
         }
         
         set {
