@@ -50,10 +50,15 @@ final class GroupCollectionHeaderView: UICollectionReusableView, ReusableType {
         titleLabel.text = title
     }
     
-    func set(title: String?, _ target: Any?, _ didTapFilterButton: Selector) {
+    func set(title: String?, filter: AlignType?, _ target: Any?, _ didTapFilterButton: Selector) {
         titleLabel.text = title
         filterStackView.isHidden = false
+        filterLabel.text = filter?.rawValue
         filterButton.addTarget(target, action: didTapFilterButton, for: .touchUpInside)
+    }
+    
+    func set(filter: AlignType?) {
+        filterLabel.text = filter?.rawValue
     }
     
     // MARK: - Setting
