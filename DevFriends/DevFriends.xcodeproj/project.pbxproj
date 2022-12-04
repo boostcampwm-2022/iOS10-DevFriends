@@ -86,6 +86,7 @@
 		E31B353F293B7A16000386BD /* UIBarButtonItem+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B353E293B7A16000386BD /* UIBarButtonItem+Combine.swift */; };
 		E31B3541293B7EC6000386BD /* UITableView+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3540293B7EC6000386BD /* UITableView+RegisterCell.swift */; };
 		E31B3543293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3542293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift */; };
+		E31B3545293CD83E000386BD /* UserInfoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3544293CD83E000386BD /* UserInfoKey.swift */; };
 		E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A2024292319C700887EC9 /* PostDetailCommentView.swift */; };
 		E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202729235A3D00887EC9 /* PostAttentionView.swift */; };
 		E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */; };
@@ -306,6 +307,7 @@
 		E31B353E293B7A16000386BD /* UIBarButtonItem+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Combine.swift"; sourceTree = "<group>"; };
 		E31B3540293B7EC6000386BD /* UITableView+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+RegisterCell.swift"; sourceTree = "<group>"; };
 		E31B3542293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionVIew+RegisterCell.swift"; sourceTree = "<group>"; };
+		E31B3544293CD83E000386BD /* UserInfoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoKey.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -1050,6 +1052,7 @@
 				E359EC80292C6BA000CE5775 /* RealmStorage */,
 				FC79AEBC292223DF0077AE5C /* Repositories */,
 				E3B53BFC2936E662006675E0 /* UserManager.swift */,
+				E31B3544293CD83E000386BD /* UserInfoKey.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1411,7 +1414,7 @@
 				E3752EAA292F53BE003C8E17 /* NotificationTypes.swift in Sources */,
 				FC5D01AE292F553200292D33 /* PopupViewController.swift in Sources */,
 				E3DE549F2935095400E63898 /* AuthCoordinator.swift in Sources */,
-				05CB4A39292DF16900A97531 /* FetchUserUseCase.swift in Sources */,
+				05CB4A39292DF16900A97531 /* LoadUserUseCase.swift in Sources */,
 				05CB4A39292DF16900A97531 /* LoadUserUseCase.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
@@ -1437,7 +1440,7 @@
 				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
 				E3DE54A429350D3700E63898 /* LoginViewModel.swift in Sources */,
-				05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */,
+				05CB4A38292DF16900A97531 /* LoadCategoryUseCase.swift in Sources */,
 				05CB4A38292DF16900A97531 /* LoadCategoryUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
@@ -1511,6 +1514,7 @@
 				A648BB4C293399D10018A654 /* AddGroupViewModel.swift in Sources */,
 				A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */,
 				A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */,
+				E31B3545293CD83E000386BD /* UserInfoKey.swift in Sources */,
 				E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */,
 				E3752EC8292F5D08003C8E17 /* NotificationSceneDIContainer.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,

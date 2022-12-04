@@ -7,17 +7,6 @@
 
 import UIKit
 
-enum UserInfoKey: String {
-    case uid = "UID"
-    case email = "EMAIL"
-    case nickname = "NICKNAME"
-    case job = "JOB"
-    case profile = "PROFILE"
-    case categoryIDs = "CATEGORYIDS"
-    case appliedGroupIDs = "APPLIEDGROUPIDS"
-    case isEnabledAutoLogin = "ISENABLEDAUTOLOGIN"
-}
-
 final class UserManager {
     static let shared = UserManager()
     
