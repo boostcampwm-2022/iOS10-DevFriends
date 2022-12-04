@@ -6,10 +6,11 @@
 //
 
 import AuthenticationServices
+import Combine
 import SnapKit
 import UIKit
 
-final class LoginViewController: DefaultViewController {
+final class LoginViewController: UIViewController {
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
@@ -53,6 +54,7 @@ final class LoginViewController: DefaultViewController {
         return label
     }()
     
+    private var cancellables = Set<AnyCancellable>()
     private let viewModel: LoginViewModel
     
     init(loginViewModel: LoginViewModel) {
@@ -65,7 +67,13 @@ final class LoginViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layout() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.layout()
+        self.bind()
+    }
+    
+    private func layout() {
         view.addSubview(logoImageView)
         logoImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(66)
@@ -119,7 +127,7 @@ final class LoginViewController: DefaultViewController {
         
         highlightLabel.adjustsFontSizeToFitWidth = true
     }
-    override func bind() {
+    private func bind() {
         appleLoginButton
             .publisher(for: .touchUpInside)
             .sink {

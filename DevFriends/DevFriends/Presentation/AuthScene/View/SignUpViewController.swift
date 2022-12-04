@@ -9,7 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class SignUpViewController: DefaultViewController {
+final class SignUpViewController: UIViewController {
     private lazy var backBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(
             image: .chevronLeft,
@@ -64,6 +64,7 @@ final class SignUpViewController: DefaultViewController {
         return button
     }()
     
+    private var cancellables = Set<AnyCancellable>()
     private let viewModel: SignUpViewModel
     
     init(signUpViewModel: SignUpViewModel) {
@@ -77,16 +78,20 @@ final class SignUpViewController: DefaultViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
         viewModel.viewDidLoad()
         self.setupNavigation()
-        super.viewDidLoad()
     }
     
-    override func configureUI() {
+    private func configureUI() {
         hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
     }
     
-    override func layout() {
+    private func layout() {
         let emailLabel = makeTitleLabel(text: "이메일")
         view.addSubview(emailLabel)
         emailLabel.snp.makeConstraints { make in
@@ -155,7 +160,7 @@ final class SignUpViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
+    private func bind() {
         emailTextField.publisher(for: \.text)
             .sink {
                 self.viewModel.didChangedTextInEmailTextField(text: $0)
