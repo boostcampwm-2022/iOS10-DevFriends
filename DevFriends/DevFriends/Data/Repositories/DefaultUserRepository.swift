@@ -34,7 +34,7 @@ extension DefaultUserRepository: UserRepository {
     
     func fetch(uid: String, completion: @escaping (_ user: User) -> Void) {
         _ = firestore
-            .collection("User")
+            .collection(FirestorePath.user.rawValue)
             .document(uid)
             .addSnapshotListener { snapshot, error in
                 guard let snapshot = snapshot, error == nil else { fatalError("user snapshot error occured!!") }
@@ -69,7 +69,7 @@ extension DefaultUserRepository: UserRepository {
     }
     
     func isExist(uid: String) async throws -> Bool {
-        let document = try await firestore.collection("User").document(uid).getDocument()
+        let document = try await firestore.collection(FirestorePath.user.rawValue).document(uid).getDocument()
         
         if document.exists {
             return true
@@ -81,13 +81,18 @@ extension DefaultUserRepository: UserRepository {
     func create(uid: String?, user: User, completion: @escaping (Error?) -> Void) throws {
         let userResponseDTO = makeUserResponseDTO(user: user)
         if let uid = uid {
-            try firestore.collection("User").document(uid).setData(from: userResponseDTO) { error in
-                completion(error)
-            }
+            try firestore
+                .collection(FirestorePath.user.rawValue)
+                .document(uid)
+                .setData(from: userResponseDTO) { error in
+                    completion(error)
+                }
         } else {
-            try firestore.collection("User").addDocument(from: userResponseDTO) { error in
-                completion(error)
-            }
+            _ = try firestore
+                .collection(FirestorePath.user.rawValue)
+                .addDocument(from: userResponseDTO) { error in
+                    completion(error)
+                }
         }
     }
 }
