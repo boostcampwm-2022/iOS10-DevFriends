@@ -39,7 +39,8 @@ final class DefaultChatViewModel: ChatViewModel {
     // MARK: Private
     private func loadGroups() async {
         let loadTask = Task {
-            return try await loadChatGroupsUseCase.execute()
+            guard let uid = UserManager.shared.uid else { fatalError("In ChatViewModel, UserManager's uid is nil.") }
+            return try await loadChatGroupsUseCase.execute(uid: uid)
         }
         
         let result = await loadTask.result

@@ -104,6 +104,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             id: "nqQW9nOes6UPXRCjBuCy",
             nickname: "흥민 손",
             job: "EPL득점왕",
+            email: "abc@def.com",
             profileImagePath: "",
             categoryIDs: [],
             appliedGroupIDs: [],
