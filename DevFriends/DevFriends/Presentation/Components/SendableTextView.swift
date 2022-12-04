@@ -46,7 +46,7 @@ final class SendableTextView: UIView {
         
         self.sendButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                if let text = self?.textField.text {
+                if let text = self?.textField.text, !text.isEmpty {
                     self?.tapSendButtonSubject.send(text)
                     self?.textField.text = nil
                 }
