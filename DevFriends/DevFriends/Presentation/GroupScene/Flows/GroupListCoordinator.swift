@@ -12,6 +12,7 @@ protocol GroupFlowCoordinatorDependencies {
     func makeGroupFilterViewController(filter: Filter, actions: GroupFilterViewModelActions) -> GroupFilterViewController
     func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer
     func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
 }
 
 final class GroupListCoordinator: Coordinator {
@@ -29,7 +30,8 @@ final class GroupListCoordinator: Coordinator {
         let actions = GroupListViewModelActions(
             showGroupFilterView: showGroupFilterViewController,
             startAddGroupScene: startAddGroupScene,
-            showNotifications: showNotificationViewController
+            showNotifications: showNotificationViewController,
+            showPostDetailScene: showGroupDetailViewController
         )
         let groupListViewController = dependencies.makeGroupListViewController(actions: actions)
         navigationController.pushViewController(groupListViewController, animated: false)
@@ -62,6 +64,13 @@ extension GroupListCoordinator {
         let actions = NotificationViewModelActions(moveBackToPrevViewController: moveBackToGroupListViewController) // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
         let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
         navigationController.pushViewController(notificationViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func showGroupDetailViewController(group: Group) {
+        let actions = PostDetailViewModelActions(backToPrevViewController: moveBackToGroupListViewController)
+        let postDetailViewController = dependencies.makePostDetailViewController(actions: actions, group: group)
+        navigationController.pushViewController(postDetailViewController, animated: true)
         navigationController.tabBarController?.tabBar.isHidden = true
     }
     

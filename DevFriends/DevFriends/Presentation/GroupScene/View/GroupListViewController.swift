@@ -264,7 +264,8 @@ extension GroupListViewController {
 // MARK: - UICollectionView Delegate
 extension GroupListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Section \(indexPath.section) : \(indexPath.item)번째 아이템을 선택했습니다.")
+        self.viewModel.didSelectGroupCell(indexPath: indexPath)
+        //print("Section \(indexPath.section) : \(indexPath.item)번째 아이템을 선택했습니다.")
     }
 }
 
