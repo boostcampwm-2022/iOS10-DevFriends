@@ -42,11 +42,7 @@ final class ChatContentViewController: UIViewController {
         return diffableDataSource
     }()
     
-    private lazy var messageTextField: SendableTextView = {
-        let textField = SendableTextView(placeholder: "메세지를 작성해주세요")
-        textField.delegate = self
-        return textField
-    }()
+    private let messageTextField = SendableTextView(placeholder: "메세지를 작성해주세요")
     
     private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
@@ -104,6 +100,12 @@ final class ChatContentViewController: UIViewController {
                     let indexPath = IndexPath(row: messages.count - 1, section: 0)
                     self?.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
+            }
+            .store(in: &cancellables)
+        
+        messageTextField.tapSendButtonSubject
+            .sink { [weak self] text in
+                self?.viewModel.didSendMessage(text: text)
             }
             .store(in: &cancellables)
     }
@@ -172,11 +174,5 @@ final class ChatContentViewController: UIViewController {
     private func populateSnapshot(data: [Message]) {
         self.messageTableViewSnapShot.appendItems(data)
         self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
-    }
-}
-
-extension ChatContentViewController: SendableTextViewDelegate {
-    func tapSendButton(text: String) {
-        viewModel.didSendMessage(text: text)
     }
 }
