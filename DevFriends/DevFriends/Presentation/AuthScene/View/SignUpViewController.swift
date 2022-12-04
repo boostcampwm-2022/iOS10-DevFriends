@@ -23,7 +23,7 @@ final class SignUpViewController: DefaultViewController {
     let emailTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: nil)
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1).cgColor
+        textField.layer.borderColor = UIColor.devFriendsGray.cgColor
         textField.layer.cornerRadius = 10
         textField.keyboardType = .emailAddress
         textField.autocapitalizationType = .none
@@ -37,7 +37,7 @@ final class SignUpViewController: DefaultViewController {
     let nicknameTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: nil)
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1).cgColor
+        textField.layer.borderColor = UIColor.devFriendsGray.cgColor
         textField.layer.cornerRadius = 10
         textField.autocapitalizationType = .none
         return textField
@@ -50,7 +50,7 @@ final class SignUpViewController: DefaultViewController {
     let jobTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: "ex: iOS Developer")
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1).cgColor
+        textField.layer.borderColor = UIColor.devFriendsGray.cgColor
         textField.layer.cornerRadius = 10
         return textField
     }()
@@ -175,6 +175,19 @@ final class SignUpViewController: DefaultViewController {
                     self.signUpButton.set(title: "회원가입", state: .activated)
                 case false:
                     self.signUpButton.set(title: "양식을 작성해주세요", state: .disabled)
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.isEmailValidated
+            .sink {
+                switch $0 {
+                case true:
+                    self.emailValidationLabel.text = "사용할 수 있는 이메일입니다."
+                    self.emailValidationLabel.textColor = .systemGreen
+                case false:
+                    self.emailValidationLabel.text = "이메일 형식을 확인해주세요."
+                    self.emailValidationLabel.textColor = .systemRed
                 }
             }
             .store(in: &cancellables)

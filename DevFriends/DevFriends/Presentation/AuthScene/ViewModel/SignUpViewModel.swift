@@ -25,6 +25,7 @@ protocol SignUpViewModelOutput {
     var email: String? { get }
     var name: String? { get }
     var isProcessEnabled: PassthroughSubject<Bool, Never> { get }
+    var isEmailValidated: PassthroughSubject<Bool, Never> { get }
 }
 
 protocol SignUpViewModel: SignUpViewModelInput, SignUpViewModelOutput {}
@@ -81,12 +82,7 @@ extension DefaultSignUpViewModel {
     }
     
     func didChangedTextInEmailTextField(text: String?) {
-        guard let text = text else { return }
-        if isValidEmail(of: text) {
-            self.isEmailValidated.send(true)
-        } else {
-            self.isEmailValidated.send(false)
-        }
+        self.isEmailValidated.send(isValidEmail(of: text))
     }
     
     func didChangedTextInNicknameTextField(text: String?) {

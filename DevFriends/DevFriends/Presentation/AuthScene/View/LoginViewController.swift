@@ -37,17 +37,6 @@ final class LoginViewController: DefaultViewController {
         button.setBackgroundImage(.box, for: .normal)
         button.setBackgroundImage(.checkBox, for: .selected)
         button.isSelected = UserManager.shared.isEnabledAutoLogin
-        button.publisher(for: .touchUpInside)
-            .sink {
-                if self.autoLoginCheckButton.isSelected {
-                    self.autoLoginCheckButton.isSelected = false
-                    UserManager.shared.isEnabledAutoLogin = false
-                } else {
-                    self.autoLoginCheckButton.isSelected = true
-                    UserManager.shared.isEnabledAutoLogin = true
-                }
-            }
-            .store(in: &cancellables)
         return button
     }()
     private let appleLoginButton: ASAuthorizationAppleIDButton = {
@@ -135,6 +124,17 @@ final class LoginViewController: DefaultViewController {
             .publisher(for: .touchUpInside)
             .sink {
                 self.didSelectLoginButton()
+            }
+            .store(in: &cancellables)
+        autoLoginCheckButton.publisher(for: .touchUpInside)
+            .sink {
+                if self.autoLoginCheckButton.isSelected {
+                    self.autoLoginCheckButton.isSelected = false
+                    UserManager.shared.isEnabledAutoLogin = false
+                } else {
+                    self.autoLoginCheckButton.isSelected = true
+                    UserManager.shared.isEnabledAutoLogin = true
+                }
             }
             .store(in: &cancellables)
     }
