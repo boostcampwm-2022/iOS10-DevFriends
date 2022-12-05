@@ -21,11 +21,11 @@ final class DefaultChatGroupsRepository: ContainsFirestore {
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
     func fetch(userID: String) async throws -> [Group] {
         let localAcceptedGroups = storage.fetch()
+        var newAcceptedGroups: [AcceptedGroup] = []
         let userGroupInfos = try await fetchUserGroupInfo(
             of: userID,
             lastAcceptedTime: localAcceptedGroups.first?.time
         )
-        var newAcceptedGroups: [AcceptedGroup] = []
         for groupInfo in userGroupInfos {
             do {
                 let group = try await fetchGroup(uid: groupInfo.groupID)

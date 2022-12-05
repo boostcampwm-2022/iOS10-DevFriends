@@ -146,6 +146,7 @@
 		FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D01A2292F54EE00292D33 /* MyGroupsViewController.swift */; };
 		FC5D01AC292F54EE00292D33 /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D01A4292F54EE00292D33 /* MyPageCoordinator.swift */; };
 		FC5D01AE292F553200292D33 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D01AD292F553200292D33 /* PopupViewController.swift */; };
+		FC6A9A92293E0CA100122A87 /* RemoveMessageListenerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A9A91293E0CA100122A87 /* RemoveMessageListenerUseCase.swift */; };
 		FC79AEC52922494F0077AE5C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC79AEC42922494F0077AE5C /* Group.swift */; };
 		FCB94CD02934B6F900DD17CD /* ChatGroupsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */; };
 		FCB94CD12934B6F900DD17CD /* ContainsRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB94CCF2934B6F900DD17CD /* ContainsRealm.swift */; };
@@ -335,6 +336,7 @@
 		FC5D01A2292F54EE00292D33 /* MyGroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyGroupsViewController.swift; sourceTree = "<group>"; };
 		FC5D01A4292F54EE00292D33 /* MyPageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageCoordinator.swift; sourceTree = "<group>"; };
 		FC5D01AD292F553200292D33 /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
+		FC6A9A91293E0CA100122A87 /* RemoveMessageListenerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveMessageListenerUseCase.swift; sourceTree = "<group>"; };
 		FC79AEC42922494F0077AE5C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		FCA285852929E79F0066FD86 /* SaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupUseCase.swift; sourceTree = "<group>"; };
 		FCB94CCE2934B6F800DD17CD /* ChatGroupsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupsStorage.swift; sourceTree = "<group>"; };
@@ -671,6 +673,7 @@
 				05CB4A36292DF16900A97531 /* FetchUserUseCase.swift */,
 				05EAC534292E68100067D63E /* PostCommentUseCase.swift */,
 				05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */,
+				FC6A9A91293E0CA100122A87 /* RemoveMessageListenerUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1277,6 +1280,7 @@
 				05CB4A3A292DF16900A97531 /* FetchCommentsUseCase.swift in Sources */,
 				FC3C35992935F32700C5BFE3 /* ChatMessagesStorage.swift in Sources */,
 				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
+				FC6A9A92293E0CA100122A87 /* RemoveMessageListenerUseCase.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
 				05CB4A38292DF16900A97531 /* FetchCategoryUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
@@ -1561,6 +1565,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 27XCYNSTBL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1588,6 +1593,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 27XCYNSTBL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevFriends/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

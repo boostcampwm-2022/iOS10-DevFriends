@@ -11,6 +11,7 @@ import Foundation
 protocol ChatContentViewModelInput {
     func didLoadMessages()
     func didSendMessage(text: String)
+    func back()
 }
 
 protocol ChatContentViewModelOutput {
@@ -19,15 +20,29 @@ protocol ChatContentViewModelOutput {
 
 protocol ChatContentViewModel: ChatContentViewModelInput, ChatContentViewModelOutput {}
 
+struct ChatContentViewModelActions {
+    let back: () -> Void
+}
+
 final class DefaultChatContentViewModel: ChatContentViewModel {
     private let group: Group
     private let loadChatMessagesUseCase: LoadChatMessagesUseCase
     private let sendChatMessagesUseCase: SendChatMessagesUseCase
+    private let removeMessageListenerUseCase: RemoveMessageListenerUseCase
+    private let actions: ChatContentViewModelActions
     
-    init(group: Group, loadChatMessagesUseCase: LoadChatMessagesUseCase, sendChatMessagesUseCase: SendChatMessagesUseCase) {
+    init(
+        group: Group,
+        loadChatMessagesUseCase: LoadChatMessagesUseCase,
+        sendChatMessagesUseCase: SendChatMessagesUseCase,
+        removeMessageListenerUseCase: RemoveMessageListenerUseCase,
+        actions: ChatContentViewModelActions
+    ) {
         self.group = group
         self.loadChatMessagesUseCase = loadChatMessagesUseCase
         self.sendChatMessagesUseCase = sendChatMessagesUseCase
+        self.removeMessageListenerUseCase = removeMessageListenerUseCase
+        self.actions = actions
     }
     
     // MARK: OUTPUT
@@ -49,6 +64,11 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     
     private func sendMessage(message: Message) {
         sendChatMessagesUseCase.execute(message: message)
+    }
+    
+    func back() {
+        removeMessageListenerUseCase.execute()
+        actions.back()
     }
 }
 
