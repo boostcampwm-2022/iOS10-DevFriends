@@ -17,7 +17,14 @@ final class FixMyInfoViewController: UIViewController {
         barButton.tintColor = .black
         return barButton
     }()
-    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
+    }()
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
     private lazy var profileImageViewHeight = view.frame.width - 100
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -77,21 +84,32 @@ final class FixMyInfoViewController: UIViewController {
     }
     
     private func layout() {
-        view.addSubview(profileImageView)
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        
+        contentView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalToSuperview().offset(20)
             make.width.height.equalTo(profileImageViewHeight)
         }
         
         let nicknameLabel = makeTitleLabel(text: "닉네임")
-        view.addSubview(nicknameLabel)
+        contentView.addSubview(nicknameLabel)
         nicknameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.top.equalTo(profileImageView.snp.bottom).offset(25)
         }
         
-        view.addSubview(nicknameTextField)
+        contentView.addSubview(nicknameTextField)
         nicknameTextField.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
@@ -99,22 +117,23 @@ final class FixMyInfoViewController: UIViewController {
         }
         
         let jobLabel = makeTitleLabel(text: "직업")
-        view.addSubview(jobLabel)
+        contentView.addSubview(jobLabel)
         jobLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.top.equalTo(nicknameTextField.snp.bottom).offset(25)
         }
         
-        view.addSubview(jobTextField)
+        contentView.addSubview(jobTextField)
         jobTextField.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
             make.top.equalTo(jobLabel.snp.bottom).offset(15)
         }
         
-        view.addSubview(fixDoneButton)
+        contentView.addSubview(fixDoneButton)
         fixDoneButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(jobTextField.snp.bottom).offset(80)
+            make.bottom.equalToSuperview().offset(-100)
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
             make.height.equalTo(40)
