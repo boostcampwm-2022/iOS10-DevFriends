@@ -9,14 +9,19 @@ import Combine
 import SnapKit
 import UIKit
 
-final class PostDetailViewController: DefaultViewController {
+final class PostDetailViewController: UIViewController {
     private lazy var backBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(
             image: .chevronLeft,
             style: .plain,
             target: self,
-            action: #selector(didTouchedBackButton)
+            action: nil
         )
+        barButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
         barButton.tintColor = .black
         return barButton
     }()
@@ -25,7 +30,12 @@ final class PostDetailViewController: DefaultViewController {
         item.image = .ellipsis
         item.tintColor = .black
         item.target = self
-        item.action = #selector(didTapSettingButton)
+        item.action = nil
+        item.publisher
+            .sink { [weak self] _ in
+                self?.didTapSettingButton()
+            }
+            .store(in: &cancellables)
         return item
     }()
     private lazy var commentTableView: UITableView = {
@@ -35,10 +45,7 @@ final class PostDetailViewController: DefaultViewController {
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
         tableView.delegate = self
-        tableView.register(
-            CommentTableViewCell.self,
-            forCellReuseIdentifier: CommentTableViewCell.reuseIdentifier
-        )
+        tableView.register(cellType: CommentTableViewCell.self)
         tableView.sectionHeaderTopPadding = 10.0
         return tableView
     }()
@@ -95,6 +102,8 @@ final class PostDetailViewController: DefaultViewController {
         return postAttentionView
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: PostDetailViewModel
     
     // MARK: - Init & Life Cycles
@@ -111,8 +120,9 @@ final class PostDetailViewController: DefaultViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        hideKeyboardWhenTappedAround()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,12 +137,12 @@ final class PostDetailViewController: DefaultViewController {
     
     // MARK: - Setting
     
-    override func configureUI() {
+    private func configureUI() {
         self.setupViews()
         self.setupNavigation()
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(commentTableView)
         commentTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -172,7 +182,10 @@ final class PostDetailViewController: DefaultViewController {
         self.navigationItem.rightBarButtonItems = [settingButton]
     }
     
-    override func bind() {
+    private func bind() {
+        hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
+        
         viewModel.postWriterInfoSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] postWriterInfo in
@@ -359,11 +372,11 @@ extension PostDetailViewController: UITableViewDelegate {
 // MARK: - Actions
 
 extension PostDetailViewController {
-    @objc func didTapSettingButton(_ sender: UIButton) {
+    private func didTapSettingButton() {
         // MARK: 동작을 넣어주세요
     }
     
-    @objc func didTouchedBackButton() {
+    private func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
     }
 }

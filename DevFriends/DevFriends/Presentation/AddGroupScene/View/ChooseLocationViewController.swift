@@ -14,7 +14,7 @@ struct ChooseLocationViewActions {
     let didSubmitLocation: (Location) -> Void
 }
 
-final class ChooseLocationViewController: DefaultViewController {
+final class ChooseLocationViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모각코할 장소를 선택해주세요."
@@ -82,6 +82,8 @@ final class ChooseLocationViewController: DefaultViewController {
     private var centerLocation: Location {
         return Location(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
     }
+    
+    private var cancellables = Set<AnyCancellable>()
 
     private let actions: ChooseLocationViewActions
 
@@ -94,7 +96,14 @@ final class ChooseLocationViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func configureUI() {
         view.backgroundColor = .white
         self.setupTapGesture()
     }
@@ -105,7 +114,7 @@ final class ChooseLocationViewController: DefaultViewController {
         self.mapView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    override func bind() {
+    private func bind() {
         currentLocationButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.setUserLocation()
@@ -120,7 +129,7 @@ final class ChooseLocationViewController: DefaultViewController {
             .store(in: &cancellables)
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)

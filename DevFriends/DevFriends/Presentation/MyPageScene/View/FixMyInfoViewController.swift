@@ -5,10 +5,11 @@
 //  Created by 심주미 on 2022/11/22.
 //
 
+import Combine
 import PhotosUI
 import UIKit
 
-final class FixMyInfoViewController: DefaultViewController {
+final class FixMyInfoViewController: UIViewController {
     private lazy var profileImageViewHeight = view.frame.width - 100
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -46,6 +47,8 @@ final class FixMyInfoViewController: DefaultViewController {
         return picker
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: FixMyInfoViewModel
     
     init(viewModel: FixMyInfoViewModel) {
@@ -58,7 +61,14 @@ final class FixMyInfoViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layout() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func layout() {
         view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -103,7 +113,7 @@ final class FixMyInfoViewController: DefaultViewController {
         }
     }
     
-    override func configureUI() {
+    private func configureUI() {
         self.view.backgroundColor = .white
         
         nicknameTextField.text = viewModel.userNickName
@@ -111,8 +121,9 @@ final class FixMyInfoViewController: DefaultViewController {
         viewModel.didLoadUser()
     }
     
-    override func bind() {
+    private func bind() {
         self.hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
         
         self.profileImageView.gesturePublisher()
             .sink { [weak self] _ in
@@ -129,13 +140,12 @@ final class FixMyInfoViewController: DefaultViewController {
         
         self.fixDoneButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                guard let nickname = self?.nicknameTextField.text else { return }
-                guard let job = self?.jobTextField.text else { return }
+                guard let nickname = self?.nicknameTextField.text, let job = self?.jobTextField.text else { return }
                 self?.viewModel.didTapDoneButton(nickname: nickname, job: job)
             }
             .store(in: &cancellables)
         
-        viewModel.profileImageSubject
+        self.viewModel.profileImageSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
                 if let image = image {

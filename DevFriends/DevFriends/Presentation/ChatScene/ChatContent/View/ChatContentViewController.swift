@@ -8,18 +8,12 @@
 import Combine
 import UIKit
 
-final class ChatContentViewController: DefaultViewController {
+final class ChatContentViewController: UIViewController {
     private let messageTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.register(
-            FriendMessageTableViewCell.self,
-            forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier
-        )
-        tableView.register(
-            MyMessageTableViewCell.self,
-            forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier
-        )
+        tableView.register(cellType: FriendMessageTableViewCell.self)
+        tableView.register(cellType: MyMessageTableViewCell.self)
         return tableView
     }()
     
@@ -68,12 +62,21 @@ final class ChatContentViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var cancellables = Set<AnyCancellable>()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
     }
     
-    override func layout() {
+    private func layout() {
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
@@ -88,8 +91,10 @@ final class ChatContentViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
-        self.hideKeyboardWhenTappedAround()
+    private func bind() {
+        hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
+        
         viewModel.messagesSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] messages in
@@ -103,7 +108,7 @@ final class ChatContentViewController: DefaultViewController {
             .store(in: &cancellables)
     }
     
-    override func configureUI() {
+    private func configureUI() {
         self.view.backgroundColor = .white
         self.setupTableView()
         self.setupNavigation()

@@ -6,11 +6,10 @@
 //
 
 import UIKit
+import Combine
 
-final class MyPageViewController: DefaultViewController {
-    private let profileImageViewHeight: CGFloat = 100
-    
-    private lazy var titleLabel: UILabel = {
+final class MyPageViewController: UIViewController {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "마이페이지"
         label.font = .systemFont(ofSize: 25, weight: .bold)
@@ -26,6 +25,8 @@ final class MyPageViewController: DefaultViewController {
         return item
     }()
     
+    private let profileImageViewHeight: CGFloat = 100
+    
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .profile
@@ -34,7 +35,7 @@ final class MyPageViewController: DefaultViewController {
         return imageView
     }()
     
-    private lazy var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 25, weight: .bold)
         label.text = "사용자"
@@ -49,6 +50,8 @@ final class MyPageViewController: DefaultViewController {
     private let logoutButton = SubtitleButton(text: "로그아웃")
     private let withdrawalButton = SubtitleButton(text: "회원탈퇴")
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: MyPageViewModel
     
     init(viewModel: MyPageViewModel) {
@@ -60,11 +63,18 @@ final class MyPageViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func configureUI() {
         self.setupNavigation()
     }
     
-    override func bind() {
+    private func bind() {
         makedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.showMakedGroup()
@@ -123,7 +133,7 @@ final class MyPageViewController: DefaultViewController {
         return stackView
     }
     
-    override func layout() {
+    private func layout() {
         let spacing = 25
         view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
@@ -153,61 +163,77 @@ final class MyPageViewController: DefaultViewController {
             make.trailing.equalToSuperview().offset(-spacing)
         }
         
+        let scrollView = UIScrollView()
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(divider1.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        let contentView = UIView()
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(view.frame.width)
+        }
+        
         let activityTitleLabel = makeTitleLabel(text: "내 활동")
-        view.addSubview(activityTitleLabel)
+        contentView.addSubview(activityTitleLabel)
         activityTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(divider1.snp.bottom).offset(30)
+            make.top.equalToSuperview().offset(30)
             make.leading.equalToSuperview().offset(spacing)
         }
         
-        view.addSubview(makedGroupButton)
+        contentView.addSubview(makedGroupButton)
         makedGroupButton.snp.makeConstraints { make in
             make.top.equalTo(activityTitleLabel.snp.bottom).offset(spacing)
             make.leading.equalTo(activityTitleLabel)
         }
         
-        view.addSubview(participatedGroupButton)
+        contentView.addSubview(participatedGroupButton)
         participatedGroupButton.snp.makeConstraints { make in
             make.top.equalTo(makedGroupButton.snp.bottom).offset(spacing)
             make.leading.equalTo(activityTitleLabel)
         }
         
-        view.addSubview(likedGroupButton)
+        contentView.addSubview(likedGroupButton)
         likedGroupButton.snp.makeConstraints { make in
             make.top.equalTo(participatedGroupButton.snp.bottom).offset(spacing)
             make.leading.equalTo(activityTitleLabel)
         }
         
-        view.addSubview(withdrawalButton)
+        contentView.addSubview(withdrawalButton)
         withdrawalButton.snp.makeConstraints { make in
             make.leading.equalTo(activityTitleLabel)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-50)
+            make.bottom.equalToSuperview().offset(-50)
         }
         
-        view.addSubview(logoutButton)
+        contentView.addSubview(logoutButton)
         logoutButton.snp.makeConstraints { make in
             make.leading.equalTo(activityTitleLabel)
             make.bottom.equalTo(withdrawalButton.snp.top).offset(-spacing)
         }
         
-        view.addSubview(fixMyInfoButton)
+        contentView.addSubview(fixMyInfoButton)
         fixMyInfoButton.snp.makeConstraints { make in
             make.leading.equalTo(activityTitleLabel)
             make.bottom.equalTo(logoutButton.snp.top).offset(-spacing)
         }
         
         let myInfoLabel = makeTitleLabel(text: "내 정보")
-        view.addSubview(myInfoLabel)
+        contentView.addSubview(myInfoLabel)
         myInfoLabel.snp.makeConstraints { make in
             make.leading.equalTo(activityTitleLabel)
             make.bottom.equalTo(fixMyInfoButton.snp.top).offset(-spacing)
         }
         
         let divider2 = DividerView()
-        view.addSubview(divider2)
+        contentView.addSubview(divider2)
         divider2.snp.makeConstraints { make in
             make.leading.trailing.equalTo(divider1)
             make.bottom.equalTo(myInfoLabel.snp.top).offset(-30)
+            make.top.equalTo(likedGroupButton.snp.bottom).offset(50)
         }
     }
     

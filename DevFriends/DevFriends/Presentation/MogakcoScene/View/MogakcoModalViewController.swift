@@ -12,7 +12,7 @@ struct MogakcoModalViewActions {
     let didSelectMogakcoCell: (Int) -> Void
 }
 
-final class MogakcoModalViewController: DefaultViewController {
+final class MogakcoModalViewController: UIViewController {
     private lazy var mogakcoListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -22,10 +22,7 @@ final class MogakcoModalViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(
-            GroupCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier
-        )
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         collectionView.delegate = self
         return collectionView
     }()
@@ -41,6 +38,7 @@ final class MogakcoModalViewController: DefaultViewController {
     }
     
     private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    
     private let actions: MogakcoModalViewActions
 
     init(actions: MogakcoModalViewActions) {
@@ -53,11 +51,17 @@ final class MogakcoModalViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+    }
+    
+    private func configureUI() {
         view.backgroundColor = .white
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(mogakcoListCollectionView)
         mogakcoListCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(50)

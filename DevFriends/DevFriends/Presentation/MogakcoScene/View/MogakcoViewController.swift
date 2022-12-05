@@ -10,7 +10,7 @@ import MapKit
 import SnapKit
 import UIKit
 
-final class MogakcoViewController: DefaultViewController {
+final class MogakcoViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모각코"
@@ -99,10 +99,7 @@ final class MogakcoViewController: DefaultViewController {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
-        collectionView.register(
-            GroupCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier
-        )
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         return collectionView
     }()
     
@@ -131,6 +128,8 @@ final class MogakcoViewController: DefaultViewController {
         return locationManager
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: MogakcoViewModel
     
     init(viewModel: MogakcoViewModel) {
@@ -142,6 +141,13 @@ final class MogakcoViewController: DefaultViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     // MARK: Set Annotation Methods
@@ -165,11 +171,11 @@ final class MogakcoViewController: DefaultViewController {
         }
     }
     
-    override func configureUI() {
+    private func configureUI() {
         self.setupNavigation()
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(mogakcoMapView)
         mogakcoMapView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -203,7 +209,7 @@ final class MogakcoViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
+    private func bind() {
         viewModeButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.deselectAllAnnotations()

@@ -83,6 +83,12 @@
 		A6ED8BA129239153003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A6ED8BA72924E44A003105E2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D6CEFA459392B61254369D07 /* Pods_DevFriends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D508A33F60F395002118917 /* Pods_DevFriends.framework */; };
+		E31B353B293B7468000386BD /* Array+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B353A293B7468000386BD /* Array+SafeIndex.swift */; };
+		E31B353D293B7645000386BD /* CommentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B353C293B7645000386BD /* CommentInfo.swift */; };
+		E31B353F293B7A16000386BD /* UIBarButtonItem+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B353E293B7A16000386BD /* UIBarButtonItem+Combine.swift */; };
+		E31B3541293B7EC6000386BD /* UITableView+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3540293B7EC6000386BD /* UITableView+RegisterCell.swift */; };
+		E31B3543293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3542293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift */; };
+		E31B3545293CD83E000386BD /* UserInfoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3544293CD83E000386BD /* UserInfoKey.swift */; };
 		E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A2024292319C700887EC9 /* PostDetailCommentView.swift */; };
 		E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202729235A3D00887EC9 /* PostAttentionView.swift */; };
 		E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */; };
@@ -116,7 +122,6 @@
 		E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20BB292665BC00887EC9 /* FilledRoundTextLabel.swift */; };
 		E33A20C0292665BC00887EC9 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20BC292665BC00887EC9 /* DividerView.swift */; };
 		E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20C22926665E00887EC9 /* SnapShotSection.swift */; };
-		E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20C32926665E00887EC9 /* DefaultViewController.swift */; };
 		E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20C52926665E00887EC9 /* UIImage+Resize.swift */; };
 		E33A20D12926665E00887EC9 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20C62926665E00887EC9 /* UIControl+Combine.swift */; };
 		E33A20D32926665E00887EC9 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20C82926665E00887EC9 /* Date+String.swift */; };
@@ -149,8 +154,18 @@
 		E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */; };
 		E394C4A9292248BA0064ADA7 /* KeyValueDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */; };
 		E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */; };
+		E3B53BF72935D5B1006675E0 /* CheckUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */; };
+		E3B53BF92935DB0A006675E0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */; };
+		E3B53BFB29365827006675E0 /* CreateUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */; };
+		E3B53BFD2936E662006675E0 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B53BFC2936E662006675E0 /* UserManager.swift */; };
 		E3DE5492293481FC00E63898 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE5491293481FC00E63898 /* UserGroup.swift */; };
 		E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */; };
+		E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54962934A8AB00E63898 /* LoginViewController.swift */; };
+		E3DE549A2934DCD400E63898 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54992934DCD400E63898 /* SignUpViewController.swift */; };
+		E3DE549C2934E6F800E63898 /* ChooseCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */; };
+		E3DE549F2935095400E63898 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE549E2935095400E63898 /* AuthCoordinator.swift */; };
+		E3DE54A1293509CD00E63898 /* AuthSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */; };
+		E3DE54A429350D3700E63898 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DE54A329350D3700E63898 /* LoginViewModel.swift */; };
 		FC07DDB7292C9A7D00D16FBC /* CLLocation+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */; };
 		FC07DDBD292CA90400D16FBC /* LoadGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBC292CA90400D16FBC /* LoadGroupUseCase.swift */; };
 		FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */; };
@@ -178,6 +193,7 @@
 		FCD8AF07291CD10300CCE5D3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */; };
 		FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */; };
 		FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */; };
+		FCED2BF9293B7A1D00A9D72A /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCED2BF8293B7A1D00A9D72A /* UIViewController+Keyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -290,6 +306,12 @@
 		A66C7BD3292E1A9B0008B6FD /* GroupListViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewModelType.swift; sourceTree = "<group>"; };
 		A66C7BD4292E1A9B0008B6FD /* GroupListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		A66C7BD5292E1A9B0008B6FD /* GroupFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupFilterViewModel.swift; sourceTree = "<group>"; };
+		E31B353A293B7468000386BD /* Array+SafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SafeIndex.swift"; sourceTree = "<group>"; };
+		E31B353C293B7645000386BD /* CommentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInfo.swift; sourceTree = "<group>"; };
+		E31B353E293B7A16000386BD /* UIBarButtonItem+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Combine.swift"; sourceTree = "<group>"; };
+		E31B3540293B7EC6000386BD /* UITableView+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+RegisterCell.swift"; sourceTree = "<group>"; };
+		E31B3542293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionVIew+RegisterCell.swift"; sourceTree = "<group>"; };
+		E31B3544293CD83E000386BD /* UserInfoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoKey.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -323,7 +345,6 @@
 		E33A20BB292665BC00887EC9 /* FilledRoundTextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilledRoundTextLabel.swift; sourceTree = "<group>"; };
 		E33A20BC292665BC00887EC9 /* DividerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		E33A20C22926665E00887EC9 /* SnapShotSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapShotSection.swift; sourceTree = "<group>"; };
-		E33A20C32926665E00887EC9 /* DefaultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultViewController.swift; sourceTree = "<group>"; };
 		E33A20C52926665E00887EC9 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		E33A20C62926665E00887EC9 /* UIControl+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		E33A20C82926665E00887EC9 /* Date+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
@@ -356,8 +377,19 @@
 		E394C4A6292243740064ADA7 /* PostDetailContentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailContentsView.swift; sourceTree = "<group>"; };
 		E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueDisplayView.swift; sourceTree = "<group>"; };
 		E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserUseCase.swift; sourceTree = "<group>"; };
+		E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserUseCase.swift; sourceTree = "<group>"; };
+		E3B53BFC2936E662006675E0 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		E3DE5491293481FC00E63898 /* UserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroup.swift; sourceTree = "<group>"; };
 		E3DE54932934824000E63898 /* UserGroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserGroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		E3DE54962934A8AB00E63898 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E3DE54992934DCD400E63898 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCategoryView.swift; sourceTree = "<group>"; };
+		E3DE549E2935095400E63898 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSceneDIContainer.swift; sourceTree = "<group>"; };
+		E3DE54A329350D3700E63898 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		E3DE54A52935120F00E63898 /* DevFriends.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DevFriends.entitlements; sourceTree = "<group>"; };
 		FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Address.swift"; sourceTree = "<group>"; };
 		FC07DDBC292CA90400D16FBC /* LoadGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadGroupUseCase.swift; sourceTree = "<group>"; };
 		FC07DDBE292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -393,6 +425,7 @@
 		FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
 		FCE46BA92928C97100383F6F /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
 		FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
+		FCED2BF8293B7A1D00A9D72A /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -652,6 +685,7 @@
 				A648BB34292F52E10018A654 /* GroupSceneDIContainer.swift */,
 				05F22BA6292F6883002B7B74 /* MogakcoSceneDIContainer.swift */,
 				E3752EC7292F5D08003C8E17 /* NotificationSceneDIContainer.swift */,
+				E3DE54A0293509CD00E63898 /* AuthSceneDIContainer.swift */,
 				A648BB5B293604AD0018A654 /* AddGroupSceneDIContainer.swift */,
 			);
 			path = DIContainer;
@@ -673,6 +707,7 @@
 				E33A20B1292665A700887EC9 /* SendableTextView.swift */,
 				E33A20B2292665A700887EC9 /* GroupFilterCollectionHeaderView.swift */,
 				E33A20B3292665A700887EC9 /* GroupFilterCollectionViewCell.swift */,
+				E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -681,7 +716,6 @@
 			isa = PBXGroup;
 			children = (
 				E33A20C22926665E00887EC9 /* SnapShotSection.swift */,
-				E33A20C32926665E00887EC9 /* DefaultViewController.swift */,
 				E33A20C42926665E00887EC9 /* Extensions */,
 				E33A20CC2926665E00887EC9 /* Protocols */,
 			);
@@ -702,6 +736,11 @@
 				A63C96F5293B8BC500517516 /* Location+Distance.swift */,
 				FC07DDB6292C9A7D00D16FBC /* CLLocation+Address.swift */,
 				A648BB5F293779740018A654 /* UITextView+Combine.swift */,
+				FCED2BF8293B7A1D00A9D72A /* UIViewController+Keyboard.swift */,
+				E31B353A293B7468000386BD /* Array+SafeIndex.swift */,
+				E31B353E293B7A16000386BD /* UIBarButtonItem+Combine.swift */,
+				E31B3540293B7EC6000386BD /* UITableView+RegisterCell.swift */,
+				E31B3542293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -753,8 +792,10 @@
 				05CB4A36292DF16900A97531 /* LoadUserUseCase.swift */,
 				05EAC534292E68100067D63E /* PostCommentUseCase.swift */,
 				05F22BA8292F6987002B7B74 /* ApplyGroupUseCase.swift */,
+				E3B53BF62935D5B1006675E0 /* CheckUserUseCase.swift */,
 				05D9256529337B3B0090A6B1 /* SendCommentNotificationUseCase.swift */,
 				05D9256729338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift */,
+				E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */,
 				058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */,
 				A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */,
 			);
@@ -857,6 +898,7 @@
 				E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */,
 				E33A202D2923DADD00887EC9 /* ReportView.swift */,
 				E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */,
+				E31B353C293B7645000386BD /* CommentInfo.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -865,6 +907,42 @@
 			isa = PBXGroup;
 			children = (
 				E394C4AC292262CE0064ADA7 /* PostDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E3DE54952934A89B00E63898 /* AuthScene */ = {
+			isa = PBXGroup;
+			children = (
+				E3DE54A229350D2900E63898 /* ViewModel */,
+				E3DE549D2935094400E63898 /* Flows */,
+				E3DE54982934DCC300E63898 /* View */,
+			);
+			path = AuthScene;
+			sourceTree = "<group>";
+		};
+		E3DE54982934DCC300E63898 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E3DE54962934A8AB00E63898 /* LoginViewController.swift */,
+				E3DE54992934DCD400E63898 /* SignUpViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E3DE549D2935094400E63898 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				E3DE549E2935095400E63898 /* AuthCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		E3DE54A229350D2900E63898 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E3DE54A329350D3700E63898 /* LoginViewModel.swift */,
+				E3B53BF82935DB0A006675E0 /* SignUpViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -920,6 +998,7 @@
 		FC79AEAC29221F730077AE5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				E3DE54952934A89B00E63898 /* AuthScene */,
 				A648BB43293399D10018A654 /* AddGroupScene */,
 				E3752EA1292F53BE003C8E17 /* NotificationScene */,
 				FC5D0191292F4E6200292D33 /* TabBarScene */,
@@ -978,6 +1057,8 @@
 				E359EC81292C6BC300CE5775 /* Network */,
 				E359EC80292C6BA000CE5775 /* RealmStorage */,
 				FC79AEBC292223DF0077AE5C /* Repositories */,
+				E3B53BFC2936E662006675E0 /* UserManager.swift */,
+				E31B3544293CD83E000386BD /* UserInfoKey.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1038,6 +1119,7 @@
 		FCD8AED5291CCE9300CCE5D3 /* DevFriends */ = {
 			isa = PBXGroup;
 			children = (
+				E3DE54A52935120F00E63898 /* DevFriends.entitlements */,
 				E33A209D292662E500887EC9 /* Application */,
 				FC79AEBB292223D90077AE5C /* Data */,
 				FC79AEB72922239F0077AE5C /* Domain */,
@@ -1334,12 +1416,17 @@
 				A66C7BBE292E19660008B6FD /* ChatGroupsRepository.swift in Sources */,
 				A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */,
 				E33A20BE292665BC00887EC9 /* CommonTextField.swift in Sources */,
+				E31B3543293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift in Sources */,
 				E3752EAA292F53BE003C8E17 /* NotificationTypes.swift in Sources */,
 				FC5D01AE292F553200292D33 /* PopupViewController.swift in Sources */,
+				E3DE549F2935095400E63898 /* AuthCoordinator.swift in Sources */,
+				05CB4A39292DF16900A97531 /* LoadUserUseCase.swift in Sources */,
 				05CB4A39292DF16900A97531 /* LoadUserUseCase.swift in Sources */,
 				E33A20D02926665E00887EC9 /* UIImage+Resize.swift in Sources */,
 				A66C7BDB292E1A9B0008B6FD /* GroupListViewModelType.swift in Sources */,
+				E3B53BF92935DB0A006675E0 /* SignUpViewModel.swift in Sources */,
 				A63C96F22937A31300517516 /* DefaultChatRepository.swift in Sources */,
+				E31B353B293B7468000386BD /* Array+SafeIndex.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
 				A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
@@ -1347,6 +1434,7 @@
 				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
+				E3B53BFD2936E662006675E0 /* UserManager.swift in Sources */,
 				FC5D01A7292F54EE00292D33 /* MyPageViewModel.swift in Sources */,
 				E3752ECC292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				05D9256829338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift in Sources */,
@@ -1357,6 +1445,8 @@
 				05CB4A3A292DF16900A97531 /* LoadCommentsUseCase.swift in Sources */,
 				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,
+				E3DE54A429350D3700E63898 /* LoginViewModel.swift in Sources */,
+				05CB4A38292DF16900A97531 /* LoadCategoryUseCase.swift in Sources */,
 				05CB4A38292DF16900A97531 /* LoadCategoryUseCase.swift in Sources */,
 				E33A20852926622000887EC9 /* ContainsProfile.swift in Sources */,
 				FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */,
@@ -1366,6 +1456,7 @@
 				E3752EB8292F5449003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
 				A66C7BD7292E1A9B0008B6FD /* GroupListViewController.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
+				E31B3541293B7EC6000386BD /* UITableView+RegisterCell.swift in Sources */,
 				E3752EAC292F53BE003C8E17 /* NotificationTableViewCell.swift in Sources */,
 				E3752EBB292F5467003C8E17 /* NotificationRepository.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
@@ -1376,6 +1467,7 @@
 				A648BB652937966D0018A654 /* Chat.swift in Sources */,
 				E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */,
 				052BF68929385BF30037C976 /* FixMyInfoViewModel.swift in Sources */,
+				E31B353F293B7A16000386BD /* UIBarButtonItem+Combine.swift in Sources */,
 				E3752ECA292F5DD2003C8E17 /* DefaultNotificationRepository.swift in Sources */,
 				E394C4A1292232630064ADA7 /* PostDetailViewController.swift in Sources */,
 				A66C7BCA292E1A460008B6FD /* Location.swift in Sources */,
@@ -1385,6 +1477,7 @@
 				05CB4A3E292DF17C00A97531 /* Comment.swift in Sources */,
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
+				E31B353D293B7645000386BD /* CommentInfo.swift in Sources */,
 				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
@@ -1392,8 +1485,9 @@
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
+				E3DE549C2934E6F800E63898 /* ChooseCategoryView.swift in Sources */,
 				E3DE5492293481FC00E63898 /* UserGroup.swift in Sources */,
-				E33A20CF2926665E00887EC9 /* DefaultViewController.swift in Sources */,
+				E3B53BF72935D5B1006675E0 /* CheckUserUseCase.swift in Sources */,
 				E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */,
 				FC5D01A8292F54EE00292D33 /* SubtitleButton.swift in Sources */,
 				FC5D0195292F512300292D33 /* UIColor+Custom.swift in Sources */,
@@ -1427,12 +1521,15 @@
 				A648BB4C293399D10018A654 /* AddGroupViewModel.swift in Sources */,
 				A66C7BD6292E1A9B0008B6FD /* GroupListSection.swift in Sources */,
 				A648BB35292F52E10018A654 /* GroupSceneDIContainer.swift in Sources */,
+				E31B3545293CD83E000386BD /* UserInfoKey.swift in Sources */,
 				E3DE54942934824000E63898 /* UserGroupResponseDTO+Mapping.swift in Sources */,
 				E3752EC8292F5D08003C8E17 /* NotificationSceneDIContainer.swift in Sources */,
 				E394C4A32922371C0064ADA7 /* PostDetailInfoView.swift in Sources */,
 				E3752EB5292F5449003C8E17 /* SendNotificationToParticipantUseCase.swift in Sources */,
 				E33A20872926622000887EC9 /* ChatContentViewController.swift in Sources */,
 				A66C7BC2292E19A60008B6FD /* LoadChatGroupsUseCase.swift in Sources */,
+				E3B53BFB29365827006675E0 /* CreateUserUseCase.swift in Sources */,
+				E3DE549A2934DCD400E63898 /* SignUpViewController.swift in Sources */,
 				E394C4A5292239B00064ADA7 /* PostWriterInfoView.swift in Sources */,
 				05F22BA9292F6987002B7B74 /* ApplyGroupUseCase.swift in Sources */,
 				E33A20A8292662E500887EC9 /* SceneDelegate.swift in Sources */,
@@ -1440,6 +1537,7 @@
 				A66C7BC6292E19F60008B6FD /* LoadChatMessagesUseCase.swift in Sources */,
 				05F22B9F292F5757002B7B74 /* MogakcoCoordinator.swift in Sources */,
 				E394C4AD292262CE0064ADA7 /* PostDetailViewModel.swift in Sources */,
+				FCED2BF9293B7A1D00A9D72A /* UIViewController+Keyboard.swift in Sources */,
 				E33A20D62926665E00887EC9 /* UIView+Combine.swift in Sources */,
 				E3752EB9292F5449003C8E17 /* UpdateGroupParticipantIDsToAddUseCase.swift in Sources */,
 				05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */,
@@ -1452,6 +1550,7 @@
 				E3752EAD292F53BE003C8E17 /* NotificationViewController.swift in Sources */,
 				E33A20A6292662E500887EC9 /* ChatSceneDIContainer.swift in Sources */,
 				A66C7BDA292E1A9B0008B6FD /* GroupFilterViewModelType.swift in Sources */,
+				E3DE54972934A8AB00E63898 /* LoginViewController.swift in Sources */,
 				E3752EB7292F5449003C8E17 /* DeleteNotificationUseCase.swift in Sources */,
 				FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */,
 				05D9256629337B3B0090A6B1 /* SendCommentNotificationUseCase.swift in Sources */,
@@ -1460,6 +1559,7 @@
 				E33A20922926623200887EC9 /* MogakcoViewModel.swift in Sources */,
 				A66C7BD9292E1A9B0008B6FD /* GroupFilterViewController.swift in Sources */,
 				E33A20BF292665BC00887EC9 /* FilledRoundTextLabel.swift in Sources */,
+				E3DE54A1293509CD00E63898 /* AuthSceneDIContainer.swift in Sources */,
 				A648BB5E293642A00018A654 /* ChooseCategoryViewModel.swift in Sources */,
 				FC5D01AA292F54EE00292D33 /* MyPageViewController.swift in Sources */,
 				E33A20B5292665A700887EC9 /* GroupCollectionHeaderView.swift in Sources */,
@@ -1651,6 +1751,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DevFriends/DevFriends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QG3GC35LA;
@@ -1680,6 +1781,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DevFriends/DevFriends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4QG3GC35LA;

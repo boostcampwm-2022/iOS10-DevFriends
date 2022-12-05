@@ -9,7 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class ChooseCategoryViewController: DefaultViewController {
+final class ChooseCategoryViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 30)
@@ -43,10 +43,7 @@ final class ChooseCategoryViewController: DefaultViewController {
         return button
     }()
     
-    override func configureUI() {
-        view.backgroundColor = .white
-        viewModel.loadCategories()
-    }
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Initializer
     private let viewModel: ChooseCategoryViewModel
@@ -60,7 +57,19 @@ final class ChooseCategoryViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layout() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .white
+        viewModel.loadCategories()
+    }
+    
+    private func layout() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -93,7 +102,7 @@ final class ChooseCategoryViewController: DefaultViewController {
         categoryTableViewDiffableDataSource.apply(categoryTableViewSnapShot)
     }
     
-    override func bind() {
+    private func bind() {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.sendCategorySelection()
