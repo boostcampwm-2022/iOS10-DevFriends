@@ -24,6 +24,10 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultImageRepository()
     }
     
+    func makeCategoryRepository() -> CategoryRepository {
+        return DefaultCategoryRepository()
+    }
+    
     // MARK: UseCase
     func makeUploadProfileImageUseCase() -> UploadProfileImageUseCase {
         return DefaultUploadProfileImageUseCase(imageRepository: makeImageRepository())
@@ -35,6 +39,10 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     
     func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
         return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
+    }
+    
+    func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
     // MARK: MyPageViwe
@@ -78,11 +86,24 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
             actions: actions,
             updateUserInfoUseCase: makeUpdateUserInfoUseCase(),
             uploadProfileImageUseCase: makeUploadProfileImageUseCase(),
-            fetchProfileImageUseCase: makeLoadProfileImageUseCase()
+            fetchProfileImageUseCase: makeLoadProfileImageUseCase(),
+            loadCategoryUseCase: makeLoadCategoryUseCase()
         )
     }
     
     func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController {
         return FixMyInfoViewController(viewModel: makeFixMyInfoViewModel(actions: actions))
+    }
+    
+    // MARK: ChooseCategoryView
+    private func makeChooseCategoryViewModel(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewModel {
+        return DefaultChooseCategoryViewModel(
+            fetchCategoryUseCase: makeLoadCategoryUseCase(),
+            actions: actions
+        )
+    }
+    
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController {
+        return ChooseCategoryViewController(viewModel: makeChooseCategoryViewModel(actions: actions))
     }
 }

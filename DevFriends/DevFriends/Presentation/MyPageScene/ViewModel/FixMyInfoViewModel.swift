@@ -9,18 +9,20 @@ import Combine
 import UIKit
 
 struct FixMyInfoViewModelActions {
-    let showCategoryChoice: () -> Void
+    let showCategoryChoice: ([Category]) -> Void
     let popFixMyInfo: () -> Void
 }
 
 protocol FixMyInfoViewModelInput {
     func didLoadUser()
+    func didCategorySelectionView(categories: [Category])
     func didTapDoneButton(nickname: String, job: String)
     func didTouchedBackButton()
 }
 
 protocol FixMyInfoViewModelOutput {
     var profileImageSubject: CurrentValueSubject<UIImage?, Never> { get }
+    var categoriesSubject: CurrentValueSubject<[Category], Never> { get }
     var userNickName: String { get }
     var userJob: String { get }
 }
@@ -32,10 +34,12 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
     private let updateUserInfoUseCase: UpdateUserInfoUseCase
     private let uploadProfileImageUseCase: UploadProfileImageUseCase
     private let fetchProfileImageUseCase: LoadProfileImageUseCase
+    private let loadCategoryUseCase: LoadCategoryUseCase
     
     // MARK: - OUTPUT
     private let localUser: User
     var profileImageSubject = CurrentValueSubject<UIImage?, Never>(nil)
+    var categoriesSubject = CurrentValueSubject<[Category], Never>([])
     var userNickName: String
     var userJob: String
     
@@ -43,12 +47,14 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
         actions: FixMyInfoViewModelActions,
         updateUserInfoUseCase: UpdateUserInfoUseCase,
         uploadProfileImageUseCase: UploadProfileImageUseCase,
-        fetchProfileImageUseCase: LoadProfileImageUseCase
+        fetchProfileImageUseCase: LoadProfileImageUseCase,
+        loadCategoryUseCase: LoadCategoryUseCase
     ) {
         self.actions = actions
         self.updateUserInfoUseCase = updateUserInfoUseCase
         self.uploadProfileImageUseCase = uploadProfileImageUseCase
         self.fetchProfileImageUseCase = fetchProfileImageUseCase
+        self.loadCategoryUseCase = loadCategoryUseCase
         
         localUser = User(
             id: "nqQW9nOes6UPXRCjBuCy",
@@ -56,7 +62,7 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
             job: "EPL득점왕",
             email: "abc@def.com",
             profileImagePath: "nqQW9nOes6UPXRCjBuCy",
-            categoryIDs: [],
+            categoryIDs: ["89kKYamuTTGC0rK7VZO8", "spXVLStPa1WBZVQlebCi"],
             appliedGroupIDs: [],
             likeGroupIDs: []
         )
@@ -79,6 +85,19 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
         return image
     }
     
+    private func loadCategories(categoryIds: [String]) async -> [Category] {
+        var categories: [Category] = []
+        if !categoryIds.isEmpty {
+            do {
+                categories = try await loadCategoryUseCase.execute(categoryIds: categoryIds)
+            } catch {
+                print(error)
+            }
+        }
+        
+        return categories
+    }
+    
     private func uploadImage() {
         guard let image = profileImageSubject.value else { return }
         
@@ -93,12 +112,13 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
         )
     }
     
-    private func updateUser(nickname: String, job: String) {
+    private func updateUser(nickname: String, job: String, categoryIDs: [String]) {
         updateUserInfoUseCase.execute(
             profileImagePath: profileImageSubject.value == nil ? "" : self.localUser.id,
             nickName: nickname,
             job: job,
-            user: self.localUser
+            user: self.localUser,
+            categoryIDs: categoryIDs
         )
     }
 }
@@ -107,12 +127,17 @@ extension DefaultFixMyInfoViewModel {
     func didLoadUser() {
         Task {
             profileImageSubject.value = await fetchImage()
+            categoriesSubject.value = await loadCategories(categoryIds: localUser.categoryIDs)
         }
+    }
+    
+    func didCategorySelectionView(categories: [Category]) {
+        actions.showCategoryChoice(categories)
     }
     
     func didTapDoneButton(nickname: String, job: String) {
         uploadImage()
-        updateUser(nickname: nickname, job: job)
+        updateUser(nickname: nickname, job: job, categoryIDs: categoriesSubject.value.map { $0.id })
         
         actions.popFixMyInfo()
     }

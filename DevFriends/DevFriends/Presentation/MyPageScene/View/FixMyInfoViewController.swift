@@ -42,7 +42,6 @@ final class FixMyInfoViewController: UIViewController {
         textField.delegate = self
         return textField
     }()
-    
     private lazy var jobTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "직업을 입력해주세요"
@@ -50,7 +49,10 @@ final class FixMyInfoViewController: UIViewController {
         textField.delegate = self
         return textField
     }()
-    
+    private lazy var categorySelectionView: ChooseCategoryView = {
+        let categorySelectionView = ChooseCategoryView()
+        return categorySelectionView
+    }()
     private let fixDoneButton = CommonButton(text: "수정 완료")
     
     private lazy var imagePicker: PHPickerViewController = {
@@ -130,9 +132,16 @@ final class FixMyInfoViewController: UIViewController {
             make.top.equalTo(jobLabel.snp.bottom).offset(15)
         }
         
+        contentView.addSubview(categorySelectionView)
+        categorySelectionView.snp.makeConstraints { make in
+            make.top.equalTo(jobTextField.snp.bottom).offset(25)
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
+        }
+        
         contentView.addSubview(fixDoneButton)
         fixDoneButton.snp.makeConstraints { make in
-            make.top.equalTo(jobTextField.snp.bottom).offset(80)
+            make.top.equalTo(categorySelectionView.snp.bottom).offset(25)
             make.bottom.equalToSuperview().offset(-100)
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
@@ -177,6 +186,12 @@ final class FixMyInfoViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        self.categorySelectionView.didTouchViewSubject
+            .sink { [weak self] _ in
+                self?.viewModel.didCategorySelectionView(categories: [])
+            }
+            .store(in: &cancellables)
+        
         self.fixDoneButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 guard let nickname = self?.nicknameTextField.text, let job = self?.jobTextField.text else { return }
@@ -192,6 +207,13 @@ final class FixMyInfoViewController: UIViewController {
                 } else {
                     self?.profileImageView.image = .profile
                 }
+            }
+            .store(in: &cancellables)
+        
+        self.viewModel.categoriesSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] categories in
+                self?.categorySelectionView.set(categories: categories)
             }
             .store(in: &cancellables)
     }
@@ -260,6 +282,12 @@ extension FixMyInfoViewController: PHPickerViewControllerDelegate {
                 }
             }
         }
+    }
+}
+
+extension FixMyInfoViewController {
+    func updateCategories(categories: [Category]) {
+        self.viewModel.categoriesSubject.value = categories
     }
 }
 

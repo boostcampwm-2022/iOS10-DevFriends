@@ -14,6 +14,7 @@ protocol MyPageFlowCoordinatorDependencies {
     func makeLikedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
     func makePopupViewController(popup: Popup) -> PopupViewController
     func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
 }
 
 final class MyPageCoordinator: Coordinator {
@@ -59,7 +60,10 @@ final class MyPageCoordinator: Coordinator {
     }
     
     func showFixMyInfoViewController() {
-        let actions = FixMyInfoViewModelActions(showCategoryChoice: showCategoryChoice, popFixMyInfo: popViewController)
+        let actions = FixMyInfoViewModelActions(
+            showCategoryChoice: showCategoryViewController,
+            popFixMyInfo: popViewController
+        )
         let fixMyInfoViewController = dependencies.makeFixMyInfoViewController(actions: actions)
         navigationController?.pushViewController(fixMyInfoViewController, animated: true)
         navigationController?.tabBarController?.tabBar.isHidden = true
@@ -73,7 +77,17 @@ final class MyPageCoordinator: Coordinator {
 }
 
 extension MyPageCoordinator {
-    func showCategoryChoice() { }
+    func showCategoryViewController(categories: [Category]) {
+        let actions = ChooseCategoryViewModelActions(didSubmitCategory: didSubmitCategorySelection)
+        let categoryViewController = dependencies.makeCategoryViewController(actions: actions)
+        navigationController?.pushViewController(categoryViewController, animated: true)
+    }
+    
+    func didSubmitCategorySelection(updatedCategories: [Category]) {
+        navigationController?.popViewController(animated: true)
+        guard let viewController = navigationController?.viewControllers.last as? FixMyInfoViewController else { return }
+        viewController.updateCategories(categories: updatedCategories)
+    }
     
     func popViewController() {
         navigationController?.popViewController(animated: true)
