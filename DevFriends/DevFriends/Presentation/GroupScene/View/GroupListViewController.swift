@@ -5,6 +5,7 @@
 //  Created by 상현 on 2022/11/14.
 //
 
+import CoreLocation
 import Combine
 import SnapKit
 import UIKit
@@ -125,6 +126,15 @@ final class GroupListViewController: UIViewController {
         return layout
     }()
     
+    private lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        return locationManager
+    }()
+    
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
@@ -151,8 +161,9 @@ final class GroupListViewController: UIViewController {
         self.view.backgroundColor = .systemGray6
         self.setupNavigationBar()
         self.setupCollectionView()
-        self.setupCollectionViewHeader()
+        self.setupCollectionViewHeader(alignType: .newest)
         self.setupNavigation()
+        self.setUserLocation()
         self.viewModel.loadGroupList()
     }
     
@@ -162,6 +173,10 @@ final class GroupListViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setUserLocation() {
+        locationManager.startUpdatingLocation()
     }
     
     private func setupNavigationBar() {
@@ -174,7 +189,7 @@ final class GroupListViewController: UIViewController {
         self.collectionViewSnapShot.appendSections([.recommand, .filtered])
     }
     
-    private func setupCollectionViewHeader() {
+    private func setupCollectionViewHeader(alignType: AlignType) {
         self.collectionViewDiffableDataSource.supplementaryViewProvider = {
             [weak self] (collectionView: UICollectionView,
                          _: String,
@@ -189,11 +204,31 @@ final class GroupListViewController: UIViewController {
             if indexPath.section == GroupListSection.recommand.rawValue {
                 header.set(title: "추천 모임")
             } else if indexPath.section == GroupListSection.filtered.rawValue {
-                header.set(title: "모집중인 모임", self, #selector(self.didTapFilterButton))
+                header.set(title: "모집중인 모임", filter: alignType, self, #selector(self.didTapFilterButton))
             }
             
             return header
         }
+    }
+    
+    private func reloadCollectionViewHeader(alignType: AlignType) {
+        let recommandItem = self.collectionViewSnapShot.itemIdentifiers(inSection: .recommand)
+        let filteredItem = self.collectionViewSnapShot.itemIdentifiers(inSection: .filtered)
+        self.setupCollectionViewHeader(alignType: alignType)
+        self.collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo> (
+            collectionView: self.collectionView) { collectionView, indexPath, data -> UICollectionViewCell? in
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+                for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+                cell.set(data.group)
+            return cell
+        }
+        self.collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()
+        self.setupCollectionView()
+        self.setupCollectionViewHeader(alignType: alignType)
+        self.collectionViewSnapShot.appendItems(recommandItem, toSection: .recommand)
+        self.collectionViewSnapShot.appendItems(filteredItem, toSection: .filtered)
+        self.collectionViewDiffableDataSource.apply(collectionViewSnapShot, animatingDifferences: false)
     }
     
     private func populateSnapShot(data: [GroupCellInfo], to section: GroupListSection) {
@@ -220,6 +255,15 @@ final class GroupListViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] groupList in
                 self?.populateSnapShot(data: groupList, to: .filtered)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.filteredGroupAlignTypeSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedType in
+                if let self = self {
+                    self.reloadCollectionViewHeader(alignType: updatedType)
+                }
             }
             .store(in: &cancellables)
     }
@@ -258,6 +302,20 @@ extension GroupListViewController {
     
     @objc func didTapNotificationButton(_ sender: UIButton) {
         viewModel.didSelectNotifications()
+    }
+}
+
+// MARK: - CLLocationManger Delegate
+extension GroupListViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            manager.stopUpdatingLocation()
+            let location = Location(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+            viewModel.didUpdateUserLocation(location: location)
+        }
     }
 }
 

@@ -33,13 +33,21 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
+    func makeSortGroupUseCase() -> SortGroupUseCase {
+        return DefaultSortGroupUseCase()
+    }
+    
     // MARK: GroupList
     func makeGroupListViewController(actions: GroupListViewModelActions) -> GroupListViewController {
         return GroupListViewController(viewModel: makeGroupListViewModel(actions: actions))
     }
     
     func makeGroupListViewModel(actions: GroupListViewModelActions) -> GroupListViewModel {
-        return DefaultGroupListViewModel(fetchGroupUseCase: makeFetchGroupUseCase(), actions: actions)
+        return DefaultGroupListViewModel(
+            fetchGroupUseCase: makeFetchGroupUseCase(),
+            sortGroupUseCase: makeSortGroupUseCase(),
+            actions: actions
+        )
     }
     
     // MARK: GroupFilterView
