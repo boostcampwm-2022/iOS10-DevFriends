@@ -111,6 +111,7 @@ final class UserManager {
     }
     
     private let userRepository = DefaultUserRepository()
+    private let imageRepository = DefaultImageRepository()
     
     private init() {}
 }
@@ -149,8 +150,17 @@ extension UserManager {
     }
     
     private func fetchProfile(path: String) async -> UIImage? {
-        // TODO: 이후에 Firebase Storage에서 받아오는 코드 넣기
-        return nil
+        var image: UIImage?
+        if !path.isEmpty {
+            do {
+                let data = try await imageRepository.fetch(.profile, path: path)
+                image = UIImage(data: data)
+            } catch {
+                print(error)
+            }
+        }
+        
+        return image
     }
 }
 
