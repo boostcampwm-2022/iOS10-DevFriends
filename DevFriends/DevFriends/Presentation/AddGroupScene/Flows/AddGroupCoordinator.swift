@@ -33,12 +33,15 @@ final class AddGroupCoordinator: Coordinator {
     func start() {
         let actions = AddGroupViewModelActions(
             showCategoryView: showCategoryViewController,
-            showLocationView: showLocationViewController)
+            showLocationView: showLocationViewController,
+            moveBackToParent: moveBackToParent
+        )
         let addGroupViewController = dependencies.makeAddGroupViewController(
             groupType: self.groupType,
             actions: actions
         )
         navigationController.pushViewController(addGroupViewController, animated: false)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
 }
 
@@ -65,5 +68,10 @@ extension AddGroupCoordinator {
         navigationController.popViewController(animated: true)
         guard let viewController = navigationController.viewControllers.last as? AddGroupViewController else { return }
         viewController.updateLocation(location: updatedLocation)
+    }
+    
+    func moveBackToParent() {
+        navigationController.tabBarController?.tabBar.isHidden = false
+        navigationController.popViewController(animated: true)
     }
 }

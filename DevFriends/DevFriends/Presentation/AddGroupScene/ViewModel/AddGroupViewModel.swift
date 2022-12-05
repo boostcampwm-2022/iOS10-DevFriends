@@ -11,6 +11,7 @@ import Foundation
 struct AddGroupViewModelActions {
     let showCategoryView: () -> Void
     let showLocationView: () -> Void
+    let moveBackToParent: () -> Void
 }
 
 protocol AddGroupViewModelInput {
@@ -23,6 +24,7 @@ protocol AddGroupViewModelInput {
     func updateCategory(categories: [Category])
     func updateLocation(location: Location)
     func didSendGroupInfo()
+    func didTouchedBackButton()
 }
 
 protocol AddGroupViewModelOutput {
@@ -140,5 +142,9 @@ extension DefaultAddGroupViewModel {
         )
         saveGroupUseCase.execute(group: newGroup)
         // TODO: User - Group 컬렉션에 해당 그룹 추가해줘야 함
+    }
+    
+    func didTouchedBackButton() {
+        actions.moveBackToParent()
     }
 }

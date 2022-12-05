@@ -74,6 +74,10 @@ final class AddGroupViewController: UIViewController {
         viewModel.didConfigureView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.didTouchedBackButton()
+    }
+    
     private func layout() {
         view.addSubview(titleTextField)
         titleTextField.snp.makeConstraints { make in
@@ -220,6 +224,14 @@ final class AddGroupViewController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancellables)
+        
+        if let backButton = self.navigationItem.backBarButtonItem {
+            backButton.publisher
+                .sink { [weak self] _ in
+                    self?.viewModel.didTouchedBackButton()
+                }
+                .store(in: &cancellables)
+        }
     }
     
     private func setStepperValue() {
