@@ -8,7 +8,10 @@
 import Combine
 
 struct MogakcoViewModelActions {
+    let showMogakcoModal: ([Group]) -> Void
     let showGroupDetail: (Group) -> Void
+    let showNotifications: () -> Void
+    let showAddMogakcoScene: () -> Void
 }
 
 protocol MogakcoViewModelInput {
@@ -17,6 +20,8 @@ protocol MogakcoViewModelInput {
     func nowMogakco(index: Int)
     func nowMogakcoWithAllList(index: Int, distance: Double)
     func didSelectNowMogakco()
+    func didSelectAddMogakco()
+    func didSelectNotifications()
 }
 
 protocol MogakcoViewModelOutput {
@@ -36,10 +41,10 @@ final class MogakcoViewModel: MogakcoViewModelType {
     private var nowMogakcoList: [Group] = []
     private var nowMogakco: Group?
     
-    private let fetchGroupUseCase: FetchGroupUseCase
-    private let actions: MogakcoViewModelActions?
+    private let fetchGroupUseCase: LoadGroupUseCase
+    private let actions: MogakcoViewModelActions
     
-    init(fetchGroupUseCase: FetchGroupUseCase, actions: MogakcoViewModelActions? = nil) {
+    init(fetchGroupUseCase: LoadGroupUseCase, actions: MogakcoViewModelActions) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.actions = actions
     }
@@ -77,8 +82,20 @@ final class MogakcoViewModel: MogakcoViewModelType {
         }
     }
     
+    func didSelectViewModeButton() {
+        actions.showMogakcoModal(allMogakcoList)
+    }
+    
     func didSelectNowMogakco() {
         guard let nowMogakco = self.nowMogakco else { return }
-        actions?.showGroupDetail(nowMogakco)
+        actions.showGroupDetail(nowMogakco)
+    }
+    
+    func didSelectAddMogakco() {
+        actions.showAddMogakcoScene()
+    }
+    
+    func didSelectNotifications() {
+        actions.showNotifications()
     }
 }

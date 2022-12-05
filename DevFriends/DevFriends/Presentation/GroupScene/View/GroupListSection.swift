@@ -7,6 +7,7 @@
 
 import Foundation
 
-enum GroupListSection: CaseIterable {
-    case recommand, filtered
+enum GroupListSection: Int, CaseIterable {
+    case recommand = 0
+    case filtered = 1
 }

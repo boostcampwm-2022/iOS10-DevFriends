@@ -19,7 +19,7 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
     }
     
     lazy var messageLabel: MessageLabel = {
-        let label = MessageLabel(type: .me)
+        let label = MessageLabel(type: .myself)
         return label
     }()
     
@@ -49,6 +49,6 @@ final class MyMessageTableViewCell: UITableViewCell, MessageCellType, ContainsTi
             make.leading.greaterThanOrEqualToSuperview().offset(50)
             make.trailing.equalToSuperview().offset(-20)
         }
-        self.makeTimeLabel(messageLabel: self.messageLabel, type: .me)
+        self.makeTimeLabel(messageLabel: self.messageLabel, type: .myself)
     }
 }

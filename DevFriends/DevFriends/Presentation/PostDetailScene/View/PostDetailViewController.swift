@@ -9,7 +9,27 @@ import Combine
 import SnapKit
 import UIKit
 
-final class PostDetailViewController: DefaultViewController {
+final class PostDetailViewController: UIViewController {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
+        barButton.tintColor = .black
+        return barButton
+    }()
+    private lazy var settingButton: UIBarButtonItem = {
+        let item = UIBarButtonItem()
+        item.image = .ellipsis
+        item.tintColor = .black
+        item.target = self
+        item.action = nil
+        item.publisher
+            .sink { [weak self] _ in
+                self?.didTapSettingButton()
+            }
+            .store(in: &cancellables)
+        return item
+    }()
     private lazy var commentTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
@@ -17,35 +37,64 @@ final class PostDetailViewController: DefaultViewController {
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
         tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(
-            CommentTableViewCell.self,
-            forCellReuseIdentifier: CommentTableViewCell.reuseIdentifier
-        )
+        tableView.register(cellType: CommentTableViewCell.self)
+        tableView.sectionHeaderTopPadding = 10.0
         return tableView
     }()
-    private lazy var commentTextField: CommonTextField = {
+    private lazy var tableViewDataSource = UITableViewDiffableDataSource<Int, CommentInfo>(
+        tableView: self.commentTableView
+    ) { commentTableView, indexPath, data in
+        guard let cell = commentTableView.dequeueReusableCell(
+            withIdentifier: CommentTableViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? CommentTableViewCell
+        else {
+            return UITableViewCell()
+        }
+        cell.set(info: data)
+
+        return cell
+    }
+    private lazy var footerView: UIView = {
+        let view = UIView()
+        
+        view.addSubview(self.spinner)
+        spinner.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
+        return view
+    }()
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = .darkGray
+        spinner.hidesWhenStopped = true
+        return spinner
+    }()
+    private let commentTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: "댓글을 입력해주세요")
         return textField
     }()
-    private lazy var commentPostButton: UIButton = {
+    private let commentPostButton: UIButton = {
         let button = UIButton()
         button.setTitle("↑", for: .normal)
         button.backgroundColor = .orange
         return button
     }()
-    private lazy var postDetailInfoView: PostDetailInfoView = {
+    private let postDetailInfoView: PostDetailInfoView = {
         let postDetailInfoView = PostDetailInfoView()
         return postDetailInfoView
     }()
-    private lazy var postRequestButton: CommonButton = {
+    private let postRequestButton: CommonButton = {
         let commonButton = CommonButton(text: "모임 신청")
         return commonButton
     }()
-    private lazy var postAttentionView: PostAttentionView = {
+    private let postAttentionView: PostAttentionView = {
         let postAttentionView = PostAttentionView()
         return postAttentionView
     }()
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: PostDetailViewModel
     
@@ -63,26 +112,29 @@ final class PostDetailViewController: DefaultViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupViews()
-        hideKeyboardWhenTapped()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         addKeyboardObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         removeKeyboardObserver()
     }
     
     // MARK: - Setting
     
-    override func layout() {
+    private func configureUI() {
+        self.setupViews()
+        self.setupNavigation()
+    }
+    
+    private func layout() {
         view.addSubview(commentTableView)
         commentTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -113,13 +165,25 @@ final class PostDetailViewController: DefaultViewController {
             postWriterInfo: viewModel.postWriterInfoSubject.value,
             postDetailContents: viewModel.postDetailContentsSubject.value
         )
-        
-        postAttentionView.set(info: viewModel.postAttentionInfo)
-        
+    
         viewModel.didLoadGroup()
     }
     
-    override func bind() {
+    private func setupNavigation() {
+        self.navigationItem.leftBarButtonItems = [backBarButton]
+        self.navigationItem.rightBarButtonItems = [settingButton]
+    }
+    
+    private func bind() {
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+        
+        hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
+        
         viewModel.postWriterInfoSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] postWriterInfo in
@@ -134,19 +198,20 @@ final class PostDetailViewController: DefaultViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.commentsSubject
+        viewModel.postAttentionInfoSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.commentTableView.reloadData()
+            .sink { [weak self] info in
+                self?.postAttentionView.set(info: info)
             }
             .store(in: &cancellables)
-        
-        viewModel.scrollToBottomSubject
+         
+        viewModel.commentsSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let commentCount = self?.viewModel.commentsSubject.value.count else { return }
-                let bottomIndex = IndexPath(row: commentCount - 1, section: 0)
-                self?.commentTableView.scrollToRow(at: bottomIndex, at: .top, animated: true)
+            .sink { [weak self] comments in
+                var snapshot = NSDiffableDataSourceSnapshot<Int, CommentInfo>()
+                snapshot.appendSections([0])
+                snapshot.appendItems(comments)
+                self?.tableViewDataSource.apply(snapshot)
             }
             .store(in: &cancellables)
         
@@ -163,6 +228,12 @@ final class PostDetailViewController: DefaultViewController {
             }
             .store(in: &cancellables)
         
+        self.postAttentionView.likeButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.didTapLikeButton()
+            }
+            .store(in: &cancellables)
+        
         self.commentPostButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 guard
@@ -171,6 +242,7 @@ final class PostDetailViewController: DefaultViewController {
                
                 self?.commentTextField.text = ""
                 self?.viewModel.didTapCommentPostButton(content: comment)
+                self?.commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             }
             .store(in: &cancellables)
     }
@@ -270,27 +342,39 @@ extension PostDetailViewController {
 
 // MARK: - UITableView
 
-extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
+extension PostDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = createHeaderView()
         return headerView
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.commentsSubject.value.count
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return self.footerView
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CommentTableViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? CommentTableViewCell
-        else {
-            return UITableViewCell()
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+
+        if maximumOffset < currentOffset {
+            viewModel.didScrollToBottom()
+            spinner.startAnimating()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.spinner.stopAnimating()
+            }
         }
-        
-        cell.set(info: viewModel.commentsSubject.value[indexPath.row])
-        
-        return cell
+    }
+}
+
+// MARK: - Actions
+
+extension PostDetailViewController {
+    private func didTapSettingButton() {
+        // MARK: 동작을 넣어주세요
+    }
+    
+    private func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }

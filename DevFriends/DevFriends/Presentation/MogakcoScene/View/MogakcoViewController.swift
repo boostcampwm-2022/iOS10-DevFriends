@@ -10,7 +10,32 @@ import MapKit
 import SnapKit
 import UIKit
 
-final class MogakcoViewController: DefaultViewController {
+final class MogakcoViewController: UIViewController {
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "모각코"
+        label.font = .systemFont(ofSize: 25, weight: .bold)
+        return label
+    }()
+    
+    private lazy var groupAddButton: UIBarButtonItem = {
+        let item = UIBarButtonItem()
+        item.image = .plus
+        item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapMogakcoAddButton)
+        return item
+    }()
+    
+    private lazy var notificationButton: UIBarButtonItem = {
+        let item = UIBarButtonItem()
+        item.image = .bell
+        item.tintColor = .black
+        item.target = self
+        item.action = #selector(didTapNotificationButton)
+        return item
+    }()
+    
     private lazy var mogakcoMapView: MKMapView = {
         let mapView = MKMapView(frame: .zero)
         mapView.delegate = self
@@ -18,9 +43,9 @@ final class MogakcoViewController: DefaultViewController {
         return mapView
     }()
     
-    private lazy var currentLocationButton: UIButton = {
+    private let currentLocationButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "scope")
+        configuration.image = .scope
         configuration.baseForegroundColor = .black
         configuration.contentInsets = NSDirectionalEdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10)
         let button = UIButton(configuration: configuration, primaryAction: nil)
@@ -34,9 +59,9 @@ final class MogakcoViewController: DefaultViewController {
         return button
     }()
     
-    private lazy var viewModeButton: UIButton = {
+    private let viewModeButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "line.3.horizontal")
+        configuration.image = .viewMode
         configuration.baseForegroundColor = .black
         configuration.imagePlacement = .leading
         configuration.imagePadding = 5
@@ -53,7 +78,7 @@ final class MogakcoViewController: DefaultViewController {
         return button
     }()
     
-    private lazy var searchOnCurrentLocationButton: UIButton = {
+    private let searchOnCurrentLocationButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.title = "현 지도에서 검색"
         configuration.baseForegroundColor = .orange
@@ -74,16 +99,16 @@ final class MogakcoViewController: DefaultViewController {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
-        collectionView.register(GroupCollectionViewCell.self,
-                                forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         return collectionView
     }()
     
     private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoCollectionView) { collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-                                                            for: indexPath) as? GroupCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        
         cell.set(data)
         return cell
     }
@@ -93,13 +118,7 @@ final class MogakcoViewController: DefaultViewController {
     private var nowCollectionViewCellIndex = 0
     
     private var isFirstLoadingMap = true
-    
-    lazy var mogakcoModalViewController: MogakcoModalViewController = {
-        let mogakcoModelViewController = MogakcoModalViewController()
-        mogakcoModelViewController.delegate = self
-        return mogakcoModelViewController
-    }()
-    
+        
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -109,16 +128,26 @@ final class MogakcoViewController: DefaultViewController {
         return locationManager
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: MogakcoViewModel
     
     init(viewModel: MogakcoViewModel) {
         self.viewModel = viewModel
+        viewModel.fetchAllMogakco()
         
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     // MARK: Set Annotation Methods
@@ -142,7 +171,11 @@ final class MogakcoViewController: DefaultViewController {
         }
     }
     
-    override func layout() {
+    private func configureUI() {
+        self.setupNavigation()
+    }
+    
+    private func layout() {
         view.addSubview(mogakcoMapView)
         mogakcoMapView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -176,11 +209,11 @@ final class MogakcoViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
+    private func bind() {
         viewModeButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.deselectAllAnnotations()
-                self?.showMogakcoModal()
+                self?.viewModel.didSelectViewModeButton()
             }
             .store(in: &cancellables)
         
@@ -201,7 +234,6 @@ final class MogakcoViewController: DefaultViewController {
             .sink { [weak self] groups in
                 self?.deselectAllAnnotations()
                 self?.setMogakcoPin(groups: groups)
-                self?.mogakcoModalViewController.populateSnapshot(data: groups)
             }
             .store(in: &cancellables)
         
@@ -221,6 +253,11 @@ final class MogakcoViewController: DefaultViewController {
             .store(in: &cancellables)
     }
     
+    private func setupNavigation() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
+    }
+    
     private func moveMogakcoLocation(group: Group) {
         moveLocation(latitudeValue: group.location.latitude, longtudeValue: group.location.longitude, delta: 0.01)
     }
@@ -231,7 +268,8 @@ final class MogakcoViewController: DefaultViewController {
                 latitudeValue: group.location.latitude,
                 longitudeValue: group.location.longitude,
                 delta: 0.1,
-                title: group.title)
+                title: group.title
+            )
         }
     }
     
@@ -263,29 +301,24 @@ final class MogakcoViewController: DefaultViewController {
         }
     }
     
-    func showMogakcoModal() {
-        
-        mogakcoModalViewController.modalPresentationStyle = .pageSheet
-        if let sheet = mogakcoModalViewController.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-            sheet.largestUndimmedDetentIdentifier = .medium
-        }
-        present(mogakcoModalViewController, animated: true, completion: nil)
-        viewModel.fetchAllMogakco()
-    }
-    
     func mapViewDistance() -> Double {
         let span = mogakcoMapView.region.span
         let center = mogakcoMapView.region.center
         let centerLocation = CLLocation(latitude: center.latitude, longitude: center.longitude)
-        let to = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude + span.longitudeDelta * 0.5)
-        return to.distance(from: centerLocation)
+        let destination = CLLocation(
+            latitude: center.latitude + span.latitudeDelta * 0.5,
+            longitude: center.longitude + span.longitudeDelta * 0.5
+        )
+        return destination.distance(from: centerLocation)
     }
     
     func setUserLocation() {
         locationManager.startUpdatingLocation()
         mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
+    }
+    
+    func setNowMogakcoWithAllList(index: Int) {
+        viewModel.nowMogakcoWithAllList(index: index, distance: mapViewDistance())
     }
 }
 
@@ -294,8 +327,10 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             manager.stopUpdatingLocation()
-            let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                    longitude: location.coordinate.longitude)
+            let coordinate = CLLocationCoordinate2D(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
             let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: coordinate, span: span)
             mogakcoMapView.setRegion(region, animated: false)
@@ -326,13 +361,6 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 }
 
-extension MogakcoViewController: MogakcoModalViewControllerDelegate {
-    func tapCell(index: Int) {
-        showMogakcoCollectionView()
-        viewModel.nowMogakcoWithAllList(index: index, distance: mapViewDistance())
-    }
-}
-
 extension MogakcoViewController: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let cellWidthIncludingSpacing = view.frame.width - 30
@@ -346,7 +374,10 @@ extension MogakcoViewController: UICollectionViewDelegate {
             roundedIndex = ceil(index)
         }
         
-        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        offset = CGPoint(
+            x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left,
+            y: -scrollView.contentInset.top
+        )
         targetContentOffset.pointee = offset
         
         if scrollView.contentOffset.x > targetContentOffset.pointee.x {
@@ -367,5 +398,17 @@ extension MogakcoViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.didSelectNowMogakco()
+    }
+}
+
+// MARK: - Actions
+
+extension MogakcoViewController {
+    @objc func didTapMogakcoAddButton(_ sender: UIButton) {
+        viewModel.didSelectAddMogakco()
+    }
+    
+    @objc func didTapNotificationButton(_ sender: UIButton) {
+        viewModel.didSelectNotifications()
     }
 }

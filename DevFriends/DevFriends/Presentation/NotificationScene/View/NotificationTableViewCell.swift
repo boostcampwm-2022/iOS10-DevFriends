@@ -10,19 +10,19 @@ import SnapKit
 import UIKit
 
 final class NotificationTableViewCell: UITableViewCell {
-    lazy var profileImageView: UIImageView = {
+    let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0.0, y: 0.0, width: 40, height: 40)
         return imageView
     }()
-    lazy var subStackView: UIStackView = {
+    let subStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.distribution = .fill
         return stackView
     }()
-    lazy var titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "알림 제목"
         label.font = .boldSystemFont(ofSize: 14)
@@ -30,7 +30,7 @@ final class NotificationTableViewCell: UITableViewCell {
         label.sizeToFit()
         return label
     }()
-    lazy var secondaryTitleLabel: UILabel = {
+    let secondaryTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "알림 설명"
         label.font = .systemFont(ofSize: 14)
@@ -44,14 +44,14 @@ final class NotificationTableViewCell: UITableViewCell {
         var titleAttr = AttributedString.init("승인")
         titleAttr.font = .boldSystemFont(ofSize: 12)
         config.attributedTitle = titleAttr
-        config.baseBackgroundColor = UIColor(red: 0.992, green: 0.577, blue: 0.277, alpha: 1)
+        config.baseBackgroundColor = .devFriendsOrange
         config.cornerStyle = .capsule
         config.contentInsets = NSDirectionalEdgeInsets(top: 6.0, leading: 13.0, bottom: 6.0, trailing: 13.0)
         button.configuration = config
         button
             .publisher(for: .touchUpInside)
-            .sink {
-                self.setButton(isAccepted: true)
+            .sink { [weak self] in
+                self?.setButton(isAccepted: true)
             }
             .store(in: &cancellables)
         return button
@@ -70,8 +70,6 @@ final class NotificationTableViewCell: UITableViewCell {
 }
 
 extension NotificationTableViewCell: ReusableType {
-    static var reuseIdentifier = String(describing: NotificationTableViewCell.self)
-    
     func layout() {
         self.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
@@ -124,7 +122,7 @@ extension NotificationTableViewCell: ReusableType {
             var titleAttr = AttributedString.init("승인됨")
             titleAttr.font = .boldSystemFont(ofSize: 12)
             config.attributedTitle = titleAttr
-            config.baseBackgroundColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 1)
+            config.baseBackgroundColor = .devFriendsGray
             self.acceptButton.configuration = config
             self.acceptButton.isUserInteractionEnabled = false
         }

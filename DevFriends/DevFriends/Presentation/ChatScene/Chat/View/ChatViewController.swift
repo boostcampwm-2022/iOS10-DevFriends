@@ -9,10 +9,17 @@ import Combine
 import SnapKit
 import UIKit
 
-final class ChatViewController: DefaultViewController {
+final class ChatViewController: UIViewController {
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "채팅"
+        label.font = .systemFont(ofSize: 25, weight: .bold)
+        return label
+    }()
+    
     private lazy var chatTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier)
+        tableView.register(cellType: ChatTableViewCell.self)
         tableView.delegate = self
         tableView.separatorStyle = .none
         return tableView
@@ -32,6 +39,9 @@ final class ChatViewController: DefaultViewController {
     }
     
     private lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    
+    private var cancellables = Set<AnyCancellable>()
+    
     private let viewModel: ChatViewModel
     
     init(chatViewModel: ChatViewModel) {
@@ -44,25 +54,33 @@ final class ChatViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configureUI() {
-        self.setupTableView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
-    override func layout() {
+    private func configureUI() {
+        self.setupTableView()
+        self.setupNavigation()
+    }
+    
+    private func layout() {
         self.view.addSubview(chatTableView)
         chatTableView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
-    override func bind() {
+    private func bind() {
         viewModel.groupsSubject
             .receive(on: RunLoop.main)
-            .sink { groups in
-                self.populateSnapshot(data: groups)
+            .sink { [weak self] groups in
+                self?.populateSnapshot(data: groups)
                 if !groups.isEmpty {
                     let indexPath = IndexPath(row: groups.count - 1, section: 0)
-                    self.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    self?.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)
@@ -76,6 +94,10 @@ final class ChatViewController: DefaultViewController {
     private func populateSnapshot(data: [Group]) {
         self.chatTableViewSnapShot.appendItems(data)
         self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
 }
 

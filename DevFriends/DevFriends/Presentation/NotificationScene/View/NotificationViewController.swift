@@ -9,7 +9,15 @@ import Combine
 import UIKit
 
 final class NotificationViewController: UITableViewController {
-    private lazy var notificationDiffableDataSource: NotificationDiffableDataSource = {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
+        barButton.tintColor = .black
+        return barButton
+    }()
+    
+    private lazy var notificationDiffableDataSource = {
         let diffableDataSource = NotificationDiffableDataSource(
             tableView: self.tableView
         ) { tableView, indexPath, data in
@@ -21,8 +29,8 @@ final class NotificationViewController: UITableViewController {
             cell.updateContent(data: data)
             cell.acceptButton
                 .publisher(for: .touchUpInside)
-                .sink {
-                    self.viewModel.didAcceptedParticipant(index: indexPath.row)
+                .sink { [weak self] in
+                    self?.viewModel.didAcceptedParticipant(index: indexPath.row)
                 }
                 .store(in: &self.cancellables)
             return cell
@@ -49,34 +57,50 @@ final class NotificationViewController: UITableViewController {
         super.viewDidLoad()
         self.tableView.rowHeight = 72
         self.setupTableView()
+        self.setupNavigation()
         self.bind()
         self.viewModel.didLoadNotifications()
     }
     
     private func bind() {
+        self.backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+        
         self.viewModel.notificationsSubject
             .receive(on: RunLoop.main)
-            .sink {
-                self.populateSnapshot(data: $0)
+            .sink { [weak self] in
+                self?.populateSnapshot(data: $0)
             }
             .store(in: &cancellables)
         self.notificationDiffableDataSource.notificationSubject
-            .sink {
-                self.viewModel.didDeleteNotification(of: $0)
+            .sink { [weak self] in
+                self?.viewModel.didDeleteNotification(of: $0)
             }
             .store(in: &cancellables)
     }
     
+    private func setupNavigation() {
+        self.navigationItem.leftBarButtonItems = [backBarButton]
+        self.navigationItem.title = "알림"
+    }
+    
     private func setupTableView() {
-        self.tableView.register(
-            NotificationTableViewCell.self,
-            forCellReuseIdentifier: NotificationTableViewCell.reuseIdentifier
-        )
+        self.tableView.register(cellType: NotificationTableViewCell.self)
         self.notificationTableViewSnapShot.appendSections([.main])
     }
     
     private func populateSnapshot(data: [Notification]) {
         self.notificationTableViewSnapShot.appendItems(data)
         self.notificationDiffableDataSource.apply(self.notificationTableViewSnapShot, animatingDifferences: true)
+    }
+    
+}
+
+extension NotificationViewController {
+    private func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }

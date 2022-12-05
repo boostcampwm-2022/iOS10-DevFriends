@@ -8,12 +8,15 @@
 import Combine
 import Foundation
 
-struct NotificationViewModelActions {} // TODO: 댓글 알림 누르면 댓글로 이동하는 코드 넣기
+struct NotificationViewModelActions {
+    let moveBackToPrevViewController: () -> Void
+} // TODO: 댓글 알림 누르면 댓글로 이동하는 코드 넣기
 
 protocol NotificationViewModelIntput {
     func didLoadNotifications()
     func didAcceptedParticipant(index: Int)
     func didDeleteNotification(of notification: Notification)
+    func didTouchedBackButton()
 }
 
 protocol NotificationViewModelOutput {
@@ -78,10 +81,11 @@ extension DefaultNotificationViewModel {
     
     func didAcceptedParticipant(index: Int) {
         // 1. 호스트의 Notification의 isAccepted를 True로 업데이트해야 함.
-        let notification = self.notificationsSubject.value[index]
-        guard let senderID = notification.senderID else { fatalError("Notification ID is nil") }
+        guard let notification = self.notificationsSubject.value[safe: index],
+            let senderID = notification.senderID else { fatalError("Notification ID is nil") }
+        
         self.updateNotificationIsAcceptedToTrueUseCase.execute(notification: notification)
-
+        
         // 2. 참여 대기자한테 승인되었다는 Notification을 보내야 함.
         self.sendNotificationToParticipantUseCase.execute(
             groupID: notification.groupID,
@@ -89,7 +93,7 @@ extension DefaultNotificationViewModel {
             groupTitle: notification.groupTitle,
             type: .accepted
         )
-
+        
         Task {
             do {
                 // 3. Group의 participantIDs에 참여 대기자의 ID를 넣어야 함.
@@ -116,5 +120,9 @@ extension DefaultNotificationViewModel {
     
     func didDeleteNotification(of notification: Notification) {
         self.deleteNotificationUseCase.execute(notification: notification)
+    }
+    
+    func didTouchedBackButton() {
+        actions.moveBackToPrevViewController()
     }
 }

@@ -8,7 +8,9 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-final class DefaultCategoryRepository: CategoryRepository {
+final class DefaultCategoryRepository: ContainsFirestore {}
+
+extension DefaultCategoryRepository: CategoryRepository {
     func fetch(_ categoryIds: [String]) async throws -> [Category] {
         return try await withThrowingTaskGroup(of: Category.self) { taskGroup in
             categoryIds.forEach { id in
@@ -23,19 +25,22 @@ final class DefaultCategoryRepository: CategoryRepository {
     
     func fetch() async throws -> [Category] {
         var categories: [Category] = []
-        let snapshot = try await firestore.collection("Category").getDocuments()
+        let snapshot = try await firestore.collection(FirestorePath.category.rawValue).getDocuments()
         
         for document in snapshot.documents {
             let categoryData = document.data()
             if let categoryString = categoryData["name"] as? String {
-                categories.append(Category(name: categoryString))
+                categories.append(Category(id: document.documentID, name: categoryString))
             }
         }
         return categories
     }
-    
+}
+ 
+// MARK: Private
+extension DefaultCategoryRepository {
     private func fetchCategory(_ id: String) async throws -> Category {
-        let snapshot = try await firestore.collection("Category").document(id).getDocument()
+        let snapshot = try await firestore.collection(FirestorePath.category.rawValue).document(id).getDocument()
         
         return try snapshot.data(as: CategoryResponseDTO.self).toDomain()
     }

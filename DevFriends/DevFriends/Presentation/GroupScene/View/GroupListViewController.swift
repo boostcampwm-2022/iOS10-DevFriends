@@ -9,8 +9,8 @@ import Combine
 import SnapKit
 import UIKit
 
-final class GroupListViewController: DefaultViewController {
-    private lazy var titleLabel: UILabel = {
+final class GroupListViewController: UIViewController {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "모임"
         label.font = .systemFont(ofSize: 25, weight: .bold)
@@ -19,7 +19,7 @@ final class GroupListViewController: DefaultViewController {
     
     private lazy var groupAddButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "plus")
+        item.image = .plus
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapGroupAddButton)
@@ -28,7 +28,7 @@ final class GroupListViewController: DefaultViewController {
     
     private lazy var notificationButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
-        item.image = UIImage(systemName: "bell")
+        item.image = .bell
         item.tintColor = .black
         item.target = self
         item.action = #selector(didTapNotificationButton)
@@ -45,14 +45,11 @@ final class GroupListViewController: DefaultViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(
-            GroupCollectionViewCell.self,
-            forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
-        
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         return collectionView
     }()
     
-    private lazy var collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo>(
+    private lazy var collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo> (
         collectionView: self.collectionView) { collectionView, indexPath, data -> UICollectionViewCell? in
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
@@ -61,15 +58,15 @@ final class GroupListViewController: DefaultViewController {
         return cell
     }
     
-    private lazy var collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()
+    private var collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()
                                                                                            
-    private lazy var compositionalLayout: UICollectionViewCompositionalLayout = {
+    private let compositionalLayout: UICollectionViewCompositionalLayout = {
         let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             
             let screenSize = UIScreen.main.bounds.size
             let padding = screenSize.width * 0.05
             
-            if sectionNumber == 0 {
+            if sectionNumber == GroupListSection.recommand.rawValue {
                 let item = NSCollectionLayoutItem(
                     layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 )
@@ -128,11 +125,20 @@ final class GroupListViewController: DefaultViewController {
         return layout
     }()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     // MARK: - Init
     private let viewModel: GroupListViewModel
     init(viewModel: GroupListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
     }
     
     required init?(coder: NSCoder) {
@@ -141,16 +147,16 @@ final class GroupListViewController: DefaultViewController {
     
     // MARK: - Setting
     
-    override func configureUI() {
+    private func configureUI() {
         self.view.backgroundColor = .systemGray6
+        self.setupNavigationBar()
         self.setupCollectionView()
         self.setupCollectionViewHeader()
+        self.setupNavigation()
         self.viewModel.loadGroupList()
     }
     
-    override func layout() {
-        setupNavigation()
-        
+    private func layout() {
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -158,20 +164,31 @@ final class GroupListViewController: DefaultViewController {
         }
     }
     
+    private func setupNavigationBar() {
+        let navigationAppearence = UINavigationBarAppearance()
+        navigationAppearence.configureWithDefaultBackground()
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearence
+    }
+    
     private func setupCollectionView() {
         self.collectionViewSnapShot.appendSections([.recommand, .filtered])
     }
     
     private func setupCollectionViewHeader() {
-        self.collectionViewDiffableDataSource.supplementaryViewProvider = { (collectionView: UICollectionView, _: String, indexPath: IndexPath) -> UICollectionReusableView? in
+        self.collectionViewDiffableDataSource.supplementaryViewProvider = {
+            [weak self] (collectionView: UICollectionView,
+                         _: String,
+                         indexPath: IndexPath
+            ) -> UICollectionReusableView? in
+            guard let self = self else { return UICollectionReusableView() }
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: GroupCollectionHeaderView.reuseIdentifier,
                 for: indexPath) as? GroupCollectionHeaderView else { return UICollectionReusableView() }
             
-            if indexPath.section == 0 {
+            if indexPath.section == GroupListSection.recommand.rawValue {
                 header.set(title: "추천 모임")
-            } else if indexPath.section == 1 {
+            } else if indexPath.section == GroupListSection.filtered.rawValue {
                 header.set(title: "모집중인 모임", self, #selector(self.didTapFilterButton))
             }
             
@@ -180,7 +197,6 @@ final class GroupListViewController: DefaultViewController {
     }
     
     private func populateSnapShot(data: [GroupCellInfo], to section: GroupListSection) {
-        print("populate", section)
         let oldItem = self.collectionViewSnapShot.itemIdentifiers(inSection: section)
         self.collectionViewSnapShot.deleteItems(oldItem)
         self.collectionViewSnapShot.appendItems(data, toSection: section)
@@ -192,18 +208,18 @@ final class GroupListViewController: DefaultViewController {
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
     }
     
-    override func bind() {
+    private func bind() {
         viewModel.recommandGroupsSubject
             .receive(on: RunLoop.main)
-            .sink { groupList in
-                self.populateSnapShot(data: groupList, to: .recommand)
+            .sink { [weak self] groupList in
+                self?.populateSnapShot(data: groupList, to: .recommand)
             }
             .store(in: &cancellables)
         
         viewModel.filteredGroupsSubject
             .receive(on: RunLoop.main)
-            .sink { groupList in
-                self.populateSnapShot(data: groupList, to: .filtered)
+            .sink { [weak self] groupList in
+                self?.populateSnapShot(data: groupList, to: .filtered)
             }
             .store(in: &cancellables)
     }
@@ -223,12 +239,12 @@ extension GroupListViewController {
             preferredStyle: .actionSheet
         )
         
-        let actionProject = UIAlertAction(title: "프로젝트", style: .default) { _ in
-            print("프로젝트 모임 생성")
+        let actionProject = UIAlertAction(title: "프로젝트", style: .default) { [weak self] _ in
+            self?.viewModel.didSelectAdd(groupType: .project)
         }
         
-        let actionStudy = UIAlertAction(title: "스터디", style: .default) { _ in
-            print("스터디 모임 생성")
+        let actionStudy = UIAlertAction(title: "스터디", style: .default) { [weak self] _ in
+            self?.viewModel.didSelectAdd(groupType: .study)
         }
         
         let actionCancel = UIAlertAction(title: "취소", style: .cancel)
@@ -241,7 +257,7 @@ extension GroupListViewController {
     }
     
     @objc func didTapNotificationButton(_ sender: UIButton) {
-        print("알림 버튼 클릭")
+        viewModel.didSelectNotifications()
     }
 }
 

@@ -7,35 +7,91 @@
 
 import UIKit
 
-protocol MogakcoFlowCoordinatorDependencies {
+protocol MogakcoCoordinatorDependencies {
     func makeMogakcoViewController(actions: MogakcoViewModelActions) -> MogakcoViewController
-    func makeGroupDetailViewController(group: Group) -> PostDetailViewController
+    func makeMogakcoModalViewController(actions: MogakcoModalViewActions, mogakcos: [Group]) -> MogakcoModalViewController
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
+    func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
+    func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer
 }
 
 final class MogakcoCoordinator: Coordinator {
     let navigationController: UINavigationController
-    let dependencies: MogakcoFlowCoordinatorDependencies
+    let dependencies: MogakcoCoordinatorDependencies
 
     var childCoordinators: [Coordinator] = []
     
     init(
         navigationController: UINavigationController,
-        dependencies: MogakcoFlowCoordinatorDependencies
+        dependencies: MogakcoCoordinatorDependencies
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
     }
     
     func start() {
-        let actions = MogakcoViewModelActions(showGroupDetail: showGroupDetailViewController)
+        let actions = MogakcoViewModelActions(
+            showMogakcoModal: showMogakcoModal,
+            showGroupDetail: showGroupDetailViewController,
+            showNotifications: showNotificationViewController,
+            showAddMogakcoScene: startAddMogakcoScene
+        )
         let mogakcoViewController = dependencies.makeMogakcoViewController(actions: actions)
+        navigationController.navigationBar.topItem?.title = "모각코"
         navigationController.pushViewController(mogakcoViewController, animated: false)
     }
 }
 
-extension MogakcoCoordinator: GroupDetailCoordinator {
+extension MogakcoCoordinator {
     func showGroupDetailViewController(group: Group) {
-        let postDetailViewController = dependencies.makeGroupDetailViewController(group: group)
+        let actions = PostDetailViewModelActions(backToPrevViewController: moveBackToMogakcoViewController)
+        let postDetailViewController = dependencies.makePostDetailViewController(actions: actions, group: group)
         navigationController.pushViewController(postDetailViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func startAddMogakcoScene() {
+        let addGroupDIContainer = dependencies.makeAddGroupSceneDIContainer()
+        let flow = addGroupDIContainer.makeAddGroupFlowCoordinator(
+            navigationController: self.navigationController,
+            groupType: .mogakco
+        )
+        flow.start()
+        childCoordinators.append(flow)
+    }
+    
+    func showNotificationViewController() {
+        let actions = NotificationViewModelActions(moveBackToPrevViewController: moveBackToMogakcoViewController) // TODO: 미래에 댓글 눌렀을 때 모임상세화면의 댓글로 이동하는 코드를 위해..
+        let notificationViewController = dependencies.makeNotificationViewController(actions: actions)
+        navigationController.pushViewController(notificationViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
+    }
+}
+
+extension MogakcoCoordinator {
+    func showMogakcoModal(mogakcos: [Group]) {
+        let actions = MogakcoModalViewActions(didSelectMogakcoCell: selectMogakco)
+        let modalViewController = dependencies.makeMogakcoModalViewController(actions: actions, mogakcos: mogakcos)
+        modalViewController.modalPresentationStyle = .pageSheet
+        if let sheet = modalViewController.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+            sheet.largestUndimmedDetentIdentifier = .medium
+        }
+        navigationController.present(modalViewController, animated: true, completion: nil)
+    }
+    
+    func selectMogakco(index: Int) {
+        guard let mogakcoViewController = navigationController.viewControllers.last as? MogakcoViewController else {
+            return
+        }
+        mogakcoViewController.showMogakcoCollectionView()
+        mogakcoViewController.setNowMogakcoWithAllList(index: index)
+        mogakcoViewController.presentedViewController?.dismiss(animated: true)
+    }
+    
+    func moveBackToMogakcoViewController() {
+        navigationController.tabBarController?.tabBar.isHidden = false
+        navigationController.popViewController(animated: true)
     }
 }

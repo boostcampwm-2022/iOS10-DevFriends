@@ -5,8 +5,6 @@
 //  Created by 유승원 on 2022/11/19.
 //
 
-import Foundation
-
 protocol ChatMessagesRepository {
     func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws
     func send(chatUID: String, message: Message)

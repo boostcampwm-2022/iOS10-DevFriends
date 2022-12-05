@@ -25,13 +25,13 @@ protocol ChatViewModel: ChatViewModelInput, ChatViewModelOutput {}
 
 final class DefaultChatViewModel: ChatViewModel {
     private let loadChatGroupsUseCase: LoadChatGroupsUseCase
-    private let actions: ChatViewModelActions?
+    private let actions: ChatViewModelActions
     
     // MARK: OUTPUT
     var groupsSubject = CurrentValueSubject<[Group], Never>([])
     
     // MARK: Init
-    init(loadChatGroupsUseCase: LoadChatGroupsUseCase, actions: ChatViewModelActions? = nil) {
+    init(loadChatGroupsUseCase: LoadChatGroupsUseCase, actions: ChatViewModelActions) {
         self.loadChatGroupsUseCase = loadChatGroupsUseCase
         self.actions = actions
     }
@@ -39,6 +39,7 @@ final class DefaultChatViewModel: ChatViewModel {
     // MARK: Private
     private func loadGroups() async {
         let loadTask = Task {
+            guard let uid = UserManager.shared.uid else { fatalError("In ChatViewModel, UserManager's uid is nil.") }
             return try await loadChatGroupsUseCase.execute()
         }
         
@@ -61,6 +62,6 @@ extension DefaultChatViewModel {
     }
     
     func didSelectGroup(at index: Int) {
-        actions?.showChatContent(groupsSubject.value[index])
+        actions.showChatContent(groupsSubject.value[index])
     }
 }

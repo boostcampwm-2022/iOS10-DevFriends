@@ -22,7 +22,7 @@ final class DefaultUpdateUserGroupsToAddGroupUseCase: UpdateUserGroupsToAddGroup
         let user = try await self.userRepository.fetch(uid: userID)
         let updatedUser = self.removeGroupIDInAppliedGroups(user: user, groupID: groupID)
         self.userRepository.update(userID: userID, user: updatedUser)
-        self.userRepository.addUserToGroup(userID: userID, groupID: groupID)
+        self.userRepository.createUserGroup(userID: userID, groupID: groupID)
     }
 }
 

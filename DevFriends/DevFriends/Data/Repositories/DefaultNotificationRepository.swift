@@ -5,18 +5,31 @@
 //  Created by 유승원 on 2022/11/22.
 //
 
-import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 final class DefaultNotificationRepository: ContainsFirestore {}
 
 extension DefaultNotificationRepository: NotificationRepository {
+    func create(to uid: String, notification: Notification) {
+        let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
+        
+        do {
+            _ = try firestore
+                .collection(FirestorePath.user.rawValue)
+                .document(uid)
+                .collection(FirestorePath.notification.rawValue)
+                .addDocument(from: notificationResponseDTO)
+        } catch {
+            print(error)
+        }
+    }
+    
     func fetch(uid: String) async throws -> [Notification] {
         let snapshot = try await firestore
-            .collection("User")
+            .collection(FirestorePath.user.rawValue)
             .document(uid)
-            .collection("Notification")
+            .collection(FirestorePath.notification.rawValue)
             .getDocuments()
         
         let notifications = try snapshot.documents
@@ -24,20 +37,6 @@ extension DefaultNotificationRepository: NotificationRepository {
             .map { $0.toDamain() }
         
         return notifications
-    }
-    
-    func send(to uid: String, notification: Notification) {
-        let notificationResponseDTO = self.makeNotificationResponseDTO(notification: notification)
-        
-        do {
-            _ = try firestore
-                .collection("User")
-                .document(uid)
-                .collection("Notification")
-                .addDocument(from: notificationResponseDTO)
-        } catch {
-            print(error)
-        }
     }
     
     func update(isAccepted: Bool, userID: String, notification: Notification) {
@@ -50,9 +49,9 @@ extension DefaultNotificationRepository: NotificationRepository {
         if isAccepted {
             do {
                 try firestore
-                    .collection("User")
+                    .collection(FirestorePath.user.rawValue)
                     .document(userID)
-                    .collection("Notification")
+                    .collection(FirestorePath.notification.rawValue)
                     .document(notificationID)
                     .setData(from: notificationResponseDTO)
             } catch {
@@ -63,9 +62,9 @@ extension DefaultNotificationRepository: NotificationRepository {
     
     func delete(userID: String, notificationID: String) {
         firestore
-            .collection("User")
+            .collection(FirestorePath.user.rawValue)
             .document(userID)
-            .collection("Notification")
+            .collection(FirestorePath.notification.rawValue)
             .document(notificationID)
             .delete()
     }

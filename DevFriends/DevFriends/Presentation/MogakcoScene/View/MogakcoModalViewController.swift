@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-protocol MogakcoModalViewControllerDelegate: AnyObject {
-    func tapCell(index: Int)
+struct MogakcoModalViewActions {
+    let didSelectMogakcoCell: (Int) -> Void
 }
 
-final class MogakcoModalViewController: DefaultViewController {
+final class MogakcoModalViewController: UIViewController {
     private lazy var mogakcoListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -22,28 +22,46 @@ final class MogakcoModalViewController: DefaultViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.reuseIdentifier)
+        collectionView.register(cellType: GroupCollectionViewCell.self)
         collectionView.delegate = self
         return collectionView
     }()
     
     private lazy var mogakcoCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(collectionView: mogakcoListCollectionView) { collectionView, indexPath, data in
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-                                                            for: indexPath) as? GroupCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        
         cell.set(data)
         return cell
     }
     
     private var mogakcoCollectionViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
-    weak var delegate: MogakcoModalViewControllerDelegate?
     
-    override func configureUI() {
+    private let actions: MogakcoModalViewActions
+
+    init(actions: MogakcoModalViewActions) {
+        self.actions = actions
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+    }
+    
+    private func configureUI() {
         view.backgroundColor = .white
     }
     
-    override func layout() {
+    private func layout() {
         view.addSubview(mogakcoListCollectionView)
         mogakcoListCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(50)
@@ -63,7 +81,6 @@ final class MogakcoModalViewController: DefaultViewController {
 
 extension MogakcoModalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.tapCell(index: indexPath.row)
-        self.dismiss(animated: true)
+        actions.didSelectMogakcoCell(indexPath.item)
     }
 }

@@ -38,6 +38,7 @@ extension ChatCoordinator {
         let actions = ChatContentViewModelActions(back: popViewController)
         let chatContentViewController = dependencies.makeChatContentViewController(group: group, actions: actions)
         navigationController.pushViewController(chatContentViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
     
     func popViewController() {

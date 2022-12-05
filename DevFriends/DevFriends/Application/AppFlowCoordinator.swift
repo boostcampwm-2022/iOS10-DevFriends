@@ -11,7 +11,7 @@ protocol Coordinator {
 }
 
 final class AppFlowCoordinator: Coordinator {
-    var navigationController: UINavigationController
+    let navigationController: UINavigationController
     private let appDIContainer: AppDIContainer
     
     var childCoordinators: [Coordinator] = []
@@ -25,6 +25,16 @@ final class AppFlowCoordinator: Coordinator {
     }
 
     func start() {
+        let authSceneDIContainer = appDIContainer.authSceneDIContainer()
+        let flow = authSceneDIContainer.makeAuthCoordinator(navigationController: navigationController)
+        flow.delegate = self
+        flow.start()
+        childCoordinators.append(flow)
+    }
+}
+
+extension AppFlowCoordinator: AuthCoordinatorDelegate {
+    func showTabBar() {
         navigationController.isNavigationBarHidden = true
         let tabBarSceneDIContainer = appDIContainer.tabBarSceneDIContainer()
         let flow = tabBarSceneDIContainer.makeTabBarFlowCoordinator(navigationController: navigationController)

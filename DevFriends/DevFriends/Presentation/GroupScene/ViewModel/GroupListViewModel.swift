@@ -10,12 +10,16 @@ import Foundation
 
 struct GroupListViewModelActions {
     let showGroupFilterView: (Filter) -> Void
+    let startAddGroupScene: (GroupType) -> Void
+    let showNotifications: () -> Void
 }
 
 protocol GroupListViewModelInput {
     func loadGroupList()
     func didSelectFilter()
+    func didSelectAdd(groupType: GroupType)
     func updateFilter(filter: Filter)
+    func didSelectNotifications()
 }
 
 protocol GroupListViewModelOutput {
@@ -29,12 +33,12 @@ protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
 }
 
 final class DefaultGroupListViewModel: GroupListViewModel {
-    private let fetchGroupUseCase: FetchGroupUseCase
+    private let fetchGroupUseCase: LoadGroupUseCase
     private let actions: GroupListViewModelActions?
     var recommandFilter: Filter
     var groupFilter: Filter = Filter(alignFilter: .newest, categoryFilter: [])
     
-    init(fetchGroupUseCase: FetchGroupUseCase, actions: GroupListViewModelActions) {
+    init(fetchGroupUseCase: LoadGroupUseCase, actions: GroupListViewModelActions) {
         self.fetchGroupUseCase = fetchGroupUseCase
         // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
         self.recommandFilter = Filter(alignFilter: .newest, categoryFilter: [])
@@ -67,7 +71,15 @@ extension DefaultGroupListViewModel {
         actions?.showGroupFilterView(groupFilter)
     }
     
+    func didSelectAdd(groupType: GroupType) {
+        actions?.startAddGroupScene(groupType)
+    }
+    
     func updateFilter(filter: Filter) {
-        self.groupFilter = filter
+        groupFilter = filter
+    }
+    
+    func didSelectNotifications() {
+        actions?.showNotifications()
     }
 }

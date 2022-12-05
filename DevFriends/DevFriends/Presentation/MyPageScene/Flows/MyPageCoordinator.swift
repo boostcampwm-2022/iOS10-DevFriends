@@ -9,13 +9,12 @@ import UIKit
 
 protocol MyPageFlowCoordinatorDependencies {
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController
-    func makeMakedGroupViewController() -> MyGroupsViewController
-    func makeParticipatedGroupViewController() -> MyGroupsViewController
-    func makeLikedGroupViewController() -> MyGroupsViewController
+    func makeMakedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
+    func makeParticipatedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
+    func makeLikedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
     func makePopupViewController(popup: Popup) -> PopupViewController
-    func makeFixMyInfoViewController() -> FixMyInfoViewController
+    func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
 }
-
 
 final class MyPageCoordinator: Coordinator {
     private weak var navigationController: UINavigationController?
@@ -27,38 +26,57 @@ final class MyPageCoordinator: Coordinator {
     }
     
     func start() {
-        let actions = MyPageViewModelActions(showMakedGroup: showMakedGroupViewController,
-                                             showParticipatedGroup: showParticipatedGroupViewController,
-                                             showLikedGroup: showLikedGroupViewController,
-                                             showFixMyInfo: showFixMyInfoViewController,
-                                             showPopup: showPopupViewController)
+        let actions = MyPageViewModelActions(
+            showMakedGroup: showMakedGroupViewController,
+            showParticipatedGroup: showParticipatedGroupViewController,
+            showLikedGroup: showLikedGroupViewController,
+            showFixMyInfo: showFixMyInfoViewController,
+            showPopup: showPopupViewController
+        )
         let myPageViewController = dependencies.makeMyPageViewController(actions: actions)
         navigationController?.pushViewController(myPageViewController, animated: false)
     }
     
     func showMakedGroupViewController() {
-        let groupViewController = dependencies.makeMakedGroupViewController()
+        let actions = MyGroupsViewModelActions(back: popViewController)
+        let groupViewController = dependencies.makeMakedGroupViewController(actions: actions)
         navigationController?.pushViewController(groupViewController, animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     func showParticipatedGroupViewController() {
-        let groupViewController = dependencies.makeParticipatedGroupViewController()
+        let actions = MyGroupsViewModelActions(back: popViewController)
+        let groupViewController = dependencies.makeParticipatedGroupViewController(actions: actions)
         navigationController?.pushViewController(groupViewController, animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     func showLikedGroupViewController() {
-        let groupViewController = dependencies.makeLikedGroupViewController()
+        let actions = MyGroupsViewModelActions(back: popViewController)
+        let groupViewController = dependencies.makeLikedGroupViewController(actions: actions)
         navigationController?.pushViewController(groupViewController, animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     func showFixMyInfoViewController() {
-        let fixMyInfoViewController = dependencies.makeFixMyInfoViewController()
+        let actions = FixMyInfoViewModelActions(showCategoryChoice: showCategoryChoice, popFixMyInfo: popViewController)
+        let fixMyInfoViewController = dependencies.makeFixMyInfoViewController(actions: actions)
         navigationController?.pushViewController(fixMyInfoViewController, animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     func showPopupViewController(popup: Popup) {
         let popupViewController = dependencies.makePopupViewController(popup: popup)
         popupViewController.modalPresentationStyle = .overFullScreen
         navigationController?.present(popupViewController, animated: false)
+    }
+}
+
+extension MyPageCoordinator {
+    func showCategoryChoice() { }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
 }

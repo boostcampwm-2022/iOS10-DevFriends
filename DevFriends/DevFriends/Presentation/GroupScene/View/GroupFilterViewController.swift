@@ -9,7 +9,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class GroupFilterViewController: DefaultViewController {
+final class GroupFilterViewController: UIViewController {
     enum SectionType: Int, CaseIterable {
         case align = 0
         case group = 1
@@ -18,7 +18,7 @@ final class GroupFilterViewController: DefaultViewController {
 
     var initialFilter: Filter?
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
@@ -33,14 +33,16 @@ final class GroupFilterViewController: DefaultViewController {
         collectionView.register(
             GroupFilterCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: GroupFilterCollectionHeaderView.id
+            withReuseIdentifier: GroupFilterCollectionHeaderView.reuseIdentifier
         )
-        collectionView.register(GroupFilterCollectionViewCell.self, forCellWithReuseIdentifier: GroupFilterCollectionViewCell.reuseIdentifier)
+        collectionView.register(cellType: GroupFilterCollectionViewCell.self)
         
         collectionView.allowsMultipleSelection = true
         
         return collectionView
     }()
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Initializer
     
@@ -55,6 +57,13 @@ final class GroupFilterViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let initialFilter = initialFilter {
@@ -63,22 +72,22 @@ final class GroupFilterViewController: DefaultViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print(self.viewModel.alignFilter)
-        print(self.viewModel.groupFilter)
-        print(self.viewModel.categoryFilter)
         super.viewWillDisappear(animated)
-        viewModel.sendFilter(filter: Filter(alignFilter: self.viewModel.alignFilter,
-                                            groupFilter: self.viewModel.groupFilter,
-                                            categoryFilter: self.viewModel.categoryFilter))
+        let filter = Filter(
+            alignFilter: self.viewModel.alignFilter,
+            groupFilter: self.viewModel.groupFilter,
+            categoryFilter: self.viewModel.categoryFilter
+        )
+        viewModel.sendFilter(filter: filter)
     }
     // MARK: - Setting
     
-    override func configureUI() {
+    private func configureUI() {
         self.view.backgroundColor = .white
         self.viewModel.loadCategories()
     }
     
-    override func layout() {
+    private func layout() {
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
@@ -87,11 +96,11 @@ final class GroupFilterViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
+    private func bind() {
         viewModel.didUpdateFilterSubject
             .receive(on: RunLoop.main)
-            .sink { _ in
-                self.collectionView.reloadData()
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
             }
             .store(in: &cancellables)
     }
@@ -110,7 +119,7 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         
         guard let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
-            withReuseIdentifier: GroupFilterCollectionHeaderView.id,
+            withReuseIdentifier: GroupFilterCollectionHeaderView.reuseIdentifier,
             for: indexPath
         ) as? GroupFilterCollectionHeaderView else { return UICollectionReusableView() }
         

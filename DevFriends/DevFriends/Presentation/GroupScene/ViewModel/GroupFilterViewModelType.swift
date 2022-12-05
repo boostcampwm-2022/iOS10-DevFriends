@@ -26,7 +26,7 @@ protocol GroupFilterViewModelType {
     
     var alignType: [AlignType] { get set }
     var groupType: [GroupType] { get set }
-    var categoryType: [String] { get set }   // @Published
+    var categoryType: [String] { get set }
     
     func fetchCategoryType()
 }

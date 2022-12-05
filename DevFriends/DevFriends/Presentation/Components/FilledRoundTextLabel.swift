@@ -20,7 +20,6 @@ final class FilledRoundTextLabel: UILabel {
     
     init(text: String, backgroundColor: UIColor, textColor: UIColor) {
         super.init(frame: .zero)
-        
         self.style(text: text, backgroundColor: backgroundColor, textColor: textColor)
     }
     
@@ -43,7 +42,6 @@ final class FilledRoundTextLabel: UILabel {
         var contentSize = super.intrinsicContentSize
         contentSize.height += padding.top + padding.bottom
         contentSize.width += padding.left + padding.right
-        
         return contentSize
     }
 }

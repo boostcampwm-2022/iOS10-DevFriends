@@ -9,12 +9,12 @@ import UIKit
 
 struct MogakcoSceneDIContainer {
     // MARK: Flow Coordinators
-    func makeChatFlowCoordinator(navigationController: UINavigationController) -> MogakcoCoordinator {
+    func makeMogakcoFlowCoordinator(navigationController: UINavigationController) -> MogakcoCoordinator {
         return MogakcoCoordinator(navigationController: navigationController, dependencies: self)
     }
 }
 
-extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
+extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     // MARK: Repositories
     private func makeGroupRepository() -> GroupRepository {
         return DefaultGroupRepository()
@@ -31,54 +31,88 @@ extension MogakcoSceneDIContainer: MogakcoFlowCoordinatorDependencies {
     private func makeGroupCommentRepository() -> GroupCommentRepository {
         return DefaultGroupCommentRepository()
     }
+    
+    private func makeNotificationRepository() -> NotificationRepository {
+        return DefaultNotificationRepository()
+    }
 
     // MARK: UseCases
-    private func makeFetchGroupUseCase() -> FetchGroupUseCase {
-        return DefaultFetchGroupUseCase(groupRepository: makeGroupRepository())
+    private func makeLoadGroupUseCase() -> LoadGroupUseCase {
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
     }
     
-    private func makeFetchUserUseCase() -> FetchUserUseCase {
-        return DefaultFetchUserUseCase(userRepository: makeUserRepository())
+    private func makeLoadUserUseCase() -> LoadUserUseCase {
+        return DefaultLoadUserUseCase(userRepository: makeUserRepository())
     }
     
-    private func makeFetchCategoryUseCase() -> FetchCategoryUseCase {
-        return DefaultFetchCategoryUseCase(categoryRepository: makeCategoryRepository())
+    private func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
-    private func makeFetchCommentsUseCase() -> FetchCommentsUseCase {
-        return DefaultFetchCommentsUseCase(commentRepository: makeGroupCommentRepository())
+    private func makeLoadCommentsUseCase() -> LoadCommentsUseCase {
+        return DefaultLoadCommentsUseCase(commentRepository: makeGroupCommentRepository())
+    }
+    
+    private func makeUpdateLikeUseCase() -> UpdateLikeUseCase {
+        return DefaultUpdateLikeUseCase(userRepository: makeUserRepository(), groupRepository: makeGroupRepository())
     }
     
     private func makeApplyGroupUseCase() -> ApplyGroupUseCase {
         return DefaultApplyGroupUseCase(userRepository: makeUserRepository())
     }
     
+    private func makeSendGroupApplyNotificationUseCase() -> SendGroupApplyNotificationUseCase {
+        return DefaultSendGroupApplyNotificationUseCase(notificationRepository: makeNotificationRepository())
+    }
+    
     private func makePostCommentUseCase() -> PostCommentUseCase {
         return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
     }
     
+    private func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
+        return DefaultSendCommentNotificationUseCase(notificationRepository: makeNotificationRepository())
+    }
+    
     // MARK: Mogakco
     private func makeMogakcoViewModel(actions: MogakcoViewModelActions) -> MogakcoViewModel {
-        return MogakcoViewModel(fetchGroupUseCase: makeFetchGroupUseCase(), actions: actions)
+        return MogakcoViewModel(fetchGroupUseCase: makeLoadGroupUseCase(), actions: actions)
     }
     
     func makeMogakcoViewController(actions: MogakcoViewModelActions) -> MogakcoViewController {
         return MogakcoViewController(viewModel: makeMogakcoViewModel(actions: actions))
     }
     
+    func makeMogakcoModalViewController(actions: MogakcoModalViewActions, mogakcos: [Group]) -> MogakcoModalViewController {
+        let mogakcoModalViewController = MogakcoModalViewController(actions: actions)
+        mogakcoModalViewController.populateSnapshot(data: mogakcos)
+        
+        return mogakcoModalViewController
+    }
+    
     // MARK: PostDetail
-    private func makePostDetailViewModel(group: Group) -> PostDetailViewModel {
+    private func makePostDetailViewModel(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewModel {
         return DefaultPostDetailViewModel(
+            actions: actions,
             group: group,
-            fetchUserUseCase: makeFetchUserUseCase(),
-            fetchCategoryUseCase: makeFetchCategoryUseCase(),
-            fetchCommentsUseCase: makeFetchCommentsUseCase(),
+            fetchUserUseCase: makeLoadUserUseCase(),
+            fetchCategoryUseCase: makeLoadCategoryUseCase(),
+            fetchCommentsUseCase: makeLoadCommentsUseCase(),
             applyGroupUseCase: makeApplyGroupUseCase(),
-            postCommentUseCase: makePostCommentUseCase()
+            sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
+            updateLikeUseCase: makeUpdateLikeUseCase(),
+            postCommentUseCase: makePostCommentUseCase(),
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
         )
     }
     
-    func makeGroupDetailViewController(group: Group) -> PostDetailViewController {
-        return PostDetailViewController(viewModel: makePostDetailViewModel(group: group))
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController {
+        return PostDetailViewController(viewModel: makePostDetailViewModel(actions: actions, group: group))
+    }
+    
+    // MARK: AddGroupScene
+    func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer {
+        return AddGroupSceneDIContainer()
     }
 }
+
+extension MogakcoSceneDIContainer: NotificationSceneDIContainer {}

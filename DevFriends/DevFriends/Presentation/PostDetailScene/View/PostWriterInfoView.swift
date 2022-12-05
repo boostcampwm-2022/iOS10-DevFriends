@@ -8,21 +8,21 @@
 import UIKit
 import SnapKit
 
-struct PostWriterInfo {
+struct PostWriterInfo: Hashable {
     let name: String
     let job: String
     let image: UIImage?
 }
 
 final class PostWriterInfoView: UIView {
-    private lazy var mainStackView: UIStackView = {
+    private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 17
         stackView.distribution = .fill
         return stackView
     }()
-    private lazy var subStackView: UIStackView = {
+    private let subStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 0
@@ -30,21 +30,21 @@ final class PostWriterInfoView: UIView {
         stackView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return stackView
     }()
-    private lazy var writerProfileImageView: UIImageView = {
+    private let writerProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView
     }()
-    private lazy var writerNameLabel: UILabel = {
+    private let writerNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.sizeToFit()
         return label
     }()
-    private lazy var writerJobLabel: UILabel = {
+    private let writerJobLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.792, green: 0.792, blue: 0.792, alpha: 1)
+        label.textColor = .devFriendsGray
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         label.numberOfLines = 0
         label.sizeToFit()
@@ -109,7 +109,7 @@ final class PostWriterInfoView: UIView {
         self.writerNameLabel.sizeToFit()
         self.writerJobLabel.sizeToFit()
         
-        let image = (info.image ?? UIImage(named: "Image.png"))?.resize(newWidth: writerProfileImageView.frame.width)
+        let image = (info.image ?? .defaultProfileImage)?.resize(newWidth: writerProfileImageView.frame.width)
         self.writerProfileImageView.image = image
     }
 }

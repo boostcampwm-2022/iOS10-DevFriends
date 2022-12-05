@@ -8,31 +8,22 @@
 import Combine
 import UIKit
 
-class ChatContentViewController: DefaultViewController {
+class ChatContentViewController: UIViewController {
     private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.register(
-            FriendMessageTableViewCell.self,
-            forCellReuseIdentifier: FriendMessageTableViewCell.reuseIdentifier
-        )
-        tableView.register(
-            MyMessageTableViewCell.self,
-            forCellReuseIdentifier: MyMessageTableViewCell.reuseIdentifier
-        )
-        tableView.register(
-            DateTableViewCell.self,
-            forCellReuseIdentifier: DateTableViewCell.reuseIdentifier
-        )
+        tableView.register(cellType: FriendMessageTableViewCell.self)
+        tableView.register(cellType: MyMessageTableViewCell.self)
+        tableView.register(cellType: DateTableViewCell.self)
         return tableView
     }()
     
     private lazy var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message> = {
         let diffableDataSource = UITableViewDiffableDataSource<Section, Message>(
             tableView: messageTableView
-        ) { tableView, indexPath, data -> UITableViewCell in
+        ) { [weak self] tableView, indexPath, data -> UITableViewCell in
             if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
-                let cell = self.createMyMessageTableViewCell(
+                let cell = self?.createMyMessageTableViewCell(
                     tableView: tableView,
                     indexPath: indexPath,
                     data: data
@@ -40,7 +31,7 @@ class ChatContentViewController: DefaultViewController {
                 cell.selectionStyle = .none
                 return cell
             } else {
-                let cell = self.createFriendMessageTableViewCell(
+                let cell = self?.createFriendMessageTableViewCell(
                     tableView: tableView,
                     indexPath: indexPath,
                     data: data
@@ -58,7 +49,7 @@ class ChatContentViewController: DefaultViewController {
         return textField
     }()
     
-    lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+    private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
     
     private let viewModel: ChatContentViewModel
     
@@ -72,7 +63,21 @@ class ChatContentViewController: DefaultViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layout() {
+    private var cancellables = Set<AnyCancellable>()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureUI()
+        self.layout()
+        self.bind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
+    }
+    
+    private func layout() {
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
@@ -87,28 +92,36 @@ class ChatContentViewController: DefaultViewController {
         }
     }
     
-    override func bind() {
-        self.hideKeyboardWhenTappedAround()
+    private func bind() {
+        hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
+        
         viewModel.messagesSubject
             .receive(on: RunLoop.main)
-            .sink { messages in
-                self.populateSnapshot(data: messages)
+            .sink { [weak self] messages in
+                self?.populateSnapshot(data: messages)
                 
                 if !messages.isEmpty {
                     let indexPath = IndexPath(row: messages.count - 1, section: 0)
-                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    self?.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             .store(in: &cancellables)
     }
     
-    override func configureUI() {
+    private func configureUI() {
+        self.view.backgroundColor = .white
         self.setupTableView()
+        self.setupNavigation()
     }
     
     private func setupTableView() {
         self.messageTableViewSnapShot.appendSections([.main])
         viewModel.didLoadMessages()
+    }
+    
+    private func setupNavigation() {
+        self.navigationItem.title = "\(viewModel.group.title)"
     }
     
     private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {
