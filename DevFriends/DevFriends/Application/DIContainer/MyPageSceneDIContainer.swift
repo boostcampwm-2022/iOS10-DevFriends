@@ -47,22 +47,22 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     }
     
     // MARK: MyGroupsView
-    func makeMyGroupsViewModel(type: MyGroupsType) -> MyGroupsViewModel {
-        return MyGroupsViewModel(type: type)
+    func makeMyGroupsViewModel(type: MyGroupsType, actions: MyGroupsViewModelActions) -> MyGroupsViewModel {
+        return MyGroupsViewModel(type: type, actions: actions)
     }
     
-    func makeMakedGroupViewController() -> MyGroupsViewController {
-        return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .makedGroup))
+    func makeMakedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController {
+        return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .makedGroup, actions: actions))
     }
     
     // MARK: ParticipatedGroupVIew
-    func makeParticipatedGroupViewController() -> MyGroupsViewController {
-        return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .participatedGroup))
+    func makeParticipatedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController {
+        return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .participatedGroup, actions: actions))
     }
     
     // MARK: LikedGroupView
-    func makeLikedGroupViewController() -> MyGroupsViewController {
-        return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .likedGroup))
+    func makeLikedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController {
+        return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .likedGroup, actions: actions))
     }
     
     // MARK: PopUpView
