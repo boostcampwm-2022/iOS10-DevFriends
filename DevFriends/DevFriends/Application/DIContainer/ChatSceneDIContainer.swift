@@ -83,9 +83,17 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
         let chatMessagesRepository = makeChatMessagesRepository()
         return DefaultChatContentViewModel(
             group: group,
-            loadChatMessagesUseCase: makeLoadChatMessagesUseCase(chatUID: group.chatID, chatMessagesRepository: chatMessagesRepository),
-            sendChatMessagesUseCase: makeSendChatMessageUseCase(chatUID: group.chatID, chatMessagesRepository: chatMessagesRepository),
-            removeMessageListenerUseCase: makeRemoveMessageListenerUseCase(chatMessagesRepository: chatMessagesRepository),
+            loadChatMessagesUseCase: makeLoadChatMessagesUseCase(
+                chatUID: group.chatID,
+                chatMessagesRepository: chatMessagesRepository
+            ),
+            sendChatMessagesUseCase: makeSendChatMessageUseCase(
+                chatUID: group.chatID,
+                chatMessagesRepository: chatMessagesRepository
+            ),
+            removeMessageListenerUseCase: makeRemoveMessageListenerUseCase(
+                chatMessagesRepository: chatMessagesRepository
+            ),
             actions: actions
         )
     }

@@ -43,5 +43,6 @@ extension ChatCoordinator {
     
     func popViewController() {
         navigationController.popViewController(animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = false
     }
 }
