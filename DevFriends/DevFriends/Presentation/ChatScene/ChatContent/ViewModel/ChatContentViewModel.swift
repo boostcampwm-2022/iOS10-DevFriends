@@ -57,14 +57,16 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
         do {
             try loadChatMessagesUseCase.execute { [weak self] newMessages in
                 guard let self = self else {return}
-                var nowMessagesWithDate = self.messagesSubject.value
+                let nowMessagesWithDate = self.messagesSubject.value
                 var totalMessageWithDate: [AnyHashable] = nowMessagesWithDate
                 
                 for newMessage in newMessages {
                     if let lastMessage = totalMessageWithDate.last as? Message {
-                        if !lastMessage.time.isSame(as: newMessage.time) {
+                        if !lastMessage.time.isSameDate(as: newMessage.time) {
                             totalMessageWithDate.append(DateMessage(time: newMessage.time))
                         }
+                    }else if totalMessageWithDate.isEmpty {
+                        totalMessageWithDate.append(DateMessage(time: newMessage.time))
                     }
                     totalMessageWithDate.append(newMessage)
                 }

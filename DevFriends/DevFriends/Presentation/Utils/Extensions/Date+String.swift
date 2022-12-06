@@ -36,6 +36,22 @@ extension Date {
         return false
     }
     
+    func isSameDate(as other: Date?) -> Bool {
+        guard let other = other else { return false }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYYMMdd"
+        
+        let myDate = dateFormatter.string(from: self)
+        let otherDate = dateFormatter.string(from: other)
+        
+        if myDate == otherDate {
+            return true
+        }
+        
+        return false
+    }
+    
     func toKoreanStringWithDay() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY년 MM월 dd일 EEEE"
