@@ -13,16 +13,20 @@ struct Popup {
     let message: String
     let done: String
     let close: String
+    let doneAction: () -> Void
     
-    init(title: String, message: String, done: String = "확인", close: String = "닫기") {
+    init(title: String, message: String, done: String = "확인", close: String = "닫기", doneAction: @escaping () -> Void) {
         self.title = title
         self.message = message
         self.done = done
         self.close = close
+        self.doneAction = doneAction
     }
 }
 
 class PopupViewController: UIViewController {
+    private var doneAction: () -> Void = {}
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "제목"
@@ -63,6 +67,7 @@ class PopupViewController: UIViewController {
         messageLabel.text = popup.message
         doneButton.setTitle(popup.done, for: .normal)
         closeButton.setTitle(popup.close, for: .normal)
+        doneAction = popup.doneAction
     }
     
     override func viewDidLoad() {
@@ -78,14 +83,14 @@ class PopupViewController: UIViewController {
     
     private func bind() {
         doneButton.publisher(for: .touchUpInside)
-            .sink {
-                print("doneButton")
+            .sink { [weak self] _ in
+                self?.dismiss(animated: false)
+                self?.doneAction()
             }
             .store(in: &cancellables)
         
         closeButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                print("closeButton")
                 self?.dismiss(animated: false)
             }
             .store(in: &cancellables)

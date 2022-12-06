@@ -17,9 +17,14 @@ protocol MyPageFlowCoordinatorDependencies {
     func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
 }
 
+protocol MyPageCoordinatorDelegate: AnyObject {
+    func showLoginView()
+}
+
 final class MyPageCoordinator: Coordinator {
     private weak var navigationController: UINavigationController?
     let dependencies: MyPageFlowCoordinatorDependencies
+    weak var delegate: MyPageCoordinatorDelegate?
     
     init(navigationController: UINavigationController, dependencies: MyPageFlowCoordinatorDependencies) {
         self.navigationController = navigationController
@@ -32,7 +37,8 @@ final class MyPageCoordinator: Coordinator {
             showParticipatedGroup: showParticipatedGroupViewController,
             showLikedGroup: showLikedGroupViewController,
             showFixMyInfo: showFixMyInfoViewController,
-            showPopup: showPopupViewController
+            showPopup: showPopupViewController,
+            showLoginView: showLoginViewController
         )
         let myPageViewController = dependencies.makeMyPageViewController(actions: actions)
         navigationController?.pushViewController(myPageViewController, animated: false)
@@ -74,6 +80,10 @@ final class MyPageCoordinator: Coordinator {
         let popupViewController = dependencies.makePopupViewController(popup: popup)
         popupViewController.modalPresentationStyle = .overFullScreen
         navigationController?.present(popupViewController, animated: false)
+    }
+    
+    func showLoginViewController() {
+        delegate?.showLoginView()
     }
 }
 

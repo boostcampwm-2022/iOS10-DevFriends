@@ -77,36 +77,36 @@ final class MyPageViewController: UIViewController {
     private func bind() {
         makedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showMakedGroup()
+                self?.viewModel.didTapMakedGroup()
             }
             .store(in: &cancellables)
         
         participatedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showParticipatedGroup()
+                self?.viewModel.didTapParticipatedGroup()
             }
             .store(in: &cancellables)
         likedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showLikedGroup()
+                self?.viewModel.didTapLikedGroup()
             }
             .store(in: &cancellables)
         
         fixMyInfoButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showFixMyInfo()
+                self?.viewModel.didTapFixMyInfo()
             }
             .store(in: &cancellables)
         
         logoutButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showLogout()
+                self?.viewModel.didTapLogout()
             }
             .store(in: &cancellables)
         
         withdrawalButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showWithdrawl()
+                self?.viewModel.didTapWithdrawal()
             }
             .store(in: &cancellables)
         

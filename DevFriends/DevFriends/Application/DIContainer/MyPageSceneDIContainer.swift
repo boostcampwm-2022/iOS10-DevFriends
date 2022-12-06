@@ -47,7 +47,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     
     // MARK: MyPageViwe
     func makeMyPageViewModel(actions: MyPageViewModelActions) -> MyPageViewModel {
-        return MyPageViewModel(actions: actions, loadCategoryUseCase: makeLoadCategoryUseCase())
+        return DefaultMyPageViewModel(actions: actions, loadCategoryUseCase: makeLoadCategoryUseCase())
     }
     
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController {

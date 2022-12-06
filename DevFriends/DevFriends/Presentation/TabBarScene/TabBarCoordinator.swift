@@ -15,10 +15,15 @@ protocol TabBarFlowCoordinatorDependencies {
     func makeMyPageSceneDIContainer() -> MyPageSceneDIContainer
 }
 
+protocol TabBarCoordinatorDelegate: AnyObject {
+    func showLoginView()
+}
+
 final class TabBarCoordinator: Coordinator {
     let dependencies: TabBarFlowCoordinatorDependencies
     private weak var navigationController: UINavigationController?
     var childCoordinators: [Coordinator] = []
+    weak var delegate: TabBarCoordinatorDelegate?
     
     init(dependencies: TabBarFlowCoordinatorDependencies, navigationController: UINavigationController) {
         self.dependencies = dependencies
@@ -80,7 +85,14 @@ final class TabBarCoordinator: Coordinator {
         myPageNavigationController.tabBarItem.title = "마이페이지"
         let myPageSceneDIContainer = dependencies.makeMyPageSceneDIContainer()
         let flow = myPageSceneDIContainer.makeMyPageCoordinator(navigationController: myPageNavigationController)
+        flow.delegate = self
         flow.start()
         childCoordinators.append(flow)
+    }
+}
+
+extension TabBarCoordinator: MyPageCoordinatorDelegate {
+    func showLoginView() {
+        delegate?.showLoginView()
     }
 }
