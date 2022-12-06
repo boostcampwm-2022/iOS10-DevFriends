@@ -19,6 +19,7 @@ struct MessageResponseDTO: Codable {
 extension MessageResponseDTO {
     func toDomain() -> Message {
         return Message(
+            id: uid ?? "",
             content: content,
             time: time,
             userID: userID,
