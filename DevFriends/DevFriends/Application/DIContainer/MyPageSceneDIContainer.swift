@@ -28,6 +28,18 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultCategoryRepository()
     }
     
+    func makeGroupRepository() -> GroupRepository {
+        return DefaultGroupRepository()
+    }
+
+    func makeGroupCommentRepository() -> GroupCommentRepository {
+        return DefaultGroupCommentRepository()
+    }
+
+    func makeNotifiactionRepository() -> NotificationRepository {
+        return DefaultNotificationRepository()
+    }
+    
     // MARK: UseCase
     func makeUploadProfileImageUseCase() -> UploadProfileImageUseCase {
         return DefaultUploadProfileImageUseCase(imageRepository: makeImageRepository())
@@ -45,6 +57,44 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
+    func makeLoadGroupUseCase() -> LoadGroupUseCase {
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
+    }
+    
+    func makeLoadUserUseCase() -> LoadUserUseCase {
+        return DefaultLoadUserUseCase(userRepository: makeUserRepository())
+    }
+
+    func makeLoadCommentsUseCase() -> LoadCommentsUseCase {
+        return DefaultLoadCommentsUseCase(commentRepository: makeGroupCommentRepository())
+    }
+
+    func makeApplyGroupUseCase() -> ApplyGroupUseCase {
+        return DefaultApplyGroupUseCase(userRepository: makeUserRepository())
+    }
+
+    func makeSendGroupApplyNotificationUseCase() -> SendGroupApplyNotificationUseCase {
+        return DefaultSendGroupApplyNotificationUseCase(notificationRepository: makeNotifiactionRepository())
+    }
+
+    func makeUpdateLikeUseCase() -> UpdateLikeUseCase {
+        return DefaultUpdateLikeUseCase(
+            userRepository: makeUserRepository(),
+            groupRepository: makeGroupRepository()
+        )
+    }
+    func makePostCommentUseCase() -> PostCommentUseCase {
+        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
+    }
+
+    func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
+        return DefaultSendCommentNotificationUseCase(notificationRepository: makeNotifiactionRepository())
+    }
+    
+    func makeLoadUserGroupIDsUseCase() -> LoadUserGroupIDsUseCase {
+        return DefaultLoadUserGroupIDsUseCase(userRepository: makeUserRepository())
+    }
+    
     // MARK: MyPageViwe
     func makeMyPageViewModel(actions: MyPageViewModelActions) -> MyPageViewModel {
         return DefaultMyPageViewModel(actions: actions, loadCategoryUseCase: makeLoadCategoryUseCase())
@@ -56,7 +106,12 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     
     // MARK: MyGroupsView
     func makeMyGroupsViewModel(type: MyGroupsType, actions: MyGroupsViewModelActions) -> MyGroupsViewModel {
-        return MyGroupsViewModel(type: type, actions: actions)
+        return DefaultMyGroupsViewModel(
+            type: type,
+            actions: actions,
+            loadUserGroupIDsUseCase: makeLoadUserGroupIDsUseCase(),
+            loadGroupUseCase: makeLoadGroupUseCase()
+        )
     }
     
     func makeMakedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController {
@@ -71,6 +126,26 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     // MARK: LikedGroupView
     func makeLikedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController {
         return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .likedGroup, actions: actions))
+    }
+    
+    // MARK: PostDetailView
+    private func makePostDetailViewModel(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewModel {
+        return DefaultPostDetailViewModel(
+            actions: actions,
+            group: group,
+            fetchUserUseCase: makeLoadUserUseCase(),
+            fetchCategoryUseCase: makeLoadCategoryUseCase(),
+            fetchCommentsUseCase: makeLoadCommentsUseCase(),
+            applyGroupUseCase: makeApplyGroupUseCase(),
+            sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
+            updateLikeUseCase: makeUpdateLikeUseCase(),
+            postCommentUseCase: makePostCommentUseCase(),
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
+        )
+    }
+
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController {
+        return PostDetailViewController(viewModel: makePostDetailViewModel(actions: actions, group: group))
     }
     
     // MARK: PopUpView

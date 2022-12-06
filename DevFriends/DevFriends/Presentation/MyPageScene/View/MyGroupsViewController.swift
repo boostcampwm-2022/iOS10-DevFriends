@@ -51,6 +51,8 @@ final class MyGroupsViewController: UIViewController {
     init(viewModel: MyGroupsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        viewModel.didLoadGroup()
     }
     
     required init?(coder: NSCoder) {
@@ -96,6 +98,12 @@ final class MyGroupsViewController: UIViewController {
                 self?.didTouchedBackButton()
             }
             .store(in: &cancellables)
+        
+        viewModel.groupsSubject
+            .sink { [weak self] groups in
+                self?.populateSnapshot(data: groups)
+            }
+            .store(in: &cancellables)
     }
     
     private func didTouchedBackButton() {
@@ -104,5 +112,8 @@ final class MyGroupsViewController: UIViewController {
 }
 
 extension MyGroupsViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let group = viewModel.groupsSubject.value[indexPath.item]
+        viewModel.didTapGroup(group: group)
+    }
 }

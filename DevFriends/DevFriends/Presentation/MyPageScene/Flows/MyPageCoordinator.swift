@@ -12,6 +12,7 @@ protocol MyPageFlowCoordinatorDependencies {
     func makeMakedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
     func makeParticipatedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
     func makeLikedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
     func makePopupViewController(popup: Popup) -> PopupViewController
     func makeFixMyInfoViewController(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
     func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
@@ -45,24 +46,35 @@ final class MyPageCoordinator: Coordinator {
     }
     
     func showMakedGroupViewController() {
-        let actions = MyGroupsViewModelActions(back: popViewController)
+        let actions = MyGroupsViewModelActions(back: popViewController, showPostDetailScene: showGroupDetailViewController)
         let groupViewController = dependencies.makeMakedGroupViewController(actions: actions)
         navigationController?.pushViewController(groupViewController, animated: true)
         navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     func showParticipatedGroupViewController() {
-        let actions = MyGroupsViewModelActions(back: popViewController)
+        let actions = MyGroupsViewModelActions(back: popViewController, showPostDetailScene: showGroupDetailViewController)
         let groupViewController = dependencies.makeParticipatedGroupViewController(actions: actions)
         navigationController?.pushViewController(groupViewController, animated: true)
         navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     func showLikedGroupViewController() {
-        let actions = MyGroupsViewModelActions(back: popViewController)
+        let actions = MyGroupsViewModelActions(back: popViewController, showPostDetailScene: showGroupDetailViewController)
         let groupViewController = dependencies.makeLikedGroupViewController(actions: actions)
         navigationController?.pushViewController(groupViewController, animated: true)
         navigationController?.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func showGroupDetailViewController(group: Group) {
+        let actions = PostDetailViewModelActions(backToPrevViewController: moveBackToGroupListViewController)
+        let postDetailViewController = dependencies.makePostDetailViewController(actions: actions, group: group)
+        navigationController?.pushViewController(postDetailViewController, animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func moveBackToGroupListViewController() {
+        navigationController?.popViewController(animated: true)
     }
     
     func showFixMyInfoViewController(userInfo: FixMyInfoStruct) {
