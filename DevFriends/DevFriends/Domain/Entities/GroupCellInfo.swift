@@ -10,10 +10,25 @@ import Foundation
 struct GroupCellInfo: Hashable {
     // DiffableDataSource에서 데이터 중복을 막기 위해 section 추가
     let section: GroupListSection
-    let group: Group
+    let title: String
+    let categories: [Category]
+    let location: Location
+    let currentNumberPeople: Int
+    let limitedNumberPeople: Int
     
-    init(group: Group, at section: GroupListSection) {
+    init(
+        section: GroupListSection,
+        title: String,
+        categories: [Category],
+        location: Location,
+        currentNumberPeople: Int,
+        limitedNumberPeople: Int
+    ) {
         self.section = section
-        self.group = group
+        self.title = title
+        self.categories = categories
+        self.location = location
+        self.currentNumberPeople = currentNumberPeople
+        self.limitedNumberPeople = limitedNumberPeople
     }
 }

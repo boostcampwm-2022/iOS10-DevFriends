@@ -14,8 +14,10 @@ extension DefaultCategoryRepository: CategoryRepository {
     func fetch(_ categoryIds: [String]) async throws -> [Category] {
         return try await withThrowingTaskGroup(of: Category.self) { taskGroup in
             categoryIds.forEach { id in
-                taskGroup.addTask {
-                    try await self.fetchCategory(id)
+                if !id.isEmpty {
+                    taskGroup.addTask {
+                        try await self.fetchCategory(id)
+                    }
                 }
             }
             

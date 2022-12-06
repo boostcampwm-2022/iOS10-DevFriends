@@ -55,7 +55,7 @@ final class GroupListViewController: UIViewController {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
             for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
-            cell.set(data.group)
+            cell.set(data)
         return cell
     }
     
@@ -215,12 +215,12 @@ final class GroupListViewController: UIViewController {
         let recommandItem = self.collectionViewSnapShot.itemIdentifiers(inSection: .recommand)
         let filteredItem = self.collectionViewSnapShot.itemIdentifiers(inSection: .filtered)
         self.setupCollectionViewHeader(alignType: alignType)
-        self.collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo> (
+        self.collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<GroupListSection, GroupCellInfo>(
             collectionView: self.collectionView) { collectionView, indexPath, data -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
                 for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
-                cell.set(data.group)
+                cell.set(data)
             return cell
         }
         self.collectionViewSnapShot = NSDiffableDataSourceSnapshot<GroupListSection, GroupCellInfo>()

@@ -56,6 +56,28 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
             placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
         }
     }
+    
+    func set(_ info: GroupCellInfo) {
+        titleLabel.text = info.title
+        participantLabel.text = "👥 \(info.currentNumberPeople)/\(info.limitedNumberPeople)"
+        tagStackView.subviews.forEach {
+            $0.removeFromSuperview()
+        }
+        info.categories.forEach {
+            tagStackView.addArrangedSubview(createInterestLabel($0.name))
+        }
+        let location = CLLocation(latitude: info.location.latitude, longitude: info.location.longitude)
+        Task {
+            placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
+        }
+    }
+    
+    private func createInterestLabel(_ text: String) -> FilledRoundTextLabel {
+        let text = "# " + text
+        let defaultColor = UIColor.devFriendsLightGray
+        let interestLabel = FilledRoundTextLabel(text: text, backgroundColor: defaultColor, textColor: .black)
+        return interestLabel
+    }
 
     // MARK: - Configure UI
     

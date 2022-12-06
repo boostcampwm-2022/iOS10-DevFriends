@@ -37,6 +37,7 @@ protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
 final class DefaultGroupListViewModel: GroupListViewModel {
     private let fetchGroupUseCase: LoadGroupUseCase
     private let sortGroupUseCase: SortGroupUseCase
+    private let fetchCategoryUseCase: LoadCategoryUseCase
     private let actions: GroupListViewModelActions?
     private var userLocation: Location?
     var recommandFilter: Filter
@@ -45,10 +46,12 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     init(
         fetchGroupUseCase: LoadGroupUseCase,
         sortGroupUseCase: SortGroupUseCase,
+        fetchCategoryUseCase: LoadCategoryUseCase,
         actions: GroupListViewModelActions
     ) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.sortGroupUseCase = sortGroupUseCase
+        self.fetchCategoryUseCase = fetchCategoryUseCase
         // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
         self.recommandFilter = Filter(alignFilter: .newest, categoryFilter: [])
         self.actions = actions
@@ -71,8 +74,18 @@ extension DefaultGroupListViewModel {
                 by: recommandFilter.alignFilter,
                 userLocation: userLocation
             )
-            // 셀의 중복 방지를 위해, uuid 정보가 있는 GroupCellInfo로 한번 더 mapping 해줬습니다
-            let recommandGroupCellInfos = sortedRecommand.map { GroupCellInfo(group: $0, at: .recommand) }
+            var recommandGroupCellInfos: [GroupCellInfo] = []
+            for group in sortedRecommand {
+                let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                recommandGroupCellInfos.append(GroupCellInfo(
+                    section: .recommand,
+                    title: group.title,
+                    categories: categories,
+                    location: group.location,
+                    currentNumberPeople: group.participantIDs.count,
+                    limitedNumberPeople: group.limitedNumberPeople
+                ))
+            }
             recommandGroupsSubject.send(recommandGroupCellInfos)
             
             let filteredGroups = try await fetchGroupUseCase
@@ -82,9 +95,32 @@ extension DefaultGroupListViewModel {
                 by: groupFilter.alignFilter,
                 userLocation: userLocation
             )
-            let filteredGroupCellInfos = sortedFiltered.map { GroupCellInfo(group: $0, at: .filtered) }
+            var filteredGroupCellInfos: [GroupCellInfo] = []
+            for group in sortedFiltered {
+                let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                filteredGroupCellInfos.append(GroupCellInfo(
+                    section: .filtered,
+                    title: group.title,
+                    categories: categories,
+                    location: group.location,
+                    currentNumberPeople: group.participantIDs.count,
+                    limitedNumberPeople: group.limitedNumberPeople
+                ))
+            }
             filteredGroupsSubject.send(filteredGroupCellInfos)
         }
+    }
+    
+    private func loadCategories(categoryIDs: [String]) async -> [Category] {
+        var result: [Category] = []
+        do {
+            result = try await Task {
+                try await fetchCategoryUseCase.execute(categoryIds: categoryIDs)
+            }.result.get()
+        } catch {
+            print(error)
+        }
+        return result
     }
     
     func didSelectFilter() {
