@@ -13,9 +13,3 @@ struct UserGroupResponseDTO: Codable {
     let groupID: String
     let time: Date
 }
-
-extension UserGroupResponseDTO {
-    func toDomain() -> UserGroup {
-        return UserGroup(groupID: self.groupID, time: self.time)
-    }
-}

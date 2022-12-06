@@ -11,17 +11,9 @@ import UIKit
 
 final class PostDetailViewController: UIViewController {
     private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(
-            image: .chevronLeft,
-            style: .plain,
-            target: self,
-            action: nil
-        )
-        barButton.publisher
-            .sink { [weak self] _ in
-                self?.didTouchedBackButton()
-            }
-            .store(in: &cancellables)
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
         barButton.tintColor = .black
         return barButton
     }()
@@ -183,6 +175,12 @@ final class PostDetailViewController: UIViewController {
     }
     
     private func bind() {
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+        
         hideKeyboardWhenTappedAround()
             .store(in: &cancellables)
         

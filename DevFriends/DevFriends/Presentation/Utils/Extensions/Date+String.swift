@@ -35,4 +35,10 @@ extension Date {
         
         return false
     }
+    
+    func toKoreanStringWithDay() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY년 MM월 dd일 EEEE"
+        return dateFormatter.string(from: self)
+    }
 }

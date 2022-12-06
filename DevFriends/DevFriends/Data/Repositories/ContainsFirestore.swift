@@ -13,7 +13,7 @@ enum FirestorePath: String {
     case comment = "Comment"
     case group = "Group"
     case message = "Message"
-    case notification = "Notifcation"
+    case notification = "Notification"
     case user = "User"
 }
 

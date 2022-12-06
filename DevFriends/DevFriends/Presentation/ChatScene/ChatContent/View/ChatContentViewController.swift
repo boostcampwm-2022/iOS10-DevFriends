@@ -8,12 +8,15 @@
 import Combine
 import UIKit
 
-final class ChatContentViewController: UIViewController {
-    private let messageTableView: UITableView = {
+class ChatContentViewController: UIViewController {
+    private let backBarButton = BackBarButtonItem()
+    
+    private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.register(cellType: FriendMessageTableViewCell.self)
         tableView.register(cellType: MyMessageTableViewCell.self)
+        tableView.register(cellType: DateTableViewCell.self)
         return tableView
     }()
     
@@ -67,11 +70,6 @@ final class ChatContentViewController: UIViewController {
         self.bind()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
-    }
-    
     private func layout() {
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
@@ -89,6 +87,12 @@ final class ChatContentViewController: UIViewController {
     
     private func bind() {
         hideKeyboardWhenTappedAround()
+            .store(in: &cancellables)
+        
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.viewModel.back()
+            }
             .store(in: &cancellables)
         
         viewModel.messagesSubject
@@ -123,6 +127,7 @@ final class ChatContentViewController: UIViewController {
     
     private func setupNavigation() {
         self.navigationItem.title = "\(viewModel.group.title)"
+        self.navigationItem.leftBarButtonItem = backBarButton
     }
     
     private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {

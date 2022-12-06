@@ -12,6 +12,7 @@ struct UserResponseDTO: Codable {
     @DocumentID var uid: String?
     let nickname: String
     let job: String
+    let email: String
     let profileImagePath: String
     let categories: [String]
     let appliedGroups: [String]
@@ -24,6 +25,7 @@ extension UserResponseDTO {
             id: uid ?? "",
             nickname: nickname,
             job: job,
+            email: email,
             profileImagePath: profileImagePath,
             categoryIDs: categories,
             appliedGroupIDs: appliedGroups,

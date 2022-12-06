@@ -9,6 +9,8 @@ import Combine
 import UIKit
 
 final class MyGroupsViewController: UIViewController {
+    private let backBarButton = BackBarButtonItem()
+    
     private lazy var groupCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -53,14 +55,16 @@ final class MyGroupsViewController: UIViewController {
         super.viewDidLoad()
         self.configureUI()
         self.layout()
+        self.bind()
     }
     
     private func configureUI() {
         setupCollectionView()
-        setupTitle()
+        setupNavigation()
     }
     
-    private func setupTitle() {
+    func setupNavigation() {
+        navigationItem.leftBarButtonItems = [backBarButton]
         navigationItem.title = viewModel.getMyGroupsTypeName()
     }
     
@@ -78,6 +82,18 @@ final class MyGroupsViewController: UIViewController {
         groupCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func bind() {
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func didTouchedBackButton() {
+        viewModel.didTouchedBackButton()
     }
 }
 
