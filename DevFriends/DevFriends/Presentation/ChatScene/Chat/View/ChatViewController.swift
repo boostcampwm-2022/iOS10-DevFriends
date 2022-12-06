@@ -25,7 +25,7 @@ final class ChatViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, Group>(
+    private lazy var chatTableViewDiffableDataSource = UITableViewDiffableDataSource<Section, AcceptedGroup>(
         tableView: chatTableView
     ) { tableView, indexPath, data -> UITableViewCell in
         guard let cell = tableView.dequeueReusableCell(
@@ -34,11 +34,11 @@ final class ChatViewController: UIViewController {
         ) as? ChatTableViewCell else {
             return UITableViewCell()
         }
-        cell.set(data: data, lastMessage: "", hasNewMessage: false)
+        cell.set(data: data)
         return cell
     }
     
-    private lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Group>()
+    private lazy var chatTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, AcceptedGroup>()
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -91,7 +91,7 @@ final class ChatViewController: UIViewController {
         viewModel.didLoadGroups()
     }
     
-    private func populateSnapshot(data: [Group]) {
+    private func populateSnapshot(data: [AcceptedGroup]) {
         self.chatTableViewSnapShot.appendItems(data)
         self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
     }

@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct AcceptedGroup {
+struct AcceptedGroup: Hashable {
     let group: Group
     let time: Date
+    let lastMessageContent: String
+    let newMessageCount: Int
 }

@@ -28,7 +28,10 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
     }
     
     func makeChatGroupsRepository() -> ChatGroupsRepository {
-        return DefaultChatGroupsRepository(storage: makeChatGroupsStorage())
+        return DefaultChatGroupsRepository(
+            groupStorage: makeChatGroupsStorage(),
+            messageStorage: makeChatMessagesStorage()
+        )
     }
     
     func makeChatMessagesRepository() -> ChatMessagesRepository {
