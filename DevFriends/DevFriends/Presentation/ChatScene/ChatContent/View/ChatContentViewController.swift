@@ -87,7 +87,12 @@ class ChatContentViewController: UIViewController {
     }
     
     private func bind() {
-        hideKeyboardWhenTappedAround()
+        let gesture = UITapGestureRecognizer()
+        messageTableView.gesturePublisher(.tap(gesture))
+            .sink { [weak self] _ in
+                self?.view.endEditing(true)
+                gesture.cancelsTouchesInView = false
+            }
             .store(in: &cancellables)
         
         settingButton.publisher
