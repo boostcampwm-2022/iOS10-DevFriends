@@ -21,34 +21,43 @@ class ChatContentViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message> = {
-        let diffableDataSource = UITableViewDiffableDataSource<Section, Message>(
+    private lazy var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, AnyHashable> = {
+        let diffableDataSource = UITableViewDiffableDataSource<Section, AnyHashable>(
             tableView: messageTableView
         ) { [weak self] tableView, indexPath, data -> UITableViewCell in
-            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
-                let cell = self?.createMyMessageTableViewCell(
-                    tableView: tableView,
-                    indexPath: indexPath,
-                    data: data
-                ) ?? UITableViewCell()
-                cell.selectionStyle = .none
-                return cell
-            } else {
-                let cell = self?.createFriendMessageTableViewCell(
-                    tableView: tableView,
-                    indexPath: indexPath,
-                    data: data
-                ) ?? UITableViewCell()
-                cell.selectionStyle = .none
+            if let data = data as? Message {
+                if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
+                    let cell = self?.createMyMessageTableViewCell(
+                        tableView: tableView,
+                        indexPath: indexPath,
+                        data: data
+                    ) ?? UITableViewCell()
+                    cell.selectionStyle = .none
+                    return cell
+                } else {
+                    let cell = self?.createFriendMessageTableViewCell(
+                        tableView: tableView,
+                        indexPath: indexPath,
+                        data: data
+                    ) ?? UITableViewCell()
+                    cell.selectionStyle = .none
+                    return cell
+                }
+            } else if let data = data as? DateMessage {
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: DateTableViewCell.reuseIdentifier
+                ) as? DateTableViewCell else { return UITableViewCell() }
+                cell.set(date: data.time)
                 return cell
             }
+            return UITableViewCell()
         }
         return diffableDataSource
     }()
     
     private let messageTextField = SendableTextView(placeholder: "메세지를 작성해주세요")
     
-    private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+    private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
     
     private let viewModel: ChatContentViewModel
     
@@ -194,17 +203,23 @@ class ChatContentViewController: UIViewController {
     
     private func isNoNeedToHaveTimeLabel(data: Message, indexPath: IndexPath) -> Bool {
         guard indexPath.row + 1 != self.viewModel.messagesSubject.value.count else { return false }
-        let isSameTime = data.time.isSame(as: self.viewModel.messagesSubject.value[indexPath.row + 1].time)
-        return isSameTime
+        if let message = self.viewModel.messagesSubject.value[indexPath.row + 1] as? Message {
+            let isSameTime = data.time.isSame(as: message.time)
+            return isSameTime
+        }
+        return false
     }
     
     private func isNoNeedToHaveProfileInfo(data: Message, indexPath: IndexPath) -> Bool {
         guard indexPath.row - 1 >= 0 else { return false }
-        let isSameUser = data.userID == self.viewModel.messagesSubject.value[indexPath.row - 1].userID
-        return isSameUser
+        if let message = self.viewModel.messagesSubject.value[indexPath.row - 1] as? Message {
+            let isSameUser = data.userID == message.userID
+            return isSameUser
+        }
+        return false
     }
     
-    private func populateSnapshot(data: [Message]) {
+    private func populateSnapshot(data: [AnyHashable]) {
         self.messageTableViewSnapShot.appendItems(data)
         self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
     }

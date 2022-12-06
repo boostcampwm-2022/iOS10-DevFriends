@@ -16,7 +16,7 @@ protocol ChatContentViewModelInput {
 }
 
 protocol ChatContentViewModelOutput {
-    var messagesSubject: CurrentValueSubject<[Message], Never> { get }
+    var messagesSubject: CurrentValueSubject<[AnyHashable], Never> { get }
     var group: Group { get }
     func getCurrentMessageCount() -> Int
 }
@@ -50,16 +50,26 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     }
     
     // MARK: OUTPUT
-    var messagesSubject = CurrentValueSubject<[Message], Never>([])
+    var messagesSubject = CurrentValueSubject<[AnyHashable], Never>([])
     
     // MARK: Private
     private func loadMessages() {
         do {
-            try loadChatMessagesUseCase.execute {
-                var tempMessages = self.messagesSubject.value
-                tempMessages += $0
+            try loadChatMessagesUseCase.execute { [weak self] newMessages in
+                guard let self = self else {return}
+                var nowMessagesWithDate = self.messagesSubject.value
+                var totalMessageWithDate: [AnyHashable] = nowMessagesWithDate
                 
-                self.messagesSubject.send(tempMessages)
+                for newMessage in newMessages {
+                    if let lastMessage = totalMessageWithDate.last as? Message {
+                        if !lastMessage.time.isSame(as: newMessage.time) {
+                            totalMessageWithDate.append(DateMessage(time: newMessage.time))
+                        }
+                    }
+                    totalMessageWithDate.append(newMessage)
+                }
+                
+                self.messagesSubject.send(totalMessageWithDate)
             }
         } catch {
             print(error)
