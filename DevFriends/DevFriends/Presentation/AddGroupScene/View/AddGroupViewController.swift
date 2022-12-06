@@ -10,6 +10,14 @@ import SnapKit
 import UIKit
 
 final class AddGroupViewController: UIViewController {
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
+        barButton.tintColor = .black
+        return barButton
+    }()
+    
     private let addGroupScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -71,16 +79,12 @@ final class AddGroupViewController: UIViewController {
     }
     
     private func configureUI() {
-        
+        self.navigationItem.leftBarButtonItems = [backBarButton]
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.didConfigureView()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel.didTouchedBackButton()
     }
     
     private func layout() {
@@ -236,7 +240,6 @@ final class AddGroupViewController: UIViewController {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.didSendGroupInfo()
-                
             }
             .store(in: &cancellables)
         
@@ -247,13 +250,11 @@ final class AddGroupViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        if let backButton = self.navigationItem.backBarButtonItem {
-            backButton.publisher
-                .sink { [weak self] _ in
-                    self?.viewModel.didTouchedBackButton()
-                }
-                .store(in: &cancellables)
-        }
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.viewModel.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
     }
     
     private func setStepperValue() {
