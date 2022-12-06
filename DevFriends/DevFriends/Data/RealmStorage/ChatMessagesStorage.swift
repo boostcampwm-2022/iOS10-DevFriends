@@ -26,7 +26,7 @@ struct DefaultChatMessagesStorage: ChatMessagesStorage, ContainsRealm {
         do {
             try realm?.write {
                 for message in messages {
-                    realm?.add(toMessageResponseEntity(groupID: groupID, message: message))
+                    realm?.add(toMessageResponseEntity(groupID: groupID, message: message), update: .modified)
                 }
             }
         } catch {
@@ -36,6 +36,7 @@ struct DefaultChatMessagesStorage: ChatMessagesStorage, ContainsRealm {
     
     private func toMessageResponseEntity(groupID: String, message: Message) -> MessageResponseEntity {
         let realmMessage = MessageResponseEntity()
+        realmMessage.id = message.id
         realmMessage.groupID = groupID
         realmMessage.userNickname = message.userNickname
         realmMessage.userID = message.userID

@@ -8,6 +8,7 @@
 import Foundation
 
 struct Message: Hashable {
+    let id: String
     let content: String
     let time: Date
     let userID: String
