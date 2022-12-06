@@ -119,6 +119,21 @@ class ChatContentViewController: UIViewController {
                 self?.viewModel.didSendMessage(text: text)
             }
             .store(in: &cancellables)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(scrollToBottom),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+    }
+    
+    @objc func scrollToBottom() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let lastIndexPath = IndexPath(row: self.viewModel.getCurrentMessageCount() - 1, section: 0)
+            self.messageTableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+        }
     }
     
     private func configureUI() {

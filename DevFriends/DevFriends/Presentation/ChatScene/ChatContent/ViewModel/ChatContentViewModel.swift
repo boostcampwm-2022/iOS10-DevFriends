@@ -18,6 +18,7 @@ protocol ChatContentViewModelInput {
 protocol ChatContentViewModelOutput {
     var messagesSubject: CurrentValueSubject<[Message], Never> { get }
     var group: Group { get }
+    func getCurrentMessageCount() -> Int
 }
 
 protocol ChatContentViewModel: ChatContentViewModelInput, ChatContentViewModelOutput {}
@@ -76,6 +77,10 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     
     func didTapSettingButton() {
         actions.report()
+    }
+    
+    func getCurrentMessageCount() -> Int {
+        return messagesSubject.value.count
     }
 }
 
