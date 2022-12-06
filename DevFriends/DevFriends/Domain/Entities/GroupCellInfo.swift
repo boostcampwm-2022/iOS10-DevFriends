@@ -13,6 +13,7 @@ struct GroupCellInfo: Hashable {
     let title: String
     let categories: [Category]
     let location: Location
+    let distance: Double?
     let currentNumberPeople: Int
     let limitedNumberPeople: Int
     
@@ -21,6 +22,7 @@ struct GroupCellInfo: Hashable {
         title: String,
         categories: [Category],
         location: Location,
+        distance: Double?,
         currentNumberPeople: Int,
         limitedNumberPeople: Int
     ) {
@@ -28,6 +30,7 @@ struct GroupCellInfo: Hashable {
         self.title = title
         self.categories = categories
         self.location = location
+        self.distance = distance
         self.currentNumberPeople = currentNumberPeople
         self.limitedNumberPeople = limitedNumberPeople
     }

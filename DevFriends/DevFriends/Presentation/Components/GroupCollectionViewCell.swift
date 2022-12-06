@@ -67,8 +67,22 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
             tagStackView.addArrangedSubview(createInterestLabel($0.name))
         }
         let location = CLLocation(latitude: info.location.latitude, longitude: info.location.longitude)
+        var distanceString = ""
+        if let distance = info.distance {
+            distanceString = makeDistanceString(distance)
+        }
         Task {
-            placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
+            placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소") · \(distanceString)"
+        }
+    }
+    
+    private func makeDistanceString(_ distance: Double) -> String {
+        if distance > 1000.0 {
+            let digit = 10.0
+            let distKM = distance / 1000
+            return "\(round(distKM * digit) / digit)km"
+        } else {
+            return "\(Int(round(distance)))m"
         }
     }
     

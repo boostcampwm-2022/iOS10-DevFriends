@@ -77,11 +77,16 @@ extension DefaultGroupListViewModel {
             var recommandGroupCellInfos: [GroupCellInfo] = []
             for group in sortedRecommand {
                 let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                var distance: Double?
+                if let userLocation = userLocation {
+                    distance = group.location.distance(from: userLocation)
+                }
                 recommandGroupCellInfos.append(GroupCellInfo(
                     section: .recommand,
                     title: group.title,
                     categories: categories,
                     location: group.location,
+                    distance: distance,
                     currentNumberPeople: group.participantIDs.count,
                     limitedNumberPeople: group.limitedNumberPeople
                 ))
@@ -98,11 +103,16 @@ extension DefaultGroupListViewModel {
             var filteredGroupCellInfos: [GroupCellInfo] = []
             for group in sortedFiltered {
                 let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                var distance: Double?
+                if let userLocation = userLocation {
+                    distance = group.location.distance(from: userLocation)
+                }
                 filteredGroupCellInfos.append(GroupCellInfo(
                     section: .filtered,
                     title: group.title,
                     categories: categories,
                     location: group.location,
+                    distance: distance,
                     currentNumberPeople: group.participantIDs.count,
                     limitedNumberPeople: group.limitedNumberPeople
                 ))
