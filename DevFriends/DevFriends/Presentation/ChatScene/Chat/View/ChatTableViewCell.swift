@@ -43,6 +43,7 @@ final class ChatTableViewCell: UITableViewCell {
         label.layer.cornerRadius = 10
         label.textAlignment = .center
         label.clipsToBounds = true
+        label.font = .systemFont(ofSize: 12)
         return label
     }()
     
@@ -101,8 +102,8 @@ extension ChatTableViewCell: ReusableType {
         self.newMessageLabel.snp.makeConstraints { make in
             make.centerY.equalTo(self.chatImageView.snp.centerY)
             make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(25)
-            make.width.greaterThanOrEqualTo(30)
+            make.height.equalTo(20)
+            make.width.greaterThanOrEqualTo(25)
         }
         self.newMessageLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
