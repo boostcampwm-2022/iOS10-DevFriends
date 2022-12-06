@@ -99,10 +99,15 @@ extension MogakcoCoordinator {
         navigationController.popViewController(animated: true)
     }
     
+    func popViewControllerWithHiddenTabBar() {
+        navigationController.popViewController(animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
+    }
+    
     func showPostReportViewController() {
         let actions = PostReportViewControllerActions(
-            submit: moveBackToMogakcoViewController,
-            close: moveBackToMogakcoViewController
+            submit: popViewControllerWithHiddenTabBar,
+            close: popViewControllerWithHiddenTabBar
         )
         let reportViewController = dependencies.makePostReportViewController(actions: actions)
         navigationController.pushViewController(reportViewController, animated: true)

@@ -47,8 +47,8 @@ extension ChatCoordinator {
     
     func showPostReportViewController() {
         let acitons = PostReportViewControllerActions(
-            submit: popViewController,
-            close: popViewController
+            submit: popViewControllerWithHiddenTabBar,
+            close: popViewControllerWithHiddenTabBar
         )
         let postReportViewController = dependencies.makePostReportViewController(actions: acitons)
         navigationController.pushViewController(postReportViewController, animated: true)
@@ -57,5 +57,10 @@ extension ChatCoordinator {
     func popViewController() {
         navigationController.popViewController(animated: true)
         navigationController.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func popViewControllerWithHiddenTabBar() {
+        navigationController.popViewController(animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
 }
