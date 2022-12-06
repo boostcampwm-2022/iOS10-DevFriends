@@ -236,6 +236,13 @@ final class AddGroupViewController: UIViewController {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.didSendGroupInfo()
+                
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didSendGroupSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancellables)

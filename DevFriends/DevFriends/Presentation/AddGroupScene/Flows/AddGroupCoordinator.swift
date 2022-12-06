@@ -11,6 +11,7 @@ protocol AddGroupFlowCoordinatorDependencies {
     func makeAddGroupViewController(groupType: GroupType, actions: AddGroupViewModelActions) -> AddGroupViewController
     func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
     func makeLocationViewController(actions: ChooseLocationViewActions) -> ChooseLocationViewController
+    func makePopupViewController(popup: Popup) -> PopupViewController
 }
 
 final class AddGroupCoordinator: Coordinator {
@@ -34,7 +35,8 @@ final class AddGroupCoordinator: Coordinator {
         let actions = AddGroupViewModelActions(
             showCategoryView: showCategoryViewController,
             showLocationView: showLocationViewController,
-            moveBackToParent: moveBackToParent
+            moveBackToParent: moveBackToParent,
+            showPopup: showPopupViewController
         )
         let addGroupViewController = dependencies.makeAddGroupViewController(
             groupType: self.groupType,
@@ -56,6 +58,12 @@ extension AddGroupCoordinator {
         let actions = ChooseLocationViewActions(didSubmitLocation: didSubmitLocationSelection)
         let locationViewController = dependencies.makeLocationViewController(actions: actions)
         navigationController.pushViewController(locationViewController, animated: true)
+    }
+    
+    func showPopupViewController(popup: Popup) {
+        let popupViewController = dependencies.makePopupViewController(popup: popup)
+        popupViewController.modalPresentationStyle = .overFullScreen
+        navigationController.present(popupViewController, animated: false)
     }
     
     func didSubmitCategorySelection(updatedCategories: [Category]) {

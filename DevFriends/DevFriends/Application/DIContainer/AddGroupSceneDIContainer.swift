@@ -67,4 +67,11 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     func makeLocationViewController(actions: ChooseLocationViewActions) -> ChooseLocationViewController {
         return ChooseLocationViewController(actions: actions)
     }
+    
+    // MARK: PopupView
+    func makePopupViewController(popup: Popup) -> PopupViewController {
+        let popupViewController = PopupViewController()
+        popupViewController.set(popup: popup)
+        return popupViewController
+    }
 }

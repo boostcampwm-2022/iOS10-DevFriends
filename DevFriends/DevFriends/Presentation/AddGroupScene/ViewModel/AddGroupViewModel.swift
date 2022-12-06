@@ -12,6 +12,7 @@ struct AddGroupViewModelActions {
     let showCategoryView: () -> Void
     let showLocationView: () -> Void
     let moveBackToParent: () -> Void
+    let showPopup: (Popup) -> Void
 }
 
 protocol AddGroupViewModelInput {
@@ -31,6 +32,7 @@ protocol AddGroupViewModelOutput {
     var didUpdateGroupTypeSubject: PassthroughSubject<GroupType, Never> { get }
     var didUpdateCategorySubject: PassthroughSubject<[Category], Never> { get }
     var didUpdateLocationSubject: PassthroughSubject<Location, Never> { get }
+    var didSendGroupSubject: PassthroughSubject<Void, Never> { get }
 }
 
 protocol AddGroupViewModel: AddGroupViewModelInput, AddGroupViewModelOutput {
@@ -69,6 +71,7 @@ final class DefaultAddGroupViewModel: AddGroupViewModel {
     var didUpdateCategorySubject = PassthroughSubject<[Category], Never>()
     var didUpdateLocationSubject = PassthroughSubject<Location, Never>()
     var didUpdateGroupTypeSubject = PassthroughSubject<GroupType, Never>()
+    var didSendGroupSubject = PassthroughSubject<Void, Never>()
 }
 
 // MARK: INPUT
@@ -121,7 +124,11 @@ extension DefaultAddGroupViewModel {
         guard let title = self.title,
               let categories = self.categorySelection,
               let location = self.locationSelection,
-              let description = self.description else { return } // TODO: alert 띄우기
+              let description = self.description else {
+            let popup = Popup(title: "", message: popupMessage())
+            actions.showPopup(popup)
+            return
+        }
         // Group을 먼저 만들고, Chat은 groupID를 ID로 이후에 만들기
         let newChat = Chat(id: "", groupID: "")
         let newChatID = saveChatUseCase.execute(chat: newChat)
@@ -142,9 +149,31 @@ extension DefaultAddGroupViewModel {
         )
         saveGroupUseCase.execute(group: newGroup)
         // TODO: User - Group 컬렉션에 해당 그룹 추가해줘야 함
+        let popup = Popup(title: "", message: "\(self.groupType.rawValue) 모집 글을 올렸어요.")
+        actions.showPopup(popup)
+        didSendGroupSubject.send()
+        
     }
     
     func didTouchedBackButton() {
         actions.moveBackToParent()
+    }
+    
+    private func popupMessage() -> String {
+        var errors: [String] = []
+        if self.title == nil {
+            errors.append("제목")
+        }
+        if self.categorySelection == nil {
+            errors.append("카테고리")
+        }
+        if self.locationSelection == nil {
+            errors.append("위치")
+        }
+        if self.description == nil {
+            errors.append("내용")
+        }
+        let errorString = errors.joined(separator: ", ")
+        return errorString + "은 필수 입력 항목이에요."
     }
 }
