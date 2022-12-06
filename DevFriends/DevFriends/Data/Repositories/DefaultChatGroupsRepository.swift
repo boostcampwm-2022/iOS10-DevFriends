@@ -25,43 +25,56 @@ final class DefaultChatGroupsRepository: ContainsFirestore {
 
 extension DefaultChatGroupsRepository: ChatGroupsRepository {
     func fetch(userID: String) async throws -> [AcceptedGroup] {
+        // 1. realm에서 그룹을 가져온다.
         var localAcceptedGroups = groupStorage.fetch()
+        
+        // 2. firestore에서 새로운 메세지를 가져오고 그룹을 업데이트한다.
         for i in 0..<localAcceptedGroups.count {
             let acceptedGroup = localAcceptedGroups[i]
             do {
+                // 해당 그룹의 로컬에 저장된 메세지를 들고 온다
                 let localMessages = messageStorage.fetch(groupID: acceptedGroup.group.id)
+                
+                // 로컬에 저장되지 않은 새로운 메세지를 들고 온다
                 let newMessages = try await fetchLastMessages(
-                    groupID: acceptedGroup.group.id,
+                    chatID: acceptedGroup.group.chatID,
                     lastMessageTime: localMessages.last?.time
                 )
+                
+                // 들고 온 메세지의 마지막 시간을 AcceptedGroup에 업데이트해준다
                 let newAcceptedGroup = AcceptedGroup(
                     group: acceptedGroup.group,
                     time: acceptedGroup.time,
                     lastMessageContent: newMessages.last?.content ?? localMessages.last?.content ?? "",
                     newMessageCount: newMessages.count
                 )
+                
+                // 업데이트된 AcceptedGroup으로 바꿔준다
                 localAcceptedGroups[i] = newAcceptedGroup
             } catch {
                 print(error)
             }
         }
+        
+        // 3. 위에서 기존 로컬에 들어있던 그룹에 대한 업데이트를 싹 했고
+        // 이제 새롭게 모임에 승인되어서 firestore에 새로운 Group이 생겼을 때 이를 가져온다
         let newAcceptedGroupInfos = try await fetchUserGroupInfo(
             of: userID,
-            lastAcceptedTime: localAcceptedGroups.first?.time
+            lastAcceptedTime: localAcceptedGroups.first?.time // SW: 왜 localAcceptedGroups 첫번째 시간을 썼는지 주석 or 직관적으로 보일 수 있게 수정하면 좋을 것 같습니다
         )
         var newAcceptedGroups: [AcceptedGroup] = []
         for groupInfo in newAcceptedGroupInfos {
             do {
                 let group = try await fetchGroup(uid: groupInfo.groupID)
-                let localMessages = messageStorage.fetch(groupID: groupInfo.groupID)
+                
                 let newMessages = try await fetchLastMessages(
-                    groupID: groupInfo.groupID,
-                    lastMessageTime: localMessages.last?.time
+                    chatID: group.chatID,
+                    lastMessageTime: nil
                 )
                 let newAcceptedGroup = AcceptedGroup(
                     group: group,
                     time: groupInfo.time,
-                    lastMessageContent: newMessages.last?.content ?? localMessages.last?.content ?? "",
+                    lastMessageContent: newMessages.last?.content ?? "",
                     newMessageCount: newMessages.count
                 )
                 newAcceptedGroups.append(newAcceptedGroup)
@@ -73,6 +86,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
         return (localAcceptedGroups + newAcceptedGroups)
     }
     
+    /// User의 uid document에 있는 그룹 중에서 lastAcceptedTime 이후에 있는 그룹을 가져온다.
     func fetchUserGroupInfo(of uid: String, lastAcceptedTime: Date?) async throws -> [UserGroupResponseDTO] {
         var query: Query = firestore
             .collection("User")
@@ -98,14 +112,15 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
         return group.toDomain()
     }
     
-    private func fetchLastMessages(groupID: String, lastMessageTime: Date?) async throws -> [Message] {
-        let localMessages = messageStorage.fetch(groupID: groupID)
+    // SW: 마지막 메세지s만 가져온다는 것이 어떤 의미인지? 마지막 메세지 하나만 필요한거면 Message만 반환해도 좋을 것 같다
+    // SW: .limit을 이용하시면 좋을 것 같다
+    private func fetchLastMessages(chatID: String, lastMessageTime: Date?) async throws -> [Message] {
         var query: Query = firestore
             .collection("Chat")
-            .document(groupID)
+            .document(chatID)
             .collection("Message")
         
-        if let lastMessageTime = localMessages.last?.time {
+        if let lastMessageTime = lastMessageTime {
             query = query.whereField("time", isGreaterThan: lastMessageTime)
         }
         
@@ -114,7 +129,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
         let newMessages = try await query
             .getDocuments()
             .documents
-            .map{
+            .map {
                 try $0.data(as: MessageResponseDTO.self)
                 .toDomain()
             }
