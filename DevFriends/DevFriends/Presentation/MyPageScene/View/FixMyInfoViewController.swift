@@ -154,7 +154,6 @@ final class FixMyInfoViewController: UIViewController {
         
         nicknameTextField.text = viewModel.userNickName
         jobTextField.text = viewModel.userJob
-        viewModel.didLoadUser()
         setupNavigation()
     }
     

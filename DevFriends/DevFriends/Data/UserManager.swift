@@ -10,6 +10,21 @@ import UIKit
 final class UserManager {
     static let shared = UserManager()
     
+    var user: User {
+        get {
+            return User(
+                id: self.uid ?? "",
+                nickname: self.nickname ?? "",
+                job: self.job ?? "",
+                email: self.email ?? "",
+                profileImagePath: self.profileImagePath ?? "",
+                categoryIDs: self.categoryIDs ?? [],
+                appliedGroupIDs: self.appliedGroupIDs ?? [],
+                likeGroupIDs: self.likeGroupIDs ?? []
+            )
+        }
+    }
+    
     // MARK: Computed Properties
     var uid: String? {
         get {
@@ -55,6 +70,17 @@ final class UserManager {
             userDefaults.synchronize()
         }
     }
+    var profileImagePath: String? {
+        get {
+            return UserDefaults.standard.string(forKey: UserInfoKey.profileImagePath.rawValue)
+        }
+        
+        set {
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(newValue, forKey: UserInfoKey.profileImagePath.rawValue)
+            userDefaults.synchronize()
+        }
+    }
     var profile: UIImage? {
         get {
             if let profileData = UserDefaults.standard.data(forKey: UserInfoKey.profile.rawValue) {
@@ -92,6 +118,17 @@ final class UserManager {
             userDefaults.synchronize()
         }
     }
+    var likeGroupIDs: [String]? {
+        get {
+            return UserDefaults.standard.stringArray(forKey: UserInfoKey.likeGroupIDs.rawValue)
+        }
+        
+        set {
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(newValue, forKey: UserInfoKey.likeGroupIDs.rawValue)
+            userDefaults.synchronize()
+        }
+    }
     var isEnabledAutoLogin: Bool {
         get {
             let isEnabled = UserDefaults.standard.bool(forKey: UserInfoKey.isEnabledAutoLogin.rawValue)
@@ -112,6 +149,7 @@ final class UserManager {
     
     private let userRepository = DefaultUserRepository()
     private let imageRepository = DefaultImageRepository()
+    private let categoryRepository = DefaultCategoryRepository()
     
     private init() {}
 }
@@ -132,6 +170,7 @@ extension UserManager {
         userDefaults.removeObject(forKey: UserInfoKey.profile.rawValue)
         userDefaults.removeObject(forKey: UserInfoKey.categoryIDs.rawValue)
         userDefaults.removeObject(forKey: UserInfoKey.appliedGroupIDs.rawValue)
+        userDefaults.removeObject(forKey: UserInfoKey.likeGroupIDs.rawValue)
         userDefaults.removeObject(forKey: UserInfoKey.isEnabledAutoLogin.rawValue)
     }
     
@@ -141,8 +180,10 @@ extension UserManager {
         email = user.email
         nickname = user.nickname
         job = user.job
+        profileImagePath = user.profileImagePath
         categoryIDs = user.categoryIDs
         appliedGroupIDs = user.appliedGroupIDs
+        likeGroupIDs = user.likeGroupIDs
         
         Task {
             self.profile = await fetchProfile(path: user.profileImagePath)

@@ -13,7 +13,7 @@ protocol MyPageFlowCoordinatorDependencies {
     func makeParticipatedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
     func makeLikedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController
     func makePopupViewController(popup: Popup) -> PopupViewController
-    func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
+    func makeFixMyInfoViewController(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
     func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
 }
 
@@ -59,12 +59,13 @@ final class MyPageCoordinator: Coordinator {
         navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
-    func showFixMyInfoViewController() {
+    func showFixMyInfoViewController(userInfo: FixMyInfoStruct) {
         let actions = FixMyInfoViewModelActions(
             showCategoryChoice: showCategoryViewController,
+            didSubmitFixInfo: didSubmitFixInfo,
             popFixMyInfo: popViewController
         )
-        let fixMyInfoViewController = dependencies.makeFixMyInfoViewController(actions: actions)
+        let fixMyInfoViewController = dependencies.makeFixMyInfoViewController(userInfo: userInfo, actions: actions)
         navigationController?.pushViewController(fixMyInfoViewController, animated: true)
         navigationController?.tabBarController?.tabBar.isHidden = true
     }
@@ -87,6 +88,13 @@ extension MyPageCoordinator {
         navigationController?.popViewController(animated: true)
         guard let viewController = navigationController?.viewControllers.last as? FixMyInfoViewController else { return }
         viewController.updateCategories(categories: updatedCategories)
+    }
+    
+    func didSubmitFixInfo(nickname: String, image: UIImage?, categories: [Category]) {
+        popViewController()
+        
+        guard let viewController = navigationController?.viewControllers.last as? MyPageViewController else { return }
+        viewController.updateUserInfo(nickname: nickname, image: image, categories: categories)
     }
     
     func popViewController() {

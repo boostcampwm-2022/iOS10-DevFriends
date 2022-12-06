@@ -5,22 +5,60 @@
 //  Created by 심주미 on 2022/11/23.
 //
 
-import Foundation
+import Combine
+import UIKit
 
 struct MyPageViewModelActions {
     let showMakedGroup: () -> Void
     let showParticipatedGroup: () -> Void
     let showLikedGroup: () -> Void
     
-    let showFixMyInfo: () -> Void
+    let showFixMyInfo: (FixMyInfoStruct) -> Void
     let showPopup: (Popup) -> Void
+}
+
+protocol MyPageViewModelInput {
+    func didLoadUser()
+}
+
+protocol MyPageViewModelOutput {
+    var userImageSubject: CurrentValueSubject<UIImage?, Never> { get }
+    var userNicknameSubject: CurrentValueSubject<String, Never> { get }
+    var userCategoriesSubject: CurrentValueSubject<[Category], Never> { get }
 }
 
 final class MyPageViewModel {
     let actions: MyPageViewModelActions
+    private let loadCategoryUseCase: LoadCategoryUseCase
     
-    init(actions: MyPageViewModelActions) {
+    var userImageSubject = CurrentValueSubject<UIImage?, Never>(nil)
+    var userNicknameSubject = CurrentValueSubject<String, Never>("사용자")
+    var userCategoriesSubject = CurrentValueSubject<[Category], Never>([])
+    
+    init(actions: MyPageViewModelActions, loadCategoryUseCase: LoadCategoryUseCase) {
         self.actions = actions
+        self.loadCategoryUseCase = loadCategoryUseCase
+        
+        userImageSubject.value = UserManager.shared.profile
+        userNicknameSubject.value = UserManager.shared.nickname ?? "사용자"
+        Task {
+            if let ids = UserManager.shared.categoryIDs {
+                userCategoriesSubject.value = await loadCategories(categoryIds: ids)
+            }
+        }
+    }
+    
+    private func loadCategories(categoryIds: [String]) async -> [Category] {
+        var categories: [Category] = []
+        if !categoryIds.isEmpty {
+            do {
+                categories = try await loadCategoryUseCase.execute(categoryIds: categoryIds)
+            } catch {
+                print(error)
+            }
+        }
+        
+        return categories
     }
 }
 
@@ -38,7 +76,14 @@ extension MyPageViewModel {
     }
     
     func showFixMyInfo() {
-        actions.showFixMyInfo()
+        let image = userImageSubject.value == UIImage(named: "Image") ? nil : userImageSubject.value
+        actions.showFixMyInfo(
+            FixMyInfoStruct(
+                user: UserManager.shared.user,
+                image: image,
+                categories: userCategoriesSubject.value
+            )
+        )
     }
     
     func showLogout() {

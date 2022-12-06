@@ -8,13 +8,19 @@
 import Combine
 import UIKit
 
+struct FixMyInfoStruct {
+    var user: User
+    let image: UIImage?
+    let categories: [Category]
+}
+
 struct FixMyInfoViewModelActions {
     let showCategoryChoice: ([Category]) -> Void
+    let didSubmitFixInfo: (String, UIImage?, [Category]) -> Void
     let popFixMyInfo: () -> Void
 }
 
 protocol FixMyInfoViewModelInput {
-    func didLoadUser()
     func didCategorySelectionView(categories: [Category])
     func didTapDoneButton(nickname: String, job: String)
     func didTouchedBackButton()
@@ -37,65 +43,31 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
     private let loadCategoryUseCase: LoadCategoryUseCase
     
     // MARK: - OUTPUT
-    private let localUser: User
+    private var userInfo: FixMyInfoStruct
     var profileImageSubject = CurrentValueSubject<UIImage?, Never>(nil)
     var categoriesSubject = CurrentValueSubject<[Category], Never>([])
     var userNickName: String
     var userJob: String
     
     init(
+        userInfo: FixMyInfoStruct,
         actions: FixMyInfoViewModelActions,
         updateUserInfoUseCase: UpdateUserInfoUseCase,
         uploadProfileImageUseCase: UploadProfileImageUseCase,
         fetchProfileImageUseCase: LoadProfileImageUseCase,
         loadCategoryUseCase: LoadCategoryUseCase
     ) {
+        self.userInfo = userInfo
         self.actions = actions
         self.updateUserInfoUseCase = updateUserInfoUseCase
         self.uploadProfileImageUseCase = uploadProfileImageUseCase
         self.fetchProfileImageUseCase = fetchProfileImageUseCase
         self.loadCategoryUseCase = loadCategoryUseCase
         
-        localUser = User(
-            id: "nqQW9nOes6UPXRCjBuCy",
-            nickname: "흥민 손",
-            job: "EPL득점왕",
-            email: "abc@def.com",
-            profileImagePath: "nqQW9nOes6UPXRCjBuCy",
-            categoryIDs: ["89kKYamuTTGC0rK7VZO8", "spXVLStPa1WBZVQlebCi"],
-            appliedGroupIDs: [],
-            likeGroupIDs: []
-        )
-        
-        userNickName = localUser.nickname
-        userJob = localUser.job
-    }
-
-    private func fetchImage() async -> UIImage? {
-        var image: UIImage?
-        if !localUser.profileImagePath.isEmpty {
-            do {
-                let data = try await fetchProfileImageUseCase.execute(path: localUser.profileImagePath)
-                image = UIImage(data: data)
-            } catch {
-                print(error)
-            }
-        }
-        
-        return image
-    }
-    
-    private func loadCategories(categoryIds: [String]) async -> [Category] {
-        var categories: [Category] = []
-        if !categoryIds.isEmpty {
-            do {
-                categories = try await loadCategoryUseCase.execute(categoryIds: categoryIds)
-            } catch {
-                print(error)
-            }
-        }
-        
-        return categories
+        profileImageSubject.value = userInfo.image
+        categoriesSubject.value = userInfo.categories
+        userNickName = userInfo.user.nickname
+        userJob = userInfo.user.job
     }
     
     private func uploadImage() {
@@ -105,8 +77,22 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
             let originData = image.jpegData(compressionQuality: 0.8),
             let thumbnailData = image.resize(newWidth: 100.0).jpegData(compressionQuality: 0.8) else { return }
         
+        let path: String
+        if userInfo.user.profileImagePath.isEmpty {
+            userInfo.user.profileImagePath = userInfo.user.id + "0"
+        } else {
+            let lastChar = userInfo.user.profileImagePath.removeLast()
+            
+            if lastChar == "0" {
+                userInfo.user.profileImagePath += "1"
+            } else {
+                userInfo.user.profileImagePath += "0"
+            }
+        }
+        path = userInfo.user.profileImagePath
+        
         uploadProfileImageUseCase.execute(
-            uid: localUser.id,
+            path: path,
             originImage: originData,
             thumbnailImage: thumbnailData
         )
@@ -114,23 +100,16 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
     
     private func updateUser(nickname: String, job: String, categoryIDs: [String]) {
         updateUserInfoUseCase.execute(
-            profileImagePath: profileImageSubject.value == nil ? "" : self.localUser.id,
+            profileImagePath: profileImageSubject.value == nil ? "" : userInfo.user.profileImagePath,
             nickName: nickname,
             job: job,
-            user: self.localUser,
+            user: userInfo.user,
             categoryIDs: categoryIDs
         )
     }
 }
 
 extension DefaultFixMyInfoViewModel {
-    func didLoadUser() {
-        Task {
-            profileImageSubject.value = await fetchImage()
-            categoriesSubject.value = await loadCategories(categoryIds: localUser.categoryIDs)
-        }
-    }
-    
     func didCategorySelectionView(categories: [Category]) {
         actions.showCategoryChoice(categories)
     }
@@ -139,7 +118,7 @@ extension DefaultFixMyInfoViewModel {
         uploadImage()
         updateUser(nickname: nickname, job: job, categoryIDs: categoriesSubject.value.map { $0.id })
         
-        actions.popFixMyInfo()
+        actions.didSubmitFixInfo(nickname, profileImageSubject.value, categoriesSubject.value)
     }
     
     func didTouchedBackButton() {

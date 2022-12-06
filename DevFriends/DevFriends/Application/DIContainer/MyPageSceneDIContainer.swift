@@ -47,7 +47,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     
     // MARK: MyPageViwe
     func makeMyPageViewModel(actions: MyPageViewModelActions) -> MyPageViewModel {
-        return MyPageViewModel(actions: actions)
+        return MyPageViewModel(actions: actions, loadCategoryUseCase: makeLoadCategoryUseCase())
     }
     
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController {
@@ -81,8 +81,9 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     }
     
     // MARK: FixMyInfoView
-    private func makeFixMyInfoViewModel(actions: FixMyInfoViewModelActions) -> FixMyInfoViewModel {
+    private func makeFixMyInfoViewModel(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewModel {
         return DefaultFixMyInfoViewModel(
+            userInfo: userInfo,
             actions: actions,
             updateUserInfoUseCase: makeUpdateUserInfoUseCase(),
             uploadProfileImageUseCase: makeUploadProfileImageUseCase(),
@@ -91,8 +92,8 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         )
     }
     
-    func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController {
-        return FixMyInfoViewController(viewModel: makeFixMyInfoViewModel(actions: actions))
+    func makeFixMyInfoViewController(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewController {
+        return FixMyInfoViewController(viewModel: makeFixMyInfoViewModel(userInfo: userInfo, actions: actions))
     }
     
     // MARK: ChooseCategoryView

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UploadProfileImageUseCase {
-    func execute(uid: String, originImage: Data, thumbnailImage: Data)
+    func execute(path: String, originImage: Data, thumbnailImage: Data)
 }
 
 final class DefaultUploadProfileImageUseCase: UploadProfileImageUseCase {
@@ -18,8 +18,8 @@ final class DefaultUploadProfileImageUseCase: UploadProfileImageUseCase {
         self.imageRepository = imageRepository
     }
     
-    func execute(uid: String, originImage: Data, thumbnailImage: Data) {
-        imageRepository.update(.profile, uid: uid, image: originImage)
-        imageRepository.update(.profile, uid: uid + "_th", image: thumbnailImage)
+    func execute(path: String, originImage: Data, thumbnailImage: Data) {
+        imageRepository.update(.profile, path: path, image: originImage)
+        imageRepository.update(.profile, path: path + "_th", image: thumbnailImage)
     }
 }
