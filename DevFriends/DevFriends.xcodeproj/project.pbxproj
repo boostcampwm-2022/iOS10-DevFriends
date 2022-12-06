@@ -90,7 +90,6 @@
 		E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A2024292319C700887EC9 /* PostDetailCommentView.swift */; };
 		E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202729235A3D00887EC9 /* PostAttentionView.swift */; };
 		E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */; };
-		E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202D2923DADD00887EC9 /* ReportView.swift */; };
 		E33A20362924E9FB00887EC9 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */; };
 		E33A20812926622000887EC9 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20732926621F00887EC9 /* ChatViewController.swift */; };
 		E33A20822926622000887EC9 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20742926621F00887EC9 /* ChatTableViewCell.swift */; };
@@ -320,7 +319,6 @@
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
-		E33A202D2923DADD00887EC9 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		E33A20732926621F00887EC9 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E33A20742926621F00887EC9 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -710,6 +708,7 @@
 		E33A20AE292665A700887EC9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */,
 				A648BB5329339A4E0018A654 /* CommonPaddingLabel.swift */,
 				A648BB5229339A4E0018A654 /* CommonTextView.swift */,
 				FC5D01AD292F553200292D33 /* PopupViewController.swift */,
@@ -916,8 +915,6 @@
 				E394C4A8292248BA0064ADA7 /* KeyValueDisplayView.swift */,
 				E33A2024292319C700887EC9 /* PostDetailCommentView.swift */,
 				E33A202729235A3D00887EC9 /* PostAttentionView.swift */,
-				E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */,
-				E33A202D2923DADD00887EC9 /* ReportView.swift */,
 				E33A20352924E9FB00887EC9 /* CommentTableViewCell.swift */,
 				E31B353C293B7645000386BD /* CommentInfo.swift */,
 			);
@@ -1513,7 +1510,6 @@
 				E33A20812926622000887EC9 /* ChatViewController.swift in Sources */,
 				05CB4A34292DF15200A97531 /* CategoryRepository.swift in Sources */,
 				E31B353D293B7645000386BD /* CommentInfo.swift in Sources */,
-				E33A202E2923DADD00887EC9 /* ReportView.swift in Sources */,
 				FCB94CD82934CD1200DD17CD /* AcceptedGroup.swift in Sources */,
 				A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,

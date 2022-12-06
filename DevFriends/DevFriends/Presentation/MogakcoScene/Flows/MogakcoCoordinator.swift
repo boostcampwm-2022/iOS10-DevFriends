@@ -13,7 +13,7 @@ protocol MogakcoCoordinatorDependencies {
     func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
     func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
     func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer
-    func makePostReportViewController() -> PostReportViewController
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController
 }
 
 final class MogakcoCoordinator: Coordinator {
@@ -100,7 +100,11 @@ extension MogakcoCoordinator {
     }
     
     func showPostReportViewController() {
-        let reportViewController = dependencies.makePostReportViewController()
+        let actions = PostReportViewControllerActions(
+            submit: moveBackToMogakcoViewController,
+            close: moveBackToMogakcoViewController
+        )
+        let reportViewController = dependencies.makePostReportViewController(actions: actions)
         navigationController.pushViewController(reportViewController, animated: true)
     }
 }

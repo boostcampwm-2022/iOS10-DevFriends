@@ -10,7 +10,7 @@ import UIKit
 protocol ChatFlowCoordinatorDependencies {
     func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController
     func makeChatContentViewController(group: Group, actions: ChatContentViewModelActions) -> ChatContentViewController
-    func makePostReportViewController() -> PostReportViewController
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController
 }
 
 final class ChatCoordinator: Coordinator {
@@ -46,7 +46,11 @@ extension ChatCoordinator {
     }
     
     func showPostReportViewController() {
-        let postReportViewController = dependencies.makePostReportViewController()
+        let acitons = PostReportViewControllerActions(
+            submit: popViewController,
+            close: popViewController
+        )
+        let postReportViewController = dependencies.makePostReportViewController(actions: acitons)
         navigationController.pushViewController(postReportViewController, animated: true)
     }
     
