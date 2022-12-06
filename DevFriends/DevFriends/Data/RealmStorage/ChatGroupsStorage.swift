@@ -24,7 +24,7 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
     func save(acceptedGroups: [AcceptedGroup]) throws {
         try realm?.write {
             for group in acceptedGroups {
-                realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: group))
+                realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: group), update: .modified)
             }
         }
     }
