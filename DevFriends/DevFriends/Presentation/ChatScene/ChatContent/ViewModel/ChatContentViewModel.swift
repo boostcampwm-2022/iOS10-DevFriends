@@ -12,6 +12,7 @@ protocol ChatContentViewModelInput {
     func didLoadMessages()
     func didSendMessage(text: String)
     func back()
+    func didTapSettingButton()
 }
 
 protocol ChatContentViewModelOutput {
@@ -23,6 +24,7 @@ protocol ChatContentViewModel: ChatContentViewModelInput, ChatContentViewModelOu
 
 struct ChatContentViewModelActions {
     let back: () -> Void
+    let report: () -> Void
 }
 
 final class DefaultChatContentViewModel: ChatContentViewModel {
@@ -70,6 +72,10 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     func back() {
         removeMessageListenerUseCase.execute()
         actions.back()
+    }
+    
+    func didTapSettingButton() {
+        actions.report()
     }
 }
 

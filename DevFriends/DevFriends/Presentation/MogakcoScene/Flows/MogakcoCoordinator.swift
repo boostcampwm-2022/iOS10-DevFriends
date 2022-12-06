@@ -13,6 +13,7 @@ protocol MogakcoCoordinatorDependencies {
     func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
     func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
     func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer
+    func makePostReportViewController() -> PostReportViewController
 }
 
 final class MogakcoCoordinator: Coordinator {
@@ -44,7 +45,10 @@ final class MogakcoCoordinator: Coordinator {
 
 extension MogakcoCoordinator {
     func showGroupDetailViewController(group: Group) {
-        let actions = PostDetailViewModelActions(backToPrevViewController: moveBackToMogakcoViewController)
+        let actions = PostDetailViewModelActions(
+            backToPrevViewController: moveBackToMogakcoViewController,
+            report: showPostReportViewController
+        )
         let postDetailViewController = dependencies.makePostDetailViewController(actions: actions, group: group)
         navigationController.pushViewController(postDetailViewController, animated: true)
         navigationController.tabBarController?.tabBar.isHidden = true
@@ -93,5 +97,10 @@ extension MogakcoCoordinator {
     func moveBackToMogakcoViewController() {
         navigationController.tabBarController?.tabBar.isHidden = false
         navigationController.popViewController(animated: true)
+    }
+    
+    func showPostReportViewController() {
+        let reportViewController = dependencies.makePostReportViewController()
+        navigationController.pushViewController(reportViewController, animated: true)
     }
 }

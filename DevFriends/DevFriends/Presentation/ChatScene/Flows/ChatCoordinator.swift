@@ -10,6 +10,7 @@ import UIKit
 protocol ChatFlowCoordinatorDependencies {
     func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController
     func makeChatContentViewController(group: Group, actions: ChatContentViewModelActions) -> ChatContentViewController
+    func makePostReportViewController() -> PostReportViewController
 }
 
 final class ChatCoordinator: Coordinator {
@@ -35,10 +36,18 @@ final class ChatCoordinator: Coordinator {
 
 extension ChatCoordinator {
     func showChatContentViewController(group: Group) {
-        let actions = ChatContentViewModelActions(back: popViewController)
+        let actions = ChatContentViewModelActions(
+            back: popViewController,
+            report: showPostReportViewController
+        )
         let chatContentViewController = dependencies.makeChatContentViewController(group: group, actions: actions)
         navigationController.pushViewController(chatContentViewController, animated: true)
         navigationController.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func showPostReportViewController() {
+        let postReportViewController = dependencies.makePostReportViewController()
+        navigationController.pushViewController(postReportViewController, animated: true)
     }
     
     func popViewController() {

@@ -10,6 +10,7 @@ import UIKit
 
 class ChatContentViewController: UIViewController {
     private let backBarButton = BackBarButtonItem()
+    private let settingButton = SettingBarButtonItem()
     
     private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
@@ -89,6 +90,12 @@ class ChatContentViewController: UIViewController {
         hideKeyboardWhenTappedAround()
             .store(in: &cancellables)
         
+        settingButton.publisher
+            .sink { [weak self] _ in
+                self?.didTapSettingButton()
+            }
+            .store(in: &cancellables)
+        
         backBarButton.publisher
             .sink { [weak self] _ in
                 self?.viewModel.back()
@@ -128,6 +135,7 @@ class ChatContentViewController: UIViewController {
     private func setupNavigation() {
         self.navigationItem.title = "\(viewModel.group.title)"
         self.navigationItem.leftBarButtonItem = backBarButton
+        self.navigationItem.rightBarButtonItem = settingButton
     }
     
     private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {
@@ -179,5 +187,19 @@ class ChatContentViewController: UIViewController {
     private func populateSnapshot(data: [Message]) {
         self.messageTableViewSnapShot.appendItems(data)
         self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
+    }
+    
+    private func didTapSettingButton() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let reportAction = UIAlertAction(title: "신고", style: .default) { [weak self] _ in
+            self?.viewModel.didTapSettingButton()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        actionSheet.addAction(reportAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true)
     }
 }
