@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0510E4A8294093C300411413 /* FixMyInfoStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0510E4A7294093C300411413 /* FixMyInfoStruct.swift */; };
 		052BF68929385BF30037C976 /* FixMyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF68829385BF30037C976 /* FixMyInfoViewModel.swift */; };
 		052BF68D29385C920037C976 /* LoadProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF68A29385C920037C976 /* LoadProfileImageUseCase.swift */; };
 		052BF68E29385C920037C976 /* UpdateUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF68B29385C920037C976 /* UpdateUserInfoUseCase.swift */; };
@@ -215,6 +216,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0510E4A7294093C300411413 /* FixMyInfoStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixMyInfoStruct.swift; sourceTree = "<group>"; };
 		052BF68829385BF30037C976 /* FixMyInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixMyInfoViewModel.swift; sourceTree = "<group>"; };
 		052BF68A29385C920037C976 /* LoadProfileImageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadProfileImageUseCase.swift; sourceTree = "<group>"; };
 		052BF68B29385C920037C976 /* UpdateUserInfoUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserInfoUseCase.swift; sourceTree = "<group>"; };
@@ -1050,6 +1052,7 @@
 				A648BB24292E1D6F0018A654 /* Filter.swift */,
 				E3DE5491293481FC00E63898 /* UserGroup.swift */,
 				A648BB642937966D0018A654 /* Chat.swift */,
+				0510E4A7294093C300411413 /* FixMyInfoStruct.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1434,6 +1437,7 @@
 				A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
 				A66C7BC0292E19830008B6FD /* ChatMessagesRepository.swift in Sources */,
+				0510E4A8294093C300411413 /* FixMyInfoStruct.swift in Sources */,
 				05CB4A2D292DF13500A97531 /* DefaultGroupCommentRepository.swift in Sources */,
 				A66C7BC4292E19C70008B6FD /* SaveGroupUseCase.swift in Sources */,
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,

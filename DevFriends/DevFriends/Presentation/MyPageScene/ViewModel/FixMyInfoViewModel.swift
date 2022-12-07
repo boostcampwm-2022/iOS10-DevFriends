@@ -8,12 +8,6 @@
 import Combine
 import UIKit
 
-struct FixMyInfoStruct {
-    var user: User
-    let image: UIImage?
-    let categories: [Category]
-}
-
 struct FixMyInfoViewModelActions {
     let showCategoryChoice: ([Category]) -> Void
     let didSubmitFixInfo: (String, UIImage?, [Category]) -> Void

@@ -17,14 +17,8 @@ final class FixMyInfoViewController: UIViewController {
         barButton.tintColor = .black
         return barButton
     }()
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        return scrollView
-    }()
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     private lazy var profileImageViewHeight = view.frame.width - 100
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -49,10 +43,7 @@ final class FixMyInfoViewController: UIViewController {
         textField.delegate = self
         return textField
     }()
-    private lazy var categorySelectionView: ChooseCategoryView = {
-        let categorySelectionView = ChooseCategoryView()
-        return categorySelectionView
-    }()
+    private let categorySelectionView = ChooseCategoryView()
     private let fixDoneButton = CommonButton(text: "수정 완료")
     
     private lazy var imagePicker: PHPickerViewController = {
