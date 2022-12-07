@@ -156,20 +156,17 @@ extension GroupFilterViewController: UICollectionViewDataSource {
         case SectionType.align.rawValue: // 정렬 순서
             cell.configure(viewModel.alignType[indexPath.item].rawValue)
             if viewModel.alignType[indexPath.item] == viewModel.alignFilter {
-                cell.isSelected = true
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
         case SectionType.group.rawValue: // 모임 종류
             cell.configure(viewModel.groupType[indexPath.item].rawValue)
             if let groupFilter = viewModel.groupFilter,
                groupFilter == viewModel.groupType[indexPath.item] {
-                cell.isSelected = true
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
         case SectionType.category.rawValue: // 태그 종류
             cell.configure(viewModel.categoryType[indexPath.item].name)
             if viewModel.categoryFilter.contains(viewModel.categoryType[indexPath.item].id) {
-                cell.isSelected = true
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
         default:

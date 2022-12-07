@@ -53,7 +53,8 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
     }
     
     private func configureUI() {
-        self.contentView.backgroundColor = .white
+        // TODO: 아래 코드는 없어도 되지 않을까요?
+//        self.contentView.backgroundColor = .white
         self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = true
         self.contentView.layer.borderWidth = 1
