@@ -35,6 +35,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     func makeNotifiactionRepository() -> NotificationRepository {
         return DefaultNotificationRepository()
     }
+    
+    func makeImageRepository() -> ImageRepository {
+        return DefaultImageRepository()
+    }
         
     // MARK: UseCases
     func makeFetchGroupUseCase() -> LoadGroupUseCase {
@@ -83,6 +87,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultSortGroupUseCase()
     }
     
+    func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
+        return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
+    }
+    
     // MARK: GroupList
     func makeGroupListViewController(actions: GroupListViewModelActions) -> GroupListViewController {
         return GroupListViewController(viewModel: makeGroupListViewModel(actions: actions))
@@ -125,7 +133,8 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
             sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
             updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
-            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
+            loadProfileImageUseCase: makeLoadProfileImageUseCase()
         )
     }
     

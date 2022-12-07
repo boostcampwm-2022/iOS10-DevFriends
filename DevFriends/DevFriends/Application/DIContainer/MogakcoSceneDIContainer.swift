@@ -35,6 +35,10 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     private func makeNotificationRepository() -> NotificationRepository {
         return DefaultNotificationRepository()
     }
+    
+    private func makeImageRepository() -> ImageRepository {
+        return DefaultImageRepository()
+    }
 
     // MARK: UseCases
     private func makeLoadGroupUseCase() -> LoadGroupUseCase {
@@ -73,6 +77,10 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return DefaultSendCommentNotificationUseCase(notificationRepository: makeNotificationRepository())
     }
     
+    private func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
+        return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
+    }
+    
     // MARK: Mogakco
     private func makeMogakcoViewModel(actions: MogakcoViewModelActions) -> MogakcoViewModel {
         return MogakcoViewModel(fetchGroupUseCase: makeLoadGroupUseCase(), actions: actions)
@@ -101,7 +109,8 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
             sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
             updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
-            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
+            loadProfileImageUseCase: makeLoadProfileImageUseCase()
         )
     }
     

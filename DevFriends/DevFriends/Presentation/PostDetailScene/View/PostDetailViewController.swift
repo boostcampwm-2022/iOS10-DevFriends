@@ -346,7 +346,7 @@ extension PostDetailViewController: UITableViewDelegate {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        if maximumOffset < currentOffset {
+        if viewModel.commentsSubject.value.count == viewModel.expectedCommentsCount && maximumOffset < currentOffset {
             viewModel.didScrollToBottom()
             spinner.startAnimating()
             
