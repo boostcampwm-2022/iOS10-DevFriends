@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 protocol LoadChatGroupsUseCase {
-    func execute() async throws -> [AcceptedGroup]
+    func executeFromLocal() -> [AcceptedGroup]
+    func execute(groupListenersProcess: @escaping (_ groupListeners: [ListenerRegistration]) -> Void, groupProcess: @escaping (_ group: AcceptedGroup) -> Void) -> ListenerRegistration
 }
 
 final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
@@ -18,11 +20,19 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
         self.chatGroupsRepository = chatGroupsRepository
     }
     
-    func execute() async throws -> [AcceptedGroup] {
-        // MARK: user를 나중에 어떻게 가져올지 논의해보기
-        //guard let uid = UserDefaults.standard.object(forKey: "uid") as? String
-        //else { fatalError("UID was not stored!!") }
+    func executeFromLocal() -> [AcceptedGroup] {
+        return chatGroupsRepository.fetchFromLocal()
+    }
+    
+    func execute(groupListenersProcess: @escaping (_ groupListeners: [ListenerRegistration]) -> Void, groupProcess: @escaping (_ group: AcceptedGroup) -> Void) -> ListenerRegistration {
         let id = "YkocW98XPzJAsSDVa5qd"
-        return try await chatGroupsRepository.fetch(userID: id)
+        
+        let groupListListener = chatGroupsRepository.fetch(
+            userID: id,
+            messageListenersProcess: groupListenersProcess,
+            groupProcess: groupProcess
+        )
+        
+        return groupListListener
     }
 }

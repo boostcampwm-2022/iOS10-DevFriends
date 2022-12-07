@@ -92,6 +92,8 @@ final class ChatViewController: UIViewController {
     }
     
     private func populateSnapshot(data: [AcceptedGroup]) {
+        self.chatTableViewSnapShot.deleteAllItems()
+        self.chatTableViewSnapShot.appendSections([.main])
         self.chatTableViewSnapShot.appendItems(data)
         self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
     }

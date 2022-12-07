@@ -27,14 +27,8 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
         for group in acceptedGroups {
             try save(acceptedGroup: group)
         }
-//        try realm?.write {
-//            for group in acceptedGroups {
-//                realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: group))
-//            }
-//        }
     }
     
-    // SW: 각 AcceptedGroup을 저장하기 위해 만듦
     func save(acceptedGroup: AcceptedGroup) throws {
         try realm?.write {
             realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: acceptedGroup), update: .modified)
