@@ -108,17 +108,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.sendCommentNotificationUseCase = sendCommentNotificationUseCase
         self.loadProfileImageUseCase = loadProfileImageUseCase
         
-        // 테스트 유저
-        localUser = User(
-            id: "nqQW9nOes6UPXRCjBuCy",
-            nickname: "흥민 손",
-            job: "EPL득점왕",
-            email: "abc@def.com",
-            profileImagePath: "",
-            categoryIDs: [],
-            appliedGroupIDs: [],
-            likeGroupIDs: []
-        )
+        localUser = UserManager.shared.user
         
         postDetailContentsSubject.value = .init(
             title: group.title,
