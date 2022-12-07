@@ -10,16 +10,8 @@ import SnapKit
 import UIKit
 
 final class SignUpViewController: UIViewController {
-    private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(
-            image: .chevronLeft,
-            style: .plain,
-            target: self,
-            action: #selector(didTouchedBackButton)
-        )
-        barButton.tintColor = .black
-        return barButton
-    }()
+    private let backBarButton = BackBarButtonItem()
+    
     let emailTextField: CommonTextField = {
         let textField = CommonTextField(placeHolder: nil)
         textField.layer.borderWidth = 1
@@ -161,48 +153,54 @@ final class SignUpViewController: UIViewController {
     }
     
     private func bind() {
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+        
         emailTextField.publisher(for: \.text)
-            .sink {
-                self.viewModel.didChangedTextInEmailTextField(text: $0)
+            .sink { [weak self] email in
+                self?.viewModel.didChangedTextInEmailTextField(text: email)
             }
             .store(in: &cancellables)
         
         nicknameTextField.publisher(for: \.text)
-            .sink {
-                self.viewModel.didChangedTextInNicknameTextField(text: $0)
+            .sink { [weak self] nickname in
+                self?.viewModel.didChangedTextInNicknameTextField(text: nickname)
             }
             .store(in: &cancellables)
         
         viewModel.isProcessEnabled
-            .sink {
-                switch $0 {
+            .sink { [weak self] enabled in
+                switch enabled {
                 case true:
-                    self.signUpButton.set(title: "회원가입", state: .activated)
+                    self?.signUpButton.set(title: "회원가입", state: .activated)
                 case false:
-                    self.signUpButton.set(title: "양식을 작성해주세요", state: .disabled)
+                    self?.signUpButton.set(title: "양식을 작성해주세요", state: .disabled)
                 }
             }
             .store(in: &cancellables)
         
         viewModel.isEmailValidated
-            .sink {
-                switch $0 {
+            .sink { [weak self] valid in
+                switch valid {
                 case true:
-                    self.emailValidationLabel.text = "사용할 수 있는 이메일입니다."
-                    self.emailValidationLabel.textColor = .systemGreen
+                    self?.emailValidationLabel.text = "사용할 수 있는 이메일입니다."
+                    self?.emailValidationLabel.textColor = .systemGreen
                 case false:
-                    self.emailValidationLabel.text = "이메일 형식을 확인해주세요."
-                    self.emailValidationLabel.textColor = .systemRed
+                    self?.emailValidationLabel.text = "이메일 형식을 확인해주세요."
+                    self?.emailValidationLabel.textColor = .systemRed
                 }
             }
             .store(in: &cancellables)
         
         signUpButton.publisher(for: .touchUpInside)
-            .sink {
-                self.viewModel.didTouchedSignUp(
-                    nickname: self.nicknameTextField.text ?? "",
-                    job: self.jobTextField.text,
-                    email: self.emailTextField.text ?? ""
+            .sink { [weak self] _ in
+                self?.viewModel.didTouchedSignUp(
+                    nickname: self?.nicknameTextField.text ?? "",
+                    job: self?.jobTextField.text,
+                    email: self?.emailTextField.text ?? ""
                 )
             }
             .store(in: &cancellables)
@@ -225,7 +223,7 @@ final class SignUpViewController: UIViewController {
 }
 
 extension SignUpViewController {
-    @objc func didTouchedBackButton() {
+    func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
     }
 }
