@@ -10,7 +10,11 @@ import PhotosUI
 import UIKit
 
 final class FixMyInfoViewController: UIViewController {
+<<<<<<< HEAD
     private let backBarButton = BackBarButtonItem()
+    
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     
     private lazy var profileImageViewHeight = view.frame.width - 100
     private lazy var profileImageView: UIImageView = {
@@ -29,7 +33,6 @@ final class FixMyInfoViewController: UIViewController {
         textField.delegate = self
         return textField
     }()
-    
     private lazy var jobTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "직업을 입력해주세요"
@@ -37,7 +40,7 @@ final class FixMyInfoViewController: UIViewController {
         textField.delegate = self
         return textField
     }()
-    
+    private let categorySelectionView = ChooseCategoryView()
     private let fixDoneButton = CommonButton(text: "수정 완료")
     
     private lazy var imagePicker: PHPickerViewController = {
@@ -71,21 +74,32 @@ final class FixMyInfoViewController: UIViewController {
     }
     
     private func layout() {
-        view.addSubview(profileImageView)
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        
+        contentView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalToSuperview().offset(20)
             make.width.height.equalTo(profileImageViewHeight)
         }
         
         let nicknameLabel = makeTitleLabel(text: "닉네임")
-        view.addSubview(nicknameLabel)
+        contentView.addSubview(nicknameLabel)
         nicknameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.top.equalTo(profileImageView.snp.bottom).offset(25)
         }
         
-        view.addSubview(nicknameTextField)
+        contentView.addSubview(nicknameTextField)
         nicknameTextField.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
@@ -93,22 +107,30 @@ final class FixMyInfoViewController: UIViewController {
         }
         
         let jobLabel = makeTitleLabel(text: "직업")
-        view.addSubview(jobLabel)
+        contentView.addSubview(jobLabel)
         jobLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.top.equalTo(nicknameTextField.snp.bottom).offset(25)
         }
         
-        view.addSubview(jobTextField)
+        contentView.addSubview(jobTextField)
         jobTextField.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
             make.top.equalTo(jobLabel.snp.bottom).offset(15)
         }
         
-        view.addSubview(fixDoneButton)
+        contentView.addSubview(categorySelectionView)
+        categorySelectionView.snp.makeConstraints { make in
+            make.top.equalTo(jobTextField.snp.bottom).offset(25)
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
+        }
+        
+        contentView.addSubview(fixDoneButton)
         fixDoneButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(categorySelectionView.snp.bottom).offset(25)
+            make.bottom.equalToSuperview().offset(-100)
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
             make.height.equalTo(40)
@@ -120,7 +142,6 @@ final class FixMyInfoViewController: UIViewController {
         
         nicknameTextField.text = viewModel.userNickName
         jobTextField.text = viewModel.userJob
-        viewModel.didLoadUser()
         setupNavigation()
     }
     
@@ -152,6 +173,12 @@ final class FixMyInfoViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        self.categorySelectionView.didTouchViewSubject
+            .sink { [weak self] _ in
+                self?.viewModel.didCategorySelectionView(categories: [])
+            }
+            .store(in: &cancellables)
+        
         self.fixDoneButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 guard let nickname = self?.nicknameTextField.text, let job = self?.jobTextField.text else { return }
@@ -167,6 +194,13 @@ final class FixMyInfoViewController: UIViewController {
                 } else {
                     self?.profileImageView.image = .profile
                 }
+            }
+            .store(in: &cancellables)
+        
+        self.viewModel.categoriesSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] categories in
+                self?.categorySelectionView.set(categories: categories)
             }
             .store(in: &cancellables)
     }
@@ -235,6 +269,12 @@ extension FixMyInfoViewController: PHPickerViewControllerDelegate {
                 }
             }
         }
+    }
+}
+
+extension FixMyInfoViewController {
+    func updateCategories(categories: [Category]) {
+        self.viewModel.categoriesSubject.value = categories
     }
 }
 

@@ -27,9 +27,10 @@ final class AppFlowCoordinator: Coordinator {
     func start() {
         let authSceneDIContainer = appDIContainer.authSceneDIContainer()
         let flow = authSceneDIContainer.makeAuthCoordinator(navigationController: navigationController)
+        
+        childCoordinators.append(flow)
         flow.delegate = self
         flow.start()
-        childCoordinators.append(flow)
     }
 }
 
@@ -38,7 +39,18 @@ extension AppFlowCoordinator: AuthCoordinatorDelegate {
         navigationController.isNavigationBarHidden = true
         let tabBarSceneDIContainer = appDIContainer.tabBarSceneDIContainer()
         let flow = tabBarSceneDIContainer.makeTabBarFlowCoordinator(navigationController: navigationController)
+        flow.delegate = self
         flow.start()
         childCoordinators.append(flow)
+    }
+}
+
+extension AppFlowCoordinator: TabBarCoordinatorDelegate {
+    func showLoginView() {
+        if let flow = childCoordinators.first as? AuthCoordinator {
+            childCoordinators.removeLast()
+            UserManager.shared.isEnabledAutoLogin = false
+            flow.start()
+        }
     }
 }

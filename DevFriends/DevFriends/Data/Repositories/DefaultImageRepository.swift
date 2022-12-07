@@ -15,11 +15,11 @@ extension DefaultImageRepository: ImageRepository {
         return try NSData(contentsOf: url) as Data
     }
     
-    func update(_ type: ImageType, uid: String, image: Data) {
+    func update(_ type: ImageType, path: String, image: Data) {
         let metaData = StorageMetadata()
         metaData.contentType = "image/png"
         
-        storage.reference().child(type.rawValue).child(uid).putData(image, metadata: metaData) { _, error in
+        storage.reference().child(type.rawValue).child(path).putData(image, metadata: metaData) { _, error in
             if let error = error {
                 print(error.localizedDescription)
             }
