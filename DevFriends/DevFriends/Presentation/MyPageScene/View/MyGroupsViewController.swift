@@ -17,6 +17,14 @@ final class MyGroupsViewController: UIViewController {
         return barButton
     }()
     
+    private lazy var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "모임이 없습니다!"
+        label.font = .systemFont(ofSize: 30.0, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
     private lazy var groupCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout)
         collectionView.backgroundColor = .white
@@ -80,6 +88,7 @@ final class MyGroupsViewController: UIViewController {
     }
     
     private func configureUI() {
+        view.backgroundColor = .white
         setupCollectionView()
         setupNavigation()
     }
@@ -102,6 +111,11 @@ final class MyGroupsViewController: UIViewController {
     }
     
     private func layout() {
+        view.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+        
         view.addSubview(groupCollectionView)
         groupCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
@@ -118,6 +132,11 @@ final class MyGroupsViewController: UIViewController {
         viewModel.groupsSubject
             .sink { [weak self] groups in
                 self?.populateSnapshot(data: groups)
+                
+                DispatchQueue.main.async {
+                    self?.groupCollectionView.isHidden = groups.isEmpty
+                    self?.emptyLabel.isHidden = !groups.isEmpty
+                }
             }
             .store(in: &cancellables)
     }
