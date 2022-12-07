@@ -85,6 +85,10 @@ extension DefaultGroupListViewModel {
             )
             var recommandGroupCellInfos: [GroupCellInfo] = []
             for group in sortedRecommand {
+                // 참가인원 다 찼으면 패스
+                if group.participantIDs.count >= group.limitedNumberPeople {
+                    continue
+                }
                 let categories = await loadCategories(categoryIDs: group.categoryIDs)
                 var distance: Double?
                 if let userLocation = userLocation {
@@ -111,6 +115,10 @@ extension DefaultGroupListViewModel {
             )
             var filteredGroupCellInfos: [GroupCellInfo] = []
             for group in sortedFiltered {
+                // 참가인원 다 찼으면 패스
+                if group.participantIDs.count >= group.limitedNumberPeople {
+                    continue
+                }
                 let categories = await loadCategories(categoryIDs: group.categoryIDs)
                 var distance: Double?
                 if let userLocation = userLocation {
