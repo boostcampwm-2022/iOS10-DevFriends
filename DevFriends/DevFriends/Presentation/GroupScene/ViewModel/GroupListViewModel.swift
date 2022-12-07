@@ -41,7 +41,7 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     private let fetchGroupUseCase: LoadGroupUseCase
     private let actions: GroupListViewModelActions
     private let sortGroupUseCase: SortGroupUseCase
-    private let fetchCategoryUseCase: LoadCategoryUseCase
+    private let loadCategoryUseCase: LoadCategoryUseCase
     private var userLocation: Location?
     var recommandFilter: Filter
     var groupFilter = Filter(alignFilter: .newest, categoryFilter: [])
@@ -54,7 +54,7 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     ) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.sortGroupUseCase = sortGroupUseCase
-        self.fetchCategoryUseCase = fetchCategoryUseCase
+        self.loadCategoryUseCase = fetchCategoryUseCase
         // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
         self.recommandFilter = Filter(alignFilter: .closest, categoryFilter: [])
         self.actions = actions
@@ -146,7 +146,7 @@ extension DefaultGroupListViewModel {
         var result: [Category] = []
         do {
             result = try await Task {
-                try await fetchCategoryUseCase.execute(categoryIds: categoryIDs)
+                try await loadCategoryUseCase.execute(categoryIds: categoryIDs)
             }.result.get()
         } catch {
             print(error)
