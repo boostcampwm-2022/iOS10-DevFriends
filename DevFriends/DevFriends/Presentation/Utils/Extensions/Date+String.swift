@@ -20,7 +20,7 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 
-    func isSame(as other: Date?) -> Bool {
+    func isSameTime(as other: Date?) -> Bool {
         guard let other = other else { return false }
         
         let dateFormatter = DateFormatter()

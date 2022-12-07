@@ -204,7 +204,7 @@ class ChatContentViewController: UIViewController {
     private func isNoNeedToHaveTimeLabel(data: Message, indexPath: IndexPath) -> Bool {
         guard indexPath.row + 1 != self.viewModel.messagesSubject.value.count else { return false }
         if let message = self.viewModel.messagesSubject.value[indexPath.row + 1] as? Message {
-            let isSameTime = data.time.isSame(as: message.time)
+            let isSameTime = data.time.isSameTime(as: message.time)
             return isSameTime
         }
         return false
