@@ -187,4 +187,8 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController {
         return ChooseCategoryViewController(viewModel: makeChooseCategoryViewModel(actions: actions))
     }
+    
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController {
+        return PostReportViewController(actions: actions)
+    }
 }

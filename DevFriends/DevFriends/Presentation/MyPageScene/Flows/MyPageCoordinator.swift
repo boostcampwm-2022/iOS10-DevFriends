@@ -16,6 +16,7 @@ protocol MyPageFlowCoordinatorDependencies {
     func makePopupViewController(popup: Popup) -> PopupViewController
     func makeFixMyInfoViewController(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
     func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController
 }
 
 protocol MyPageCoordinatorDelegate: AnyObject {
@@ -67,7 +68,10 @@ final class MyPageCoordinator: Coordinator {
     }
     
     func showGroupDetailViewController(group: Group) {
-        let actions = PostDetailViewModelActions(backToPrevViewController: moveBackToGroupListViewController)
+        let actions = PostDetailViewModelActions(
+            backToPrevViewController: moveBackToGroupListViewController,
+            report: showPostReportViewController
+        )
         let postDetailViewController = dependencies.makePostDetailViewController(actions: actions, group: group)
         navigationController?.pushViewController(postDetailViewController, animated: true)
         navigationController?.tabBarController?.tabBar.isHidden = true
@@ -96,6 +100,20 @@ final class MyPageCoordinator: Coordinator {
     
     func showLoginViewController() {
         delegate?.showLoginView()
+    }
+    
+    func showPostReportViewController() {
+        let acitons = PostReportViewControllerActions(
+            submit: popViewControllerWithHiddenTabBar,
+            close: popViewControllerWithHiddenTabBar
+        )
+        let postReportViewController = dependencies.makePostReportViewController(actions: acitons)
+        navigationController?.pushViewController(postReportViewController, animated: true)
+    }
+    
+    func popViewControllerWithHiddenTabBar() {
+        navigationController?.popViewController(animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = true
     }
 }
 

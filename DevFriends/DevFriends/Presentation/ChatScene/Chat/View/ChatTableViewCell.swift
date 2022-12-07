@@ -36,11 +36,15 @@ final class ChatTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let newMessageView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        view.layer.cornerRadius = 10
-        return view
+    private let newMessageLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .red
+        label.textColor = .white
+        label.layer.cornerRadius = 10
+        label.textAlignment = .center
+        label.clipsToBounds = true
+        label.font = .systemFont(ofSize: 12)
+        return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -59,11 +63,20 @@ final class ChatTableViewCell: UITableViewCell {
         self.lastMessageLabel.text = ""
     }
     
-    func set(data: Group, lastMessage: String?, hasNewMessage: Bool) {
-        self.participantCountLabel.text = "\(data.participantIDs.count)"
-        self.titleLabel.text = data.title
-        self.lastMessageLabel.text = lastMessage
-        self.newMessageView.isHidden = !hasNewMessage
+    func set(data: AcceptedGroup) {
+        self.participantCountLabel.text = "\(data.group.participantIDs.count)"
+        self.titleLabel.text = data.group.title
+        self.lastMessageLabel.text = data.lastMessageContent
+        if data.newMessageCount == 0 {
+            self.newMessageLabel.isHidden = true
+        } else {
+            self.newMessageLabel.isHidden = false
+            if data.newMessageCount > 9 {
+                self.newMessageLabel.text = "9+"
+            } else {
+                self.newMessageLabel.text = "\(data.newMessageCount)"
+            }
+        }
     }
 }
 
@@ -85,25 +98,27 @@ extension ChatTableViewCell: ReusableType {
             make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
         }
         
-        self.addSubview(newMessageView)
-        self.newMessageView.snp.makeConstraints { make in
+        self.addSubview(newMessageLabel)
+        self.newMessageLabel.snp.makeConstraints { make in
             make.centerY.equalTo(self.chatImageView.snp.centerY)
             make.trailing.equalToSuperview().offset(-20)
-            make.size.height.width.equalTo(20)
+            make.height.equalTo(20)
+            make.width.greaterThanOrEqualTo(25)
         }
+        self.newMessageLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         self.addSubview(lastMessageLabel)
         self.lastMessageLabel.snp.makeConstraints { make in
             make.bottom.equalTo(self.chatImageView.snp.bottom).offset(-10)
             make.leading.equalTo(self.chatImageView.snp.trailing).offset(20)
-            make.trailing.equalTo(self.newMessageView.snp.leading).offset(-10)
+            make.trailing.equalTo(self.newMessageLabel.snp.leading).offset(-10)
         }
         
         self.addSubview(participantCountLabel)
         self.participantCountLabel.snp.makeConstraints { make in
             make.top.equalTo(self.titleLabel.snp.top)
             make.leading.equalTo(self.titleLabel.snp.trailing).offset(10)
-            make.trailing.lessThanOrEqualTo(self.newMessageView.snp.leading).offset(-10)
+            make.trailing.lessThanOrEqualTo(self.newMessageLabel.snp.leading).offset(-10)
         }
     }
 }

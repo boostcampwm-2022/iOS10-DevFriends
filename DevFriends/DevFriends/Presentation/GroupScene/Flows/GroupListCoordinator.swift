@@ -12,6 +12,8 @@ protocol GroupFlowCoordinatorDependencies {
     func makeGroupFilterViewController(filter: Filter, actions: GroupFilterViewModelActions) -> GroupFilterViewController
     func makeAddGroupSceneDIContainer() -> AddGroupSceneDIContainer
     func makeNotificationViewController(actions: NotificationViewModelActions) -> NotificationViewController
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController
 }
 
 final class GroupListCoordinator: Coordinator {
@@ -29,7 +31,8 @@ final class GroupListCoordinator: Coordinator {
         let actions = GroupListViewModelActions(
             showGroupFilterView: showGroupFilterViewController,
             startAddGroupScene: startAddGroupScene,
-            showNotifications: showNotificationViewController
+            showNotifications: showNotificationViewController,
+            showPostDetailScene: showGroupDetailViewController
         )
         let groupListViewController = dependencies.makeGroupListViewController(actions: actions)
         navigationController.pushViewController(groupListViewController, animated: false)
@@ -65,8 +68,32 @@ extension GroupListCoordinator {
         navigationController.tabBarController?.tabBar.isHidden = true
     }
     
+    func showGroupDetailViewController(group: Group) {
+        let actions = PostDetailViewModelActions(
+            backToPrevViewController: moveBackToGroupListViewController,
+            report: showPostReportViewController
+        )
+        let postDetailViewController = dependencies.makePostDetailViewController(actions: actions, group: group)
+        navigationController.pushViewController(postDetailViewController, animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
+    }
+    
     func moveBackToGroupListViewController() {
         navigationController.tabBarController?.tabBar.isHidden = false
         navigationController.popViewController(animated: true)
+    }
+    
+    func showPostReportViewController() {
+        let acitons = PostReportViewControllerActions(
+            submit: popViewControllerWithHiddenTabBar,
+            close: popViewControllerWithHiddenTabBar
+        )
+        let postReportViewController = dependencies.makePostReportViewController(actions: acitons)
+        navigationController.pushViewController(postReportViewController, animated: true)
+    }
+    
+    func popViewControllerWithHiddenTabBar() {
+        navigationController.popViewController(animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
     }
 }

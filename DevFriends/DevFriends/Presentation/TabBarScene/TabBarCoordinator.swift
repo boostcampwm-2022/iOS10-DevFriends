@@ -33,6 +33,7 @@ final class TabBarCoordinator: Coordinator {
     func start() {
         let tabBarController = dependencies.makeTabBarController()
         navigationController?.pushViewController(tabBarController, animated: false)
+        tabBarController.tabBar.tintColor = .orange
 
         let chatSceneNavigationController = UINavigationController()
         let groupSceneNavigationController = UINavigationController()
