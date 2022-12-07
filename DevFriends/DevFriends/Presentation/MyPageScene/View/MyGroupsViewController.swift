@@ -9,13 +9,7 @@ import Combine
 import UIKit
 
 final class MyGroupsViewController: UIViewController {
-    private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem()
-        barButton.image = .chevronLeft
-        barButton.style = .plain
-        barButton.tintColor = .black
-        return barButton
-    }()
+    private let backBarButton = BackBarButtonItem()
     
     private lazy var groupCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

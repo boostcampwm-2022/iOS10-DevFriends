@@ -17,6 +17,7 @@ enum GroupApplyButtonState {
 
 struct PostDetailViewModelActions {
     let backToPrevViewController: () -> Void
+    let report: () -> Void
 }
 
 protocol PostDetailViewModelInput {
@@ -26,6 +27,7 @@ protocol PostDetailViewModelInput {
     func didScrollToBottom()
     func didTapCommentPostButton(content: String)
     func didTouchedBackButton()
+    func didTouchedReportButton()
 }
 
 protocol PostDetailViewModelOutput {
@@ -291,11 +293,14 @@ extension DefaultPostDetailViewModel {
                     contents: comment.content
                 )
             }
-//            scrollToBottomSubject.send()
         }
     }
     
     func didTouchedBackButton() {
         actions.backToPrevViewController()
+    }
+    
+    func didTouchedReportButton() {
+        actions.report()
     }
 }

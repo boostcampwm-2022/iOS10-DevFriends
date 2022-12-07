@@ -9,7 +9,8 @@ import UIKit
 
 protocol ChatFlowCoordinatorDependencies {
     func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController
-    func makeChatContentViewController(group: Group) -> ChatContentViewController
+    func makeChatContentViewController(group: Group, actions: ChatContentViewModelActions) -> ChatContentViewController
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController
 }
 
 final class ChatCoordinator: Coordinator {
@@ -35,10 +36,31 @@ final class ChatCoordinator: Coordinator {
 
 extension ChatCoordinator {
     func showChatContentViewController(group: Group) {
-        let chatContentViewController = dependencies.makeChatContentViewController(group: group)
+        let actions = ChatContentViewModelActions(
+            back: popViewController,
+            report: showPostReportViewController
+        )
+        let chatContentViewController = dependencies.makeChatContentViewController(group: group, actions: actions)
         navigationController.pushViewController(chatContentViewController, animated: true)
         navigationController.tabBarController?.tabBar.isHidden = true
     }
     
-    // TODO: 뒤로가기도 구현하자(각자 하기)
+    func showPostReportViewController() {
+        let acitons = PostReportViewControllerActions(
+            submit: popViewControllerWithHiddenTabBar,
+            close: popViewControllerWithHiddenTabBar
+        )
+        let postReportViewController = dependencies.makePostReportViewController(actions: acitons)
+        navigationController.pushViewController(postReportViewController, animated: true)
+    }
+    
+    func popViewController() {
+        navigationController.popViewController(animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func popViewControllerWithHiddenTabBar() {
+        navigationController.popViewController(animated: true)
+        navigationController.tabBarController?.tabBar.isHidden = true
+    }
 }

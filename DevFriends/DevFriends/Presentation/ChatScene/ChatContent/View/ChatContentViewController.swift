@@ -8,47 +8,56 @@
 import Combine
 import UIKit
 
-final class ChatContentViewController: UIViewController {
-    private let messageTableView: UITableView = {
+class ChatContentViewController: UIViewController {
+    private let backBarButton = BackBarButtonItem()
+    private let settingButton = SettingBarButtonItem()
+    
+    private lazy var messageTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.register(cellType: FriendMessageTableViewCell.self)
         tableView.register(cellType: MyMessageTableViewCell.self)
+        tableView.register(cellType: DateTableViewCell.self)
         return tableView
     }()
     
-    private lazy var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Message> = {
-        let diffableDataSource = UITableViewDiffableDataSource<Section, Message>(
+    private lazy var messageTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, AnyHashable> = {
+        let diffableDataSource = UITableViewDiffableDataSource<Section, AnyHashable>(
             tableView: messageTableView
         ) { [weak self] tableView, indexPath, data -> UITableViewCell in
-            if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
-                let cell = self?.createMyMessageTableViewCell(
-                    tableView: tableView,
-                    indexPath: indexPath,
-                    data: data
-                ) ?? UITableViewCell()
-                cell.selectionStyle = .none
-                return cell
-            } else {
-                let cell = self?.createFriendMessageTableViewCell(
-                    tableView: tableView,
-                    indexPath: indexPath,
-                    data: data
-                ) ?? UITableViewCell()
-                cell.selectionStyle = .none
+            if let data = data as? Message {
+                if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
+                    let cell = self?.createMyMessageTableViewCell(
+                        tableView: tableView,
+                        indexPath: indexPath,
+                        data: data
+                    ) ?? UITableViewCell()
+                    cell.selectionStyle = .none
+                    return cell
+                } else {
+                    let cell = self?.createFriendMessageTableViewCell(
+                        tableView: tableView,
+                        indexPath: indexPath,
+                        data: data
+                    ) ?? UITableViewCell()
+                    cell.selectionStyle = .none
+                    return cell
+                }
+            } else if let data = data as? DateMessage {
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: DateTableViewCell.reuseIdentifier
+                ) as? DateTableViewCell else { return UITableViewCell() }
+                cell.set(date: data.time)
                 return cell
             }
+            return UITableViewCell()
         }
         return diffableDataSource
     }()
     
-    private lazy var messageTextField: SendableTextView = {
-        let textField = SendableTextView(placeholder: "메세지를 작성해주세요")
-        textField.delegate = self
-        return textField
-    }()
+    private let messageTextField = SendableTextView(placeholder: "메세지를 작성해주세요")
     
-    private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Message>()
+    private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
     
     private let viewModel: ChatContentViewModel
     
@@ -71,11 +80,6 @@ final class ChatContentViewController: UIViewController {
         self.bind()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false // TODO: 코디네이터에서 backTo 메서드 구현되면 그 곳에서 사용
-    }
-    
     private func layout() {
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
@@ -92,7 +96,24 @@ final class ChatContentViewController: UIViewController {
     }
     
     private func bind() {
-        hideKeyboardWhenTappedAround()
+        let gesture = UITapGestureRecognizer()
+        messageTableView.gesturePublisher(.tap(gesture))
+            .sink { [weak self] _ in
+                self?.view.endEditing(true)
+                gesture.cancelsTouchesInView = false
+            }
+            .store(in: &cancellables)
+        
+        settingButton.publisher
+            .sink { [weak self] _ in
+                self?.didTapSettingButton()
+            }
+            .store(in: &cancellables)
+        
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.viewModel.back()
+            }
             .store(in: &cancellables)
         
         viewModel.messagesSubject
@@ -106,6 +127,27 @@ final class ChatContentViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        messageTextField.tapSendButtonSubject
+            .sink { [weak self] text in
+                self?.viewModel.didSendMessage(text: text)
+            }
+            .store(in: &cancellables)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(scrollToBottom),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+    }
+    
+    @objc func scrollToBottom() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let lastIndexPath = IndexPath(row: self.viewModel.getCurrentMessageCount() - 1, section: 0)
+            self.messageTableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+        }
     }
     
     private func configureUI() {
@@ -121,6 +163,8 @@ final class ChatContentViewController: UIViewController {
     
     private func setupNavigation() {
         self.navigationItem.title = "\(viewModel.group.title)"
+        self.navigationItem.leftBarButtonItem = backBarButton
+        self.navigationItem.rightBarButtonItem = settingButton
     }
     
     private func createMyMessageTableViewCell(tableView: UITableView, indexPath: IndexPath, data: Message) -> MyMessageTableViewCell? {
@@ -159,24 +203,38 @@ final class ChatContentViewController: UIViewController {
     
     private func isNoNeedToHaveTimeLabel(data: Message, indexPath: IndexPath) -> Bool {
         guard indexPath.row + 1 != self.viewModel.messagesSubject.value.count else { return false }
-        let isSameTime = data.time.isSame(as: self.viewModel.messagesSubject.value[indexPath.row + 1].time)
-        return isSameTime
+        if let message = self.viewModel.messagesSubject.value[indexPath.row + 1] as? Message {
+            let isSameTime = data.time.isSameTime(as: message.time)
+            return isSameTime
+        }
+        return false
     }
     
     private func isNoNeedToHaveProfileInfo(data: Message, indexPath: IndexPath) -> Bool {
         guard indexPath.row - 1 >= 0 else { return false }
-        let isSameUser = data.userID == self.viewModel.messagesSubject.value[indexPath.row - 1].userID
-        return isSameUser
+        if let message = self.viewModel.messagesSubject.value[indexPath.row - 1] as? Message {
+            let isSameUser = data.userID == message.userID
+            return isSameUser
+        }
+        return false
     }
     
-    private func populateSnapshot(data: [Message]) {
+    private func populateSnapshot(data: [AnyHashable]) {
         self.messageTableViewSnapShot.appendItems(data)
         self.messageTableViewDiffableDataSource.apply(messageTableViewSnapShot, animatingDifferences: true)
     }
-}
-
-extension ChatContentViewController: SendableTextViewDelegate {
-    func tapSendButton(text: String) {
-        viewModel.didSendMessage(text: text)
+    
+    private func didTapSettingButton() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let reportAction = UIAlertAction(title: "신고", style: .default) { [weak self] _ in
+            self?.viewModel.didTapSettingButton()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        actionSheet.addAction(reportAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true)
     }
 }
