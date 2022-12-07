@@ -10,13 +10,7 @@ import PhotosUI
 import UIKit
 
 final class FixMyInfoViewController: UIViewController {
-    private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem()
-        barButton.image = .chevronLeft
-        barButton.style = .plain
-        barButton.tintColor = .black
-        return barButton
-    }()
+    private let backBarButton = BackBarButtonItem()
     
     private lazy var profileImageViewHeight = view.frame.width - 100
     private lazy var profileImageView: UIImageView = {

@@ -521,7 +521,6 @@
 			isa = PBXGroup;
 			children = (
 				A648BB47293399D10018A654 /* ChooseLocationView.swift */,
-				A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */,
 				A648BB49293399D10018A654 /* ChooseLocationViewController.swift */,
 				A648BB4A293399D10018A654 /* AddGroupViewController.swift */,
 			);
@@ -711,6 +710,7 @@
 		E33A20AE292665A700887EC9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A648BB48293399D10018A654 /* ChooseCategoryViewController.swift */,
 				E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */,
 				A648BB5329339A4E0018A654 /* CommonPaddingLabel.swift */,
 				A648BB5229339A4E0018A654 /* CommonTextView.swift */,

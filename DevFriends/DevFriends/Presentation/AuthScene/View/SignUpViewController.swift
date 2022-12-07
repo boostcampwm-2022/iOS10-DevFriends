@@ -46,10 +46,8 @@ final class SignUpViewController: UIViewController {
         textField.layer.cornerRadius = 10
         return textField
     }()
-    let categorySelectionView: ChooseCategoryView = {
-        let categorySelectionView = ChooseCategoryView()
-        return categorySelectionView
-    }()
+    let categorySelectionView = ChooseCategoryView()
+    
     let signUpButton: CommonButton = {
         let button = CommonButton(text: "회원가입")
         button.set(title: "양식을 작성해주세요", state: .disabled)
@@ -202,6 +200,12 @@ final class SignUpViewController: UIViewController {
                     job: self?.jobTextField.text,
                     email: self?.emailTextField.text ?? ""
                 )
+            }
+            .store(in: &cancellables)
+        
+        categorySelectionView.didTouchViewSubject
+            .sink { [weak self] _ in
+                self?.viewModel.didTouchedCategoryView()
             }
             .store(in: &cancellables)
         

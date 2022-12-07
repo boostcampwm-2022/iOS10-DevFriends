@@ -18,6 +18,10 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
         return DefaultUserRepository()
     }
     
+    private func makeCategoryRepository() -> CategoryRepository {
+        return DefaultCategoryRepository()
+    }
+    
     private func makeCheckUserUseCase() -> CheckUserUseCase {
         return DefaultCheckUserUseCase(userRepository: makeUserRepository())
     }
@@ -51,5 +55,17 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
             email: email,
             name: name
         ))
+    }
+    
+    func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
+    }
+    
+    func makeChooseCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController {
+        return ChooseCategoryViewController(viewModel: makeCategoryViewModel(actions: actions))
+    }
+    
+    func makeCategoryViewModel(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewModel {
+        return DefaultChooseCategoryViewModel(fetchCategoryUseCase: makeLoadCategoryUseCase(), actions: actions)
     }
 }

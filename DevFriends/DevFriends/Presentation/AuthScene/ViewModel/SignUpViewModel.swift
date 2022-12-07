@@ -11,6 +11,7 @@ import Foundation
 struct SignUpViewModelActions {
     let showTabBarController: () -> Void
     let moveBackToPrevViewController: () -> Void
+    let showChooseCategoryViewController: () -> Void
 }
 
 protocol SignUpViewModelInput {
@@ -19,6 +20,7 @@ protocol SignUpViewModelInput {
     func didChangedTextInEmailTextField(text: String?)
     func didChangedTextInNicknameTextField(text: String?)
     func didTouchedBackButton()
+    func didTouchedCategoryView()
 }
 
 protocol SignUpViewModelOutput {
@@ -97,6 +99,10 @@ extension DefaultSignUpViewModel {
     
     func didTouchedBackButton() {
         actions.moveBackToPrevViewController()
+    }
+    
+    func didTouchedCategoryView() {
+        actions.showChooseCategoryViewController()
     }
 }
 

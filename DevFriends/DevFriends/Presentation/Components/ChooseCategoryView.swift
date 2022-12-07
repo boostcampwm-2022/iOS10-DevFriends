@@ -14,20 +14,20 @@ protocol ChooseCategoryOutput {
 }
 
 final class ChooseCategoryView: UIView, ChooseCategoryOutput {
-    private lazy var categoryLabel: UILabel = {
+    private let categoryLabel: UILabel = {
         let label = UILabel()
         label.text = "카테고리 선택"
         return label
     }()
     
-    private lazy var categoryStack: UIStackView = {
+    private let categoryStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 9
         return stackView
     }()
     
-    private lazy var disclosureIndicator: UIImageView = {
+    private let disclosureIndicator: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage.disclosure
         imageView.tintColor = .black
