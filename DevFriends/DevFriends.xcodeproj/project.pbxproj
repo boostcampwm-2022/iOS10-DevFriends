@@ -43,6 +43,7 @@
 		A63C96F42937A32A00517516 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F32937A32A00517516 /* ChatRepository.swift */; };
 		A63C96F6293B8BC600517516 /* Location+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F5293B8BC500517516 /* Location+Distance.swift */; };
 		A63C96F8293B8F9800517516 /* SortGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */; };
+		A63C96FF2940CB2600517516 /* SaveUserGroupIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96FE2940CB2600517516 /* SaveUserGroupIDUseCase.swift */; };
 		A648BB1D292E1B1C0018A654 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */; };
 		A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1E292E1B930018A654 /* ChatViewModel.swift */; };
 		A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB22292E1C060018A654 /* ChatContentViewModel.swift */; };
@@ -282,6 +283,7 @@
 		A63C96F32937A32A00517516 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		A63C96F5293B8BC500517516 /* Location+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+Distance.swift"; sourceTree = "<group>"; };
 		A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortGroupUseCase.swift; sourceTree = "<group>"; };
+		A63C96FE2940CB2600517516 /* SaveUserGroupIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserGroupIDUseCase.swift; sourceTree = "<group>"; };
 		A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 		A648BB1E292E1B930018A654 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		A648BB22292E1C060018A654 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
@@ -820,6 +822,7 @@
 				FC07DDBC292CA90400D16FBC /* LoadGroupUseCase.swift */,
 				A66C7BC3292E19C70008B6FD /* SaveGroupUseCase.swift */,
 				05966968294097B000628DB3 /* LoadUserGroupIDsUseCase.swift */,
+				A63C96FE2940CB2600517516 /* SaveUserGroupIDUseCase.swift */,
 				A66C7BC5292E19F60008B6FD /* LoadChatMessagesUseCase.swift */,
 				A66C7BC7292E1A160008B6FD /* SendChatMessagesUseCase.swift */,
 				05CB4A35292DF16800A97531 /* LoadCategoryUseCase.swift */,
@@ -1454,6 +1457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05EA623C293B0F93007385E9 /* ContainsStorage.swift in Sources */,
+				A63C96FF2940CB2600517516 /* SaveUserGroupIDUseCase.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
 				A648BB51293399D10018A654 /* ChooseCategoryView.swift in Sources */,
 				05CB4A33292DF15200A97531 /* GroupCommentRepository.swift in Sources */,
