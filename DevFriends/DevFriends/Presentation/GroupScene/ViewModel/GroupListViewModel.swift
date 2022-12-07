@@ -12,6 +12,7 @@ struct GroupListViewModelActions {
     let showGroupFilterView: (Filter) -> Void
     let startAddGroupScene: (GroupType) -> Void
     let showNotifications: () -> Void
+    let showPostDetailScene: (Group) -> Void
 }
 
 protocol GroupListViewModelInput {
@@ -21,6 +22,7 @@ protocol GroupListViewModelInput {
     func didSelectAdd(groupType: GroupType)
     func updateFilter(filter: Filter)
     func didSelectNotifications()
+    func didSelectGroupCell(indexPath: IndexPath)
     func didUpdateUserLocation(location: Location)
 }
 
@@ -37,6 +39,7 @@ protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
 
 final class DefaultGroupListViewModel: GroupListViewModel {
     private let fetchGroupUseCase: LoadGroupUseCase
+    private let actions: GroupListViewModelActions
     private let sortGroupUseCase: SortGroupUseCase
     private let fetchCategoryUseCase: LoadCategoryUseCase
     private let actions: GroupListViewModelActions?
@@ -151,11 +154,11 @@ extension DefaultGroupListViewModel {
     }
     
     func didSelectFilter() {
-        actions?.showGroupFilterView(groupFilter)
+        actions.showGroupFilterView(groupFilter)
     }
     
     func didSelectAdd(groupType: GroupType) {
-        actions?.startAddGroupScene(groupType)
+        actions.startAddGroupScene(groupType)
     }
     
     func updateFilter(filter: Filter) {
@@ -164,7 +167,18 @@ extension DefaultGroupListViewModel {
     }
     
     func didSelectNotifications() {
-        actions?.showNotifications()
+        actions.showNotifications()
+    }
+    
+    func didSelectGroupCell(indexPath: IndexPath) {
+        if indexPath.section == GroupListSection.recommand.rawValue {
+            let group = recommandGroupsSubject.value[indexPath.row]
+            actions.showPostDetailScene(group.group)
+        } else if indexPath.section == GroupListSection.filtered.rawValue {
+            let group = filteredGroupsSubject.value[indexPath.row]
+            actions.showPostDetailScene(group.group)
+        }
+        
     }
     
     func didUpdateUserLocation(location: Location) {

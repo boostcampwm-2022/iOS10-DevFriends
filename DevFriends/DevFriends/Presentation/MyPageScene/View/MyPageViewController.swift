@@ -33,6 +33,15 @@ final class MyPageViewController: UIViewController {
         return label
     }()
     
+    private let preferenceStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
+    
     private let makedGroupButton = SubtitleButton(text: "만든 모임")
     private let participatedGroupButton = SubtitleButton(text: "참여 모임")
     private let likedGroupButton = SubtitleButton(text: "관심 모임")
@@ -68,36 +77,63 @@ final class MyPageViewController: UIViewController {
     private func bind() {
         makedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showMakedGroup()
+                self?.viewModel.didTapMakedGroup()
             }
             .store(in: &cancellables)
         
         participatedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showParticipatedGroup()
+                self?.viewModel.didTapParticipatedGroup()
             }
             .store(in: &cancellables)
         likedGroupButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showLikedGroup()
+                self?.viewModel.didTapLikedGroup()
             }
             .store(in: &cancellables)
         
         fixMyInfoButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showFixMyInfo()
+                self?.viewModel.didTapFixMyInfo()
             }
             .store(in: &cancellables)
         
         logoutButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showLogout()
+                self?.viewModel.didTapLogout()
             }
             .store(in: &cancellables)
         
         withdrawalButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                self?.viewModel.showWithdrawl()
+                self?.viewModel.didTapWithdrawal()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.userImageSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                self?.profileImageView.image = image
+            }
+            .store(in: &cancellables)
+        
+        viewModel.userNicknameSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] name in
+                self?.nameLabel.text = name
+            }
+            .store(in: &cancellables)
+        
+        viewModel.userCategoriesSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] categories in
+                self?.preferenceStackView.subviews.forEach({ view in
+                    view.removeFromSuperview()
+                })
+                categories.forEach { category in
+                    let label = FilledRoundTextLabel(text: category.name, backgroundColor: .devFriendsGreen, textColor: .black)
+                    self?.preferenceStackView.addArrangedSubview(label)
+                }
             }
             .store(in: &cancellables)
     }
@@ -108,22 +144,7 @@ final class MyPageViewController: UIViewController {
         label.text = text
         return label
     }
-    
-    private func makePreferenceStackView() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 5
-        stackView.alignment = .leading
-        stackView.distribution = .fillProportionally
         
-        ["swift", "java"].forEach { text in
-            let label = FilledRoundTextLabel(text: text, backgroundColor: .devFriendsGreen, textColor: .black)
-            stackView.addArrangedSubview(label)
-        }
-        
-        return stackView
-    }
-    
     private func layout() {
         let spacing = 25
         view.addSubview(profileImageView)
@@ -138,9 +159,8 @@ final class MyPageViewController: UIViewController {
             make.leading.equalTo(profileImageView.snp.trailing).offset(spacing)
         }
         
-        let stackView = makePreferenceStackView()
-        view.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
+        view.addSubview(preferenceStackView)
+        preferenceStackView.snp.makeConstraints { make in
             make.leading.equalTo(nameLabel)
             make.bottom.equalTo(profileImageView).offset(-10)
             make.trailing.lessThanOrEqualTo(view).offset(-spacing)
@@ -230,5 +250,11 @@ final class MyPageViewController: UIViewController {
     
     private func setupNavigation() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+    }
+    
+    func updateUserInfo(nickname: String, image: UIImage?, categories: [Category]) {
+        viewModel.userImageSubject.value = image ?? UIImage(named: "Image")
+        viewModel.userNicknameSubject.value = nickname
+        viewModel.userCategoriesSubject.value = categories
     }
 }

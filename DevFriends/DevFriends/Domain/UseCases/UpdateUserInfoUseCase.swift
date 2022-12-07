@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UpdateUserInfoUseCase {
-    func execute(profileImagePath: String, nickName: String, job: String, user: User)
+    func execute(profileImagePath: String, nickName: String, job: String, user: User, categoryIDs: [String])
 }
 
 final class DefaultUpdateUserInfoUseCase: UpdateUserInfoUseCase {
@@ -18,11 +18,12 @@ final class DefaultUpdateUserInfoUseCase: UpdateUserInfoUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(profileImagePath: String, nickName: String, job: String, user: User) {
+    func execute(profileImagePath: String, nickName: String, job: String, user: User, categoryIDs: [String]) {
         var tempUser = user
         tempUser.profileImagePath = profileImagePath
         tempUser.nickname = nickName
         tempUser.job = job
+        tempUser.categoryIDs = categoryIDs
         
         return self.userRepository.update(tempUser)
     }

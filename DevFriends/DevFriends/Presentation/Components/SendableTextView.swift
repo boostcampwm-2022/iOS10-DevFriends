@@ -7,11 +7,6 @@
 
 import Combine
 import UIKit
-import Kingfisher
-
-protocol SendableTextViewDelegate: AnyObject {
-    func tapSendButton(text: String)
-}
 
 final class SendableTextView: UIView {
     private let textField = UITextField()
@@ -23,7 +18,7 @@ final class SendableTextView: UIView {
         return button
     }()
     
-    weak var delegate: SendableTextViewDelegate?
+    var tapSendButtonSubject = PassthroughSubject<String, Never>()
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -51,8 +46,8 @@ final class SendableTextView: UIView {
         
         self.sendButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                if let text = self?.textField.text {
-                    self?.delegate?.tapSendButton(text: text)
+                if let text = self?.textField.text, !text.isEmpty {
+                    self?.tapSendButtonSubject.send(text)
                     self?.textField.text = nil
                 }
             }

@@ -6,5 +6,5 @@
 //
 
 protocol ChatGroupsRepository {
-    func fetch(uids: [String]) async throws -> [Group]
+    func fetch(userID: String) async throws -> [AcceptedGroup]
 }

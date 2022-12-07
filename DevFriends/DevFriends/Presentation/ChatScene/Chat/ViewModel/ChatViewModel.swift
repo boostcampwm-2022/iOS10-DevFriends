@@ -18,7 +18,7 @@ protocol ChatViewModelInput {
 }
 
 protocol ChatViewModelOutput {
-    var groupsSubject: CurrentValueSubject<[Group], Never> { get }
+    var groupsSubject: CurrentValueSubject<[AcceptedGroup], Never> { get }
 }
 
 protocol ChatViewModel: ChatViewModelInput, ChatViewModelOutput {}
@@ -28,7 +28,7 @@ final class DefaultChatViewModel: ChatViewModel {
     private let actions: ChatViewModelActions
     
     // MARK: OUTPUT
-    var groupsSubject = CurrentValueSubject<[Group], Never>([])
+    var groupsSubject = CurrentValueSubject<[AcceptedGroup], Never>([])
     
     // MARK: Init
     init(loadChatGroupsUseCase: LoadChatGroupsUseCase, actions: ChatViewModelActions) {
@@ -40,7 +40,7 @@ final class DefaultChatViewModel: ChatViewModel {
     private func loadGroups() async {
         let loadTask = Task {
             guard let uid = UserManager.shared.uid else { fatalError("In ChatViewModel, UserManager's uid is nil.") }
-            return try await loadChatGroupsUseCase.execute(uid: uid)
+            return try await loadChatGroupsUseCase.execute()
         }
         
         let result = await loadTask.result
@@ -62,6 +62,6 @@ extension DefaultChatViewModel {
     }
     
     func didSelectGroup(at index: Int) {
-        actions.showChatContent(groupsSubject.value[index])
+        actions.showChatContent(groupsSubject.value[index].group)
     }
 }

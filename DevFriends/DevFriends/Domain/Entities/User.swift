@@ -13,7 +13,7 @@ struct User {
     var job: String
     let email: String
     var profileImagePath: String
-    let categoryIDs: [String]
+    var categoryIDs: [String]
     var appliedGroupIDs: [String]
     var likeGroupIDs: [String]
 }

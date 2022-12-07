@@ -99,9 +99,7 @@ extension DefaultUserRepository: UserRepository {
 
 extension DefaultUserRepository {
     func createUserGroup(userID: String, groupID: String) {
-        let userGroup = UserGroup(groupID: groupID, time: Date())
-        let userGroupResponseDTO = makeUserGroupResponseDTO(userGroup: userGroup)
-        
+        let userGroupResponseDTO = UserGroupResponseDTO(groupID: groupID, time: Date.now)
         do {
             _ = try firestore
                 .collection(FirestorePath.user.rawValue)
@@ -125,6 +123,22 @@ extension DefaultUserRepository {
         
         return groups
     }
+    
+    func deleteUserGroup(userID: String, groupID: String) {
+        firestore
+            .collection(FirestorePath.user.rawValue)
+            .document(userID)
+            .collection(FirestorePath.group.rawValue)
+            .whereField("groupID", isEqualTo: groupID)
+            .limit(to: 1)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    snapshot?.documents.first?.reference.delete()
+                }
+            }
+    }
 }
 
 // MARK: Private
@@ -139,9 +153,5 @@ extension DefaultUserRepository {
             appliedGroups: user.appliedGroupIDs,
             likeGroups: user.likeGroupIDs
         )
-    }
-    
-    private func makeUserGroupResponseDTO(userGroup: UserGroup) -> UserGroupResponseDTO {
-        return UserGroupResponseDTO(groupID: userGroup.groupID, time: userGroup.time)
     }
 }

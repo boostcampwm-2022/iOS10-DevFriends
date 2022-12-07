@@ -29,6 +29,22 @@ final class DefaultGroupRepository: GroupRepository {
         return group.toDomain()
     }
     
+    func fetch(groupIDs: [String]) async throws -> [Group] {
+        return try await withThrowingTaskGroup(of: Group.self) { taskGroup in
+            groupIDs.forEach { id in
+                if id.isEmpty { return }
+                
+                taskGroup.addTask {
+                    try await self.fetch(groupID: id)
+                }
+            }
+            
+            return try await taskGroup.reduce(into: []) { partialResult, user in
+                partialResult.append(user)
+            }
+        }
+    }
+    
     func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group] {
         var groups: [Group] = []
         var query: Query
