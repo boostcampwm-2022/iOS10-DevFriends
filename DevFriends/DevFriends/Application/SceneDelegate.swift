@@ -15,14 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.backgroundColor = .white
+        window?.backgroundColor = .systemBackground
 
-        // MARK: 로그인을 구현을 안해서 일단 테스트 uid를 저장하고 이를 필요할 때 가져다 쓸 예정(사용자 정보는 어떻게 관리할지 논의해보기!)
-        if UserDefaults.standard.object(forKey: "uid") as? String == nil {
-            UserDefaults.standard.set("YkocW98XPzJAsSDVa5qd", forKey: "uid")
-            UserDefaults.standard.set("frogking", forKey: "nickname")
-        }
-        
         let navigationController = UINavigationController()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

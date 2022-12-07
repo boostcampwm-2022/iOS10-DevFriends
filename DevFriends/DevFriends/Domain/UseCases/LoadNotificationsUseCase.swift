@@ -19,9 +19,8 @@ final class DefaultLoadNotificationsUseCase: LoadNotificationsUseCase {
     }
     
     func execute() async throws -> [Notification] {
-        // MARK: user를 나중에 어떻게 가져올지 논의해보기
-        guard let uid = UserDefaults.standard.object(forKey: "uid") as? String
-        else { fatalError("UID was not stored!!") }
+        guard let uid = UserManager.shared.uid else { fatalError("UID was not stored!!") }
+
         let notifications = try await notificationRepository.fetch(uid: uid)
         return notifications
     }

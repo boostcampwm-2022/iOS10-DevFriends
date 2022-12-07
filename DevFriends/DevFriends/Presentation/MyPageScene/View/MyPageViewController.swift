@@ -16,15 +16,6 @@ final class MyPageViewController: UIViewController {
         return label
     }()
     
-    private lazy var settingButton: UIBarButtonItem = {
-        let item = UIBarButtonItem()
-        item.image = .gearshape
-        item.tintColor = .black
-        item.target = self
-        item.action = #selector(didTapSettingButton)
-        return item
-    }()
-    
     private let profileImageViewHeight: CGFloat = 100
     
     private lazy var profileImageView: UIImageView = {
@@ -239,14 +230,5 @@ final class MyPageViewController: UIViewController {
     
     private func setupNavigation() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
-        self.navigationItem.rightBarButtonItems = [settingButton]
-    }
-}
-
-// MARK: - Actions
-
-extension MyPageViewController {
-    @objc func didTapSettingButton(_ sender: UIButton) {
-        // MARK: 동작을 넣어주세요
     }
 }

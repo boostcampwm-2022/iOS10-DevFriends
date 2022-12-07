@@ -60,11 +60,8 @@ extension DefaultChatContentViewModel {
     }
     
     func didSendMessage(text: String) {
-        // TODO: userID를 여기서 이렇게 접근해도 될까? 의존성을 분리하는 방법도 있을 거 같은데.. 일단 씀
-        guard let userID = UserDefaults.standard.object(forKey: "uid") as? String,
-            let nickname = UserDefaults.standard.object(forKey: "nickname") as? String
-        else { fatalError("사용자의 uid가 로컬에 저장되어 있지 않습니다.") }
-        
+        guard let userID = UserManager.shared.uid, let nickname = UserManager.shared.nickname
+        else { fatalError("UserDefaults doesn't have values.") }
         let message = Message(content: text, time: Date(), userID: userID, userNickname: nickname)
         sendMessage(message: message)
     }

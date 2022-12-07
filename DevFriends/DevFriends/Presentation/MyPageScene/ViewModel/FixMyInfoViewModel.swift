@@ -16,6 +16,7 @@ struct FixMyInfoViewModelActions {
 protocol FixMyInfoViewModelInput {
     func didLoadUser()
     func didTapDoneButton(nickname: String, job: String)
+    func didTouchedBackButton()
 }
 
 protocol FixMyInfoViewModelOutput {
@@ -53,6 +54,7 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
             id: "nqQW9nOes6UPXRCjBuCy",
             nickname: "흥민 손",
             job: "EPL득점왕",
+            email: "abc@def.com",
             profileImagePath: "nqQW9nOes6UPXRCjBuCy",
             categoryIDs: [],
             appliedGroupIDs: [],
@@ -112,6 +114,10 @@ extension DefaultFixMyInfoViewModel {
         uploadImage()
         updateUser(nickname: nickname, job: job)
         
+        actions.popFixMyInfo()
+    }
+    
+    func didTouchedBackButton() {
         actions.popFixMyInfo()
     }
 }

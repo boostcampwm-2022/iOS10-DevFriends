@@ -10,20 +10,13 @@ import UIKit
 
 final class NotificationViewController: UITableViewController {
     private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(
-            image: .chevronLeft,
-            style: .plain,
-            target: self,
-            action: nil
-        )
-        barButton.publisher
-            .sink { [weak self] _ in
-                self?.didTouchedBackButton()
-            }
-            .store(in: &cancellables)
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
         barButton.tintColor = .black
         return barButton
     }()
+    
     private lazy var notificationDiffableDataSource = {
         let diffableDataSource = NotificationDiffableDataSource(
             tableView: self.tableView
@@ -70,6 +63,12 @@ final class NotificationViewController: UITableViewController {
     }
     
     private func bind() {
+        self.backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.didTouchedBackButton()
+            }
+            .store(in: &cancellables)
+        
         self.viewModel.notificationsSubject
             .receive(on: RunLoop.main)
             .sink { [weak self] in
@@ -97,6 +96,7 @@ final class NotificationViewController: UITableViewController {
         self.notificationTableViewSnapShot.appendItems(data)
         self.notificationDiffableDataSource.apply(self.notificationTableViewSnapShot, animatingDifferences: true)
     }
+    
 }
 
 extension NotificationViewController {
