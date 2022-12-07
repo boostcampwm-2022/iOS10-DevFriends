@@ -42,7 +42,6 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     private let actions: GroupListViewModelActions
     private let sortGroupUseCase: SortGroupUseCase
     private let fetchCategoryUseCase: LoadCategoryUseCase
-    private let actions: GroupListViewModelActions?
     private var userLocation: Location?
     var recommandFilter: Filter
     var groupFilter = Filter(alignFilter: .newest, categoryFilter: [])
@@ -99,6 +98,7 @@ extension DefaultGroupListViewModel {
                 }
                 recommandGroupCellInfos.append(GroupCellInfo(
                     section: .recommand,
+                    group: group,
                     title: group.title,
                     categories: categories,
                     location: group.location,
@@ -129,6 +129,7 @@ extension DefaultGroupListViewModel {
                 }
                 filteredGroupCellInfos.append(GroupCellInfo(
                     section: .filtered,
+                    group: group,
                     title: group.title,
                     categories: categories,
                     location: group.location,

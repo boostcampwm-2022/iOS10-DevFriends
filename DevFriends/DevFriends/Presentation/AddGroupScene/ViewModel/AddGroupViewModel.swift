@@ -125,7 +125,7 @@ extension DefaultAddGroupViewModel {
               let categories = self.categorySelection,
               let location = self.locationSelection,
               let description = self.description else {
-            let popup = Popup(title: "", message: popupMessage())
+            let popup = Popup(title: "", message: popupMessage(), doneAction: {})
             actions.showPopup(popup)
             return
         }
@@ -149,7 +149,7 @@ extension DefaultAddGroupViewModel {
         )
         saveGroupUseCase.execute(group: newGroup)
         // TODO: User - Group 컬렉션에 해당 그룹 추가해줘야 함
-        let popup = Popup(title: "", message: "\(self.groupType.rawValue) 모집 글을 올렸어요.")
+        let popup = Popup(title: "", message: "\(self.groupType.rawValue) 모집 글을 올렸어요.", done: "", doneAction: {})
         actions.showPopup(popup)
         didSendGroupSubject.send()
         
