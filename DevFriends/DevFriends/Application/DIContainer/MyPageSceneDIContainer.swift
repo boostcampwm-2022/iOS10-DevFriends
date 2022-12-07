@@ -95,6 +95,10 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultLoadUserGroupIDsUseCase(userRepository: makeUserRepository())
     }
     
+    func makeLeaveGroupUseCase() -> LeaveGroupUseCase {
+        return DefaultLeaveGroupUseCase(userRepository: makeUserRepository(), groupRepository: makeGroupRepository())
+    }
+    
     // MARK: MyPageViwe
     func makeMyPageViewModel(actions: MyPageViewModelActions) -> MyPageViewModel {
         return DefaultMyPageViewModel(actions: actions, loadCategoryUseCase: makeLoadCategoryUseCase())
@@ -110,7 +114,8 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
             type: type,
             actions: actions,
             loadUserGroupIDsUseCase: makeLoadUserGroupIDsUseCase(),
-            loadGroupUseCase: makeLoadGroupUseCase()
+            loadGroupUseCase: makeLoadGroupUseCase(),
+            leaveGroupUseCase: makeLeaveGroupUseCase()
         )
     }
     

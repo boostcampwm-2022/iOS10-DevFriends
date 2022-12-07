@@ -16,8 +16,9 @@ struct MyGroupsViewModelActions {
 protocol MyGroupsViewModelInput {
     func didLoadGroup()
     func didTapGroup(group: Group)
+    func didLeaveGroup(group: Group)
     func didTouchedBackButton()
-    func getMyGroupsTypeName() -> String
+    func getMyGroupsType() -> MyGroupsType
 }
 
 protocol MyGroupsViewModelOutput {
@@ -31,6 +32,7 @@ final class DefaultMyGroupsViewModel: MyGroupsViewModel {
     let actions: MyGroupsViewModelActions
     private let loadUserGroupIDsUseCase: LoadUserGroupIDsUseCase
     private let loadGroupUseCase: LoadGroupUseCase
+    private let leaveGroupUseCase: LeaveGroupUseCase
     
     private var groupIDs: [String] = []
     var groupsSubject = CurrentValueSubject<[Group], Never>([])
@@ -39,12 +41,14 @@ final class DefaultMyGroupsViewModel: MyGroupsViewModel {
         type: MyGroupsType,
         actions: MyGroupsViewModelActions,
         loadUserGroupIDsUseCase: LoadUserGroupIDsUseCase,
-        loadGroupUseCase: LoadGroupUseCase
+        loadGroupUseCase: LoadGroupUseCase,
+        leaveGroupUseCase: LeaveGroupUseCase
     ) {
         self.type = type
         self.actions = actions
         self.loadUserGroupIDsUseCase = loadUserGroupIDsUseCase
         self.loadGroupUseCase = loadGroupUseCase
+        self.leaveGroupUseCase = leaveGroupUseCase
     }
     
     private func loadGroupIDs() async -> [String] {
@@ -73,6 +77,12 @@ final class DefaultMyGroupsViewModel: MyGroupsViewModel {
         }
         return result
     }
+    
+    private func leaveGroup(group: Group) {
+        guard let userID = UserManager.shared.uid else { return }
+        leaveGroupUseCase.execute(userID: userID, group: group)
+        groupsSubject.value.removeAll { $0.id == group.id }
+    }
 }
 
 extension DefaultMyGroupsViewModel {
@@ -98,11 +108,15 @@ extension DefaultMyGroupsViewModel {
         actions.showPostDetailScene(group)
     }
     
+    func didLeaveGroup(group: Group) {
+        leaveGroup(group: group)
+    }
+    
     func didTouchedBackButton() {
         actions.back()
     }
     
-    func getMyGroupsTypeName() -> String {
-        return type.rawValue
+    func getMyGroupsType() -> MyGroupsType {
+        return type
     }
 }

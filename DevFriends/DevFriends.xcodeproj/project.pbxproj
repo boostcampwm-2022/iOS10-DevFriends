@@ -15,6 +15,8 @@
 		052BF693293861C20037C976 /* DefaultImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052BF692293861C20037C976 /* DefaultImageRepository.swift */; };
 		058520FB293516DC00D3CC4F /* UpdateLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */; };
 		05C4B3A9293F851D00FE5FC8 /* LoadUserGroupIDsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C4B3A8293F851D00FE5FC8 /* LoadUserGroupIDsUseCase.swift */; };
+		05C4B3AB293F9AEB00FE5FC8 /* MyGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C4B3AA293F9AEB00FE5FC8 /* MyGroupCollectionViewCell.swift */; };
+		05C4B3AD293FA1DA00FE5FC8 /* LeaveGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C4B3AC293FA1DA00FE5FC8 /* LeaveGroupUseCase.swift */; };
 		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
 		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
 		05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */; };
@@ -232,6 +234,8 @@
 		05A8DECC292BDFEA00497902 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		05A8DED0292BF0EA00497902 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		05C4B3A8293F851D00FE5FC8 /* LoadUserGroupIDsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadUserGroupIDsUseCase.swift; sourceTree = "<group>"; };
+		05C4B3AA293F9AEB00FE5FC8 /* MyGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupCollectionViewCell.swift; sourceTree = "<group>"; };
+		05C4B3AC293FA1DA00FE5FC8 /* LeaveGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveGroupUseCase.swift; sourceTree = "<group>"; };
 		05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CategoryResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CommentResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultCategoryRepository.swift; sourceTree = "<group>"; };
@@ -706,6 +710,7 @@
 				E33A20B2292665A700887EC9 /* GroupFilterCollectionHeaderView.swift */,
 				E33A20B3292665A700887EC9 /* GroupFilterCollectionViewCell.swift */,
 				E3DE549B2934E6F800E63898 /* ChooseCategoryView.swift */,
+				05C4B3AA293F9AEB00FE5FC8 /* MyGroupCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -795,6 +800,7 @@
 				E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */,
 				058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */,
 				05C4B3A8293F851D00FE5FC8 /* LoadUserGroupIDsUseCase.swift */,
+				05C4B3AC293FA1DA00FE5FC8 /* LeaveGroupUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1480,6 +1486,7 @@
 				A648BB4D293399D10018A654 /* ChooseLocationView.swift in Sources */,
 				E33A20B6292665A700887EC9 /* SendableTextView.swift in Sources */,
 				FC5D01AB292F54EE00292D33 /* MyGroupsViewController.swift in Sources */,
+				05C4B3AB293F9AEB00FE5FC8 /* MyGroupCollectionViewCell.swift in Sources */,
 				E394C4A7292243740064ADA7 /* PostDetailContentsView.swift in Sources */,
 				E33A20D32926665E00887EC9 /* Date+String.swift in Sources */,
 				E33A20862926622000887EC9 /* MessageCellType.swift in Sources */,
@@ -1562,6 +1569,7 @@
 				FC07DDBF292CAA8200D16FBC /* GroupResponseDTO+Mapping.swift in Sources */,
 				A648BB60293779740018A654 /* UITextView+Combine.swift in Sources */,
 				A6ED8BA72924E44A003105E2 /* (null) in Sources */,
+				05C4B3AD293FA1DA00FE5FC8 /* LeaveGroupUseCase.swift in Sources */,
 				A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */,
 				FC07DDC1292CAEFF00D16FBC /* UserResponseDTO+Mapping.swift in Sources */,
 				05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */,

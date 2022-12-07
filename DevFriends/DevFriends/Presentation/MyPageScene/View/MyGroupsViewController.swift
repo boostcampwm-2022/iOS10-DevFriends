@@ -18,24 +18,37 @@ final class MyGroupsViewController: UIViewController {
     }()
     
     private lazy var groupCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: 140.0)
-
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(cellType: GroupCollectionViewCell.self)
+        collectionView.register(cellType: MyGroupCollectionViewCell.self)
         collectionView.delegate = self
         return collectionView
+    }()
+
+    private lazy var compositionalLayout: UICollectionViewCompositionalLayout = {
+        let layout = UICollectionViewCompositionalLayout() { sectionIndex, layoutEnvironment in
+            var config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+            config.trailingSwipeActionsConfigurationProvider = self.makeSwipeActions
+            
+            let section = NSCollectionLayoutSection.list(using: config, layoutEnvironment: layoutEnvironment)
+            section.contentInsets.leading = 5
+            section.contentInsets.trailing = 5
+            section.contentInsets.top = 5
+            section.contentInsets.bottom = 5
+            section.interGroupSpacing = 10
+            
+            return section
+        }
+        
+        return layout
     }()
     
     private lazy var groupCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Group>(
         collectionView: groupCollectionView) { collectionView, indexPath, data in
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GroupCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? GroupCollectionViewCell else {
+            withReuseIdentifier: MyGroupCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? MyGroupCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.set(data)
@@ -73,7 +86,7 @@ final class MyGroupsViewController: UIViewController {
     
     func setupNavigation() {
         navigationItem.leftBarButtonItems = [backBarButton]
-        navigationItem.title = viewModel.getMyGroupsTypeName()
+        navigationItem.title = viewModel.getMyGroupsType().rawValue
     }
     
     private func setupCollectionView() {
@@ -81,6 +94,9 @@ final class MyGroupsViewController: UIViewController {
     }
     
     private func populateSnapshot(data: [Group]) {
+        groupCollectionViewSnapShot.deleteAllItems()
+        setupCollectionView()
+        
         groupCollectionViewSnapShot.appendItems(data)
         groupCollectionViewDiffableDataSource.apply(groupCollectionViewSnapShot)
     }
@@ -108,6 +124,32 @@ final class MyGroupsViewController: UIViewController {
     
     private func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
+    }
+    
+    private func makeSwipeActions(for indexPath: IndexPath?) -> UISwipeActionsConfiguration? {
+        let deleteActionTitle: String
+        let deleteAction: UIContextualAction
+        
+        let type = viewModel.getMyGroupsType()
+        switch type {
+        case .makedGroup:
+            return UISwipeActionsConfiguration(actions: [])
+        case .participatedGroup:
+            guard let indexPath = indexPath else { return nil }
+            let group = viewModel.groupsSubject.value[indexPath.item]
+            
+            deleteActionTitle = NSLocalizedString("나가기", comment: "Delete action title")
+            deleteAction = UIContextualAction(style: .destructive, title: deleteActionTitle) { [weak self] _, _, _ in
+                self?.viewModel.didLeaveGroup(group: group)
+            }
+        case .likedGroup:
+            return UISwipeActionsConfiguration(actions: [])
+        }
+
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        config.performsFirstActionWithFullSwipe = false
+        
+        return config
     }
 }
 

@@ -15,4 +15,5 @@ protocol UserRepository {
     func create(uid: String?, user: User, completion: @escaping (Error?) -> Void) throws
     func fetch(uid: String, completion: @escaping (_ user: User) -> Void)
     func createUserGroup(userID: String, groupID: String)
+    func deleteUserGroup(userID: String, groupID: String)
 }
