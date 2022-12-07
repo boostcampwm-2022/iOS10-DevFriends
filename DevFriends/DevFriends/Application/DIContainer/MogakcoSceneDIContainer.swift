@@ -70,7 +70,7 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     }
     
     private func makePostCommentUseCase() -> PostCommentUseCase {
-        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
+        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository(), groupRepository: makeGroupRepository())
     }
     
     private func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
@@ -79,6 +79,10 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     
     private func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
         return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
+    }
+    
+    private func makeUpdateHitUseCase() -> UpdateHitUseCase {
+        return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
     }
     
     // MARK: Mogakco
@@ -110,7 +114,8 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
             updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
             sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
-            loadProfileImageUseCase: makeLoadProfileImageUseCase()
+            loadProfileImageUseCase: makeLoadProfileImageUseCase(),
+            updateHitUseCase: makeUpdateHitUseCase()
         )
     }
     

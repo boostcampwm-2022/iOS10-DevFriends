@@ -23,6 +23,7 @@ struct GroupResponseDTO: Codable {
     let limitedNumberPeople: Int
     let managerID: String
     let type: String
+    let commentNumber: Int
 }
 
 extension GroupResponseDTO {
@@ -43,7 +44,8 @@ extension GroupResponseDTO {
             hit: hit,
             limitedNumberPeople: limitedNumberPeople,
             managerID: managerID,
-            type: type
+            type: type,
+            commentNumber: commentNumber
         )
     }
 }

@@ -76,7 +76,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         )
     }
     func makePostCommentUseCase() -> PostCommentUseCase {
-        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
+        return DefaultPostCommentUseCase(
+            commentRepository: makeGroupCommentRepository(),
+            groupRepository: makeGroupRepository()
+        )
     }
     
     func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
@@ -89,6 +92,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     
     func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
         return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
+    }
+    
+    func makeUpdateHitUseCase() -> UpdateHitUseCase {
+        return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
     }
     
     // MARK: GroupList
@@ -134,7 +141,8 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
             updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
             sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
-            loadProfileImageUseCase: makeLoadProfileImageUseCase()
+            loadProfileImageUseCase: makeLoadProfileImageUseCase(),
+            updateHitUseCase: makeUpdateHitUseCase()
         )
     }
     

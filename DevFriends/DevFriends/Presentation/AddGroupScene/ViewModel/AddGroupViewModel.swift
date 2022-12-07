@@ -136,7 +136,8 @@ extension DefaultAddGroupViewModel {
             hit: 0,
             limitedNumberPeople: limit,
             managerID: son.id,
-            type: groupType.rawValue
+            type: groupType.rawValue,
+            commentNumber: 0
         )
         saveGroupUseCase.execute(group: newGroup)
         // TODO: User - Group 컬렉션에 해당 그룹 추가해줘야 함

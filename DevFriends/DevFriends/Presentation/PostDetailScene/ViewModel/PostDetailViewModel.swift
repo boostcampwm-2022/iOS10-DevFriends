@@ -55,6 +55,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let sendCommentNotificationUseCase: SendCommentNotificationUseCase
     private let sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase
     private let loadProfileImageUseCase: LoadProfileImageUseCase
+    private let updateHitUseCase: UpdateHitUseCase
     
     private var lastCommentLoadTime: Date?
     var expectedCommentsCount: Int = 0
@@ -94,7 +95,8 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         updateLikeUseCase: UpdateLikeUseCase,
         postCommentUseCase: PostCommentUseCase,
         sendCommentNotificationUseCase: SendCommentNotificationUseCase,
-        loadProfileImageUseCase: LoadProfileImageUseCase
+        loadProfileImageUseCase: LoadProfileImageUseCase,
+        updateHitUseCase: UpdateHitUseCase
     ) {
         self.actions = actions
         self.group = group
@@ -107,6 +109,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.postCommentUseCase = postCommentUseCase
         self.sendCommentNotificationUseCase = sendCommentNotificationUseCase
         self.loadProfileImageUseCase = loadProfileImageUseCase
+        self.updateHitUseCase = updateHitUseCase
         
         localUser = UserManager.shared.user
         
@@ -121,12 +124,10 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         
         postAttentionInfoSubject.value = .init(
             likeOrNot: localUser.likeGroupIDs.contains(group.id),
-            commentsCount: 0,
+            commentsCount: group.commentNumber,
             maxParticipantCount: group.limitedNumberPeople,
             currentParticipantCount: group.participantIDs.count
         )
-        
-        // 강남구청에서 모각코 id : CMUPNkEns4Pg9ez7fXvg
         
         if group.limitedNumberPeople == group.participantIDs.count {
             groupApplyButtonStateSubject.value = .closed
@@ -187,6 +188,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
 // MARK: INPUT
 extension DefaultPostDetailViewModel {
     func didLoadGroup() {
+        updateHitUseCase.execute(groupID: group.id)
         Task {
             guard let user = await loadUser(id: group.managerID) else { return }
             let image = await loadProfile(path: user.profileImagePath)
@@ -231,7 +233,7 @@ extension DefaultPostDetailViewModel {
     
     func didTapLikeButton() {
         postAttentionInfoSubject.value.likeOrNot.toggle()
-        updateLikeUseCase.execute(like: postAttentionInfoSubject.value.likeOrNot, user: localUser, group: group)
+        updateLikeUseCase.execute(like: postAttentionInfoSubject.value.likeOrNot, user: localUser, groupID: group.id)
         
         if postAttentionInfoSubject.value.likeOrNot == true {
             localUser.likeGroupIDs.append(group.id)

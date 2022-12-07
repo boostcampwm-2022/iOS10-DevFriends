@@ -123,6 +123,24 @@ final class DefaultGroupRepository: GroupRepository {
             print(error)
         }
     }
+    
+    func updateHit(groupID: String) {
+        firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
+            "hit": FieldValue.increment(Int64(1))
+        ])
+    }
+    
+    func updateLike(groupID: String, increment: Bool) {
+        firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
+            "like": FieldValue.increment(increment ? Int64(1) : Int64(-1))
+        ])
+    }
+    
+    func updateCommentNumber(groupID: String) {
+        firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
+            "commentNumber": FieldValue.increment(Int64(1))
+        ])
+    }
 }
 
 // MARK: Private
@@ -140,7 +158,8 @@ extension DefaultGroupRepository {
             hit: group.hit,
             limitedNumberPeople: group.limitedNumberPeople,
             managerID: group.managerID,
-            type: group.type
+            type: group.type,
+            commentNumber: group.commentNumber
         )
     }
 }

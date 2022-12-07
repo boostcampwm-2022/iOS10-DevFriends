@@ -19,6 +19,7 @@
 		05966969294097B000628DB3 /* LoadUserGroupIDsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05966968294097B000628DB3 /* LoadUserGroupIDsUseCase.swift */; };
 		0596696B294097BD00628DB3 /* LeaveGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696A294097BD00628DB3 /* LeaveGroupUseCase.swift */; };
 		0596696D29409B1300628DB3 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696C29409B1300628DB3 /* UserGroup.swift */; };
+		0596696F2940E49D00628DB3 /* UpdateHitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */; };
 		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
 		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
 		05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */; };
@@ -243,6 +244,7 @@
 		05966968294097B000628DB3 /* LoadUserGroupIDsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadUserGroupIDsUseCase.swift; sourceTree = "<group>"; };
 		0596696A294097BD00628DB3 /* LeaveGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveGroupUseCase.swift; sourceTree = "<group>"; };
 		0596696C29409B1300628DB3 /* UserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroup.swift; sourceTree = "<group>"; };
+		0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHitUseCase.swift; sourceTree = "<group>"; };
 		05A8DEC0292B71C200497902 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		05A8DEC6292BBF7B00497902 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		05A8DECC292BDFEA00497902 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
@@ -833,6 +835,7 @@
 				E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */,
 				058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */,
 				A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */,
+				0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1494,6 +1497,7 @@
 				05CB4A3A292DF16900A97531 /* LoadCommentsUseCase.swift in Sources */,
 				FC3C35992935F32700C5BFE3 /* ChatMessagesStorage.swift in Sources */,
 				05CB4A3A292DF16900A97531 /* LoadCommentsUseCase.swift in Sources */,
+				0596696F2940E49D00628DB3 /* UpdateHitUseCase.swift in Sources */,
 				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
 				FC6A9A92293E0CA100122A87 /* RemoveMessageListenerUseCase.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,

@@ -21,6 +21,7 @@ class AcceptedGroupResponseEntity: Object {
     @objc dynamic var limitedNumberPeople: Int = 0
     @objc dynamic var managerID: String = ""
     @objc dynamic var type: String = ""
+    @objc dynamic var commentNumber: Int = 0
     @objc dynamic var acceptedTime: Date = .now
     @objc dynamic var lastMessageContent: String = ""
     @objc dynamic var lastMessageCount: Int = 0
@@ -41,7 +42,8 @@ extension AcceptedGroupResponseEntity {
             hit: hit,
             limitedNumberPeople: limitedNumberPeople,
             managerID: managerID,
-            type: type
+            type: type,
+            commentNumber: commentNumber
         )
         
         return AcceptedGroup(
