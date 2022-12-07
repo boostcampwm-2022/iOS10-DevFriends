@@ -10,7 +10,6 @@ import PhotosUI
 import UIKit
 
 final class FixMyInfoViewController: UIViewController {
-<<<<<<< HEAD
     private let backBarButton = BackBarButtonItem()
     
     private let scrollView = UIScrollView()

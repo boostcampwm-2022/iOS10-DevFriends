@@ -74,7 +74,7 @@ final class AuthCoordinator: Coordinator {
     
     func didSubmitCategorySelection(updatedCategories: [Category]) {
         navigationController?.popViewController(animated: true)
-        guard let viewController = navigationController?.viewControllers.last as? AddGroupViewController else { return }
+        guard let viewController = navigationController?.viewControllers.last as? SignUpViewController else { return }
         viewController.updateCategories(categories: updatedCategories)
     }
 }

@@ -21,6 +21,7 @@ protocol SignUpViewModelInput {
     func didChangedTextInNicknameTextField(text: String?)
     func didTouchedBackButton()
     func didTouchedCategoryView()
+    func updateCategory(categories: [Category])
 }
 
 protocol SignUpViewModelOutput {
@@ -28,6 +29,7 @@ protocol SignUpViewModelOutput {
     var name: String? { get }
     var isProcessEnabled: PassthroughSubject<Bool, Never> { get }
     var isEmailValidated: PassthroughSubject<Bool, Never> { get }
+    var didUpdateCategorySubject: PassthroughSubject<[Category], Never> { get }
 }
 
 protocol SignUpViewModel: SignUpViewModelInput, SignUpViewModelOutput {}
@@ -41,10 +43,12 @@ final class DefaultSignUpViewModel: SignUpViewModel {
     private let uid: String
     let email: String?
     let name: String?
+    var categorySelection: [Category] = []
     
     let isProcessEnabled = PassthroughSubject<Bool, Never>()
     let isEmailValidated = PassthroughSubject<Bool, Never>()
     let isNicknameValidated = PassthroughSubject<Bool, Never>()
+    let didUpdateCategorySubject = PassthroughSubject<[Category], Never>()
     
     init(actions: SignUpViewModelActions, createUserUseCase: CreateUserUseCase, uid: String, email: String? = nil, name: String? = nil) {
         self.actions = actions
@@ -71,7 +75,8 @@ extension DefaultSignUpViewModel {
             uid: self.uid,
             nickname: nickname,
             job: job ?? "",
-            email: email
+            email: email,
+            categoryIDs: categorySelection.map{ $0.id }
         ) { error in
             if let error = error {
                 print(error)
@@ -103,6 +108,11 @@ extension DefaultSignUpViewModel {
     
     func didTouchedCategoryView() {
         actions.showChooseCategoryViewController()
+    }
+    
+    func updateCategory(categories: [Category]) {
+        self.categorySelection = categories
+        didUpdateCategorySubject.send(categories)
     }
 }
 

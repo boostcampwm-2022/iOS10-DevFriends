@@ -193,6 +193,13 @@ final class SignUpViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.didUpdateCategorySubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedCategories in
+                self?.categorySelectionView.set(categories: updatedCategories)
+            }
+            .store(in: &cancellables)
+        
         signUpButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.didTouchedSignUp(
@@ -223,6 +230,10 @@ final class SignUpViewController: UIViewController {
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.text = text
         return label
+    }
+    
+    func updateCategories(categories: [Category]) {
+        self.viewModel.updateCategory(categories: categories)
     }
 }
 
