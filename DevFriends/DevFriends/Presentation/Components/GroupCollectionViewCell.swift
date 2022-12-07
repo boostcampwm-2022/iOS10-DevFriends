@@ -48,6 +48,13 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         return label
     }()
     
+    private let distanceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "0m"
+        label.font = .systemFont(ofSize: 12, weight: .bold)
+        return label
+    }()
+    
     func set(_ group: Group) {
         titleLabel.text = group.title
         participantLabel.text = "👥 \(group.participantIDs.count)/\(group.limitedNumberPeople)"
@@ -67,12 +74,11 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
             tagStackView.addArrangedSubview(createInterestLabel($0.name))
         }
         let location = CLLocation(latitude: info.location.latitude, longitude: info.location.longitude)
-        var distanceString = ""
         if let distance = info.distance {
-            distanceString = makeDistanceString(distance)
+            distanceLabel.text = makeDistanceString(distance)
         }
         Task {
-            placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소") · \(distanceString)"
+            placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
         }
     }
     
@@ -117,7 +123,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         
         self.contentView.addSubview(tagStackView)
         tagStackView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(6)
             make.leading.equalTo(titleLabel.snp.leading)
         }
         
@@ -132,6 +138,12 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
             make.bottom.equalTo(participantLabel.snp.bottom)
             make.leading.equalTo(titleLabel.snp.leading)
             make.trailing.lessThanOrEqualTo(participantLabel.snp.leading)
+        }
+        
+        self.contentView.addSubview(distanceLabel)
+        distanceLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(participantLabel.snp.top).offset(-8)
+            make.leading.equalTo(placeLabel.snp.leading)
         }
     }
     

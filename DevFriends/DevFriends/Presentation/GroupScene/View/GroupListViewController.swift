@@ -101,7 +101,7 @@ final class GroupListViewController: UIViewController {
                 item.contentInsets.bottom = 10
                 
                 let group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(140)),
+                    layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)),
                     subitems: [item]
                 )
                 
