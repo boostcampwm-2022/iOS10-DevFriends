@@ -132,6 +132,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController {
         return PostDetailViewController(viewModel: makePostDetailViewModel(actions: actions, group: group))
     }
+    
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController {
+        return PostReportViewController(actions: actions)
+    }
 }
 
 extension GroupSceneDIContainer: NotificationSceneDIContainer {}

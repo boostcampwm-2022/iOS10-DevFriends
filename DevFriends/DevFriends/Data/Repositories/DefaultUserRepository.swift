@@ -110,6 +110,35 @@ extension DefaultUserRepository {
             print(error)
         }
     }
+    
+    func fetchUserGroup(of uid: String) async throws -> [UserGroup] {
+        let snapshot = try await firestore
+            .collection(FirestorePath.user.rawValue)
+            .document(uid)
+            .collection(FirestorePath.group.rawValue)
+            .getDocuments()
+        let groups = try snapshot.documents
+            .map { try $0.data(as: UserGroupResponseDTO.self) }
+            .map { $0.toDomain() }
+        
+        return groups
+    }
+    
+    func deleteUserGroup(userID: String, groupID: String) {
+        firestore
+            .collection(FirestorePath.user.rawValue)
+            .document(userID)
+            .collection(FirestorePath.group.rawValue)
+            .whereField("groupID", isEqualTo: groupID)
+            .limit(to: 1)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    snapshot?.documents.first?.reference.delete()
+                }
+            }
+    }
 }
 
 // MARK: Private
