@@ -15,6 +15,7 @@ struct GroupListViewModelActions {
 }
 
 protocol GroupListViewModelInput {
+    func loadUserRecommand()
     func loadGroupList()
     func didSelectFilter()
     func didSelectAdd(groupType: GroupType)
@@ -53,7 +54,7 @@ final class DefaultGroupListViewModel: GroupListViewModel {
         self.sortGroupUseCase = sortGroupUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
         // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
-        self.recommandFilter = Filter(alignFilter: .newest, categoryFilter: [])
+        self.recommandFilter = Filter(alignFilter: .closest, categoryFilter: [])
         self.actions = actions
     }
     
@@ -65,6 +66,14 @@ final class DefaultGroupListViewModel: GroupListViewModel {
 
 // MARK: INPUT
 extension DefaultGroupListViewModel {
+    func loadUserRecommand() {
+        Task {
+            if let userCategoryIDs = UserManager.shared.categoryIDs {
+                self.recommandFilter.categoryFilter = userCategoryIDs
+            }
+        }
+    }
+    
     func loadGroupList() {
         Task {
             let recommandGroups = try await fetchGroupUseCase

@@ -164,6 +164,7 @@ final class GroupListViewController: UIViewController {
         self.setupCollectionViewHeader(alignType: .newest)
         self.setupNavigation()
         self.setUserLocation()
+        self.viewModel.loadUserRecommand()
         self.viewModel.loadGroupList()
     }
     

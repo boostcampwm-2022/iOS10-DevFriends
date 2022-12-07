@@ -167,8 +167,8 @@ extension GroupFilterViewController: UICollectionViewDataSource {
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
         case SectionType.category.rawValue: // 태그 종류
-            cell.configure(viewModel.categoryType[indexPath.item])
-            if viewModel.categoryFilter.contains(viewModel.categoryType[indexPath.item]) {
+            cell.configure(viewModel.categoryType[indexPath.item].name)
+            if viewModel.categoryFilter.contains(viewModel.categoryType[indexPath.item].id) {
                 cell.isSelected = true
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
@@ -246,7 +246,7 @@ extension GroupFilterViewController: UICollectionViewDelegateFlowLayout {
         case SectionType.group.rawValue:
             tagString = viewModel.groupType[indexPath.item].rawValue
         case SectionType.category.rawValue:
-            tagString = viewModel.categoryType[indexPath.item]
+            tagString = viewModel.categoryType[indexPath.item].name
         default:
             tagString = ""
         }
