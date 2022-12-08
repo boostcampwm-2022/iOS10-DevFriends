@@ -20,7 +20,7 @@ final class DefaultDeleteNotificationUseCase: DeleteNotificationUseCase {
     
     func execute(notification: Notification) {
         // MARK: user를 나중에 어떻게 가져올지 논의해보기
-        guard let uid = UserDefaults.standard.object(forKey: "uid") as? String, let notificationID = notification.uid
+        guard let uid = UserManager.shared.uid, let notificationID = notification.uid
         else { fatalError("UID was not stored!!") }
         notificationRepository.delete(userID: uid, notificationID: notificationID)
     }

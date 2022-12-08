@@ -26,7 +26,7 @@ class ChatContentViewController: UIViewController {
             tableView: messageTableView
         ) { [weak self] tableView, indexPath, data -> UITableViewCell in
             if let data = data as? Message {
-                if data.userID == UserDefaults.standard.object(forKey: "uid") as? String {
+                if data.userID == UserManager.shared.uid {
                     let cell = self?.createMyMessageTableViewCell(
                         tableView: tableView,
                         indexPath: indexPath,

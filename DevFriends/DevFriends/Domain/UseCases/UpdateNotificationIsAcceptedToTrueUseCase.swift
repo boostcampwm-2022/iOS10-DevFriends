@@ -20,7 +20,7 @@ final class DefaultUpdateNotificationIsAcceptedToTrueUseCase: UpdateNotification
     
     func execute(notification: Notification) {
         // MARK: user를 나중에 어떻게 가져올지 논의해보기
-        guard let uid = UserDefaults.standard.object(forKey: "uid") as? String
+        guard let uid = UserManager.shared.uid
         else { fatalError("UID was not stored!!") }
         notificationRepository.update(isAccepted: true, userID: uid, notification: notification)
     }
