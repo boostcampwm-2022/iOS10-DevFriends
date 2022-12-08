@@ -30,6 +30,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
     
     private let tagStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.spacing = 3
         return stackView
     }()
     
