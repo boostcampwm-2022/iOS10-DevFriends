@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import FirebaseFirestore
 
 struct ChatViewModelActions {
     let showChatContent: (Group) -> Void
@@ -27,6 +28,9 @@ final class DefaultChatViewModel: ChatViewModel {
     private let loadChatGroupsUseCase: LoadChatGroupsUseCase
     private let actions: ChatViewModelActions
     
+    private var groupListListener: ListenerRegistration?
+    private var groupListeners: [ListenerRegistration]?
+    
     // MARK: OUTPUT
     var groupsSubject = CurrentValueSubject<[AcceptedGroup], Never>([])
     
@@ -37,28 +41,36 @@ final class DefaultChatViewModel: ChatViewModel {
     }
     
     // MARK: Private
-    private func loadGroups() async {
-        let loadTask = Task {
-            guard let uid = UserManager.shared.uid else { fatalError("In ChatViewModel, UserManager's uid is nil.") }
-            return try await loadChatGroupsUseCase.execute()
-        }
+    private func loadGroupsWithListener() {
+        let localAcceptedGroups = loadChatGroupsUseCase.executeFromLocal()
+        self.groupsSubject.send(localAcceptedGroups)
         
-        let result = await loadTask.result
-        
-        do {
-            groupsSubject.send(try result.get())
-        } catch {
-            print(error)
-        }
+        groupListListener = loadChatGroupsUseCase.execute(groupListenersProcess: { groupListeners in
+            self.groupListeners = groupListeners
+        }, groupProcess: { group in
+            // SW: 업데이트된 그룹이 중복될 수 있어서 같은 것이 있으면 이전에 있던 걸 지우는 방식으로 진행함
+            var groups = self.groupsSubject.value
+            if let index = groups.firstIndex(where: { acceptedGroup in
+                if acceptedGroup.group.id == group.group.id {
+                    return true
+                }
+                return false
+            }) {
+                groups.remove(at: index)
+                groups.insert(group, at: 0)
+            } else {
+                groups.insert(group, at: 0)
+            }
+            
+            self.groupsSubject.send(groups)
+        })
     }
 }
 
 // MARK: INPUT
 extension DefaultChatViewModel {
     func didLoadGroups() {
-        Task {
-            await loadGroups()
-        }
+        loadGroupsWithListener()
     }
     
     func didSelectGroup(at index: Int) {
