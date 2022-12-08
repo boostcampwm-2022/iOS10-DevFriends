@@ -59,6 +59,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         titleLabel.text = group.title
         participantLabel.text = "👥 \(group.participantIDs.count)/\(group.limitedNumberPeople)"
         let location = CLLocation(latitude: group.location.latitude, longitude: group.location.longitude)
+        setImage(group: group)
         Task {
             placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
         }
@@ -77,8 +78,23 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         if let distance = info.distance {
             distanceLabel.text = makeDistanceString(distance)
         }
+        setImage(group: info.group)
         Task {
             placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
+        }
+    }
+    
+    func setImage(group: Group) {
+        let groupType = GroupType(rawValue: group.type)
+        switch groupType {
+        case .project:
+            imageView.image = .project
+        case .mogakco:
+            imageView.image = .mogakco
+        case .study:
+            imageView.image = .study
+        default:
+            imageView.image = .devFriends
         }
     }
     
