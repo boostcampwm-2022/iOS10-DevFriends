@@ -25,8 +25,7 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
     }
     
     func execute(groupListenersProcess: @escaping (_ groupListeners: [ListenerRegistration]) -> Void, groupProcess: @escaping (_ group: AcceptedGroup) -> Void) -> ListenerRegistration {
-        let id = "YkocW98XPzJAsSDVa5qd"
-        
+        guard let id = UserManager.shared.uid else { fatalError("LoadChatGroupsUseCase에서 UserManager에 uid가 없다고 함") }
         let groupListListener = chatGroupsRepository.fetch(
             userID: id,
             messageListenersProcess: groupListenersProcess,

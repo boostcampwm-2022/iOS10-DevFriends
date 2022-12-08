@@ -37,13 +37,14 @@ final class ChatTableViewCell: UITableViewCell {
     }()
     
     private let newMessageLabel: UILabel = {
-        let label = UILabel()
+        let label = CommonPaddingLabel()
         label.backgroundColor = .red
         label.textColor = .white
         label.layer.cornerRadius = 10
         label.textAlignment = .center
         label.clipsToBounds = true
         label.font = .systemFont(ofSize: 12)
+        label.padding = UIEdgeInsets(top: 16, left: 8, bottom: 16, right: 8)
         return label
     }()
     
@@ -71,11 +72,7 @@ final class ChatTableViewCell: UITableViewCell {
             self.newMessageLabel.isHidden = true
         } else {
             self.newMessageLabel.isHidden = false
-            if data.newMessageCount > 9 {
-                self.newMessageLabel.text = "9+"
-            } else {
-                self.newMessageLabel.text = "\(data.newMessageCount)"
-            }
+            self.newMessageLabel.text = "new"
         }
     }
 }
