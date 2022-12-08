@@ -103,9 +103,9 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         if distance > 1000.0 {
             let digit = 10.0
             let distKM = distance / 1000
-            return "\(round(distKM * digit) / digit)km"
+            return "🏃🏻‍♀️\(round(distKM * digit) / digit)km"
         } else {
-            return "\(Int(round(distance)))m"
+            return "🏃🏻‍♀️\(Int(round(distance)))m"
         }
     }
     
