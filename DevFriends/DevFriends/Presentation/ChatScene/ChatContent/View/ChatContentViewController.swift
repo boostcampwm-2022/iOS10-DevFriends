@@ -145,6 +145,9 @@ class ChatContentViewController: UIViewController {
     @objc func scrollToBottom() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            if self.viewModel.getCurrentMessageCount() == 0 {
+                return
+            }
             let lastIndexPath = IndexPath(row: self.viewModel.getCurrentMessageCount() - 1, section: 0)
             self.messageTableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
         }
