@@ -9,12 +9,7 @@ import SnapKit
 
 final class ChatTableViewCell: UITableViewCell {
     private let chatImageViewHeight: CGFloat = 70
-    private lazy var chatImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .gray
-        imageView.layer.cornerRadius = self.chatImageViewHeight / 2
-        return imageView
-    }()
+    private let chatImageView = UIImageView()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -73,6 +68,21 @@ final class ChatTableViewCell: UITableViewCell {
         } else {
             self.newMessageLabel.isHidden = false
             self.newMessageLabel.text = "new"
+        }
+        setImage(group: data.group)
+    }
+    
+    func setImage(group: Group) {
+        let groupType = GroupType(rawValue: group.type)
+        switch groupType {
+        case .project:
+            chatImageView.image = .project
+        case .mogakco:
+            chatImageView.image = .mogakco
+        case .study:
+            chatImageView.image = .study
+        default:
+            chatImageView.image = .devFriends
         }
     }
 }
