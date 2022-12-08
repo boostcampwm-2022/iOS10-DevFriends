@@ -6,6 +6,7 @@
 //
 
 protocol ChatMessagesRepository {
-    func create(chatUID: String, message: Message)
     func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws
+    func send(chatUID: String, message: Message)
+    func removeMessageListener()
 }

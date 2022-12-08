@@ -9,13 +9,15 @@ import CoreLocation
 import FirebaseFirestore
 
 final class DefaultGroupRepository: GroupRepository {
-    func create(group: Group) {
+    func create(group: Group) -> String {
         do {
-            try firestore.collection(FirestorePath.group.rawValue)
+            let reference = firestore.collection(FirestorePath.group.rawValue)
                 .document()
-                .setData(from: makeGroupResponseDTO(group: group))
+            try reference.setData(from: makeGroupResponseDTO(group: group))
+            return reference.documentID
         } catch {
             print(error)
+            return ""
         }
     }
     
@@ -27,6 +29,22 @@ final class DefaultGroupRepository: GroupRepository {
             .data(as: GroupResponseDTO.self)
         
         return group.toDomain()
+    }
+    
+    func fetch(groupIDs: [String]) async throws -> [Group] {
+        return try await withThrowingTaskGroup(of: Group.self) { taskGroup in
+            groupIDs.forEach { id in
+                if id.isEmpty { return }
+                
+                taskGroup.addTask {
+                    try await self.fetch(groupID: id)
+                }
+            }
+            
+            return try await taskGroup.reduce(into: []) { partialResult, user in
+                partialResult.append(user)
+            }
+        }
     }
     
     func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group] {
@@ -107,6 +125,24 @@ final class DefaultGroupRepository: GroupRepository {
             print(error)
         }
     }
+    
+    func updateHit(groupID: String) {
+        firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
+            "hit": FieldValue.increment(Int64(1))
+        ])
+    }
+    
+    func updateLike(groupID: String, increment: Bool) {
+        firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
+            "like": FieldValue.increment(increment ? Int64(1) : Int64(-1))
+        ])
+    }
+    
+    func updateCommentNumber(groupID: String) {
+        firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
+            "commentNumber": FieldValue.increment(Int64(1))
+        ])
+    }
 }
 
 // MARK: Private
@@ -124,7 +160,8 @@ extension DefaultGroupRepository {
             hit: group.hit,
             limitedNumberPeople: group.limitedNumberPeople,
             managerID: group.managerID,
-            type: group.type
+            type: group.type,
+            commentNumber: group.commentNumber
         )
     }
 }

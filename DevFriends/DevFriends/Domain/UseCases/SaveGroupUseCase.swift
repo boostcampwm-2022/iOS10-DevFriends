@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SaveGroupUseCase {
-    func execute(group: Group)
+    func execute(group: Group) -> String
 }
 
 final class DefaultSaveGroupUseCase: SaveGroupUseCase {
@@ -18,7 +18,7 @@ final class DefaultSaveGroupUseCase: SaveGroupUseCase {
         self.groupRepository = groupRepository
     }
     
-    func execute(group: Group) {
-        groupRepository.create(group: group)
+    func execute(group: Group) -> String {
+        return groupRepository.create(group: group)
     }
 }

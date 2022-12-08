@@ -10,26 +10,10 @@ import SnapKit
 import UIKit
 
 final class PostDetailViewController: UIViewController {
-    private lazy var backBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem()
-        barButton.image = .chevronLeft
-        barButton.style = .plain
-        barButton.tintColor = .black
-        return barButton
-    }()
-    private lazy var settingButton: UIBarButtonItem = {
-        let item = UIBarButtonItem()
-        item.image = .ellipsis
-        item.tintColor = .black
-        item.target = self
-        item.action = nil
-        item.publisher
-            .sink { [weak self] _ in
-                self?.didTapSettingButton()
-            }
-            .store(in: &cancellables)
-        return item
-    }()
+    private let backBarButton = BackBarButtonItem()
+    
+    private let settingButton = SettingBarButtonItem()
+    
     private lazy var commentTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
@@ -175,6 +159,12 @@ final class PostDetailViewController: UIViewController {
     }
     
     private func bind() {
+        settingButton.publisher
+            .sink { [weak self] _ in
+                self?.didTapSettingButton()
+            }
+            .store(in: &cancellables)
+        
         backBarButton.publisher
             .sink { [weak self] _ in
                 self?.didTouchedBackButton()
@@ -329,14 +319,24 @@ extension PostDetailViewController {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             
-            UIView.animate(withDuration: 0.3) {
-                self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
+            if self.view.frame.origin.y == 0.0 {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y -= keyboardRectangle.height
+                }
             }
         }
     }
     
-    @objc func doKeyboardDown() {
-        self.view.transform = .identity
+    @objc func doKeyboardDown(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            
+            if self.view.frame.origin.y == -1 * keyboardRectangle.height {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y = 0
+                }
+            }
+        }
     }
 }
 
@@ -356,7 +356,7 @@ extension PostDetailViewController: UITableViewDelegate {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        if maximumOffset < currentOffset {
+        if viewModel.commentsSubject.value.count == viewModel.expectedCommentsCount && maximumOffset < currentOffset {
             viewModel.didScrollToBottom()
             spinner.startAnimating()
             
@@ -371,7 +371,17 @@ extension PostDetailViewController: UITableViewDelegate {
 
 extension PostDetailViewController {
     private func didTapSettingButton() {
-        // MARK: 동작을 넣어주세요
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let reportAction = UIAlertAction(title: "신고", style: .default) { [weak self] _ in
+            self?.viewModel.didTouchedReportButton()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        actionSheet.addAction(reportAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true)
     }
     
     private func didTouchedBackButton() {

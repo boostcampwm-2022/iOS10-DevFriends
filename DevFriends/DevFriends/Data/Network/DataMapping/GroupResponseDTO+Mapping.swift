@@ -23,6 +23,7 @@ struct GroupResponseDTO: Codable {
     let limitedNumberPeople: Int
     let managerID: String
     let type: String
+    let commentNumber: Int
 }
 
 extension GroupResponseDTO {
@@ -33,14 +34,18 @@ extension GroupResponseDTO {
             title: title,
             chatID: chatID,
             categoryIDs: categories,
-            location: Location(latitude: location.latitude, longitude: location.longitude),
+            location: Location(
+                latitude: location.latitude,
+                longitude: location.longitude
+            ),
             description: description,
             time: time,
             like: like,
             hit: hit,
             limitedNumberPeople: limitedNumberPeople,
             managerID: managerID,
-            type: type
+            type: type,
+            commentNumber: commentNumber
         )
     }
 }

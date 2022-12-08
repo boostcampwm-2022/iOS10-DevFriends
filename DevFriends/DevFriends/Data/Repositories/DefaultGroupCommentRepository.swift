@@ -27,16 +27,28 @@ extension DefaultGroupCommentRepository: GroupCommentRepository {
         return ""
     }
     
-    func fetch(_ groupId: String, limit: Int) async throws -> [Comment] {
-        let querySnapshot = try await firestore
+    func fetch(_ groupId: String, from: Date?, limit: Int) async throws -> [Comment] {
+        var reference = firestore
             .collection(FirestorePath.group.rawValue)
             .document(groupId)
             .collection(FirestorePath.comment.rawValue)
-            .order(by: "time", descending: true)
-            .limit(to: limit)
-            .getDocuments()
+        
+        var querySnapshot: QuerySnapshot
+        if let from = from {
+            querySnapshot = try await reference
+                .whereField("time", isLessThan: from)
+                .order(by: "time", descending: true)
+                .limit(to: limit)
+                .getDocuments()
+        } else {
+            querySnapshot = try await reference
+                .order(by: "time", descending: true)
+                .limit(to: limit)
+                .getDocuments()
+        }
         
         let comments = querySnapshot.documentChanges.compactMap { try? $0.document.data(as: CommentResponseDTO.self) }
+            .filter { $0.time != from }
         return comments.map { $0.toDomain() }
     }
 }

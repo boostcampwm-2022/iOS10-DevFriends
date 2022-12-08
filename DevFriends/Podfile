@@ -13,6 +13,7 @@ target 'DevFriends' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'RealmSwift', '~>10'
 
   target 'DevFriendsTests' do
     inherit! :search_paths

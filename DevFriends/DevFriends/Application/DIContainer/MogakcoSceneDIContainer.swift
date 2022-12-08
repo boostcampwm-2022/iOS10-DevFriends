@@ -35,6 +35,10 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     private func makeNotificationRepository() -> NotificationRepository {
         return DefaultNotificationRepository()
     }
+    
+    private func makeImageRepository() -> ImageRepository {
+        return DefaultImageRepository()
+    }
 
     // MARK: UseCases
     private func makeLoadGroupUseCase() -> LoadGroupUseCase {
@@ -66,11 +70,19 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     }
     
     private func makePostCommentUseCase() -> PostCommentUseCase {
-        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
+        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository(), groupRepository: makeGroupRepository())
     }
     
     private func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
         return DefaultSendCommentNotificationUseCase(notificationRepository: makeNotificationRepository())
+    }
+    
+    private func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
+        return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
+    }
+    
+    private func makeUpdateHitUseCase() -> UpdateHitUseCase {
+        return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
     }
     
     // MARK: Mogakco
@@ -101,12 +113,18 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
             sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
             updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
-            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
+            loadProfileImageUseCase: makeLoadProfileImageUseCase(),
+            updateHitUseCase: makeUpdateHitUseCase()
         )
     }
     
     func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController {
         return PostDetailViewController(viewModel: makePostDetailViewModel(actions: actions, group: group))
+    }
+    
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController {
+        return PostReportViewController(actions: actions)
     }
     
     // MARK: AddGroupScene

@@ -15,22 +15,6 @@ extension DefaultUserRepository: UserRepository {
         let user = try userSnapshot.data(as: UserResponseDTO.self)
         return user.toDomain()
     }
-
-    func fetch(uids: [String]) async throws -> [User] {
-        return try await withThrowingTaskGroup(of: User.self) { taskGroup in
-            uids.forEach { id in
-                if id.isEmpty { return }
-                
-                taskGroup.addTask {
-                    try await self.fetch(uid: id)
-                }
-            }
-            
-            return try await taskGroup.reduce(into: []) { partialResult, user in
-                partialResult.append(user)
-            }
-        }
-    }
     
     func fetch(uid: String, completion: @escaping (_ user: User) -> Void) {
         _ = firestore
@@ -99,9 +83,7 @@ extension DefaultUserRepository: UserRepository {
 
 extension DefaultUserRepository {
     func createUserGroup(userID: String, groupID: String) {
-        let userGroup = UserGroup(groupID: groupID, time: Date())
-        let userGroupResponseDTO = makeUserGroupResponseDTO(userGroup: userGroup)
-        
+        let userGroupResponseDTO = UserGroupResponseDTO(groupID: groupID, time: Date.now)
         do {
             _ = try firestore
                 .collection(FirestorePath.user.rawValue)
@@ -125,6 +107,22 @@ extension DefaultUserRepository {
         
         return groups
     }
+    
+    func deleteUserGroup(userID: String, groupID: String) {
+        firestore
+            .collection(FirestorePath.user.rawValue)
+            .document(userID)
+            .collection(FirestorePath.group.rawValue)
+            .whereField("groupID", isEqualTo: groupID)
+            .limit(to: 1)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    snapshot?.documents.first?.reference.delete()
+                }
+            }
+    }
 }
 
 // MARK: Private
@@ -139,9 +137,5 @@ extension DefaultUserRepository {
             appliedGroups: user.appliedGroupIDs,
             likeGroups: user.likeGroupIDs
         )
-    }
-    
-    private func makeUserGroupResponseDTO(userGroup: UserGroup) -> UserGroupResponseDTO {
-        return UserGroupResponseDTO(groupID: userGroup.groupID, time: userGroup.time)
     }
 }

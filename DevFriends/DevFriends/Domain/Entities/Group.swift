@@ -21,6 +21,7 @@ struct Group: Hashable {
     let limitedNumberPeople: Int
     let managerID: String
     let type: String
+    var commentNumber: Int
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(chatID)

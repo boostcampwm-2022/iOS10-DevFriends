@@ -24,6 +24,22 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultImageRepository()
     }
     
+    func makeCategoryRepository() -> CategoryRepository {
+        return DefaultCategoryRepository()
+    }
+    
+    func makeGroupRepository() -> GroupRepository {
+        return DefaultGroupRepository()
+    }
+
+    func makeGroupCommentRepository() -> GroupCommentRepository {
+        return DefaultGroupCommentRepository()
+    }
+
+    func makeNotifiactionRepository() -> NotificationRepository {
+        return DefaultNotificationRepository()
+    }
+    
     // MARK: UseCase
     func makeUploadProfileImageUseCase() -> UploadProfileImageUseCase {
         return DefaultUploadProfileImageUseCase(imageRepository: makeImageRepository())
@@ -37,9 +53,59 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
     }
     
+    func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
+    }
+    
+    func makeLoadGroupUseCase() -> LoadGroupUseCase {
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
+    }
+    
+    func makeLoadUserUseCase() -> LoadUserUseCase {
+        return DefaultLoadUserUseCase(userRepository: makeUserRepository())
+    }
+
+    func makeLoadCommentsUseCase() -> LoadCommentsUseCase {
+        return DefaultLoadCommentsUseCase(commentRepository: makeGroupCommentRepository())
+    }
+
+    func makeApplyGroupUseCase() -> ApplyGroupUseCase {
+        return DefaultApplyGroupUseCase(userRepository: makeUserRepository())
+    }
+
+    func makeSendGroupApplyNotificationUseCase() -> SendGroupApplyNotificationUseCase {
+        return DefaultSendGroupApplyNotificationUseCase(notificationRepository: makeNotifiactionRepository())
+    }
+
+    func makeUpdateLikeUseCase() -> UpdateLikeUseCase {
+        return DefaultUpdateLikeUseCase(
+            userRepository: makeUserRepository(),
+            groupRepository: makeGroupRepository()
+        )
+    }
+    func makePostCommentUseCase() -> PostCommentUseCase {
+        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository(), groupRepository: makeGroupRepository())
+    }
+
+    func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
+        return DefaultSendCommentNotificationUseCase(notificationRepository: makeNotifiactionRepository())
+    }
+    
+    func makeLoadUserGroupIDsUseCase() -> LoadUserGroupIDsUseCase {
+        return DefaultLoadUserGroupIDsUseCase(userRepository: makeUserRepository())
+    }
+    
+    func makeLeaveGroupUseCase() -> LeaveGroupUseCase {
+        return DefaultLeaveGroupUseCase(userRepository: makeUserRepository(), groupRepository: makeGroupRepository())
+    }
+    
+    func makeUpdateHitUseCase() -> UpdateHitUseCase {
+        return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
+    }
+    
     // MARK: MyPageViwe
     func makeMyPageViewModel(actions: MyPageViewModelActions) -> MyPageViewModel {
-        return MyPageViewModel(actions: actions)
+        return DefaultMyPageViewModel(actions: actions, loadCategoryUseCase: makeLoadCategoryUseCase())
     }
     
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController {
@@ -48,7 +114,13 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     
     // MARK: MyGroupsView
     func makeMyGroupsViewModel(type: MyGroupsType, actions: MyGroupsViewModelActions) -> MyGroupsViewModel {
-        return MyGroupsViewModel(type: type, actions: actions)
+        return DefaultMyGroupsViewModel(
+            type: type,
+            actions: actions,
+            loadUserGroupIDsUseCase: makeLoadUserGroupIDsUseCase(),
+            loadGroupUseCase: makeLoadGroupUseCase(),
+            leaveGroupUseCase: makeLeaveGroupUseCase()
+        )
     }
     
     func makeMakedGroupViewController(actions: MyGroupsViewModelActions) -> MyGroupsViewController {
@@ -65,6 +137,28 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return MyGroupsViewController(viewModel: makeMyGroupsViewModel(type: .likedGroup, actions: actions))
     }
     
+    // MARK: PostDetailView
+    private func makePostDetailViewModel(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewModel {
+        return DefaultPostDetailViewModel(
+            actions: actions,
+            group: group,
+            fetchUserUseCase: makeLoadUserUseCase(),
+            fetchCategoryUseCase: makeLoadCategoryUseCase(),
+            fetchCommentsUseCase: makeLoadCommentsUseCase(),
+            applyGroupUseCase: makeApplyGroupUseCase(),
+            sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
+            updateLikeUseCase: makeUpdateLikeUseCase(),
+            postCommentUseCase: makePostCommentUseCase(),
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
+            loadProfileImageUseCase: makeLoadProfileImageUseCase(),
+            updateHitUseCase: makeUpdateHitUseCase()
+        )
+    }
+
+    func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController {
+        return PostDetailViewController(viewModel: makePostDetailViewModel(actions: actions, group: group))
+    }
+    
     // MARK: PopUpView
     func makePopupViewController(popup: Popup) -> PopupViewController {
         let popupViewController = PopupViewController()
@@ -73,16 +167,34 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     }
     
     // MARK: FixMyInfoView
-    private func makeFixMyInfoViewModel(actions: FixMyInfoViewModelActions) -> FixMyInfoViewModel {
+    private func makeFixMyInfoViewModel(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewModel {
         return DefaultFixMyInfoViewModel(
+            userInfo: userInfo,
             actions: actions,
             updateUserInfoUseCase: makeUpdateUserInfoUseCase(),
             uploadProfileImageUseCase: makeUploadProfileImageUseCase(),
-            fetchProfileImageUseCase: makeLoadProfileImageUseCase()
+            fetchProfileImageUseCase: makeLoadProfileImageUseCase(),
+            loadCategoryUseCase: makeLoadCategoryUseCase()
         )
     }
     
-    func makeFixMyInfoViewController(actions: FixMyInfoViewModelActions) -> FixMyInfoViewController {
-        return FixMyInfoViewController(viewModel: makeFixMyInfoViewModel(actions: actions))
+    func makeFixMyInfoViewController(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewController {
+        return FixMyInfoViewController(viewModel: makeFixMyInfoViewModel(userInfo: userInfo, actions: actions))
+    }
+    
+    // MARK: ChooseCategoryView
+    private func makeChooseCategoryViewModel(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewModel {
+        return DefaultChooseCategoryViewModel(
+            fetchCategoryUseCase: makeLoadCategoryUseCase(),
+            actions: actions
+        )
+    }
+    
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController {
+        return ChooseCategoryViewController(viewModel: makeChooseCategoryViewModel(actions: actions))
+    }
+    
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController {
+        return PostReportViewController(actions: actions)
     }
 }
