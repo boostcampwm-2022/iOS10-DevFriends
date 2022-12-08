@@ -30,6 +30,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
     
     private let tagStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.spacing = 3
         return stackView
     }()
     
@@ -59,6 +60,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         titleLabel.text = group.title
         participantLabel.text = "👥 \(group.participantIDs.count)/\(group.limitedNumberPeople)"
         let location = CLLocation(latitude: group.location.latitude, longitude: group.location.longitude)
+        setImage(group: group)
         Task {
             placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
         }
@@ -77,8 +79,23 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         if let distance = info.distance {
             distanceLabel.text = makeDistanceString(distance)
         }
+        setImage(group: info.group)
         Task {
             placeLabel.text = "📍\(try await location.placemark() ?? "모임 장소")"
+        }
+    }
+    
+    func setImage(group: Group) {
+        let groupType = GroupType(rawValue: group.type)
+        switch groupType {
+        case .project:
+            imageView.image = .project
+        case .mogakco:
+            imageView.image = .mogakco
+        case .study:
+            imageView.image = .study
+        default:
+            imageView.image = .devFriends
         }
     }
     
@@ -86,9 +103,9 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         if distance > 1000.0 {
             let digit = 10.0
             let distKM = distance / 1000
-            return "\(round(distKM * digit) / digit)km"
+            return "🏃🏻‍♀️\(round(distKM * digit) / digit)km"
         } else {
-            return "\(Int(round(distance)))m"
+            return "🏃🏻‍♀️\(Int(round(distance)))m"
         }
     }
     

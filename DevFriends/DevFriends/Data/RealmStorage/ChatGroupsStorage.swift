@@ -10,6 +10,7 @@ import RealmSwift
 protocol ChatGroupsStorage {
     func fetch() -> [AcceptedGroup]
     func save(acceptedGroups: [AcceptedGroup]) throws
+    func save(acceptedGroup: AcceptedGroup) throws
 }
 
 final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
@@ -18,14 +19,19 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
             .objects(AcceptedGroupResponseEntity.self)
             .sorted(byKeyPath: "acceptedTime", ascending: false)
         guard let groups = groups else { return [] }
-        return groups.map{ $0.toDomain() }
+        return groups.map { $0.toDomain() }
     }
     
     func save(acceptedGroups: [AcceptedGroup]) throws {
+        // SW: 수정된 코드
+        for group in acceptedGroups {
+            try save(acceptedGroup: group)
+        }
+    }
+    
+    func save(acceptedGroup: AcceptedGroup) throws {
         try realm?.write {
-            for group in acceptedGroups {
-                realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: group))
-            }
+            realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: acceptedGroup), update: .modified)
         }
     }
     

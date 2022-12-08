@@ -28,4 +28,8 @@ extension UIImage {
     static var message = UIImage(systemName: "message")
     static var box = UIImage(systemName: "square")
     static var checkBox = UIImage(systemName: "checkmark.square")
+    static var mogakco = UIImage(named: "mogakco")
+    static var study = UIImage(named: "study")
+    static var project = UIImage(named: "project")
+    static var devFriends = UIImage(named: "devFriends")
 }

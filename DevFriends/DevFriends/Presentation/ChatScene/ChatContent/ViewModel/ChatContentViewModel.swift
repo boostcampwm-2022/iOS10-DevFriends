@@ -105,7 +105,7 @@ extension DefaultChatContentViewModel {
     func didSendMessage(text: String) {
         guard let userID = UserManager.shared.uid, let nickname = UserManager.shared.nickname
         else { fatalError("UserDefaults doesn't have values.") }
-        let message = Message(content: text, time: Date(), userID: userID, userNickname: nickname)
+        let message = Message(id: "", content: text, time: Date(), userID: userID, userNickname: nickname)
         sendMessage(message: message)
     }
 }

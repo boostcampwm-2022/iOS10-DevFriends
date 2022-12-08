@@ -25,6 +25,10 @@ class AcceptedGroupResponseEntity: Object {
     @objc dynamic var acceptedTime: Date = .now
     @objc dynamic var lastMessageContent: String = ""
     @objc dynamic var lastMessageCount: Int = 0
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 extension AcceptedGroupResponseEntity {

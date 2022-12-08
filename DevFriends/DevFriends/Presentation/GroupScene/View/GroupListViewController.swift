@@ -79,7 +79,7 @@ final class GroupListViewController: UIViewController {
                 )
                 
                 let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
+                section.orthogonalScrollingBehavior = .groupPaging
                 section.contentInsets.leading = padding
                 section.contentInsets.top = 10
                 section.contentInsets.bottom = 10
@@ -87,7 +87,7 @@ final class GroupListViewController: UIViewController {
                 // Header, Footer 레이아웃
                 section.boundarySupplementaryItems = [
                     .init(
-                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)),
+                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)),
                         elementKind: UICollectionView.elementKindSectionHeader,
                         alignment: .top
                     )

@@ -9,12 +9,7 @@ import SnapKit
 
 final class ChatTableViewCell: UITableViewCell {
     private let chatImageViewHeight: CGFloat = 70
-    private lazy var chatImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .gray
-        imageView.layer.cornerRadius = self.chatImageViewHeight / 2
-        return imageView
-    }()
+    private let chatImageView = UIImageView()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -37,13 +32,14 @@ final class ChatTableViewCell: UITableViewCell {
     }()
     
     private let newMessageLabel: UILabel = {
-        let label = UILabel()
+        let label = CommonPaddingLabel()
         label.backgroundColor = .red
         label.textColor = .white
         label.layer.cornerRadius = 10
         label.textAlignment = .center
         label.clipsToBounds = true
         label.font = .systemFont(ofSize: 12)
+        label.padding = UIEdgeInsets(top: 16, left: 8, bottom: 16, right: 8)
         return label
     }()
     
@@ -71,11 +67,22 @@ final class ChatTableViewCell: UITableViewCell {
             self.newMessageLabel.isHidden = true
         } else {
             self.newMessageLabel.isHidden = false
-            if data.newMessageCount > 9 {
-                self.newMessageLabel.text = "9+"
-            } else {
-                self.newMessageLabel.text = "\(data.newMessageCount)"
-            }
+            self.newMessageLabel.text = "new"
+        }
+        setImage(group: data.group)
+    }
+    
+    func setImage(group: Group) {
+        let groupType = GroupType(rawValue: group.type)
+        switch groupType {
+        case .project:
+            chatImageView.image = .project
+        case .mogakco:
+            chatImageView.image = .mogakco
+        case .study:
+            chatImageView.image = .study
+        default:
+            chatImageView.image = .devFriends
         }
     }
 }
