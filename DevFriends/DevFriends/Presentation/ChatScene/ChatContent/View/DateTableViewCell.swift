@@ -21,6 +21,7 @@ final class DateTableViewCell: UITableViewCell, ReusableType {
     }
     
     func layout() {
+        addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }

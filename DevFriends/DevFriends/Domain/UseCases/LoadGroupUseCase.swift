@@ -10,6 +10,7 @@ import Foundation
 protocol LoadGroupUseCase {
     func execute(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group]
     func execute(filter: Filter) async throws -> [Group]
+    func execute(ids: [String]) async throws -> [Group]
 }
 
 final class DefaultLoadGroupUseCase: LoadGroupUseCase {
@@ -25,5 +26,9 @@ final class DefaultLoadGroupUseCase: LoadGroupUseCase {
     
     func execute(filter: Filter) async throws -> [Group] {
         return try await groupRepository.fetch(filter: filter)
+    }
+    
+    func execute(ids: [String]) async throws -> [Group] {
+        return try await groupRepository.fetch(groupIDs: ids)
     }
 }

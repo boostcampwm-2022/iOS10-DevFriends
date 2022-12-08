@@ -100,4 +100,8 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
             actions: actions
         )
     }
+    
+    func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController {
+        return PostReportViewController(actions: actions)
+    }
 }

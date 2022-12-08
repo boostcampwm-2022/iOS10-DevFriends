@@ -44,7 +44,7 @@ extension DefaultLoginViewModel {
             let isExist = try result.get()
             if isExist {
                 UserManager.shared.login(uid: uid)
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                     self.actions.showTabBarController() // 2. 있으면 -> 탭 바로 이동
                 }
             } else {

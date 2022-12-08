@@ -14,3 +14,7 @@ struct Message: Hashable {
     let userID: String
     let userNickname: String
 }
+
+struct DateMessage: Hashable {
+    let time: Date
+}

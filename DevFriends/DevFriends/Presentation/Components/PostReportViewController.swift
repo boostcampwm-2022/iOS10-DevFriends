@@ -1,13 +1,22 @@
 //
-//  ReportView.swift
+//  PostReportViewController.swift
 //  DevFriends
 //
 //  Created by 유승원 on 2022/11/15.
 //
 
+import Combine
 import UIKit
+import SnapKit
 
-final class ReportView: UIView {
+struct PostReportViewControllerActions {
+    let submit: () -> Void
+    let close: () -> Void
+}
+
+final class PostReportViewController: UIViewController {
+    let backBarButtonItem = BackBarButtonItem()
+    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -34,29 +43,38 @@ final class ReportView: UIView {
         button.layer.cornerRadius = 5
         return button
     }()
-    private let closeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("취소", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 5
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.devFriendsGray.cgColor
-        return button
-    }()
     
-    required init?(coder: NSCoder) {
-        fatalError("Init Error")
+    let actions: PostReportViewControllerActions
+    
+    var cancellables = Set<AnyCancellable>()
+    
+    init(actions: PostReportViewControllerActions) {
+        self.actions = actions
+        super.init(nibName: nil, bundle: nil)
     }
     
-    init() {
-        super.init(frame: .zero)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         self.layout()
+        self.configureUI()
+        self.bind()
     }
     
     private func layout() {
-        self.addSubview(stackView)
+        let containerView = UIView()
+        view.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.left.equalTo(view.safeAreaLayoutGuide).offset(14)
+            make.right.equalTo(view.safeAreaLayoutGuide).offset(-14)
+        }
+        
+        containerView.addSubview(stackView)
         self.stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -75,14 +93,25 @@ final class ReportView: UIView {
             make.height.equalTo(48)
         }
         
-        self.stackView.addArrangedSubview(closeButton)
         self.stackView.setCustomSpacing(10, after: submitButton)
-        self.closeButton.snp.makeConstraints { make in
-            make.height.equalTo(48)
-        }
     }
     
-    func setTitleText(title: String) {
-        self.titleLabel.text = title
+    private func configureUI() {
+        self.titleLabel.text = "신고하려는 이유가 무엇인가요?"
+        self.navigationItem.leftBarButtonItem = backBarButtonItem
+    }
+    
+    private func bind() {
+        submitButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.actions.submit()
+            }
+            .store(in: &cancellables)
+        
+        backBarButtonItem.publisher
+            .sink { [weak self] _ in
+                self?.actions.close()
+            }
+            .store(in: &cancellables)
     }
 }

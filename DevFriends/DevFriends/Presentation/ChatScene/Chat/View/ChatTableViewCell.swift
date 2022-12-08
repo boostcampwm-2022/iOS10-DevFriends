@@ -39,7 +39,11 @@ final class ChatTableViewCell: UITableViewCell {
     private let newMessageLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .red
+        label.textColor = .white
         label.layer.cornerRadius = 10
+        label.textAlignment = .center
+        label.clipsToBounds = true
+        label.font = .systemFont(ofSize: 12)
         return label
     }()
     
@@ -67,7 +71,11 @@ final class ChatTableViewCell: UITableViewCell {
             self.newMessageLabel.isHidden = true
         } else {
             self.newMessageLabel.isHidden = false
-            self.newMessageLabel.text = "\(data.newMessageCount)"
+            if data.newMessageCount > 9 {
+                self.newMessageLabel.text = "9+"
+            } else {
+                self.newMessageLabel.text = "\(data.newMessageCount)"
+            }
         }
     }
 }
@@ -94,8 +102,10 @@ extension ChatTableViewCell: ReusableType {
         self.newMessageLabel.snp.makeConstraints { make in
             make.centerY.equalTo(self.chatImageView.snp.centerY)
             make.trailing.equalToSuperview().offset(-20)
-            make.size.height.width.equalTo(20)
+            make.height.equalTo(20)
+            make.width.greaterThanOrEqualTo(25)
         }
+        self.newMessageLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         self.addSubview(lastMessageLabel)
         self.lastMessageLabel.snp.makeConstraints { make in
