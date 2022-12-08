@@ -68,6 +68,11 @@ class PopupViewController: UIViewController {
         doneButton.setTitle(popup.done, for: .normal)
         closeButton.setTitle(popup.close, for: .normal)
         doneAction = popup.doneAction
+        if popup.close.isEmpty {
+            closeButton.snp.makeConstraints { make in
+                make.height.equalTo(0)
+            }
+        }
     }
     
     override func viewDidLoad() {
