@@ -35,6 +35,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     func makeNotifiactionRepository() -> NotificationRepository {
         return DefaultNotificationRepository()
     }
+    
+    func makeImageRepository() -> ImageRepository {
+        return DefaultImageRepository()
+    }
         
     // MARK: UseCases
     func makeFetchGroupUseCase() -> LoadGroupUseCase {
@@ -72,7 +76,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         )
     }
     func makePostCommentUseCase() -> PostCommentUseCase {
-        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
+        return DefaultPostCommentUseCase(
+            commentRepository: makeGroupCommentRepository(),
+            groupRepository: makeGroupRepository()
+        )
     }
     
     func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
@@ -81,6 +88,14 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     
     func makeSortGroupUseCase() -> SortGroupUseCase {
         return DefaultSortGroupUseCase()
+    }
+    
+    func makeLoadProfileImageUseCase() -> LoadProfileImageUseCase {
+        return DefaultLoadProfileImageUseCase(imageRepository: makeImageRepository())
+    }
+    
+    func makeUpdateHitUseCase() -> UpdateHitUseCase {
+        return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
     }
     
     // MARK: GroupList
@@ -92,6 +107,7 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultGroupListViewModel(
             fetchGroupUseCase: makeFetchGroupUseCase(),
             sortGroupUseCase: makeSortGroupUseCase(),
+            fetchCategoryUseCase: makeFetchCategoryUseCase(),
             actions: actions
         )
     }
@@ -125,7 +141,9 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
             sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
             updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
-            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
+            loadProfileImageUseCase: makeLoadProfileImageUseCase(),
+            updateHitUseCase: makeUpdateHitUseCase()
         )
     }
     

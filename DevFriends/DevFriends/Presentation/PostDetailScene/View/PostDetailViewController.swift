@@ -319,14 +319,24 @@ extension PostDetailViewController {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             
-            UIView.animate(withDuration: 0.3) {
-                self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
+            if self.view.frame.origin.y == 0.0 {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y -= keyboardRectangle.height
+                }
             }
         }
     }
     
-    @objc func doKeyboardDown() {
-        self.view.transform = .identity
+    @objc func doKeyboardDown(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            
+            if self.view.frame.origin.y == -1 * keyboardRectangle.height {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y = 0
+                }
+            }
+        }
     }
 }
 
@@ -346,7 +356,7 @@ extension PostDetailViewController: UITableViewDelegate {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        if maximumOffset < currentOffset {
+        if viewModel.commentsSubject.value.count == viewModel.expectedCommentsCount && maximumOffset < currentOffset {
             viewModel.didScrollToBottom()
             spinner.startAnimating()
             

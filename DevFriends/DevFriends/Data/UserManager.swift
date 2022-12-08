@@ -186,7 +186,7 @@ extension UserManager {
         likeGroupIDs = user.likeGroupIDs
         
         Task {
-            self.profile = await fetchProfile(path: user.profileImagePath)
+            self.profile = await fetchProfile(path: user.id)
         }
     }
     

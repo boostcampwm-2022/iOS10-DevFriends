@@ -16,6 +16,7 @@ struct GroupListViewModelActions {
 }
 
 protocol GroupListViewModelInput {
+    func loadUserRecommand()
     func loadGroupList()
     func didSelectFilter()
     func didSelectAdd(groupType: GroupType)
@@ -40,6 +41,7 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     private let fetchGroupUseCase: LoadGroupUseCase
     private let actions: GroupListViewModelActions
     private let sortGroupUseCase: SortGroupUseCase
+    private let loadCategoryUseCase: LoadCategoryUseCase
     private var userLocation: Location?
     var recommandFilter: Filter
     var groupFilter = Filter(alignFilter: .newest, categoryFilter: [])
@@ -47,12 +49,14 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     init(
         fetchGroupUseCase: LoadGroupUseCase,
         sortGroupUseCase: SortGroupUseCase,
+        fetchCategoryUseCase: LoadCategoryUseCase,
         actions: GroupListViewModelActions
     ) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.sortGroupUseCase = sortGroupUseCase
+        self.loadCategoryUseCase = fetchCategoryUseCase
         // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
-        self.recommandFilter = Filter(alignFilter: .newest, categoryFilter: [])
+        self.recommandFilter = Filter(alignFilter: .closest, categoryFilter: [])
         self.actions = actions
     }
     
@@ -64,6 +68,14 @@ final class DefaultGroupListViewModel: GroupListViewModel {
 
 // MARK: INPUT
 extension DefaultGroupListViewModel {
+    func loadUserRecommand() {
+        Task {
+            if let userCategoryIDs = UserManager.shared.categoryIDs {
+                self.recommandFilter.categoryFilter = userCategoryIDs
+            }
+        }
+    }
+    
     func loadGroupList() {
         Task {
             let recommandGroups = try await fetchGroupUseCase
@@ -73,8 +85,28 @@ extension DefaultGroupListViewModel {
                 by: recommandFilter.alignFilter,
                 userLocation: userLocation
             )
-            // 셀의 중복 방지를 위해, uuid 정보가 있는 GroupCellInfo로 한번 더 mapping 해줬습니다
-            let recommandGroupCellInfos = sortedRecommand.map { GroupCellInfo(group: $0, at: .recommand) }
+            var recommandGroupCellInfos: [GroupCellInfo] = []
+            for group in sortedRecommand {
+                // 참가인원 다 찼으면 패스
+                if group.participantIDs.count >= group.limitedNumberPeople {
+                    continue
+                }
+                let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                var distance: Double?
+                if let userLocation = userLocation {
+                    distance = group.location.distance(from: userLocation)
+                }
+                recommandGroupCellInfos.append(GroupCellInfo(
+                    section: .recommand,
+                    group: group,
+                    title: group.title,
+                    categories: categories,
+                    location: group.location,
+                    distance: distance,
+                    currentNumberPeople: group.participantIDs.count,
+                    limitedNumberPeople: group.limitedNumberPeople
+                ))
+            }
             recommandGroupsSubject.send(recommandGroupCellInfos)
             
             let filteredGroups = try await fetchGroupUseCase
@@ -84,9 +116,42 @@ extension DefaultGroupListViewModel {
                 by: groupFilter.alignFilter,
                 userLocation: userLocation
             )
-            let filteredGroupCellInfos = sortedFiltered.map { GroupCellInfo(group: $0, at: .filtered) }
+            var filteredGroupCellInfos: [GroupCellInfo] = []
+            for group in sortedFiltered {
+                // 참가인원 다 찼으면 패스
+                if group.participantIDs.count >= group.limitedNumberPeople {
+                    continue
+                }
+                let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                var distance: Double?
+                if let userLocation = userLocation {
+                    distance = group.location.distance(from: userLocation)
+                }
+                filteredGroupCellInfos.append(GroupCellInfo(
+                    section: .filtered,
+                    group: group,
+                    title: group.title,
+                    categories: categories,
+                    location: group.location,
+                    distance: distance,
+                    currentNumberPeople: group.participantIDs.count,
+                    limitedNumberPeople: group.limitedNumberPeople
+                ))
+            }
             filteredGroupsSubject.send(filteredGroupCellInfos)
         }
+    }
+    
+    private func loadCategories(categoryIDs: [String]) async -> [Category] {
+        var result: [Category] = []
+        do {
+            result = try await Task {
+                try await loadCategoryUseCase.execute(categoryIds: categoryIDs)
+            }.result.get()
+        } catch {
+            print(error)
+        }
+        return result
     }
     
     func didSelectFilter() {

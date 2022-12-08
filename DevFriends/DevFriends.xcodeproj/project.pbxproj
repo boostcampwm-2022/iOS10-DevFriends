@@ -19,6 +19,7 @@
 		05966969294097B000628DB3 /* LoadUserGroupIDsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05966968294097B000628DB3 /* LoadUserGroupIDsUseCase.swift */; };
 		0596696B294097BD00628DB3 /* LeaveGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696A294097BD00628DB3 /* LeaveGroupUseCase.swift */; };
 		0596696D29409B1300628DB3 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696C29409B1300628DB3 /* UserGroup.swift */; };
+		0596696F2940E49D00628DB3 /* UpdateHitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */; };
 		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
 		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
 		05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */; };
@@ -43,6 +44,7 @@
 		A63C96F42937A32A00517516 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F32937A32A00517516 /* ChatRepository.swift */; };
 		A63C96F6293B8BC600517516 /* Location+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F5293B8BC500517516 /* Location+Distance.swift */; };
 		A63C96F8293B8F9800517516 /* SortGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */; };
+		A63C96FF2940CB2600517516 /* SaveUserGroupIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C96FE2940CB2600517516 /* SaveUserGroupIDUseCase.swift */; };
 		A648BB1D292E1B1C0018A654 /* CLLocation+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */; };
 		A648BB1F292E1B930018A654 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB1E292E1B930018A654 /* ChatViewModel.swift */; };
 		A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB22292E1C060018A654 /* ChatContentViewModel.swift */; };
@@ -243,6 +245,7 @@
 		05966968294097B000628DB3 /* LoadUserGroupIDsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadUserGroupIDsUseCase.swift; sourceTree = "<group>"; };
 		0596696A294097BD00628DB3 /* LeaveGroupUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveGroupUseCase.swift; sourceTree = "<group>"; };
 		0596696C29409B1300628DB3 /* UserGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroup.swift; sourceTree = "<group>"; };
+		0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHitUseCase.swift; sourceTree = "<group>"; };
 		05A8DEC0292B71C200497902 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		05A8DEC6292BBF7B00497902 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		05A8DECC292BDFEA00497902 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
@@ -282,6 +285,7 @@
 		A63C96F32937A32A00517516 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		A63C96F5293B8BC500517516 /* Location+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+Distance.swift"; sourceTree = "<group>"; };
 		A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortGroupUseCase.swift; sourceTree = "<group>"; };
+		A63C96FE2940CB2600517516 /* SaveUserGroupIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserGroupIDUseCase.swift; sourceTree = "<group>"; };
 		A648BB1C292E1B1C0018A654 /* CLLocation+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Distance.swift"; sourceTree = "<group>"; };
 		A648BB1E292E1B930018A654 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		A648BB22292E1C060018A654 /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
@@ -549,6 +553,7 @@
 			isa = PBXGroup;
 			children = (
 				A66C7BCD292E1A9B0008B6FD /* GroupListSection.swift */,
+				A648BB26292E20260018A654 /* GroupCellInfo.swift */,
 				A66C7BCE292E1A9B0008B6FD /* GroupListViewController.swift */,
 				A66C7BD0292E1A9B0008B6FD /* GroupFilterViewController.swift */,
 			);
@@ -819,6 +824,7 @@
 				FC07DDBC292CA90400D16FBC /* LoadGroupUseCase.swift */,
 				A66C7BC3292E19C70008B6FD /* SaveGroupUseCase.swift */,
 				05966968294097B000628DB3 /* LoadUserGroupIDsUseCase.swift */,
+				A63C96FE2940CB2600517516 /* SaveUserGroupIDUseCase.swift */,
 				A66C7BC5292E19F60008B6FD /* LoadChatMessagesUseCase.swift */,
 				A66C7BC7292E1A160008B6FD /* SendChatMessagesUseCase.swift */,
 				05CB4A35292DF16800A97531 /* LoadCategoryUseCase.swift */,
@@ -833,6 +839,7 @@
 				E3B53BFA29365827006675E0 /* CreateUserUseCase.swift */,
 				058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */,
 				A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */,
+				0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1075,7 +1082,6 @@
 			children = (
 				E33A20E92927BB1000887EC9 /* User.swift */,
 				FC79AEC42922494F0077AE5C /* Group.swift */,
-				A648BB26292E20260018A654 /* GroupCellInfo.swift */,
 				FC15452F2923630500A40FD8 /* Message.swift */,
 				A66C7BC9292E1A460008B6FD /* Location.swift */,
 				05CB4A3B292DF17B00A97531 /* Category.swift */,
@@ -1454,6 +1460,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05EA623C293B0F93007385E9 /* ContainsStorage.swift in Sources */,
+				A63C96FF2940CB2600517516 /* SaveUserGroupIDUseCase.swift in Sources */,
 				E33A20892926622000887EC9 /* MyMessageTableViewCell.swift in Sources */,
 				A648BB51293399D10018A654 /* ChooseCategoryView.swift in Sources */,
 				05CB4A33292DF15200A97531 /* GroupCommentRepository.swift in Sources */,
@@ -1494,6 +1501,7 @@
 				05CB4A3A292DF16900A97531 /* LoadCommentsUseCase.swift in Sources */,
 				FC3C35992935F32700C5BFE3 /* ChatMessagesStorage.swift in Sources */,
 				05CB4A3A292DF16900A97531 /* LoadCommentsUseCase.swift in Sources */,
+				0596696F2940E49D00628DB3 /* UpdateHitUseCase.swift in Sources */,
 				E3752EBD292F548E003C8E17 /* Notification.swift in Sources */,
 				FC6A9A92293E0CA100122A87 /* RemoveMessageListenerUseCase.swift in Sources */,
 				05CB4A3D292DF17C00A97531 /* Category.swift in Sources */,

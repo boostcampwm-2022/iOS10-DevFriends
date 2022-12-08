@@ -15,22 +15,6 @@ extension DefaultUserRepository: UserRepository {
         let user = try userSnapshot.data(as: UserResponseDTO.self)
         return user.toDomain()
     }
-
-    func fetch(uids: [String]) async throws -> [User] {
-        return try await withThrowingTaskGroup(of: User.self) { taskGroup in
-            uids.forEach { id in
-                if id.isEmpty { return }
-                
-                taskGroup.addTask {
-                    try await self.fetch(uid: id)
-                }
-            }
-            
-            return try await taskGroup.reduce(into: []) { partialResult, user in
-                partialResult.append(user)
-            }
-        }
-    }
     
     func fetch(uid: String, completion: @escaping (_ user: User) -> Void) {
         _ = firestore

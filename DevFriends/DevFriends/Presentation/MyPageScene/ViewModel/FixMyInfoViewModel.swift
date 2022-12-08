@@ -86,7 +86,7 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
         path = userInfo.user.profileImagePath
         
         uploadProfileImageUseCase.execute(
-            path: path,
+            path: userInfo.user.id,
             originImage: originData,
             thumbnailImage: thumbnailData
         )

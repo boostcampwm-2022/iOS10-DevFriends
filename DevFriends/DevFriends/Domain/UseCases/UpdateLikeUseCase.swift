@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UpdateLikeUseCase {
-    func execute(like: Bool, user: User, group: Group)
+    func execute(like: Bool, user: User, groupID: String)
 }
 
 final class DefaultUpdateLikeUseCase: UpdateLikeUseCase {
@@ -20,19 +20,16 @@ final class DefaultUpdateLikeUseCase: UpdateLikeUseCase {
         self.groupRepository = groupRepository
     }
     
-    func execute(like: Bool, user: User, group: Group) {
+    func execute(like: Bool, user: User, groupID: String) {
         var tempUser = user
-        var tempGroup = group
         
         if like == true {
-            tempUser.likeGroupIDs.append(group.id)
-            tempGroup.like += 1
+            tempUser.likeGroupIDs.append(groupID)
         } else {
-            tempUser.likeGroupIDs.removeAll { $0 == group.id }
-            tempGroup.like -= 1
+            tempUser.likeGroupIDs.removeAll { $0 == groupID }
         }
         
         self.userRepository.update(tempUser)
-        self.groupRepository.update(groupID: tempGroup.id, group: tempGroup)
+        self.groupRepository.updateLike(groupID: groupID, increment: like)
     }
 }

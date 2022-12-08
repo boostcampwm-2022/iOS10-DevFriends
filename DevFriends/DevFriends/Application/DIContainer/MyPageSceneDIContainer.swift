@@ -84,7 +84,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         )
     }
     func makePostCommentUseCase() -> PostCommentUseCase {
-        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository())
+        return DefaultPostCommentUseCase(commentRepository: makeGroupCommentRepository(), groupRepository: makeGroupRepository())
     }
 
     func makeSendCommentNotificationUseCase() -> SendCommentNotificationUseCase {
@@ -97,6 +97,10 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     
     func makeLeaveGroupUseCase() -> LeaveGroupUseCase {
         return DefaultLeaveGroupUseCase(userRepository: makeUserRepository(), groupRepository: makeGroupRepository())
+    }
+    
+    func makeUpdateHitUseCase() -> UpdateHitUseCase {
+        return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
     }
     
     // MARK: MyPageViwe
@@ -145,7 +149,9 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
             sendGroupApplyNotificationUseCase: makeSendGroupApplyNotificationUseCase(),
             updateLikeUseCase: makeUpdateLikeUseCase(),
             postCommentUseCase: makePostCommentUseCase(),
-            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase()
+            sendCommentNotificationUseCase: makeSendCommentNotificationUseCase(),
+            loadProfileImageUseCase: makeLoadProfileImageUseCase(),
+            updateHitUseCase: makeUpdateHitUseCase()
         )
     }
 
