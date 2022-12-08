@@ -10,16 +10,7 @@ import UIKit
 import CoreLocation
 
 final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
-    private let imageView: UIImageView = {
-        let view = UIImageView()
-        view.backgroundColor = UIColor(
-            red: 242.0 / 255.0,
-            green: 242.0 / 255.0,
-            blue: 242.0 / 255.0,
-            alpha: 1
-        )
-        return view
-    }()
+    private let imageView = UIImageView()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
