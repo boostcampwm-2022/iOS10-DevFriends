@@ -10,7 +10,20 @@ import SnapKit
 import UIKit
 
 final class AddGroupViewController: UIViewController {
-    // TODO: 뷰 전체 스크롤뷰로 한번 감싸기
+    private lazy var backBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem()
+        barButton.image = .chevronLeft
+        barButton.style = .plain
+        barButton.tintColor = .black
+        return barButton
+    }()
+    
+    private let addGroupScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
     private let titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
@@ -66,99 +79,108 @@ final class AddGroupViewController: UIViewController {
     }
     
     private func configureUI() {
-        
+        self.navigationItem.leftBarButtonItems = [backBarButton]
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.didConfigureView()
     }
     
     private func layout() {
-        view.addSubview(titleTextField)
+        view.addSubview(submitButton)
+        submitButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.height.equalTo(60)
+        }
+        
+        view.addSubview(addGroupScrollView)
+        addGroupScrollView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.equalTo(submitButton)
+            make.bottom.equalTo(submitButton.snp.top).offset(-20)
+        }
+        
+        addGroupScrollView.addSubview(titleTextField)
         titleTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
-            make.left.equalTo(view.safeAreaLayoutGuide).offset(30)
-            make.right.equalTo(view.safeAreaLayoutGuide).offset(-30)
+            make.top.equalToSuperview().offset(50)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalTo(40)
         }
         
         let divider1 = DividerView()
-        view.addSubview(divider1)
+        addGroupScrollView.addSubview(divider1)
         divider1.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(titleTextField)
             make.height.equalTo(1)
         }
         
-        view.addSubview(chooseCategoryView)
+        addGroupScrollView.addSubview(chooseCategoryView)
         chooseCategoryView.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom)
             make.left.right.equalTo(titleTextField)
         }
         
         let divider2 = DividerView()
-        view.addSubview(divider2)
+        addGroupScrollView.addSubview(divider2)
         divider2.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(chooseCategoryView)
             make.height.equalTo(1)
         }
         
-        view.addSubview(chooseLocationView)
+        addGroupScrollView.addSubview(chooseLocationView)
         chooseLocationView.snp.makeConstraints { make in
             make.top.equalTo(chooseCategoryView.snp.bottom)
             make.left.right.equalTo(chooseCategoryView)
         }
         
         let divider3 = DividerView()
-        view.addSubview(divider3)
+        addGroupScrollView.addSubview(divider3)
         divider3.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(chooseLocationView)
             make.height.equalTo(1)
         }
         
-        view.addSubview(limitPeopleLabel)
+        addGroupScrollView.addSubview(limitPeopleLabel)
         limitPeopleLabel.snp.makeConstraints { make in
             make.top.equalTo(chooseLocationView.snp.bottom).offset(20)
             make.left.equalTo(chooseLocationView)
         }
         
-        view.addSubview(limitPeopleStepper)
+        addGroupScrollView.addSubview(limitPeopleStepper)
         limitPeopleStepper.snp.makeConstraints { make in
             make.centerY.equalTo(limitPeopleLabel)
             make.right.equalTo(chooseLocationView)
         }
         
-        view.addSubview(peopleNumberLabel)
+        addGroupScrollView.addSubview(peopleNumberLabel)
         peopleNumberLabel.snp.makeConstraints { make in
             make.centerY.equalTo(limitPeopleStepper)
             make.right.equalTo(limitPeopleStepper.snp.left).offset(-20)
         }
         
-        view.addSubview(descriptionTextView)
+        addGroupScrollView.addSubview(descriptionTextView)
         descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(limitPeopleLabel.snp.bottom).offset(20)
             make.left.equalTo(limitPeopleLabel)
             make.right.equalTo(limitPeopleStepper)
             make.height.equalTo(250)
-        }
-        
-        view.addSubview(submitButton)
-        submitButton.snp.makeConstraints { make in
-            make.left.right.equalTo(chooseLocationView)
-            make.top.equalTo(descriptionTextView.snp.bottom).offset(20)
-            make.height.equalTo(60)
+            make.bottom.equalToSuperview().offset(-20)
         }
     }
     
     private func bind() {
         hideKeyboardWhenTappedAround()
             .store(in: &cancellables)
-        
-        upViewByKeyboardHeight()
-            .store(in: &cancellables)
-        
-        downViewByKeyboardHeight()
-            .store(in: &cancellables)
+
+//        upViewByKeyboardHeight()
+//            .store(in: &cancellables)
+//
+//        downViewByKeyboardHeight()
+//            .store(in: &cancellables)
         
         titleTextField.publisher(for: .editingDidEnd)
             .sink { [weak self] _ in
@@ -197,6 +219,7 @@ final class AddGroupViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] groupType in
                 self?.titleTextField.placeholder = "\(groupType.rawValue) 제목"
+                self?.navigationItem.title = "\(groupType.rawValue) 모집 글쓰기"
             }
             .store(in: &cancellables)
         
@@ -217,7 +240,19 @@ final class AddGroupViewController: UIViewController {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.didSendGroupInfo()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didSendGroupSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancellables)
+        
+        backBarButton.publisher
+            .sink { [weak self] _ in
+                self?.viewModel.didTouchedBackButton()
             }
             .store(in: &cancellables)
     }
