@@ -191,7 +191,7 @@ extension DefaultPostDetailViewModel {
         updateHitUseCase.execute(groupID: group.id)
         Task {
             guard let user = await loadUser(id: group.managerID) else { return }
-            let image = await loadProfile(path: user.profileImagePath)
+            let image = await loadProfile(path: user.id)
             postWriterInfoSubject.value = .init(name: user.nickname, job: user.job, image: image)
             
             let categories = await loadCategories()
@@ -215,7 +215,7 @@ extension DefaultPostDetailViewModel {
                     ))
                     continue
                 }
-                let profile = await loadProfile(path: user.profileImagePath)
+                let profile = await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
                     writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
@@ -258,7 +258,7 @@ extension DefaultPostDetailViewModel {
                     ))
                     continue
                 }
-                let profile = await loadProfile(path: user.profileImagePath)
+                let profile = await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
                     writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
