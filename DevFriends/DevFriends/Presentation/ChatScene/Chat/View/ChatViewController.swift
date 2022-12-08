@@ -105,6 +105,11 @@ final class ChatViewController: UIViewController {
 
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var selectedGroup = chatTableViewSnapShot.itemIdentifiers
+        selectedGroup[indexPath.row].newMessageCount = 0
+        
+        populateSnapshot(data: selectedGroup)
+        
         tableView.deselectRow(at: indexPath, animated: true)
         viewModel.didSelectGroup(at: indexPath.row)
     }
