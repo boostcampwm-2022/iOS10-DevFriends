@@ -37,6 +37,7 @@ protocol PostDetailViewModelOutput {
     var commentsSubject: CurrentValueSubject<[CommentInfo], Never> { get }
     var scrollToBottomSubject: PassthroughSubject<Void, Never> { get }
     var groupApplyButtonStateSubject: CurrentValueSubject<GroupApplyButtonState, Never> { get }
+    var expectedCommentsCount: Int { get }
 }
 
 protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutput {}
@@ -53,6 +54,11 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private let postCommentUseCase: PostCommentUseCase
     private let sendCommentNotificationUseCase: SendCommentNotificationUseCase
     private let sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase
+    private let loadProfileImageUseCase: LoadProfileImageUseCase
+    private let updateHitUseCase: UpdateHitUseCase
+    
+    private var lastCommentLoadTime: Date?
+    var expectedCommentsCount: Int = 0
     
     // MARK: - OUTPUT
     var postWriterInfoSubject = CurrentValueSubject<PostWriterInfo, Never>(.init(name: "", job: "", image: nil))
@@ -88,7 +94,9 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         sendGroupApplyNotificationUseCase: SendGroupApplyNotificationUseCase,
         updateLikeUseCase: UpdateLikeUseCase,
         postCommentUseCase: PostCommentUseCase,
-        sendCommentNotificationUseCase: SendCommentNotificationUseCase
+        sendCommentNotificationUseCase: SendCommentNotificationUseCase,
+        loadProfileImageUseCase: LoadProfileImageUseCase,
+        updateHitUseCase: UpdateHitUseCase
     ) {
         self.actions = actions
         self.group = group
@@ -100,18 +108,10 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.updateLikeUseCase = updateLikeUseCase
         self.postCommentUseCase = postCommentUseCase
         self.sendCommentNotificationUseCase = sendCommentNotificationUseCase
+        self.loadProfileImageUseCase = loadProfileImageUseCase
+        self.updateHitUseCase = updateHitUseCase
         
-        // 테스트 유저
-        localUser = User(
-            id: "nqQW9nOes6UPXRCjBuCy",
-            nickname: "흥민 손",
-            job: "EPL득점왕",
-            email: "abc@def.com",
-            profileImagePath: "",
-            categoryIDs: [],
-            appliedGroupIDs: [],
-            likeGroupIDs: []
-        )
+        localUser = UserManager.shared.user
         
         postDetailContentsSubject.value = .init(
             title: group.title,
@@ -124,12 +124,10 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         
         postAttentionInfoSubject.value = .init(
             likeOrNot: localUser.likeGroupIDs.contains(group.id),
-            commentsCount: 0,
+            commentsCount: group.commentNumber,
             maxParticipantCount: group.limitedNumberPeople,
             currentParticipantCount: group.participantIDs.count
         )
-        
-        // 강남구청에서 모각코 id : CMUPNkEns4Pg9ez7fXvg
         
         if group.limitedNumberPeople == group.participantIDs.count {
             groupApplyButtonStateSubject.value = .closed
@@ -146,16 +144,18 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         }.result.get()
     }
     
-    private func loadUsers(ids: [String]) async -> [User] {
-        var result: [User] = []
-        do {
-            result = try await Task {
-                try await fetchUserUseCase.execute(userIds: ids)
-            }.result.get()
-        } catch {
-            print(error)
+    private func loadProfile(path: String) async -> UIImage? {
+        var image: UIImage?
+        if !path.isEmpty {
+            do {
+                let data = try await loadProfileImageUseCase.execute(path: path + "_th")
+                image = UIImage(data: data)
+            } catch {
+                print(error)
+            }
         }
-        return result
+        
+        return image
     }
     
     private func loadCategories() async -> [Category] {
@@ -170,12 +170,14 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         return result
     }
     
-    private func loadComments(limit: Int = 5) async -> [Comment] {
+    private func loadComments(from: Date? = nil, limit: Int = 3) async -> [Comment] {
         var result: [Comment] = []
         do {
             result = try await Task {
-                try await fetchCommentsUseCase.execute(groupId: group.id, limit: commentsSubject.value.count + limit)
+                try await fetchCommentsUseCase.execute(groupId: group.id, from: from, limit: limit)
             }.result.get()
+            
+            expectedCommentsCount += result.count
         } catch {
             print(error)
         }
@@ -186,9 +188,11 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
 // MARK: INPUT
 extension DefaultPostDetailViewModel {
     func didLoadGroup() {
+        updateHitUseCase.execute(groupID: group.id)
         Task {
             guard let user = await loadUser(id: group.managerID) else { return }
-            postWriterInfoSubject.value = .init(name: user.nickname, job: user.job, image: nil)
+            let image = await loadProfile(path: user.profileImagePath)
+            postWriterInfoSubject.value = .init(name: user.nickname, job: user.job, image: image)
             
             let categories = await loadCategories()
             postDetailContentsSubject.value = .init(
@@ -201,20 +205,21 @@ extension DefaultPostDetailViewModel {
             )
             
             let comments = await loadComments()
-            postAttentionInfoSubject.value.commentsCount = comments.count
+            lastCommentLoadTime = comments.last?.time
             
-            let commentUsers = await loadUsers(ids: comments.map { $0.userID })
-            commentsSubject.value = comments.map { comment in
-                guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
-                    return CommentInfo(
+            for comment in comments {
+                guard let user = await loadUser(id: comment.userID) else {
+                    commentsSubject.value.append(CommentInfo(
                         writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
                         contents: comment.content
-                    )
+                    ))
+                    continue
                 }
-                return CommentInfo(
-                    writerInfo: .init(name: user.nickname, job: user.job, image: nil),
+                let profile = await loadProfile(path: user.profileImagePath)
+                commentsSubject.value.append(CommentInfo(
+                    writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
-                )
+                ))
             }
         }
     }
@@ -228,7 +233,7 @@ extension DefaultPostDetailViewModel {
     
     func didTapLikeButton() {
         postAttentionInfoSubject.value.likeOrNot.toggle()
-        updateLikeUseCase.execute(like: postAttentionInfoSubject.value.likeOrNot, user: localUser, group: group)
+        updateLikeUseCase.execute(like: postAttentionInfoSubject.value.likeOrNot, user: localUser, groupID: group.id)
         
         if postAttentionInfoSubject.value.likeOrNot == true {
             localUser.likeGroupIDs.append(group.id)
@@ -241,21 +246,23 @@ extension DefaultPostDetailViewModel {
     
     func didScrollToBottom() {
         Task {
-            let comments = await loadComments()
-            postAttentionInfoSubject.value.commentsCount = comments.count
+            guard let loadTime = lastCommentLoadTime else { return }
+            let comments = await loadComments(from: loadTime)
+            lastCommentLoadTime = comments.last?.time
             
-            let commentUsers = await loadUsers(ids: comments.map { $0.userID })
-            commentsSubject.value = comments.map { comment in
-                guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
-                    return CommentInfo(
+            for comment in comments {
+                guard let user = await loadUser(id: comment.userID) else {
+                    commentsSubject.value.append(CommentInfo(
                         writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
                         contents: comment.content
-                    )
+                    ))
+                    continue
                 }
-                return CommentInfo(
-                    writerInfo: .init(name: user.nickname, job: user.job, image: nil),
+                let profile = await loadProfile(path: user.profileImagePath)
+                commentsSubject.value.append(CommentInfo(
+                    writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
-                )
+                ))
             }
         }
     }
@@ -276,24 +283,19 @@ extension DefaultPostDetailViewModel {
             commentID: commentID
         )
         
-        Task {
-            let comments = await loadComments(limit: 1)
-            postAttentionInfoSubject.value.commentsCount = comments.count
-            
-            let commentUsers = await loadUsers(ids: comments.map { $0.userID })
-            commentsSubject.value = comments.map { comment in
-                guard let user = commentUsers.first(where: { $0.id == comment.userID }) else {
-                    return CommentInfo(
-                        writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
-                        contents: comment.content
-                    )
-                }
-                return CommentInfo(
-                    writerInfo: .init(name: user.nickname, job: user.job, image: nil),
-                    contents: comment.content
-                )
-            }
-        }
+        postAttentionInfoSubject.value.commentsCount += 1
+        expectedCommentsCount += 1
+        commentsSubject.value.insert(
+            CommentInfo(
+                writerInfo: .init(
+                    name: localUser.nickname,
+                    job: localUser.job,
+                    image: UserManager.shared.profile
+                ),
+                contents: comment.content
+            )
+            ,at: 0
+        )
     }
     
     func didTouchedBackButton() {

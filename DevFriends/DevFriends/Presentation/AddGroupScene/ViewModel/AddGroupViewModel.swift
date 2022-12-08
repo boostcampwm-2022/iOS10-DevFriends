@@ -141,7 +141,8 @@ extension DefaultAddGroupViewModel {
             hit: 0,
             limitedNumberPeople: limit,
             managerID: user.id,
-            type: groupType.rawValue
+            type: groupType.rawValue,
+            commentNumber: 0
         )
         let newGroupID = saveGroupUseCase.execute(group: newGroup)
         saveUserGroupIDUseCase.execute(userId: user.id, groupID: newGroupID)
