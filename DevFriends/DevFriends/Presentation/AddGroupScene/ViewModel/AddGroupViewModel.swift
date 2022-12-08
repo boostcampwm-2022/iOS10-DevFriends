@@ -122,7 +122,7 @@ extension DefaultAddGroupViewModel {
               let categories = self.categorySelection,
               let location = self.locationSelection,
               let description = self.description else {
-            let popup = Popup(title: "", message: popupMessage(), doneAction: {})
+            let popup = Popup(title: "", message: popupMessage(), close: "", doneAction: {})
             actions.showPopup(popup)
             return
         }
@@ -146,7 +146,7 @@ extension DefaultAddGroupViewModel {
         )
         let newGroupID = saveGroupUseCase.execute(group: newGroup)
         saveUserGroupIDUseCase.execute(userId: user.id, groupID: newGroupID)
-        let popup = Popup(title: "", message: "\(self.groupType.rawValue) 모집 글을 올렸어요.", done: "", doneAction: {})
+        let popup = Popup(title: "", message: "\(self.groupType.rawValue) 모집 글을 올렸어요.", close: "", doneAction: {})
         actions.showPopup(popup)
         didSendGroupSubject.send()
         actions.moveBackToParent()
@@ -158,7 +158,7 @@ extension DefaultAddGroupViewModel {
     
     private func popupMessage() -> String {
         var errors: [String] = []
-        if self.title == nil {
+        if self.title == nil || (self.title != nil && self.title!.isEmpty) {
             errors.append("제목")
         }
         if self.categorySelection == nil {
