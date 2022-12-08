@@ -107,6 +107,7 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultGroupListViewModel(
             fetchGroupUseCase: makeFetchGroupUseCase(),
             sortGroupUseCase: makeSortGroupUseCase(),
+            fetchCategoryUseCase: makeFetchCategoryUseCase(),
             actions: actions
         )
     }

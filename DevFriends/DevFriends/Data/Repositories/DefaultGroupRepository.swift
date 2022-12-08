@@ -9,13 +9,15 @@ import CoreLocation
 import FirebaseFirestore
 
 final class DefaultGroupRepository: GroupRepository {
-    func create(group: Group) {
+    func create(group: Group) -> String {
         do {
-            try firestore.collection(FirestorePath.group.rawValue)
+            let reference = firestore.collection(FirestorePath.group.rawValue)
                 .document()
-                .setData(from: makeGroupResponseDTO(group: group))
+            try reference.setData(from: makeGroupResponseDTO(group: group))
+            return reference.documentID
         } catch {
             print(error)
+            return ""
         }
     }
     
