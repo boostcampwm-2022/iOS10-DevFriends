@@ -31,7 +31,7 @@ final class ChooseLocationView: UIView, ChooseLocationOutput {
     private let disclosureIndicator: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage.disclosure
-        imageView.tintColor = .black
+        imageView.tintColor = .devFriendsBase
         return imageView
     }()
     
@@ -48,7 +48,7 @@ final class ChooseLocationView: UIView, ChooseLocationOutput {
     }
     
     private func commonInit() {
-        self.backgroundColor = .white
+        self.backgroundColor = .devFriendsReverseBase
         self.layout()
         self.setupTapGesture()
     }

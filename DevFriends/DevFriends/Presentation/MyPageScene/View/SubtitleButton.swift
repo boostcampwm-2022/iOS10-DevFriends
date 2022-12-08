@@ -21,7 +21,7 @@ class SubtitleButton: UIButton {
     private func configureUI(text: String) {
         var config = UIButton.Configuration.plain()
         config.title = text
-        config.baseForegroundColor = .darkText
+        config.baseForegroundColor = .devFriendsBase
         self.configuration = config
         self.configuration?.contentInsets = .zero
     }

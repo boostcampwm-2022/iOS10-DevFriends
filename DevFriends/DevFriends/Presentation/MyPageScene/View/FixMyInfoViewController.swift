@@ -14,7 +14,7 @@ final class FixMyInfoViewController: UIViewController {
         let barButton = UIBarButtonItem()
         barButton.image = .chevronLeft
         barButton.style = .plain
-        barButton.tintColor = .black
+        barButton.tintColor = .devFriendsBase
         return barButton
     }()
     private let scrollView = UIScrollView()
@@ -141,7 +141,7 @@ final class FixMyInfoViewController: UIViewController {
     }
     
     private func configureUI() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .devFriendsReverseBase
         
         nicknameTextField.text = viewModel.userNickName
         jobTextField.text = viewModel.userJob

@@ -104,7 +104,7 @@ final class ChooseLocationViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .devFriendsReverseBase
         self.setupTapGesture()
     }
     

@@ -27,8 +27,8 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
                 self.contentView.backgroundColor = .systemOrange
                 self.contentView.layer.borderColor = UIColor.systemOrange.cgColor
             } else {
-                self.contentView.backgroundColor = .white
-                self.contentView.layer.borderColor = UIColor.black.cgColor
+                self.contentView.backgroundColor = .devFriendsCellColor
+                self.contentView.layer.borderColor = UIColor.devFriendsBase.cgColor
             }
         }
     }
@@ -56,5 +56,7 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
         self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = true
         self.contentView.layer.borderWidth = 1
+        self.contentView.backgroundColor = .devFriendsCellColor
+        self.contentView.layer.borderColor = UIColor.devFriendsBase.cgColor
     }
 }

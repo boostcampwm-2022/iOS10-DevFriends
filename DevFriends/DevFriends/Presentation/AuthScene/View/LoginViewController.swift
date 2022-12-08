@@ -161,7 +161,7 @@ final class LoginViewController: UIViewController {
     private func makeTitleLabel(text: String) -> UILabel {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .black
+        label.textColor = .devFriendsBase
         label.text = text
         return label
     }

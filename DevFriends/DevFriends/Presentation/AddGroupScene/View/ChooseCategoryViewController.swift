@@ -65,7 +65,7 @@ final class ChooseCategoryViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .devFriendsReverseBase
         viewModel.loadCategories()
     }
     

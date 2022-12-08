@@ -30,7 +30,7 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
     private lazy var disclosureIndicator: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage.disclosure
-        imageView.tintColor = .black
+        imageView.tintColor = .devFriendsBase
         return imageView
     }()
     
@@ -47,7 +47,7 @@ final class ChooseCategoryView: UIView, ChooseCategoryOutput {
     }
     
     private func commonInit() {
-        self.backgroundColor = .white
+        self.backgroundColor = .devFriendsReverseBase
         self.layout()
         self.setupTapGesture()
     }

@@ -154,7 +154,7 @@ class ChatContentViewController: UIViewController {
     }
     
     private func configureUI() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .devFriendsReverseBase
         self.setupTableView()
         self.setupNavigation()
     }

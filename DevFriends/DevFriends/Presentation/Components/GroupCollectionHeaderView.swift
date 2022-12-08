@@ -32,8 +32,8 @@ final class GroupCollectionHeaderView: UICollectionReusableView, ReusableType {
     
     private let filterButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
-        button.tintColor = .black
+        button.setImage(.filter, for: .normal)
+        button.tintColor = .devFriendsBase
         return button
     }()
     

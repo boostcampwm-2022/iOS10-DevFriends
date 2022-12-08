@@ -32,4 +32,5 @@ extension UIImage {
     static var study = UIImage(named: "study")
     static var project = UIImage(named: "project")
     static var devFriends = UIImage(named: "devFriends")
+    static var filter = UIImage(systemName: "slider.horizontal.3")
 }

@@ -54,7 +54,7 @@ class PopupViewController: UIViewController {
     
     private var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .devFriendsReverseBase
         view.layer.cornerRadius = 10
         view.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
         return view

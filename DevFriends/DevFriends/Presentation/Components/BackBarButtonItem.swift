@@ -12,7 +12,7 @@ class BackBarButtonItem: UIBarButtonItem {
         super.init()
         image = .chevronLeft
         style = .plain
-        tintColor = .black
+        tintColor = .devFriendsBase
     }
     
     required init?(coder: NSCoder) {

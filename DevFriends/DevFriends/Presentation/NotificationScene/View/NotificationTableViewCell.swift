@@ -26,7 +26,7 @@ final class NotificationTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "알림 제목"
         label.font = .boldSystemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .devFriendsBase
         label.sizeToFit()
         return label
     }()
@@ -34,7 +34,7 @@ final class NotificationTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "알림 설명"
         label.font = .systemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = .devFriendsBase
         label.sizeToFit()
         return label
     }()
@@ -88,7 +88,7 @@ extension NotificationTableViewCell: ReusableType {
     
     func updateContent(data: Notification) {
         titleLabel.text = data.groupTitle
-        profileImageView.image = UIImage.profile?.resize(newWidth: 40)
+        profileImageView.image = UIImage.defaultProfileImage?.resize(newWidth: 40)
         
         let notificationType = data.type
         switch notificationType {

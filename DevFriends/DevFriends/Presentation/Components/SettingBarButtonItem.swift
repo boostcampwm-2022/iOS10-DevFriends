@@ -11,7 +11,7 @@ class SettingBarButtonItem: UIBarButtonItem {
     override init() {
         super.init()
         image = .ellipsis
-        tintColor = .black
+        tintColor = .devFriendsBase
     }
     
     required init?(coder: NSCoder) {

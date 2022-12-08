@@ -21,7 +21,7 @@ final class MyGroupsViewController: UIViewController {
     
     private lazy var groupCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .devFriendsReverseBase
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cellType: MyGroupCollectionViewCell.self)
         collectionView.delegate = self
@@ -82,7 +82,7 @@ final class MyGroupsViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .devFriendsReverseBase
         setupCollectionView()
         setupNavigation()
     }

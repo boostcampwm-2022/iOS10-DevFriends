@@ -13,7 +13,7 @@ final class NotificationViewController: UITableViewController {
         let barButton = UIBarButtonItem()
         barButton.image = .chevronLeft
         barButton.style = .plain
-        barButton.tintColor = .black
+        barButton.tintColor = .devFriendsBase
         return barButton
     }()
     

@@ -38,7 +38,7 @@ final class FriendMessageTableViewCell: UITableViewCell, MessageCellType, Contai
         
         self.timeSubject.send(data.time)
         self.nameSubject.send(data.userNickname)
-        self.imageSubject.send(UIImage.profile?.pngData())
+        self.imageSubject.send(UIImage.defaultProfileImage?.pngData())
         self.makeMessageTopConstraintsOffset()
     }
     

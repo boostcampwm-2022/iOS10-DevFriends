@@ -20,7 +20,7 @@ final class MogakcoModalViewController: UIViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: 140.0)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .devFriendsReverseBase
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(cellType: GroupCollectionViewCell.self)
         collectionView.delegate = self
@@ -58,7 +58,7 @@ final class MogakcoModalViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .devFriendsReverseBase
     }
     
     private func layout() {

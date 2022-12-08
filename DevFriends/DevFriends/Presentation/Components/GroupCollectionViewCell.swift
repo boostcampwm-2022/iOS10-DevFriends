@@ -16,6 +16,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         let label = UILabel()
         label.text = "그룹 제목"
         label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .devFriendsBase
         return label
     }()
     
@@ -29,6 +30,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         let label = UILabel()
         label.text = "📍모임 장소"
         label.font = .systemFont(ofSize: 12, weight: .bold)
+        label.textColor = .devFriendsBase
         return label
     }()
     
@@ -37,6 +39,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         label.text = "👥 0/0"
         label.font = .systemFont(ofSize: 12, weight: .bold)
         label.textAlignment = .right
+        label.textColor = .devFriendsBase
         return label
     }()
     
@@ -44,6 +47,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         let label = UILabel()
         label.text = "0m"
         label.font = .systemFont(ofSize: 12, weight: .bold)
+        label.textColor = .devFriendsBase
         return label
     }()
     
@@ -156,7 +160,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
     }
     
     private func configureUI() {
-        self.contentView.backgroundColor = .white
+        self.contentView.backgroundColor = .devFriendsCellColor
         self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = true
     }

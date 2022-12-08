@@ -21,7 +21,7 @@ final class GroupListViewController: UIViewController {
     private lazy var groupAddButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
         item.image = .plus
-        item.tintColor = .black
+        item.tintColor = .devFriendsBase
         item.target = self
         item.action = #selector(didTapGroupAddButton)
         return item
@@ -30,7 +30,7 @@ final class GroupListViewController: UIViewController {
     private lazy var notificationButton: UIBarButtonItem = {
         let item = UIBarButtonItem()
         item.image = .bell
-        item.tintColor = .black
+        item.tintColor = .devFriendsBase
         item.target = self
         item.action = #selector(didTapNotificationButton)
         return item

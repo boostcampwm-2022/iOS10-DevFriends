@@ -83,7 +83,7 @@ final class GroupFilterViewController: UIViewController {
     // MARK: - Setting
     
     private func configureUI() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .devFriendsReverseBase
         self.viewModel.loadCategories()
     }
     
