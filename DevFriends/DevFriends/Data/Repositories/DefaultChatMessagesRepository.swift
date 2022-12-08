@@ -21,9 +21,9 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
         let localMessages = storage.fetch(groupID: chatUID)
         print("local", localMessages)
         var query: Query = firestore
-            .collection("Chat")
+            .collection(FirestorePath.chat.rawValue)
             .document(chatUID)
-            .collection("Message")
+            .collection(FirestorePath.message.rawValue)
         
         if let lastMessageTime = localMessages.last?.time {
             print("LAST", localMessages.last)
@@ -52,9 +52,9 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
     func send(chatUID: String, message: Message) {
         do {
             let newDocReference = try firestore
-                .collection("Chat")
+                .collection(FirestorePath.chat.rawValue)
                 .document(chatUID)
-                .collection("Message")
+                .collection(FirestorePath.message.rawValue)
                 .addDocument(from: makeMessageResponseDTO(message: message))
         } catch {
             print(error)

@@ -90,9 +90,9 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
     /// User의 uid document에 있는 그룹 중에서 lastAcceptedTime 이후에 있는 그룹을 가져온다.
     func fetchUserGroupInfo(of uid: String, lastAcceptedTime: Date?) async throws -> [UserGroupResponseDTO] {
         var query: Query = firestore
-            .collection("User")
+            .collection(FirestorePath.user.rawValue)
             .document(uid)
-            .collection("Group")
+            .collection(FirestorePath.group.rawValue)
         
         if let lastAcceptedTime = lastAcceptedTime {
             query = query.whereField("time", isGreaterThan: lastAcceptedTime)
@@ -105,9 +105,9 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
     
     func fetchUserGroupInfo(of uid: String, completion: @escaping (_ groups: [UserGroupResponseDTO]) -> Void) -> ListenerRegistration {
         let query: Query = firestore
-            .collection("User")
+            .collection(FirestorePath.user.rawValue)
             .document(uid)
-            .collection("Group")
+            .collection(FirestorePath.group.rawValue)
         
         return query.addSnapshotListener { snapshot, _ in
             if let groups = snapshot?.documents
@@ -121,7 +121,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
     
     private func fetchGroup(uid: String) async throws -> Group {
         let groupSnapshot = try await firestore
-            .collection("Group")
+            .collection(FirestorePath.group.rawValue)
             .document(uid)
             .getDocument()
         let group = try groupSnapshot.data(as: GroupResponseDTO.self)
@@ -131,9 +131,9 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
     
     private func fetchLastMessages(chatID: String, lastMessageTime: Date?, completion: @escaping (_ messages: [Message]) -> Void) -> ListenerRegistration {
         var query: Query = firestore
-            .collection("Chat")
+            .collection(FirestorePath.chat.rawValue)
             .document(chatID)
-            .collection("Message")
+            .collection(FirestorePath.message.rawValue)
         
         if let lastMessageTime = lastMessageTime {
             query = query.whereField("time", isGreaterThan: lastMessageTime)
@@ -159,9 +159,9 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
     
     private func fetchLastMessage(chatID: String) async throws -> Message? {
         var query: Query = firestore
-            .collection("Chat")
+            .collection(FirestorePath.chat.rawValue)
             .document(chatID)
-            .collection("Message")
+            .collection(FirestorePath.message.rawValue)
             .order(by: "time", descending: false)
             .limit(to: 1)
         
