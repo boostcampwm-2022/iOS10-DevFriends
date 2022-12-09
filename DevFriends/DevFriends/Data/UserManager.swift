@@ -107,6 +107,17 @@ final class UserManager {
             userDefaults.synchronize()
         }
     }
+    var joinedGroupIDs: [String]? {
+        get {
+            return UserDefaults.standard.stringArray(forKey: UserInfoKey.joinedGroupIDs.rawValue)
+        }
+        
+        set {
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(newValue, forKey: UserInfoKey.joinedGroupIDs.rawValue)
+            userDefaults.synchronize()
+        }
+    }
     var appliedGroupIDs: [String]? {
         get {
             return UserDefaults.standard.stringArray(forKey: UserInfoKey.appliedGroupIDs.rawValue)
@@ -158,6 +169,10 @@ extension UserManager {
     func login(uid: String) {
         userRepository.fetch(uid: uid) { user in
             self.setUserInfo(of: user)
+        }
+        
+        userRepository.fetchUserGroup(uid: uid) { userGroups in
+            self.joinedGroupIDs = userGroups.map { $0.groupID }
         }
     }
     

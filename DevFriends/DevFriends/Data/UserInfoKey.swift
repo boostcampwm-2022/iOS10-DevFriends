@@ -15,6 +15,7 @@ enum UserInfoKey: String {
     case profile = "PROFILE"
     case profileImagePath = "PROFILEIMAGEPATH"
     case categoryIDs = "CATEGORYIDS"
+    case joinedGroupIDs = "JOINEDGROUPIDS"
     case appliedGroupIDs = "APPLIEDGROUPIDS"
     case likeGroupIDs = "LIKEGROUPIDS"
     case isEnabledAutoLogin = "ISENABLEDAUTOLOGIN"

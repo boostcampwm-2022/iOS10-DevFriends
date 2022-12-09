@@ -283,7 +283,7 @@ final class PostDetailViewController: UIViewController {
         case .applied:
             self.postRequestButton.set(title: "신청된 모임입니다", state: .disabled)
             self.postRequestButton.isHidden = false
-        case .joined:
+        case .joined, .manager:
             self.postRequestButton.isHidden = true
         case .closed:
             self.postRequestButton.set(title: "마감된 모임입니다", state: .disabled)
