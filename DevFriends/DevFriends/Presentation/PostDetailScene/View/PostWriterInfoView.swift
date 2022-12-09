@@ -40,6 +40,7 @@ final class PostWriterInfoView: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.sizeToFit()
+        label.textColor = .devFriendsBase
         return label
     }()
     private let writerJobLabel: UILabel = {
@@ -91,6 +92,8 @@ final class PostWriterInfoView: UIView {
     }
     
     private func style(imageViewRadius: Double, nameTextSize: Double, jobTextSize: Double) {
+        self.backgroundColor = .devFriendsReverseBase
+        
         self.writerProfileImageView.frame = CGRect(
             x: 0.0,
             y: 0.0,

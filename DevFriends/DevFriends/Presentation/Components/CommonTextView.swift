@@ -36,7 +36,7 @@ extension CommonTextView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if self.text == placeholder {
             self.text = nil
-            self.textColor = .black
+            self.textColor = .devFriendsBase
         }
     }
     

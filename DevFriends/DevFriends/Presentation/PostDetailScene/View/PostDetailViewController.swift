@@ -16,7 +16,7 @@ final class PostDetailViewController: UIViewController {
     
     private lazy var commentTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .devFriendsReverseBase
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
@@ -144,7 +144,7 @@ final class PostDetailViewController: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .devFriendsReverseBase
         postDetailInfoView.set(
             postWriterInfo: viewModel.postWriterInfoSubject.value,
             postDetailContents: viewModel.postDetailContentsSubject.value
