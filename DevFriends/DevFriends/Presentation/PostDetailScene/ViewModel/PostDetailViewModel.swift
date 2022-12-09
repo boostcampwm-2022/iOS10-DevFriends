@@ -9,6 +9,7 @@ import Combine
 import UIKit
 
 enum GroupApplyButtonState {
+    case manager
     case available
     case applied
     case joined
@@ -44,6 +45,7 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localUser: User
+    private var localJoinedGroupIDs: [String]
     private let actions: PostDetailViewModelActions
     private var group: Group
     private let fetchUserUseCase: LoadUserUseCase
@@ -112,6 +114,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.updateHitUseCase = updateHitUseCase
         
         localUser = UserManager.shared.user
+        localJoinedGroupIDs = UserManager.shared.joinedGroupIDs ?? []
         
         postDetailContentsSubject.value = .init(
             title: group.title,
@@ -129,7 +132,11 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             currentParticipantCount: group.participantIDs.count
         )
         
-        if group.limitedNumberPeople == group.participantIDs.count {
+        if group.managerID == UserManager.shared.uid {
+            groupApplyButtonStateSubject.value = .manager
+        } else if localJoinedGroupIDs.contains(group.id) {
+            groupApplyButtonStateSubject.value = .joined
+        } else if group.limitedNumberPeople == group.participantIDs.count {
             groupApplyButtonStateSubject.value = .closed
         } else if localUser.appliedGroupIDs.contains(group.id) {
             groupApplyButtonStateSubject.value = .applied
