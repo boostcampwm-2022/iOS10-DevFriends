@@ -47,9 +47,9 @@ extension DefaultGroupCommentRepository: GroupCommentRepository {
                 .getDocuments()
         }
         
-        let comments = querySnapshot.documentChanges.compactMap { try? $0.document.data(as: CommentResponseDTO.self) }
-            .filter { $0.time != from }
-        return comments.map { $0.toDomain() }
+        return querySnapshot.documentChanges.compactMap { try? $0.document.data(as: CommentResponseDTO.self) }
+            .filter { $0.time.firestamp() != from?.firestamp() }
+            .map { $0.toDomain() }
     }
 }
 

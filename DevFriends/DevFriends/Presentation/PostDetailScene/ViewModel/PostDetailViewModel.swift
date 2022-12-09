@@ -217,6 +217,7 @@ extension DefaultPostDetailViewModel {
             for comment in comments {
                 guard let user = await loadUser(id: comment.userID) else {
                     commentsSubject.value.append(CommentInfo(
+                        id: UUID().uuidString,
                         writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
                         contents: comment.content
                     ))
@@ -224,6 +225,7 @@ extension DefaultPostDetailViewModel {
                 }
                 let profile = await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
+                    id: comment.id ?? UUID().uuidString,
                     writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
                 ))
@@ -260,6 +262,7 @@ extension DefaultPostDetailViewModel {
             for comment in comments {
                 guard let user = await loadUser(id: comment.userID) else {
                     commentsSubject.value.append(CommentInfo(
+                        id: UUID().uuidString,
                         writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
                         contents: comment.content
                     ))
@@ -267,6 +270,7 @@ extension DefaultPostDetailViewModel {
                 }
                 let profile = await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
+                    id: comment.id ?? UUID().uuidString,
                     writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
                 ))
@@ -290,10 +294,12 @@ extension DefaultPostDetailViewModel {
             commentID: commentID
         )
         
+        lastCommentLoadTime = comment.time
         postAttentionInfoSubject.value.commentsCount += 1
         expectedCommentsCount += 1
         commentsSubject.value.insert(
             CommentInfo(
+                id: commentID,
                 writerInfo: .init(
                     name: localUser.nickname,
                     job: localUser.job,
