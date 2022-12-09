@@ -257,6 +257,9 @@ extension DefaultPostDetailViewModel {
         Task {
             guard let loadTime = lastCommentLoadTime else { return }
             let comments = await loadComments(from: loadTime)
+            
+            if comments.isEmpty { return }
+            
             lastCommentLoadTime = comments.last?.time
             
             for comment in comments {
@@ -294,7 +297,6 @@ extension DefaultPostDetailViewModel {
             commentID: commentID
         )
         
-        lastCommentLoadTime = comment.time
         postAttentionInfoSubject.value.commentsCount += 1
         expectedCommentsCount += 1
         commentsSubject.value.insert(
