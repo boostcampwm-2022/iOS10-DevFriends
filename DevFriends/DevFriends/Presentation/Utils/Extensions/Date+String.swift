@@ -58,3 +58,9 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
+
+extension Date {
+    func firestamp() -> TimeInterval {
+        return (self.timeIntervalSince1970 * 1000).rounded() / 1000.0
+    }
+}

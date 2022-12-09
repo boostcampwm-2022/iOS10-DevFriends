@@ -229,10 +229,13 @@ final class PostDetailViewController: UIViewController {
                 guard
                     let comment = self?.commentTextField.text,
                     !comment.isEmpty else { return }
-               
+                
                 self?.commentTextField.text = ""
                 self?.viewModel.didTapCommentPostButton(content: comment)
-                self?.commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                
+                if self?.commentTableView.numberOfRows(inSection: 0) ?? 0 > 0 {
+                    self?.commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
             }
             .store(in: &cancellables)
     }
