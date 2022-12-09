@@ -96,7 +96,6 @@ final class MogakcoViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.register(cellType: GroupCollectionViewCell.self)
@@ -173,6 +172,7 @@ final class MogakcoViewController: UIViewController {
     
     private func configureUI() {
         self.setupNavigation()
+        self.setupCollection()
     }
     
     private func layout() {
@@ -256,6 +256,36 @@ final class MogakcoViewController: UIViewController {
     private func setupNavigation() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
         self.navigationItem.rightBarButtonItems = [notificationButton, groupAddButton]
+    }
+    
+    private func setupCollection() {
+        mogakcoCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
+            
+            let item = NSCollectionLayoutItem(
+                layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            )
+            item.contentInsets.trailing = 5
+            
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: .init(widthDimension: .absolute(UIScreen.main.bounds.size.width - 30), heightDimension: .absolute(140)),
+                subitems: [item]
+            )
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .groupPaging
+            section.contentInsets.leading = 10
+            section.contentInsets.trailing = 10
+            section.contentInsets.top = 5
+            section.contentInsets.bottom = 5
+            
+            // SH: 기존 scrollViewWillEndDragging에서 하던 작업 아래 클로저에서 하면 됩니다
+            section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
+                let itemIndex = Int(max(0, round(contentOffset.x / environment.container.contentSize.width)))
+                self?.viewModel.nowMogakco(index: itemIndex)
+            }
+            
+            return section
+        }
     }
     
     private func moveMogakcoLocation(group: Group) {
@@ -362,40 +392,6 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
 }
 
 extension MogakcoViewController: UICollectionViewDelegate {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let cellWidthIncludingSpacing = view.frame.width - 30
-        var offset = targetContentOffset.pointee
-        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-        
-        var roundedIndex = round(index)
-        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
-            roundedIndex = floor(index)
-        } else {
-            roundedIndex = ceil(index)
-        }
-        
-        offset = CGPoint(
-            x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left,
-            y: -scrollView.contentInset.top
-        )
-        targetContentOffset.pointee = offset
-        
-        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
-            roundedIndex = floor(index)
-        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
-            roundedIndex = ceil(index)
-        } else {
-            roundedIndex = round(index)
-        }
-        
-        if nowCollectionViewCellIndex > Int(roundedIndex) {
-            nowCollectionViewCellIndex -= 1
-        } else if nowCollectionViewCellIndex < Int(roundedIndex) {
-            nowCollectionViewCellIndex += 1
-        }
-        viewModel.nowMogakco(index: nowCollectionViewCellIndex)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.didSelectNowMogakco()
     }
