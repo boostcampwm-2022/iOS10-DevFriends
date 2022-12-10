@@ -177,6 +177,7 @@
 		FC3C359B2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */; };
 		FC3C359D29361BA500C5BFE3 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C359C29361BA500C5BFE3 /* DateTableViewCell.swift */; };
 		FC5C5939293F17F7000C3CE0 /* SettingBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C5938293F17F7000C3CE0 /* SettingBarButtonItem.swift */; };
+		FC5CC9E729445694007A2A52 /* CategoryCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */; };
 		FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */; };
 		FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D0192292F4E6200292D33 /* TabBarCoordinator.swift */; };
 		FC5D0195292F512300292D33 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D0194292F512300292D33 /* UIColor+Custom.swift */; };
@@ -419,6 +420,7 @@
 		FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseEntity+Mapping.swift"; sourceTree = "<group>"; };
 		FC3C359C29361BA500C5BFE3 /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		FC5C5938293F17F7000C3CE0 /* SettingBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBarButtonItem.swift; sourceTree = "<group>"; };
+		FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCacheManager.swift; sourceTree = "<group>"; };
 		FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarSceneDIContainer.swift; sourceTree = "<group>"; };
 		FC5D0192292F4E6200292D33 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		FC5D0194292F512300292D33 /* UIColor+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
@@ -1104,6 +1106,7 @@
 				FC79AEBC292223DF0077AE5C /* Repositories */,
 				E3B53BFC2936E662006675E0 /* UserManager.swift */,
 				E31B3544293CD83E000386BD /* UserInfoKey.swift */,
+				FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1483,6 +1486,7 @@
 				A63C96F22937A31300517516 /* DefaultChatRepository.swift in Sources */,
 				E31B353B293B7468000386BD /* Array+SafeIndex.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
+				FC5CC9E729445694007A2A52 /* CategoryCacheManager.swift in Sources */,
 				A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
 				A66C7BC0292E19830008B6FD /* ChatMessagesRepository.swift in Sources */,
