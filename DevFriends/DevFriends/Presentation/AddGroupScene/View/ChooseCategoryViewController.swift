@@ -39,7 +39,7 @@ final class ChooseCategoryViewController: UIViewController {
     private lazy var categoryTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Category>()
     
     private let submitButton: CommonButton = {
-        let button = CommonButton(text: "작성 완료")
+        let button = CommonButton(text: "선택 완료")
         return button
     }()
     
