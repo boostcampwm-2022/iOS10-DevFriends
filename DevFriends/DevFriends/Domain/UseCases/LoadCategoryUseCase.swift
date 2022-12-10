@@ -10,6 +10,7 @@ import Foundation
 protocol LoadCategoryUseCase {
     func execute() async throws -> [Category]
     func execute(categoryIds: [String]) async throws -> [Category]
+    func execute() async throws -> [String: Category]
 }
 
 final class DefaultLoadCategoryUseCase: LoadCategoryUseCase {
@@ -24,5 +25,8 @@ final class DefaultLoadCategoryUseCase: LoadCategoryUseCase {
     }
     func execute(categoryIds: [String]) async throws -> [Category] {
         return try await self.categoryRepository.fetch(categoryIds)
+    }
+    func execute() async throws -> [String: Category] {
+        return try await self.categoryRepository.fetch()
     }
 }

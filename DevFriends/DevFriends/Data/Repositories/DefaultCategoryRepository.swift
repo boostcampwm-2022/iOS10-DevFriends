@@ -25,6 +25,19 @@ extension DefaultCategoryRepository: CategoryRepository {
         }
     }
     
+    func fetch() async throws -> [String: Category] {
+        var categoryDic : [String: Category] = [:]
+        let snapshot = try await firestore.collection(FirestorePath.category.rawValue).getDocuments()
+        
+        for document in snapshot.documents {
+            let categoryData = document.data()
+            if let categoryString = categoryData["name"] as? String {
+                categoryDic[document.documentID] = Category(id: document.documentID, name: categoryString)
+            }
+        }
+        return categoryDic
+    }
+    
     func fetch() async throws -> [Category] {
         var categories: [Category] = []
         let snapshot = try await firestore.collection(FirestorePath.category.rawValue).getDocuments()
