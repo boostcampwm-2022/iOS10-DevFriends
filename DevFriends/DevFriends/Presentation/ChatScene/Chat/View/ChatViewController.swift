@@ -100,7 +100,7 @@ final class ChatViewController: UIViewController {
         self.chatTableViewSnapShot.deleteAllItems()
         self.chatTableViewSnapShot.appendSections([.main])
         self.chatTableViewSnapShot.appendItems(data)
-        self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
+        self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: false)
     }
     
     private func setupNavigation() {
