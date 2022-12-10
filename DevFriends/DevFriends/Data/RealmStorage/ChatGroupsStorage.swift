@@ -15,10 +15,9 @@ protocol ChatGroupsStorage {
 
 final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
     func fetch() -> [AcceptedGroup] {
-        let groups = realm?
+        let groups = realm
             .objects(AcceptedGroupResponseEntity.self)
             .sorted(byKeyPath: "acceptedTime", ascending: false)
-        guard let groups = groups else { return [] }
         return groups.map { $0.toDomain() }
     }
     
@@ -30,8 +29,17 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
     }
     
     func save(acceptedGroup: AcceptedGroup) throws {
-        try realm?.write {
-            realm?.add(toAcceptedGroupResponseEntity(acceptedGroup: acceptedGroup), update: .modified)
+        try realm.write {
+            realm.add(toAcceptedGroupResponseEntity(acceptedGroup: acceptedGroup), update: .modified)
+        }
+    }
+    
+    /// 특정 Group의 newMessageCount를 업데이트한다
+    func update(groupID: String, newMessageCount: Int) {
+        if let group = realm.object(ofType: AcceptedGroupResponseEntity.self, forPrimaryKey: groupID) {
+            try! realm.write {
+                group.lastMessageCount = newMessageCount
+            }
         }
     }
     
@@ -55,6 +63,8 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
         realmGroup.managerID = group.managerID
         realmGroup.type = group.type
         realmGroup.acceptedTime = acceptedGroup.time
+        realmGroup.lastMessageCount = acceptedGroup.newMessageCount
+        realmGroup.lastMessageContent = acceptedGroup.lastMessageContent
         return realmGroup
     }
 }

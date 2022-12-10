@@ -57,6 +57,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                                 chatID: group.chatID,
                                 lastMessageTime: lastMessageTime
                             ) { messages in
+                                guard !messages.isEmpty else { return }
                                 let acceptedGroup = AcceptedGroup(
                                     group: group,
                                     time: userGroupResponseDTO.time,
@@ -144,9 +145,9 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
         return query.addSnapshotListener { snapshot, _ in
             if let snapshot {
                 do {
-                    let messages = try snapshot.documents
+                    let messages = try snapshot.documentChanges
                         .map {
-                            try $0.data(as: MessageResponseDTO.self)
+                            try $0.document.data(as: MessageResponseDTO.self)
                                 .toDomain()
                         }
                         .filter { $0.time.firestamp() != lastMessageTime?.firestamp() }

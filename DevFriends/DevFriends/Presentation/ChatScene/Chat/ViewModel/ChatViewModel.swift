@@ -88,6 +88,7 @@ final class DefaultChatViewModel: ChatViewModel {
 extension DefaultChatViewModel {
     func viewWillAppear() {
         setEnteredGroup()
+        self.groupID = nil
     }
     
     func didLoadGroups() {

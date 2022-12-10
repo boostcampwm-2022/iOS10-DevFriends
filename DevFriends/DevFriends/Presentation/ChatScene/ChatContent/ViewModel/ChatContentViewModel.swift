@@ -13,6 +13,7 @@ protocol ChatContentViewModelInput {
     func didSendMessage(text: String)
     func back()
     func didTapSettingButton()
+    func viewWillDisappear()
 }
 
 protocol ChatContentViewModelOutput {
@@ -68,7 +69,7 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
                         if !lastMessage.time.isSameDate(as: newMessage.time) {
                             totalMessageWithDate.append(DateMessage(time: newMessage.time))
                         }
-                    }else if totalMessageWithDate.isEmpty {
+                    } else if totalMessageWithDate.isEmpty {
                         totalMessageWithDate.append(DateMessage(time: newMessage.time))
                     }
                     totalMessageWithDate.append(newMessage)
@@ -115,5 +116,10 @@ extension DefaultChatContentViewModel {
         else { fatalError("UserDefaults doesn't have values.") }
         let message = Message(id: "", content: text, time: Date(), userID: userID, userNickname: nickname)
         sendMessage(message: message)
+    }
+    
+    func viewWillDisappear() {
+        // TODO: 관심사 분리 꼭 하기(임시방편)
+        DefaultChatGroupsStorage().update(groupID: group.id, newMessageCount: 0)
     }
 }
