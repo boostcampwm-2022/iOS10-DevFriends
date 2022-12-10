@@ -9,13 +9,13 @@ import Combine
 import UIKit
 
 struct FixMyInfoViewModelActions {
-    let showCategoryChoice: ([Category]) -> Void
+    let showCategoryChoice: ([Category]?) -> Void
     let didSubmitFixInfo: (String, UIImage?, [Category]) -> Void
     let popFixMyInfo: () -> Void
 }
 
 protocol FixMyInfoViewModelInput {
-    func didCategorySelectionView(categories: [Category])
+    func didCategorySelectionView(categories: [Category]?)
     func didTapDoneButton(nickname: String, job: String)
     func didTouchedBackButton()
 }
@@ -104,7 +104,7 @@ final class DefaultFixMyInfoViewModel: FixMyInfoViewModel {
 }
 
 extension DefaultFixMyInfoViewModel {
-    func didCategorySelectionView(categories: [Category]) {
+    func didCategorySelectionView(categories: [Category]?) {
         actions.showCategoryChoice(categories)
     }
     

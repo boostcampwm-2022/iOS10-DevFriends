@@ -13,7 +13,7 @@ final class ChooseCategoryViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.text = "카테고리 선택"
+        label.text = "카테고리 선택 (최대 2개)"
         return label
     }()
     
@@ -39,7 +39,7 @@ final class ChooseCategoryViewController: UIViewController {
     private lazy var categoryTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, Category>()
     
     private let submitButton: CommonButton = {
-        let button = CommonButton(text: "작성 완료")
+        let button = CommonButton(text: "선택 완료")
         return button
     }()
     
@@ -102,6 +102,13 @@ final class ChooseCategoryViewController: UIViewController {
         categoryTableViewDiffableDataSource.apply(categoryTableViewSnapShot)
     }
     
+    private func setFilter(filter: [Category]) {
+        filter.forEach {
+            let indexPath = categoryTableViewDiffableDataSource.indexPath(for: $0)
+            categoryTableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+        }
+    }
+    
     private func bind() {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
@@ -115,10 +122,24 @@ final class ChooseCategoryViewController: UIViewController {
                 self?.loadTableView()
             }
             .store(in: &cancellables)
+        
+        viewModel.didInitFilterSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] filter in
+                self?.setFilter(filter: filter)
+            }
+            .store(in: &cancellables)
     }
 }
 
 extension ChooseCategoryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if tableView.indexPathsForSelectedRows?.count == 2 {
+            return nil
+        }
+        return indexPath
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selected: Category = self.categoryTableViewSnapShot.itemIdentifiers[indexPath.row]
         viewModel.addCategory(category: selected)

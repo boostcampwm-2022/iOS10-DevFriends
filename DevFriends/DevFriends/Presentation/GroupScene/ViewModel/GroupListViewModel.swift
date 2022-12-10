@@ -43,7 +43,7 @@ final class DefaultGroupListViewModel: GroupListViewModel {
     private let sortGroupUseCase: SortGroupUseCase
     private let loadCategoryUseCase: LoadCategoryUseCase
     private var userLocation: Location?
-    var recommandFilter: Filter
+    var recommandFilter = Filter(alignFilter: .closest, categoryFilter: [])
     var groupFilter = Filter(alignFilter: .newest, categoryFilter: [])
 
     init(
@@ -55,8 +55,6 @@ final class DefaultGroupListViewModel: GroupListViewModel {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.sortGroupUseCase = sortGroupUseCase
         self.loadCategoryUseCase = fetchCategoryUseCase
-        // 추천 필터는 나중에 사용자 정보 받아와서 업데이트
-        self.recommandFilter = Filter(alignFilter: .closest, categoryFilter: [])
         self.actions = actions
     }
     
@@ -78,6 +76,7 @@ extension DefaultGroupListViewModel {
     
     func loadGroupList() {
         Task {
+            let categoryDic: [String: Category] = try await loadCategoryUseCase.execute()
             let recommandGroups = try await fetchGroupUseCase
                 .execute(filter: self.recommandFilter)
             let sortedRecommand = sortGroupUseCase.execute(
@@ -85,13 +84,13 @@ extension DefaultGroupListViewModel {
                 by: recommandFilter.alignFilter,
                 userLocation: userLocation
             )
+            let recommandLoadCategories = CFAbsoluteTimeGetCurrent()
             var recommandGroupCellInfos: [GroupCellInfo] = []
             for group in sortedRecommand {
-                // 참가인원 다 찼으면 패스
                 if group.participantIDs.count >= group.limitedNumberPeople {
                     continue
                 }
-                let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                let categories = group.categoryIDs.compactMap { categoryDic[$0] }
                 var distance: Double?
                 if let userLocation = userLocation {
                     distance = group.location.distance(from: userLocation)
@@ -107,6 +106,7 @@ extension DefaultGroupListViewModel {
                     limitedNumberPeople: group.limitedNumberPeople
                 ))
             }
+            print("Recommand loadCategories: ", CFAbsoluteTimeGetCurrent() - recommandLoadCategories)
             recommandGroupsSubject.send(recommandGroupCellInfos)
             
             let filteredGroups = try await fetchGroupUseCase
@@ -116,13 +116,14 @@ extension DefaultGroupListViewModel {
                 by: groupFilter.alignFilter,
                 userLocation: userLocation
             )
+            let filterLoadCategories = CFAbsoluteTimeGetCurrent()
             var filteredGroupCellInfos: [GroupCellInfo] = []
             for group in sortedFiltered {
                 // 참가인원 다 찼으면 패스
                 if group.participantIDs.count >= group.limitedNumberPeople {
                     continue
                 }
-                let categories = await loadCategories(categoryIDs: group.categoryIDs)
+                let categories = group.categoryIDs.compactMap { categoryDic[$0] }
                 var distance: Double?
                 if let userLocation = userLocation {
                     distance = group.location.distance(from: userLocation)
@@ -138,6 +139,7 @@ extension DefaultGroupListViewModel {
                     limitedNumberPeople: group.limitedNumberPeople
                 ))
             }
+            print("Filter loadCategories: ", CFAbsoluteTimeGetCurrent() - filterLoadCategories)
             filteredGroupsSubject.send(filteredGroupCellInfos)
         }
     }

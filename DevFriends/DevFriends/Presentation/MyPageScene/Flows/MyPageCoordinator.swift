@@ -15,7 +15,7 @@ protocol MyPageFlowCoordinatorDependencies {
     func makePostDetailViewController(actions: PostDetailViewModelActions, group: Group) -> PostDetailViewController
     func makePopupViewController(popup: Popup) -> PopupViewController
     func makeFixMyInfoViewController(userInfo: FixMyInfoStruct, actions: FixMyInfoViewModelActions) -> FixMyInfoViewController
-    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewController
     func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController
 }
 
@@ -118,9 +118,9 @@ final class MyPageCoordinator: Coordinator {
 }
 
 extension MyPageCoordinator {
-    func showCategoryViewController(categories: [Category]) {
+    func showCategoryViewController(categories: [Category]?) {
         let actions = ChooseCategoryViewModelActions(didSubmitCategory: didSubmitCategorySelection)
-        let categoryViewController = dependencies.makeCategoryViewController(actions: actions)
+        let categoryViewController = dependencies.makeCategoryViewController(actions: actions, initFilter: categories)
         navigationController?.pushViewController(categoryViewController, animated: true)
     }
     

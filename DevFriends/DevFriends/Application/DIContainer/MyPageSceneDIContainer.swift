@@ -183,15 +183,16 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     }
     
     // MARK: ChooseCategoryView
-    private func makeChooseCategoryViewModel(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewModel {
+    private func makeChooseCategoryViewModel(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewModel {
         return DefaultChooseCategoryViewModel(
             fetchCategoryUseCase: makeLoadCategoryUseCase(),
-            actions: actions
+            actions: actions,
+            initFilter: initFilter
         )
     }
     
-    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController {
-        return ChooseCategoryViewController(viewModel: makeChooseCategoryViewModel(actions: actions))
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewController {
+        return ChooseCategoryViewController(viewModel: makeChooseCategoryViewModel(actions: actions, initFilter: initFilter))
     }
     
     func makePostReportViewController(actions: PostReportViewControllerActions) -> PostReportViewController {

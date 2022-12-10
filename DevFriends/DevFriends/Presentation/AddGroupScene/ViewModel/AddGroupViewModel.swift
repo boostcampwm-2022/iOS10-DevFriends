@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 struct AddGroupViewModelActions {
-    let showCategoryView: () -> Void
+    let showCategoryView: ([Category]?) -> Void
     let showLocationView: () -> Void
     let moveBackToParent: () -> Void
     let showPopup: (Popup) -> Void
@@ -99,7 +99,7 @@ extension DefaultAddGroupViewModel {
     }
     
     func didCategorySelect() {
-        actions.showCategoryView()
+        actions.showCategoryView(self.categorySelection)
     }
     
     func didLocationSelect() {
