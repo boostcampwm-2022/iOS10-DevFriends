@@ -98,10 +98,10 @@ final class DefaultGroupRepository: GroupRepository {
         if let groupFilter = filter.groupFilter {
             snapshot = try await firestore.collection(FirestorePath.group.rawValue)
                 .whereField("type", isEqualTo: groupFilter.rawValue)
-            /*.whereField()*/
                 .getDocuments()
         } else {
             snapshot = try await firestore.collection(FirestorePath.group.rawValue)
+                .whereField("type", isNotEqualTo: GroupType.mogakco.rawValue) // 모각코는 포함 x
                 .getDocuments()
         }
         
