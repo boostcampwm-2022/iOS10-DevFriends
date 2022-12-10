@@ -13,7 +13,7 @@ final class ChooseCategoryViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.text = "카테고리 선택"
+        label.text = "카테고리 선택 (최대 2개)"
         return label
     }()
     
@@ -133,6 +133,13 @@ final class ChooseCategoryViewController: UIViewController {
 }
 
 extension ChooseCategoryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if tableView.indexPathsForSelectedRows?.count == 2 {
+            return nil
+        }
+        return indexPath
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selected: Category = self.categoryTableViewSnapShot.itemIdentifiers[indexPath.row]
         viewModel.addCategory(category: selected)
