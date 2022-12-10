@@ -25,8 +25,8 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
             .document(chatUID)
             .collection(FirestorePath.message.rawValue)
         
-        if let lastMessageTime = localMessages.last?.time {
-            print("LAST", localMessages.last)
+        let lastMessageTime = localMessages.last?.time
+        if let lastMessageTime = lastMessageTime {
             query = query.whereField("time", isGreaterThan: lastMessageTime)
         }
         
@@ -36,7 +36,8 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
             
             let messages = snapshot.documentChanges
                 .compactMap { try? $0.document.data(as: MessageResponseDTO.self) }
-                .map{ $0.toDomain() }
+                .filter { $0.time.firestamp() != lastMessageTime?.firestamp() }
+                .map { $0.toDomain() }
             completion(messages)
             print("NEW", messages)
             self?.storage.save(groupID: chatUID, messages: messages)
