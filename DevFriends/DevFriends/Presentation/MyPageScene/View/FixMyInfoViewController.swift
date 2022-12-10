@@ -178,7 +178,7 @@ final class FixMyInfoViewController: UIViewController {
         
         self.categorySelectionView.didTouchViewSubject
             .sink { [weak self] _ in
-                self?.viewModel.didCategorySelectionView(categories: [])
+                self?.viewModel.didCategorySelectionView(categories: self?.viewModel.categoriesSubject.value)
             }
             .store(in: &cancellables)
         

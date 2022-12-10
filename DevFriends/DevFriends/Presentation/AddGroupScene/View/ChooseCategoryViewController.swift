@@ -102,6 +102,13 @@ final class ChooseCategoryViewController: UIViewController {
         categoryTableViewDiffableDataSource.apply(categoryTableViewSnapShot)
     }
     
+    private func setFilter(filter: [Category]) {
+        filter.forEach {
+            let indexPath = categoryTableViewDiffableDataSource.indexPath(for: $0)
+            categoryTableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+        }
+    }
+    
     private func bind() {
         submitButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
@@ -113,6 +120,13 @@ final class ChooseCategoryViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.loadTableView()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didInitFilterSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] filter in
+                self?.setFilter(filter: filter)
             }
             .store(in: &cancellables)
     }

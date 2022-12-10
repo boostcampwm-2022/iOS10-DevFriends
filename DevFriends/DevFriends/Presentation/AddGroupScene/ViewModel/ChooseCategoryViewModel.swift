@@ -21,6 +21,7 @@ protocol ChooseCategoryViewModelInput {
 
 protocol ChooseCategoryViewModelOutput {
     var didUpdateSelectionSubject: PassthroughSubject<Void, Never> { get }
+    var didInitFilterSubject: PassthroughSubject<[Category], Never> { get }
 }
 
 protocol ChooseCategoryViewModel: ChooseCategoryViewModelInput, ChooseCategoryViewModelOutput {
@@ -35,13 +36,17 @@ final class DefaultChooseCategoryViewModel: ChooseCategoryViewModel {
     private let fetchCategoryUseCase: LoadCategoryUseCase
     private let actions: ChooseCategoryViewModelActions
     
-    init(fetchCategoryUseCase: LoadCategoryUseCase, actions: ChooseCategoryViewModelActions) {
+    init(fetchCategoryUseCase: LoadCategoryUseCase, actions: ChooseCategoryViewModelActions, initFilter: [Category]?) {
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.actions = actions
+        if let initFilter = initFilter {
+            self.categoryFilter = initFilter
+        }
     }
     
     // MARK: OUTPUT
     var didUpdateSelectionSubject = PassthroughSubject<Void, Never>()
+    var didInitFilterSubject = PassthroughSubject<[Category], Never>()
 }
 
 extension DefaultChooseCategoryViewModel {
@@ -50,6 +55,9 @@ extension DefaultChooseCategoryViewModel {
             let categories: [Category] = try await fetchCategoryUseCase.execute()
             self.categoryType = categories
             didUpdateSelectionSubject.send()
+            if !categoryFilter.isEmpty {
+                didInitFilterSubject.send(self.categoryFilter)
+            }
         }
     }
     
