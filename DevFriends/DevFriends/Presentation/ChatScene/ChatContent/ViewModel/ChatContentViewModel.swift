@@ -32,6 +32,7 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     let group: Group
     private let loadChatMessagesUseCase: LoadChatMessagesUseCase
     private let sendChatMessagesUseCase: SendChatMessagesUseCase
+    private let updateUserGroupUseCase: UpdateUserGroupUseCase
     private let removeMessageListenerUseCase: RemoveMessageListenerUseCase
     private let actions: ChatContentViewModelActions
     
@@ -39,12 +40,14 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
         group: Group,
         loadChatMessagesUseCase: LoadChatMessagesUseCase,
         sendChatMessagesUseCase: SendChatMessagesUseCase,
+        updateUserGroupUseCase: UpdateUserGroupUseCase,
         removeMessageListenerUseCase: RemoveMessageListenerUseCase,
         actions: ChatContentViewModelActions
     ) {
         self.group = group
         self.loadChatMessagesUseCase = loadChatMessagesUseCase
         self.sendChatMessagesUseCase = sendChatMessagesUseCase
+        self.updateUserGroupUseCase = updateUserGroupUseCase
         self.removeMessageListenerUseCase = removeMessageListenerUseCase
         self.actions = actions
     }
@@ -56,7 +59,7 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     private func loadMessages() {
         do {
             try loadChatMessagesUseCase.execute { [weak self] newMessages in
-                guard let self = self else {return}
+                guard let self = self else { return }
                 let nowMessagesWithDate = self.messagesSubject.value
                 var totalMessageWithDate: [AnyHashable] = nowMessagesWithDate
                 
@@ -72,6 +75,11 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
                 }
                 
                 self.messagesSubject.send(totalMessageWithDate)
+                
+                // SW: User Group을 메세지의 최신 시간으로 업데이트해주자!
+                if let latestTime = newMessages.last?.time {
+                    self.updateUserGroupUseCase.execute(groupID: self.group.id, time: latestTime)
+                }
             }
         } catch {
             print(error)

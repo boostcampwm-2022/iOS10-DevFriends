@@ -15,4 +15,5 @@ protocol UserRepository {
     func createUserGroup(userID: String, groupID: String)
     func fetchUserGroup(of uid: String) async throws -> [UserGroup]
     func deleteUserGroup(userID: String, groupID: String)
+    func updateUserGroup(userID: String, groupID: String, userGroup: UserGroup) async throws
 }

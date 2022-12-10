@@ -149,6 +149,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                             try $0.data(as: MessageResponseDTO.self)
                                 .toDomain()
                         }
+                        .filter { $0.time.firestamp() != lastMessageTime?.firestamp() }
                     completion(messages)
                 } catch {
                     print(error)

@@ -79,6 +79,28 @@ extension DefaultUserRepository: UserRepository {
                 }
         }
     }
+    
+    func updateUserGroup(userID: String, groupID: String, userGroup: UserGroup) async throws {
+        let userGroupID = try await firestore
+            .collection(FirestorePath.user.rawValue)
+            .document(userID)
+            .collection(FirestorePath.group.rawValue)
+            .whereField("groupID", in: [groupID])
+            .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: UserGroupResponseDTO.self) }
+            .first?.uid
+        
+        if let userGroupID = userGroupID {
+            do {
+                try firestore.collection(FirestorePath.user.rawValue)
+                    .document(userID)
+                    .collection(FirestorePath.group.rawValue)
+                    .document(userGroupID)
+                    .setData(from: makeUserGroupResponseDTO(userGroup: userGroup))
+            }
+        }
+    }
 }
 
 extension DefaultUserRepository {
@@ -157,5 +179,9 @@ extension DefaultUserRepository {
             appliedGroups: user.appliedGroupIDs,
             likeGroups: user.likeGroupIDs
         )
+    }
+    
+    private func makeUserGroupResponseDTO(userGroup: UserGroup) -> UserGroupResponseDTO {
+        return UserGroupResponseDTO(groupID: userGroup.groupID, time: userGroup.time)
     }
 }
