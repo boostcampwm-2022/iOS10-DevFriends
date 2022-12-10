@@ -114,6 +114,7 @@ final class DefaultGroupRepository: GroupRepository {
                 groups.append(group)
             }
         }
+        groups = groups.filter { $0.managerID != UserManager.shared.user.id } // 자신이 쓴 글은 제외
         return groups
     }
     
