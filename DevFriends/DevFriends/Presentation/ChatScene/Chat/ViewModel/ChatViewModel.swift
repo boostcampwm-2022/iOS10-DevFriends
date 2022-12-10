@@ -14,6 +14,7 @@ struct ChatViewModelActions {
 }
 
 protocol ChatViewModelInput {
+    func viewWillAppear()
     func didLoadGroups()
     func didSelectGroup(at index: Int)
 }
@@ -30,6 +31,8 @@ final class DefaultChatViewModel: ChatViewModel {
     
     private var groupListListener: ListenerRegistration?
     private var groupListeners: [ListenerRegistration]?
+    
+    private var groupID: String?
     
     // MARK: OUTPUT
     var groupsSubject = CurrentValueSubject<[AcceptedGroup], Never>([])
@@ -65,15 +68,34 @@ final class DefaultChatViewModel: ChatViewModel {
             self.groupsSubject.send(groups)
         })
     }
+    
+    /// 들어갔던 그룹은 new라는 표시가 뜨지 않게 함
+    private func setEnteredGroup() {
+        if let groupID = self.groupID {
+            var newGroups = groupsSubject.value
+            let index = newGroups.firstIndex { group in
+                return group.group.id == groupID
+            }
+            if let index = index {
+                newGroups[index].newMessageCount = 0
+                groupsSubject.send(newGroups)
+            }
+        }
+    }
 }
 
 // MARK: INPUT
 extension DefaultChatViewModel {
+    func viewWillAppear() {
+        setEnteredGroup()
+    }
+    
     func didLoadGroups() {
         loadGroupsWithListener()
     }
     
     func didSelectGroup(at index: Int) {
         actions.showChatContent(groupsSubject.value[index].group)
+        self.groupID = self.groupsSubject.value[index].group.id
     }
 }
