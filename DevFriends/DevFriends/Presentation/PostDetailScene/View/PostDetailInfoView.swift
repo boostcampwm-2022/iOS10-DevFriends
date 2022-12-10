@@ -9,19 +9,9 @@ import UIKit
 import SnapKit
 
 final class PostDetailInfoView: UIView {
-    private let mainStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        return stackView
-    }()
-    private let postWriterInfoView: PostWriterInfoView = {
-        let postWriterInfoView = PostWriterInfoView()
-        return postWriterInfoView
-    }()
-    private let postDetailContentsView: PostDetailContentsView = {
-        let postDetailContentsView = PostDetailContentsView()
-        return postDetailContentsView
-    }()
+    private let postWriterInfoView = PostWriterInfoView()
+    
+    private let postDetailContentsView = PostDetailContentsView()
     
     required init?(coder: NSCoder) {
         fatalError("Init Error")
@@ -35,15 +25,17 @@ final class PostDetailInfoView: UIView {
     }
     
     private func layout() {
-        self.addSubview(mainStackView)
-        self.mainStackView.addArrangedSubview(postWriterInfoView)
-        self.mainStackView.addArrangedSubview(postDetailContentsView)
-        
-        self.mainStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        addSubview(postWriterInfoView)
+        postWriterInfoView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(60)
         }
         
-        self.mainStackView.setCustomSpacing(20, after: postWriterInfoView)
+        addSubview(postDetailContentsView)
+        postDetailContentsView.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+            make.top.equalTo(postWriterInfoView.snp.bottom).offset(10)
+        }
     }
     
     private func style() {
