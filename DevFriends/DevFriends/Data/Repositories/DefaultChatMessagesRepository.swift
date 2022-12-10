@@ -19,7 +19,6 @@ final class DefaultChatMessagesRepository: ContainsFirestore {
 extension DefaultChatMessagesRepository: ChatMessagesRepository {
     func fetch(chatUID: String, completion: @escaping (_ messages: [Message]) -> Void) throws {
         let localMessages = storage.fetch(groupID: chatUID)
-        print("local", localMessages)
         var query: Query = firestore
             .collection(FirestorePath.chat.rawValue)
             .document(chatUID)
@@ -39,7 +38,6 @@ extension DefaultChatMessagesRepository: ChatMessagesRepository {
                 .filter { $0.time.firestamp() != lastMessageTime?.firestamp() }
                 .map { $0.toDomain() }
             completion(messages)
-            print("NEW", messages)
             self?.storage.save(groupID: chatUID, messages: messages)
         }
         
