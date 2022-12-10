@@ -52,16 +52,18 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                     userGroup: userGroup,
                     lastMessageTime: lastMessageTime
                 ) { group, userGroup, messages in
-                    guard !messages.isEmpty else { return }
-                    let acceptedGroup = AcceptedGroup(
-                        group: group,
-                        time: messages.last?.time ?? userGroup.time,
-                        lastMessageContent: messages.last?.content ?? "",
-                        newMessageCount: messages.count
-                    )
-                    
+                    var acceptedGroup: AcceptedGroup
+                    if messages.isEmpty {
+                        acceptedGroup = AcceptedGroup(group: group, time: userGroup.time, lastMessageContent: "", newMessageCount: 0)
+                    } else {
+                        acceptedGroup = AcceptedGroup(
+                            group: group,
+                            time: messages.last?.time ?? userGroup.time,
+                            lastMessageContent: messages.last?.content ?? "",
+                            newMessageCount: messages.count
+                        )
+                    }
                     completion(acceptedGroup) // SW: 여기서 반복적으로 Diffable이 업데이트됨
-                    
                     do {
                         try self.groupStorage.save(acceptedGroup: acceptedGroup) // SW: realm에도 저장함
                     } catch {
