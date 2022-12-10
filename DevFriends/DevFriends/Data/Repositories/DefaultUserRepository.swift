@@ -108,6 +108,26 @@ extension DefaultUserRepository {
         return groups
     }
     
+    func fetchUserGroup(uid: String, completion: @escaping (_ userGroups: [UserGroup]) -> Void) {
+        _ = firestore
+            .collection(FirestorePath.user.rawValue)
+            .document(uid)
+            .collection(FirestorePath.group.rawValue)
+            .addSnapshotListener { snapshot, error in
+                guard let snapshot = snapshot, error == nil else { fatalError("userGroup snapshot error occured!!") }
+                
+                do {
+                    let groups = try snapshot.documents
+                        .map { try $0.data(as: UserGroupResponseDTO.self) }
+                        .map { $0.toDomain() }
+                    
+                    completion(groups)
+                } catch {
+                    fatalError("\(error)")
+                }
+            }
+    }
+    
     func deleteUserGroup(userID: String, groupID: String) {
         firestore
             .collection(FirestorePath.user.rawValue)

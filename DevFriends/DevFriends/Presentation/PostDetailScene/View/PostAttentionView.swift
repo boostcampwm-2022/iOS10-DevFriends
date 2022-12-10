@@ -68,6 +68,7 @@ final class PostAttentionView: UIView {
         super.init(frame: .zero)
         
         layout()
+        style()
     }
     
     private func layout() {
@@ -95,6 +96,10 @@ final class PostAttentionView: UIView {
             make.edges.equalTo(mainStackView)
             make.size.equalTo(mainStackView)
         }
+    }
+    
+    private func style() {
+        self.backgroundColor = .devFriendsReverseBase
     }
     
     func set(info: PostAttentionInfo) {

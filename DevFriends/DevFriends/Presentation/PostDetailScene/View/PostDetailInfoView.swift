@@ -31,6 +31,7 @@ final class PostDetailInfoView: UIView {
         super.init(frame: .zero)
         
         self.layout()
+        self.style()
     }
     
     private func layout() {
@@ -43,6 +44,10 @@ final class PostDetailInfoView: UIView {
         }
         
         self.mainStackView.setCustomSpacing(20, after: postWriterInfoView)
+    }
+    
+    private func style() {
+        self.backgroundColor = .devFriendsReverseBase
     }
     
     func set(postWriterInfo: PostWriterInfo) {

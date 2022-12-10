@@ -9,9 +9,10 @@ import Foundation
 
 struct CommentInfo: Hashable {
     static func == (lhs: CommentInfo, rhs: CommentInfo) -> Bool {
-        return lhs.writerInfo == rhs.writerInfo && lhs.contents == rhs.contents
+        return lhs.id == rhs.id
     }
     
+    let id: String
     let writerInfo: PostWriterInfo
     let contents: String
 }

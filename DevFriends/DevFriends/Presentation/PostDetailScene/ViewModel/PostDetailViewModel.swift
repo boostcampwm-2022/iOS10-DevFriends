@@ -9,6 +9,7 @@ import Combine
 import UIKit
 
 enum GroupApplyButtonState {
+    case manager
     case available
     case applied
     case joined
@@ -44,6 +45,7 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localUser: User
+    private var localJoinedGroupIDs: [String]
     private let actions: PostDetailViewModelActions
     private var group: Group
     private let fetchUserUseCase: LoadUserUseCase
@@ -112,6 +114,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.updateHitUseCase = updateHitUseCase
         
         localUser = UserManager.shared.user
+        localJoinedGroupIDs = UserManager.shared.joinedGroupIDs ?? []
         
         postDetailContentsSubject.value = .init(
             title: group.title,
@@ -129,7 +132,11 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             currentParticipantCount: group.participantIDs.count
         )
         
-        if group.limitedNumberPeople == group.participantIDs.count {
+        if group.managerID == UserManager.shared.uid {
+            groupApplyButtonStateSubject.value = .manager
+        } else if localJoinedGroupIDs.contains(group.id) {
+            groupApplyButtonStateSubject.value = .joined
+        } else if group.limitedNumberPeople == group.participantIDs.count {
             groupApplyButtonStateSubject.value = .closed
         } else if localUser.appliedGroupIDs.contains(group.id) {
             groupApplyButtonStateSubject.value = .applied
@@ -210,6 +217,7 @@ extension DefaultPostDetailViewModel {
             for comment in comments {
                 guard let user = await loadUser(id: comment.userID) else {
                     commentsSubject.value.append(CommentInfo(
+                        id: UUID().uuidString,
                         writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
                         contents: comment.content
                     ))
@@ -217,6 +225,7 @@ extension DefaultPostDetailViewModel {
                 }
                 let profile = await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
+                    id: comment.id ?? UUID().uuidString,
                     writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
                 ))
@@ -248,11 +257,15 @@ extension DefaultPostDetailViewModel {
         Task {
             guard let loadTime = lastCommentLoadTime else { return }
             let comments = await loadComments(from: loadTime)
+            
+            if comments.isEmpty { return }
+            
             lastCommentLoadTime = comments.last?.time
             
             for comment in comments {
                 guard let user = await loadUser(id: comment.userID) else {
                     commentsSubject.value.append(CommentInfo(
+                        id: UUID().uuidString,
                         writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
                         contents: comment.content
                     ))
@@ -260,6 +273,7 @@ extension DefaultPostDetailViewModel {
                 }
                 let profile = await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
+                    id: comment.id ?? UUID().uuidString,
                     writerInfo: .init(name: user.nickname, job: user.job, image: profile),
                     contents: comment.content
                 ))
@@ -287,6 +301,7 @@ extension DefaultPostDetailViewModel {
         expectedCommentsCount += 1
         commentsSubject.value.insert(
             CommentInfo(
+                id: commentID,
                 writerInfo: .init(
                     name: localUser.nickname,
                     job: localUser.job,

@@ -16,7 +16,7 @@ final class PostDetailViewController: UIViewController {
     
     private lazy var commentTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .devFriendsReverseBase
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
         tableView.allowsSelection = false
@@ -144,7 +144,7 @@ final class PostDetailViewController: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .devFriendsReverseBase
         postDetailInfoView.set(
             postWriterInfo: viewModel.postWriterInfoSubject.value,
             postDetailContents: viewModel.postDetailContentsSubject.value
@@ -229,10 +229,13 @@ final class PostDetailViewController: UIViewController {
                 guard
                     let comment = self?.commentTextField.text,
                     !comment.isEmpty else { return }
-               
+                
                 self?.commentTextField.text = ""
                 self?.viewModel.didTapCommentPostButton(content: comment)
-                self?.commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                
+                if self?.commentTableView.numberOfRows(inSection: 0) ?? 0 > 0 {
+                    self?.commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
             }
             .store(in: &cancellables)
     }
@@ -283,7 +286,7 @@ final class PostDetailViewController: UIViewController {
         case .applied:
             self.postRequestButton.set(title: "신청된 모임입니다", state: .disabled)
             self.postRequestButton.isHidden = false
-        case .joined:
+        case .joined, .manager:
             self.postRequestButton.isHidden = true
         case .closed:
             self.postRequestButton.set(title: "마감된 모임입니다", state: .disabled)

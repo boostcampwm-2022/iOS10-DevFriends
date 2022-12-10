@@ -40,6 +40,7 @@ final class MogakcoViewModel: MogakcoViewModelType {
     private var allMogakcoList: [Group] = []
     private var nowMogakcoList: [Group] = []
     private var nowMogakco: Group?
+    private var nowMogackoIndex: Int = -1
     
     private let fetchGroupUseCase: LoadGroupUseCase
     private let actions: MogakcoViewModelActions
@@ -68,7 +69,8 @@ final class MogakcoViewModel: MogakcoViewModelType {
     }
     
     func nowMogakco(index: Int) {
-        if index < nowMogakcoList.count {
+        if index != nowMogackoIndex && index < nowMogakcoList.count {
+            nowMogackoIndex = index
             nowMogakco = nowMogakcoList[index]
             nowMogakcoSubject.send(nowMogakcoList[index])
         }
