@@ -18,7 +18,7 @@ protocol MogakcoViewModelInput {
     func fetchMogakco(location: Location, distance: Double)
     func nowMogakco(index: Int)
     func nowMogakco(location: Location, distance: Double)
-    func didSelectNowMogakco()
+    func didSelectNowMogakco(index: Int)
     func didSelectAddMogakco()
     func didSelectNotifications()
 }
@@ -88,9 +88,12 @@ final class MogakcoViewModel: MogakcoViewModelType {
         }
     }
     
-    func didSelectNowMogakco() {
-        guard let nowMogakco = self.nowMogakco else { return }
-        actions.showGroupDetail(nowMogakco)
+    func didSelectNowMogakco(index: Int) {
+        if index < nowMogakcoList.count {
+            nowMogakco = nowMogakcoList[index]
+            nowMogakcoIndex = index
+            actions.showGroupDetail(nowMogakcoList[index])
+        }
     }
     
     func didSelectAddMogakco() {
