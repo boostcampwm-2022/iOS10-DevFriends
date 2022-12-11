@@ -95,16 +95,17 @@ final class DefaultGroupRepository: GroupRepository {
     func fetch(filter: Filter) async throws -> [Group] {
         var groups: [Group] = []
         let snapshot: QuerySnapshot
+        let start = CFAbsoluteTimeGetCurrent()
         if let groupFilter = filter.groupFilter {
             snapshot = try await firestore.collection(FirestorePath.group.rawValue)
                 .whereField("type", isEqualTo: groupFilter.rawValue)
-            /*.whereField()*/
                 .getDocuments()
         } else {
             snapshot = try await firestore.collection(FirestorePath.group.rawValue)
+                .whereField("type", isNotEqualTo: GroupType.mogakco.rawValue) // 모각코는 포함 x
                 .getDocuments()
         }
-        
+        print("Firebase Query 경과시간: ", CFAbsoluteTimeGetCurrent() - start)
         for document in snapshot.documents {
             let group = try document.data(as: GroupResponseDTO.self).toDomain()
             // 필터 카테고리가 비어있으면 필터링 x
@@ -114,6 +115,7 @@ final class DefaultGroupRepository: GroupRepository {
                 groups.append(group)
             }
         }
+        groups = groups.filter { $0.managerID != UserManager.shared.user.id } // 자신이 쓴 글은 제외
         return groups
     }
     

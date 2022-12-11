@@ -55,13 +55,25 @@ extension MogakcoCoordinator {
     }
     
     func startAddMogakcoScene() {
-        let addGroupDIContainer = dependencies.makeAddGroupSceneDIContainer()
-        let flow = addGroupDIContainer.makeAddGroupFlowCoordinator(
-            navigationController: self.navigationController,
-            groupType: .mogakco
-        )
-        flow.start()
-        childCoordinators.append(flow)
+        if let modalViewController = self.navigationController.presentedViewController {
+            modalViewController.dismiss(animated: true) {
+                let addGroupDIContainer = self.dependencies.makeAddGroupSceneDIContainer()
+                let flow = addGroupDIContainer.makeAddGroupFlowCoordinator(
+                    navigationController: self.navigationController,
+                    groupType: .mogakco
+                )
+                flow.start()
+                self.childCoordinators.append(flow)
+            }
+        } else {
+            let addGroupDIContainer = dependencies.makeAddGroupSceneDIContainer()
+            let flow = addGroupDIContainer.makeAddGroupFlowCoordinator(
+                navigationController: self.navigationController,
+                groupType: .mogakco
+            )
+            flow.start()
+            childCoordinators.append(flow)
+        }
     }
     
     func showNotificationViewController() {

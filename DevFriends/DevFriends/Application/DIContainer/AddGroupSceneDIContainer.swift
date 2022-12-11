@@ -70,12 +70,12 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
     }
     
     // MARK: CategoryView
-    func makeCategoryViewController(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewController {
-        return ChooseCategoryViewController(viewModel: makeCategoryViewModel(actions: actions))
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewController {
+        return ChooseCategoryViewController(viewModel: makeCategoryViewModel(actions: actions, initFilter: initFilter))
     }
     
-    func makeCategoryViewModel(actions: ChooseCategoryViewModelActions) -> ChooseCategoryViewModel {
-        return DefaultChooseCategoryViewModel(fetchCategoryUseCase: makeLoadCategoryUseCase(), actions: actions)
+    func makeCategoryViewModel(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewModel {
+        return DefaultChooseCategoryViewModel(fetchCategoryUseCase: makeLoadCategoryUseCase(), actions: actions, initFilter: initFilter)
     }
     
     // MARK: LocationView

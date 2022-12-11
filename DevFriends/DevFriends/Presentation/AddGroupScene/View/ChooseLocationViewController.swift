@@ -63,7 +63,7 @@ final class ChooseLocationViewController: UIViewController {
     }()
     
     private let submitButton: CommonButton = {
-        let button = CommonButton(text: "작성 완료")
+        let button = CommonButton(text: "선택 완료")
         return button
     }()
     

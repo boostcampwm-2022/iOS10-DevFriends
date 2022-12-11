@@ -38,7 +38,7 @@ protocol GroupFilterViewModel: GroupFilterViewModelInput, GroupFilterViewModelOu
 
 final class DefaultGroupFilterViewModel: GroupFilterViewModel {
     var alignType: [AlignType] = [.newest, .closest]
-    var groupType: [GroupType] = [.mogakco, .project, .study]
+    var groupType: [GroupType] = [.project, .study]
     var categoryType: [Category] = []
     var alignFilter: AlignType = .newest
     var groupFilter: GroupType?
