@@ -410,7 +410,7 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
 
 extension MogakcoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSelectNowMogakco()
+        viewModel.didSelectNowMogakco(index: indexPath.row)
     }
 }
 
