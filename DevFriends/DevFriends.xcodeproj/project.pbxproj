@@ -93,6 +93,7 @@
 		E31B3541293B7EC6000386BD /* UITableView+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3540293B7EC6000386BD /* UITableView+RegisterCell.swift */; };
 		E31B3543293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3542293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift */; };
 		E31B3545293CD83E000386BD /* UserInfoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B3544293CD83E000386BD /* UserInfoKey.swift */; };
+		E32C535A2944631500FB58BC /* UpdateUserGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32C53592944631500FB58BC /* UpdateUserGroupUseCase.swift */; };
 		E33A2025292319C700887EC9 /* PostDetailCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A2024292319C700887EC9 /* PostDetailCommentView.swift */; };
 		E33A202829235A3D00887EC9 /* PostAttentionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202729235A3D00887EC9 /* PostAttentionView.swift */; };
 		E33A202C2923D7FC00887EC9 /* PostReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */; };
@@ -333,6 +334,7 @@
 		E31B3540293B7EC6000386BD /* UITableView+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+RegisterCell.swift"; sourceTree = "<group>"; };
 		E31B3542293B9DD7000386BD /* UICollectionVIew+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionVIew+RegisterCell.swift"; sourceTree = "<group>"; };
 		E31B3544293CD83E000386BD /* UserInfoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoKey.swift; sourceTree = "<group>"; };
+		E32C53592944631500FB58BC /* UpdateUserGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserGroupUseCase.swift; sourceTree = "<group>"; };
 		E33A2024292319C700887EC9 /* PostDetailCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailCommentView.swift; sourceTree = "<group>"; };
 		E33A202729235A3D00887EC9 /* PostAttentionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttentionView.swift; sourceTree = "<group>"; };
 		E33A202B2923D7FC00887EC9 /* PostReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportViewController.swift; sourceTree = "<group>"; };
@@ -840,6 +842,7 @@
 				058520FA293516DC00D3CC4F /* UpdateLikeUseCase.swift */,
 				A63C96F7293B8F9800517516 /* SortGroupUseCase.swift */,
 				0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */,
+				E32C53592944631500FB58BC /* UpdateUserGroupUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1523,6 +1526,7 @@
 				E3752EBB292F5467003C8E17 /* NotificationRepository.swift in Sources */,
 				E33A20D42926665E00887EC9 /* UITextField+Combine.swift in Sources */,
 				FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */,
+				E32C535A2944631500FB58BC /* UpdateUserGroupUseCase.swift in Sources */,
 				E33A20EA2927BB1000887EC9 /* User.swift in Sources */,
 				E3752EB6292F5449003C8E17 /* UpdateNotificationIsAcceptedToTrueUseCase.swift in Sources */,
 				A648BB23292E1C060018A654 /* ChatContentViewModel.swift in Sources */,

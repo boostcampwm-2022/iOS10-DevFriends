@@ -14,19 +14,18 @@ protocol ChatMessagesStorage {
 
 struct DefaultChatMessagesStorage: ChatMessagesStorage, ContainsRealm {
     func fetch(groupID: String) -> [Message] {
-        let messages = realm?
+        let messages = realm
             .objects(MessageResponseEntity.self)
             .filter("groupID == '\(groupID)'")
             .sorted(byKeyPath: "time")
-        guard let messages = messages else { return [] }
         return messages.map{ $0.toDomain() }
     }
     
     func save(groupID: String, messages: [Message]) {
         do {
-            try realm?.write {
+            try realm.write {
                 for message in messages {
-                    realm?.add(toMessageResponseEntity(groupID: groupID, message: message), update: .modified)
+                    realm.add(toMessageResponseEntity(groupID: groupID, message: message), update: .modified)
                 }
             }
         } catch {

@@ -80,6 +80,11 @@ class ChatContentViewController: UIViewController {
         self.bind()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.viewWillDisappear()
+    }
+    
     private func layout() {
         self.view.addSubview(messageTextField)
         self.messageTextField.snp.makeConstraints { make in
