@@ -205,6 +205,7 @@
 		FCD8AEFA291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */; };
 		FCD8AF07291CD10300CCE5D3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */; };
 		FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */; };
+		FCE345D72945A42C000E6954 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE345D62945A42C000E6954 /* ImageCacheManager.swift */; };
 		FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */; };
 		FCED2BF9293B7A1D00A9D72A /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCED2BF8293B7A1D00A9D72A /* UIViewController+Keyboard.swift */; };
 /* End PBXBuildFile section */
@@ -453,6 +454,7 @@
 		FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFriendsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FCE345D62945A42C000E6954 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
 		FCE46BA92928C97100383F6F /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
 		FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
@@ -1107,6 +1109,7 @@
 				E3B53BFC2936E662006675E0 /* UserManager.swift */,
 				E31B3544293CD83E000386BD /* UserInfoKey.swift */,
 				FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */,
+				FCE345D62945A42C000E6954 /* ImageCacheManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1496,6 +1499,7 @@
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
 				E3B53BFD2936E662006675E0 /* UserManager.swift in Sources */,
 				FC5D01A7292F54EE00292D33 /* MyPageViewModel.swift in Sources */,
+				FCE345D72945A42C000E6954 /* ImageCacheManager.swift in Sources */,
 				E3752ECC292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				05D9256829338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift in Sources */,
 				052BF68F29385C920037C976 /* UploadProfileImageUseCase.swift in Sources */,
