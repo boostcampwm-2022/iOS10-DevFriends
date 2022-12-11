@@ -11,6 +11,7 @@ import Foundation
 struct SignUpViewModelActions {
     let showTabBarController: () -> Void
     let moveBackToPrevViewController: () -> Void
+    let showCategoryView: ([Category]?) -> Void
 }
 
 protocol SignUpViewModelInput {
@@ -19,6 +20,8 @@ protocol SignUpViewModelInput {
     func didChangedTextInEmailTextField(text: String?)
     func didChangedTextInNicknameTextField(text: String?)
     func didTouchedBackButton()
+    func didCategorySelect()
+    func updateCategory(categories: [Category])
 }
 
 protocol SignUpViewModelOutput {
@@ -26,6 +29,7 @@ protocol SignUpViewModelOutput {
     var name: String? { get }
     var isProcessEnabled: PassthroughSubject<Bool, Never> { get }
     var isEmailValidated: PassthroughSubject<Bool, Never> { get }
+    var didUpdateCategorySubject: PassthroughSubject<[Category], Never> { get }
 }
 
 protocol SignUpViewModel: SignUpViewModelInput, SignUpViewModelOutput {}
@@ -36,6 +40,7 @@ final class DefaultSignUpViewModel: SignUpViewModel {
     private let actions: SignUpViewModelActions
     private let createUserUseCase: CreateUserUseCase
     
+    var categorySelection: [Category]?
     private let uid: String
     let email: String?
     let name: String?
@@ -43,6 +48,7 @@ final class DefaultSignUpViewModel: SignUpViewModel {
     let isProcessEnabled = PassthroughSubject<Bool, Never>()
     let isEmailValidated = PassthroughSubject<Bool, Never>()
     let isNicknameValidated = PassthroughSubject<Bool, Never>()
+    var didUpdateCategorySubject = PassthroughSubject<[Category], Never>()
     
     init(actions: SignUpViewModelActions, createUserUseCase: CreateUserUseCase, uid: String, email: String? = nil, name: String? = nil) {
         self.actions = actions
@@ -69,7 +75,8 @@ extension DefaultSignUpViewModel {
             uid: self.uid,
             nickname: nickname,
             job: job ?? "",
-            email: email
+            email: email,
+            categories: self.categorySelection
         ) { error in
             if let error = error {
                 print(error)
@@ -97,6 +104,15 @@ extension DefaultSignUpViewModel {
     
     func didTouchedBackButton() {
         actions.moveBackToPrevViewController()
+    }
+    
+    func didCategorySelect() {
+        actions.showCategoryView(self.categorySelection)
+    }
+    
+    func updateCategory(categories: [Category]) {
+        self.categorySelection = categories
+        didUpdateCategorySubject.send(categories)
     }
 }
 
