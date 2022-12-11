@@ -20,7 +20,7 @@ final class DefaultUpdateGroupParticipantIDsToAddUseCase: UpdateGroupParticipant
     
     func execute(groupID: String, senderID: String) async throws {
         // 1. group 정보를 가져온다.
-        var group = try await groupRepository.fetch(groupID: groupID)
+        guard var group = try await groupRepository.fetch(groupID: groupID) else { return }
         
         // 2. group에 participantIDs에 senderID를 추가하고 업데이트한다.
         var tempParticipantIDs = group.participantIDs

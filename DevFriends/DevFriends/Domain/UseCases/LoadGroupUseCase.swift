@@ -11,7 +11,7 @@ protocol LoadGroupUseCase {
     func execute(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group]
     func execute(filter: Filter) async throws -> [Group]
     func execute(ids: [String]) async throws -> [Group]
-    func execute(id: String) async throws -> Group
+    func execute(id: String) async throws -> Group?
 }
 
 final class DefaultLoadGroupUseCase: LoadGroupUseCase {
@@ -21,7 +21,7 @@ final class DefaultLoadGroupUseCase: LoadGroupUseCase {
         self.groupRepository = groupRepository
     }
     
-    func execute(id: String) async throws -> Group {
+    func execute(id: String) async throws -> Group? {
         return try await groupRepository.fetch(groupID: id)
     }
     

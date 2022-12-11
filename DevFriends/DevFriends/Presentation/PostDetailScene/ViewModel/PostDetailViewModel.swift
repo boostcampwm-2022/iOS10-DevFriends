@@ -215,7 +215,7 @@ extension DefaultPostDetailViewModel {
                 self.group = loadedGroup
             }
             guard let user = await loadUser(id: group.managerID) else { return }
-            let image = await loadProfile(path: user.id)
+            let image = user.profileImagePath.isEmpty ? nil : await loadProfile(path: user.id)
             postWriterInfoSubject.value = .init(name: user.nickname, job: user.job, image: image)
             
             let categories = await loadCategories()
@@ -242,15 +242,15 @@ extension DefaultPostDetailViewModel {
                 guard let user = await loadUser(id: comment.userID) else {
                     commentsSubject.value.append(CommentInfo(
                         id: UUID().uuidString,
-                        writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
+                        writerInfo: .init(name: "존재하지 않는 사용자입니다", job: "", image: nil),
                         contents: comment.content
                     ))
                     continue
                 }
-                let profile = await loadProfile(path: user.id)
+                let image = user.profileImagePath.isEmpty ? nil : await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
                     id: comment.id ?? UUID().uuidString,
-                    writerInfo: .init(name: user.nickname, job: user.job, image: profile),
+                    writerInfo: .init(name: user.nickname, job: user.job, image: image),
                     contents: comment.content
                 ))
             }
@@ -295,10 +295,10 @@ extension DefaultPostDetailViewModel {
                     ))
                     continue
                 }
-                let profile = await loadProfile(path: user.id)
+                let image = user.profileImagePath.isEmpty ? nil : await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
                     id: comment.id ?? UUID().uuidString,
-                    writerInfo: .init(name: user.nickname, job: user.job, image: profile),
+                    writerInfo: .init(name: user.nickname, job: user.job, image: image),
                     contents: comment.content
                 ))
             }
