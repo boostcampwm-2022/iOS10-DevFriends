@@ -54,7 +54,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                 ) { group, userGroup, messages in
                     var acceptedGroup: AcceptedGroup
                     let localAcceptedGroups = self.groupStorage.fetch()
-                    // message is empty && 원래 렘에 저장되어 있던 그룹이면
+                    // (message is empty && 원래 렘에 저장되어 있던 그룹)이면 업데이트할 필요 없음
                     if messages.isEmpty && localAcceptedGroups.contains(where: { acceptedGroup in
                         return acceptedGroup.group.id == group.id
                     }) {
