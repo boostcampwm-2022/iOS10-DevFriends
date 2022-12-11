@@ -15,17 +15,15 @@ struct MogakcoViewModelActions {
 }
 
 protocol MogakcoViewModelInput {
-    func fetchAllMogakco()
     func fetchMogakco(location: Location, distance: Double)
     func nowMogakco(index: Int)
-    func nowMogakcoWithAllList(index: Int, distance: Double)
+    func nowMogakco(location: Location, distance: Double)
     func didSelectNowMogakco()
     func didSelectAddMogakco()
     func didSelectNotifications()
 }
 
 protocol MogakcoViewModelOutput {
-    var allMogakcosSubject: PassthroughSubject<[Group], Never> { get }
     var mogakcosSubject: PassthroughSubject<[Group], Never> { get }
     var nowMogakcoSubject: PassthroughSubject<Group, Never> { get }
 }
@@ -37,10 +35,9 @@ final class MogakcoViewModel: MogakcoViewModelType {
     var mogakcosSubject = PassthroughSubject<[Group], Never>()
     var nowMogakcoSubject = PassthroughSubject<Group, Never>()
     
-    private var allMogakcoList: [Group] = []
     private var nowMogakcoList: [Group] = []
     private var nowMogakco: Group?
-    private var nowMogackoIndex: Int = -1
+    private var nowMogakcoIndex: Int = -1
     
     private let fetchGroupUseCase: LoadGroupUseCase
     private let actions: MogakcoViewModelActions
@@ -48,15 +45,6 @@ final class MogakcoViewModel: MogakcoViewModelType {
     init(fetchGroupUseCase: LoadGroupUseCase, actions: MogakcoViewModelActions) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.actions = actions
-    }
-    
-    func fetchAllMogakco() {
-        Task {
-            let groups = try await fetchGroupUseCase
-                .execute(groupType: .mogakco, location: nil, distance: nil)
-            allMogakcoList = groups
-            allMogakcosSubject.send(groups)
-        }
     }
     
     func fetchMogakco(location: Location, distance: Double) {
@@ -69,23 +57,35 @@ final class MogakcoViewModel: MogakcoViewModelType {
     }
     
     func nowMogakco(index: Int) {
-        if index != nowMogackoIndex && index < nowMogakcoList.count {
-            nowMogackoIndex = index
+        if index != nowMogakcoIndex && index < nowMogakcoList.count {
+            nowMogakcoIndex = index
             nowMogakco = nowMogakcoList[index]
             nowMogakcoSubject.send(nowMogakcoList[index])
         }
     }
     
-    func nowMogakcoWithAllList(index: Int, distance: Double) {
-        if index < allMogakcoList.count {
-            nowMogakco = allMogakcoList[index]
-            nowMogakcoSubject.send(allMogakcoList[index])
-            fetchMogakco(location: allMogakcoList[index].location, distance: distance)
+    func nowMogakco(location: Location, distance: Double) {
+        if let index = nowMogakcoList.firstIndex(where: { $0.location == location }) {
+            nowMogakcoList.swapAt(index, 0)
+            nowMogakcoIndex = 0
+            nowMogakco = nowMogakcoList[0]
+            nowMogakcoSubject.send(nowMogakcoList[0])
+            mogakcosSubject.send(nowMogakcoList)
+        } else {
+            fetchMogakco(location: location, distance: distance)
         }
     }
     
-    func didSelectViewModeButton() {
-        actions.showMogakcoModal(allMogakcoList)
+    func didSelectViewModeButton(location: Location, distance: Double) {
+        Task {
+            let groups = try await fetchGroupUseCase
+                .execute(groupType: .mogakco, location: location, distance: distance)
+            nowMogakcoList = groups
+            mogakcosSubject.send(groups)
+            await MainActor.run {
+                actions.showMogakcoModal(nowMogakcoList)
+            }
+        }
     }
     
     func didSelectNowMogakco() {

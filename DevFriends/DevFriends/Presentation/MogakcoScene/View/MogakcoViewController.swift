@@ -117,13 +117,13 @@ final class MogakcoViewController: UIViewController {
     private var nowCollectionViewCellIndex = 0
     
     private var isFirstLoadingMap = true
+    private var hasSelectedPin: Bool?
         
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
         return locationManager
     }()
     
@@ -133,7 +133,6 @@ final class MogakcoViewController: UIViewController {
     
     init(viewModel: MogakcoViewModel) {
         self.viewModel = viewModel
-        viewModel.fetchAllMogakco()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -213,7 +212,11 @@ final class MogakcoViewController: UIViewController {
         viewModeButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.deselectAllAnnotations()
-                self?.viewModel.didSelectViewModeButton()
+                let location = self?.mogakcoMapView.centerCoordinate
+                if let location = location, let distance = self?.mapViewDistance() {
+                    self?.viewModel.didSelectViewModeButton(location: Location(latitude: location.latitude, longitude: location.longitude), distance: distance)
+                    self?.hasSelectedPin = true
+                }
             }
             .store(in: &cancellables)
         
@@ -280,8 +283,14 @@ final class MogakcoViewController: UIViewController {
             
             // SH: 기존 scrollViewWillEndDragging에서 하던 작업 아래 클로저에서 하면 됩니다
             section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
-                let itemIndex = Int(max(0, round(contentOffset.x / environment.container.contentSize.width)))
-                self?.viewModel.nowMogakco(index: itemIndex)
+                let itemIndex = Int(max(0, round(contentOffset.x / (environment.container.contentSize.width-20))))
+                if let hasSelectedPin = self?.hasSelectedPin {
+                    if !hasSelectedPin {
+                        self?.viewModel.nowMogakco(index: itemIndex)
+                    } else {
+                        self?.hasSelectedPin = false
+                    }
+                }
             }
             
             return section
@@ -311,10 +320,16 @@ final class MogakcoViewController: UIViewController {
     }
     
     private func populateSnapshot(data: [Group]) {
-        mogakcoCollectionViewSnapShot.deleteAllItems()
-        mogakcoCollectionViewSnapShot.appendSections([.main])
-        mogakcoCollectionViewSnapShot.appendItems(data)
-        mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
+        if !data.isEmpty {
+            showMogakcoCollectionView()
+            mogakcoCollectionViewSnapShot.deleteAllItems()
+            mogakcoCollectionViewSnapShot.appendSections([.main])
+            mogakcoCollectionViewSnapShot.appendItems(data)
+            mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
+            mogakcoCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
+        } else {
+            hideMogakcoCollectionView()
+        }
     }
     
     func showMogakcoCollectionView() {
@@ -347,8 +362,9 @@ final class MogakcoViewController: UIViewController {
         mogakcoMapView.removeAnnotations(mogakcoMapView.annotations)
     }
     
-    func setNowMogakcoWithAllList(index: Int) {
-        viewModel.nowMogakcoWithAllList(index: index, distance: mapViewDistance())
+    func setNowMogakcoWithAllList(location: Location) {
+        viewModel.nowMogakco(location: location, distance: mapViewDistance())
+        moveLocation(latitudeValue: location.latitude, longtudeValue: location.longitude, delta: 0.01)
     }
 }
 
@@ -376,7 +392,8 @@ extension MogakcoViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             moveLocation(latitudeValue: latitude, longtudeValue: longitude, delta: 0.01)
             showMogakcoCollectionView()
             let location = Location(latitude: latitude, longitude: longitude)
-            viewModel.fetchMogakco(location: location, distance: mapViewDistance())
+            viewModel.nowMogakco(location: location, distance: mapViewDistance())
+            hasSelectedPin = true
         }
     }
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {

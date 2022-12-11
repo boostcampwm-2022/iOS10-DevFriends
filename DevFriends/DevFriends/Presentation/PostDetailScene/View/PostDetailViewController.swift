@@ -65,18 +65,12 @@ final class PostDetailViewController: UIViewController {
         button.backgroundColor = .orange
         return button
     }()
-    private let postDetailInfoView: PostDetailInfoView = {
-        let postDetailInfoView = PostDetailInfoView()
-        return postDetailInfoView
-    }()
-    private let postRequestButton: CommonButton = {
-        let commonButton = CommonButton(text: "모임 신청")
-        return commonButton
-    }()
-    private let postAttentionView: PostAttentionView = {
-        let postAttentionView = PostAttentionView()
-        return postAttentionView
-    }()
+    
+    private let postDetailInfoView = PostDetailInfoView()
+    
+    private let postRequestButton = CommonButton(text: "모임 신청")
+    
+    private let postAttentionView = PostAttentionView()
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -121,7 +115,7 @@ final class PostDetailViewController: UIViewController {
     private func layout() {
         view.addSubview(commentTableView)
         commentTableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.right.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
         }
@@ -242,38 +236,43 @@ final class PostDetailViewController: UIViewController {
     
     private func createHeaderView() -> UIView {
         let contentsView = UIView()
+        var padding = 15
         
-        let contentsStackView = UIStackView()
-        contentsStackView.axis = .vertical
-        contentsStackView.spacing = 0
-        
-        contentsView.addSubview(contentsStackView)
-        contentsStackView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview().inset(12)
-            make.top.equalToSuperview().offset(20)
+        contentsView.addSubview(postDetailInfoView)
+        postDetailInfoView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(padding)
+            make.trailing.equalToSuperview().offset(-padding)
         }
         
-        contentsStackView.addArrangedSubview(postDetailInfoView)
-        
-        contentsStackView.addArrangedSubview(postRequestButton)
-        contentsStackView.setCustomSpacing(20, after: postDetailInfoView)
+        contentsView.addSubview(postRequestButton)
         postRequestButton.snp.makeConstraints { make in
-            make.height.equalTo(58)
+            make.top.equalTo(postDetailInfoView.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(postDetailInfoView)
         }
         
         let divider1 = DividerView()
-        contentsStackView.addArrangedSubview(divider1)
-        contentsStackView.setCustomSpacing(18, after: postRequestButton)
+        contentsView.addSubview(divider1)
+        divider1.snp.makeConstraints { make in
+            make.top.equalTo(postRequestButton.snp.bottom).offset(padding)
+            make.leading.trailing.equalTo(postDetailInfoView)
+        }
         
-        contentsStackView.addArrangedSubview(postAttentionView)
-        contentsStackView.setCustomSpacing(5, after: divider1)
+        contentsView.addSubview(postAttentionView)
         postAttentionView.snp.makeConstraints { make in
-            make.height.equalTo(40)
+            make.top.equalTo(divider1.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(postDetailInfoView)
+            make.height.equalTo(20)
         }
         
         let divider2 = DividerView()
-        contentsStackView.addArrangedSubview(divider2)
-        contentsStackView.setCustomSpacing(5, after: postAttentionView)
+        contentsView.addSubview(divider2)
+        
+        divider2.snp.makeConstraints { make in
+            make.top.equalTo(postAttentionView.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(postDetailInfoView)
+            make.bottom.equalToSuperview().offset(-padding)
+        }
         
         return contentsView
     }
@@ -288,6 +287,9 @@ final class PostDetailViewController: UIViewController {
             self.postRequestButton.isHidden = false
         case .joined, .manager:
             self.postRequestButton.isHidden = true
+            self.postRequestButton.snp.makeConstraints { make in
+                make.height.equalTo(0)
+            }
         case .closed:
             self.postRequestButton.set(title: "마감된 모임입니다", state: .disabled)
             self.postRequestButton.isHidden = false
@@ -347,8 +349,7 @@ extension PostDetailViewController {
 
 extension PostDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = createHeaderView()
-        return headerView
+        return createHeaderView()
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

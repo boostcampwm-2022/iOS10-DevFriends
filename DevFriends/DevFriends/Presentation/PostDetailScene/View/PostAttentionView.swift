@@ -73,29 +73,13 @@ final class PostAttentionView: UIView {
     
     private func layout() {
         addSubview(mainStackView)
+        mainStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         mainStackView.addArrangedSubview(likeButton)
         mainStackView.addArrangedSubview(commentsButton)
         mainStackView.addArrangedSubview(participantsButton)
         mainStackView.addArrangedSubview(emptyView)
-        
-        likeButton.snp.makeConstraints { make in
-            make.height.equalTo(40)
-        }
-        commentsButton.snp.makeConstraints { make in
-            make.height.equalTo(40)
-        }
-        participantsButton.snp.makeConstraints { make in
-            make.height.equalTo(40)
-        }
-        
-        mainStackView.snp.makeConstraints { make in
-            make.height.equalTo(40)
-        }
-        
-        snp.makeConstraints { make in
-            make.edges.equalTo(mainStackView)
-            make.size.equalTo(mainStackView)
-        }
     }
     
     private func style() {
