@@ -178,6 +178,7 @@
 		FC3C359B2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */; };
 		FC3C359D29361BA500C5BFE3 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C359C29361BA500C5BFE3 /* DateTableViewCell.swift */; };
 		FC5C5939293F17F7000C3CE0 /* SettingBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C5938293F17F7000C3CE0 /* SettingBarButtonItem.swift */; };
+		FC5CC9E729445694007A2A52 /* CategoryCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */; };
 		FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */; };
 		FC5D0193292F4E6200292D33 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D0192292F4E6200292D33 /* TabBarCoordinator.swift */; };
 		FC5D0195292F512300292D33 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D0194292F512300292D33 /* UIColor+Custom.swift */; };
@@ -205,6 +206,7 @@
 		FCD8AEFA291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */; };
 		FCD8AF07291CD10300CCE5D3 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */; };
 		FCD8AF0A291CDD1A00CCE5D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */; };
+		FCE345D72945A42C000E6954 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE345D62945A42C000E6954 /* ImageCacheManager.swift */; };
 		FCE46BA82928B11700383F6F /* DefaultGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */; };
 		FCED2BF9293B7A1D00A9D72A /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCED2BF8293B7A1D00A9D72A /* UIViewController+Keyboard.swift */; };
 /* End PBXBuildFile section */
@@ -421,6 +423,7 @@
 		FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseEntity+Mapping.swift"; sourceTree = "<group>"; };
 		FC3C359C29361BA500C5BFE3 /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		FC5C5938293F17F7000C3CE0 /* SettingBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBarButtonItem.swift; sourceTree = "<group>"; };
+		FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCacheManager.swift; sourceTree = "<group>"; };
 		FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarSceneDIContainer.swift; sourceTree = "<group>"; };
 		FC5D0192292F4E6200292D33 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		FC5D0194292F512300292D33 /* UIColor+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
@@ -453,6 +456,7 @@
 		FCD8AEF9291CCE9600CCE5D3 /* DevFriendsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFriendsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FCD8AF06291CD10300CCE5D3 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		FCD8AF09291CDD1A00CCE5D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FCE345D62945A42C000E6954 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		FCE46BA72928B11700383F6F /* DefaultGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGroupRepository.swift; sourceTree = "<group>"; };
 		FCE46BA92928C97100383F6F /* GroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRepository.swift; sourceTree = "<group>"; };
 		FCE46BAB2928C9B700383F6F /* FetchGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGroupUseCase.swift; sourceTree = "<group>"; };
@@ -1107,6 +1111,8 @@
 				FC79AEBC292223DF0077AE5C /* Repositories */,
 				E3B53BFC2936E662006675E0 /* UserManager.swift */,
 				E31B3544293CD83E000386BD /* UserInfoKey.swift */,
+				FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */,
+				FCE345D62945A42C000E6954 /* ImageCacheManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1486,6 +1492,7 @@
 				A63C96F22937A31300517516 /* DefaultChatRepository.swift in Sources */,
 				E31B353B293B7468000386BD /* Array+SafeIndex.swift in Sources */,
 				E33A20882926622000887EC9 /* ContainsTime.swift in Sources */,
+				FC5CC9E729445694007A2A52 /* CategoryCacheManager.swift in Sources */,
 				A648BB4E293399D10018A654 /* ChooseCategoryViewController.swift in Sources */,
 				FC5D01A5292F54EE00292D33 /* MyGroupsType.swift in Sources */,
 				A66C7BC0292E19830008B6FD /* ChatMessagesRepository.swift in Sources */,
@@ -1495,6 +1502,7 @@
 				A648BB27292E20260018A654 /* GroupCellInfo.swift in Sources */,
 				E3B53BFD2936E662006675E0 /* UserManager.swift in Sources */,
 				FC5D01A7292F54EE00292D33 /* MyPageViewModel.swift in Sources */,
+				FCE345D72945A42C000E6954 /* ImageCacheManager.swift in Sources */,
 				E3752ECC292F5DF6003C8E17 /* NotificationResponseDTO+Mapping.swift in Sources */,
 				05D9256829338AF50090A6B1 /* SendGroupApplyNotificationUseCase.swift in Sources */,
 				052BF68F29385C920037C976 /* UploadProfileImageUseCase.swift in Sources */,

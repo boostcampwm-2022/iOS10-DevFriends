@@ -59,20 +59,23 @@ final class PostWriterInfoView: UIView {
     init() {
         super.init(frame: .zero)
         
-        self.style(imageViewRadius: 35, nameTextSize: 25, jobTextSize: 14)
-        self.layout()
+        self.style(imageViewRadius: 30, nameTextSize: 25, jobTextSize: 14)
+        self.layout(imageViewRadius: 30)
     }
     
     init(imageViewRadius: Double, nameTextSize: Double, jobTextSize: Double) {
         super.init(frame: .zero)
         
         self.style(imageViewRadius: imageViewRadius, nameTextSize: nameTextSize, jobTextSize: jobTextSize)
-        self.layout()
+        self.layout(imageViewRadius: imageViewRadius)
     }
     
-    private func layout() {
+    private func layout(imageViewRadius: Double) {
         self.addSubview(mainStackView)
         self.mainStackView.addArrangedSubview(writerProfileImageView)
+        writerProfileImageView.snp.makeConstraints { make in
+            make.size.equalTo(imageViewRadius * 2)
+        }
         
         self.mainStackView.addArrangedSubview(subStackView)
         self.subStackView.addArrangedSubview(writerNameLabel)
@@ -93,14 +96,7 @@ final class PostWriterInfoView: UIView {
     
     private func style(imageViewRadius: Double, nameTextSize: Double, jobTextSize: Double) {
         self.backgroundColor = .devFriendsReverseBase
-        
-        self.writerProfileImageView.frame = CGRect(
-            x: 0.0,
-            y: 0.0,
-            width: 2 * imageViewRadius,
-            height: 2 * imageViewRadius
-        )
-        self.writerProfileImageView.layer.cornerRadius = writerProfileImageView.frame.size.width / 2
+        self.writerProfileImageView.layer.cornerRadius = imageViewRadius
         self.writerNameLabel.font = .boldSystemFont(ofSize: nameTextSize)
         self.writerJobLabel.font = .systemFont(ofSize: jobTextSize)
     }
@@ -108,11 +104,6 @@ final class PostWriterInfoView: UIView {
     func set(info: PostWriterInfo) {
         self.writerNameLabel.text = info.name
         self.writerJobLabel.text = info.job
-        
-        self.writerNameLabel.sizeToFit()
-        self.writerJobLabel.sizeToFit()
-        
-        let image = (info.image ?? .defaultProfileImage)?.resize(newWidth: writerProfileImageView.frame.width)
-        self.writerProfileImageView.image = image
+        self.writerProfileImageView.image = info.image ?? .defaultProfileImage
     }
 }
