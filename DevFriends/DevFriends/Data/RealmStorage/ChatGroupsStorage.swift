@@ -35,9 +35,9 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
     }
     
     /// 특정 Group의 newMessageCount를 업데이트한다
-    func update(groupID: String, newMessageCount: Int) {
+    func update(groupID: String, newMessageCount: Int) throws {
         if let group = realm.object(ofType: AcceptedGroupResponseEntity.self, forPrimaryKey: groupID) {
-            try! realm.write {
+            try realm.write {
                 group.lastMessageCount = newMessageCount
             }
         }

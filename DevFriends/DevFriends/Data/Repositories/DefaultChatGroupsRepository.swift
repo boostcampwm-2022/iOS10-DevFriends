@@ -53,8 +53,12 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                     lastMessageTime: lastMessageTime
                 ) { group, userGroup, messages in
                     var acceptedGroup: AcceptedGroup
-                    if messages.isEmpty {
-                        acceptedGroup = AcceptedGroup(group: group, time: userGroup.time, lastMessageContent: "", newMessageCount: 0)
+                    let localAcceptedGroups = self.groupStorage.fetch()
+                    // message is empty && 원래 렘에 저장되어 있던 그룹이면
+                    if messages.isEmpty && localAcceptedGroups.contains(where: { acceptedGroup in
+                        return acceptedGroup.group.id == group.id
+                    }) {
+                        return
                     } else {
                         acceptedGroup = AcceptedGroup(
                             group: group,
@@ -96,6 +100,7 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
             .collection(FirestorePath.user.rawValue)
             .document(uid)
             .collection(FirestorePath.group.rawValue)
+            .order(by: "time", descending: true)
         
         query.addSnapshotListener { snapshot, _ in
             snapshot?.documents

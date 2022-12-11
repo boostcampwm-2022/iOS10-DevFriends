@@ -120,6 +120,10 @@ extension DefaultChatContentViewModel {
     
     func viewWillDisappear() {
         // TODO: 관심사 분리 꼭 하기(임시방편)
-        DefaultChatGroupsStorage().update(groupID: group.id, newMessageCount: 0)
+        do {
+            try DefaultChatGroupsStorage().update(groupID: group.id, newMessageCount: 0)
+        } catch {
+            print(error)
+        }
     }
 }
