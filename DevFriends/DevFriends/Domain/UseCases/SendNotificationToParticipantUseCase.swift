@@ -24,7 +24,8 @@ final class DefaultSendNotificationToParticipantUseCase: SendNotificationToParti
             let notification = Notification(
                 groupID: groupID,
                 groupTitle: groupTitle,
-                type: NotificationType.joinSuccess
+                type: NotificationType.joinSuccess,
+                time: Date()
             )
             
             notificationRepository.create(to: senderID, notification: notification)
