@@ -320,12 +320,15 @@ final class MogakcoViewController: UIViewController {
     }
     
     private func populateSnapshot(data: [Group]) {
-        mogakcoCollectionViewSnapShot.deleteAllItems()
-        mogakcoCollectionViewSnapShot.appendSections([.main])
-        mogakcoCollectionViewSnapShot.appendItems(data)
-        mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
         if !data.isEmpty {
+            showMogakcoCollectionView()
+            mogakcoCollectionViewSnapShot.deleteAllItems()
+            mogakcoCollectionViewSnapShot.appendSections([.main])
+            mogakcoCollectionViewSnapShot.appendItems(data)
+            mogakcoCollectionViewDiffableDataSource.apply(mogakcoCollectionViewSnapShot)
             mogakcoCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
+        } else {
+            hideMogakcoCollectionView()
         }
     }
     
