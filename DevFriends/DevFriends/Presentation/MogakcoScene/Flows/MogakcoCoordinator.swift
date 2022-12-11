@@ -85,12 +85,12 @@ extension MogakcoCoordinator {
         navigationController.present(modalViewController, animated: true, completion: nil)
     }
     
-    func selectMogakco(index: Int) {
+    func selectMogakco(location: Location) {
         guard let mogakcoViewController = navigationController.viewControllers.last as? MogakcoViewController else {
             return
         }
         mogakcoViewController.showMogakcoCollectionView()
-        mogakcoViewController.setNowMogakcoWithAllList(index: index)
+        mogakcoViewController.setNowMogakcoWithAllList(location: location)
         mogakcoViewController.presentedViewController?.dismiss(animated: true)
     }
     
