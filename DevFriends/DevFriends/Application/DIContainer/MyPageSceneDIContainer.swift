@@ -103,9 +103,17 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
     }
     
+    func makeWithdrawUseCase() -> WithdrawUseCase {
+        return DefaultWithdrawUseCase(userRepository: makeUserRepository(), groupRepository: makeGroupRepository())
+    }
+    
     // MARK: MyPageViwe
     func makeMyPageViewModel(actions: MyPageViewModelActions) -> MyPageViewModel {
-        return DefaultMyPageViewModel(actions: actions, loadCategoryUseCase: makeLoadCategoryUseCase())
+        return DefaultMyPageViewModel(
+            actions: actions,
+            loadCategoryUseCase: makeLoadCategoryUseCase(),
+            withdrawUseCase: makeWithdrawUseCase()
+        )
     }
     
     func makeMyPageViewController(actions: MyPageViewModelActions) -> MyPageViewController {
@@ -142,6 +150,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultPostDetailViewModel(
             actions: actions,
             group: group,
+            fetchGroupUseCase: makeLoadGroupUseCase(),
             fetchUserUseCase: makeLoadUserUseCase(),
             fetchCategoryUseCase: makeLoadCategoryUseCase(),
             fetchCommentsUseCase: makeLoadCommentsUseCase(),

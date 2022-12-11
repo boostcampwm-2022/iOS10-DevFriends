@@ -21,18 +21,17 @@ final class DefaultGroupRepository: GroupRepository {
         }
     }
     
-    func fetch(groupID: String) async throws -> Group {
-        let group = try await firestore
-            .collection(FirestorePath.group.rawValue)
-            .document(groupID)
-            .getDocument()
-            .data(as: GroupResponseDTO.self)
-        
-        return group.toDomain()
+    func fetch(groupID: String) async throws -> Group? {
+        do {
+            let snapshot = try await firestore.collection(FirestorePath.group.rawValue).document(groupID).getDocument()
+            return try snapshot.data(as: GroupResponseDTO.self).toDomain()
+        } catch {
+            return nil
+        }
     }
     
     func fetch(groupIDs: [String]) async throws -> [Group] {
-        return try await withThrowingTaskGroup(of: Group.self) { taskGroup in
+        return try await withThrowingTaskGroup(of: Group?.self) { taskGroup in
             groupIDs.forEach { id in
                 if id.isEmpty { return }
                 
@@ -41,8 +40,10 @@ final class DefaultGroupRepository: GroupRepository {
                 }
             }
             
-            return try await taskGroup.reduce(into: []) { partialResult, user in
-                partialResult.append(user)
+            return try await taskGroup.reduce(into: []) { partialResult, group in
+                if let group = group {
+                    partialResult.append(group)
+                }
             }
         }
     }
@@ -144,6 +145,38 @@ final class DefaultGroupRepository: GroupRepository {
         firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
             "commentNumber": FieldValue.increment(Int64(1))
         ])
+    }
+    
+    func delete(id: String) async {
+        do {
+            guard let group = try await self.fetch(groupID: id) else { return }
+            let userRepository = DefaultUserRepository()
+            
+            for userID in group.participantIDs {
+                let user = try await userRepository.fetch(uid: userID)
+                userRepository.deleteUserGroup(userID: userID, groupID: id)
+            }
+            
+            try await firestore.collection(FirestorePath.group.rawValue).document(id).delete()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteUser(_ userID: String, from groupID: String) async {
+        do {
+            guard let group = try await self.fetch(groupID: groupID) else { return }
+            
+            if group.managerID == userID {
+                await self.delete(id: groupID)
+            } else {
+                try await firestore.collection(FirestorePath.group.rawValue).document(groupID).updateData([
+                    "participantIDs": group.participantIDs.filter { $0 != userID }
+                ])
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 

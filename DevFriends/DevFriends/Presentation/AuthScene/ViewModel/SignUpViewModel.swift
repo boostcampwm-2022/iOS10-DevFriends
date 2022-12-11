@@ -84,7 +84,9 @@ extension DefaultSignUpViewModel {
             }
             
             UserManager.shared.login(uid: self.uid)
-            self.actions.showTabBarController()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                self.actions.showTabBarController()
+            }
         }
     }
     
