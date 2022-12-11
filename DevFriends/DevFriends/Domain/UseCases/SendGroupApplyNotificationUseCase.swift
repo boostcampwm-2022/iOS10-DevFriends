@@ -27,7 +27,8 @@ final class DefaultSendGroupApplyNotificationUseCase: SendGroupApplyNotification
                 senderID: user.id,
                 senderNickname: user.nickname,
                 type: .joinRequest,
-                isAccepted: false
+                isAccepted: false,
+                time: Date()
             )
         )
     }

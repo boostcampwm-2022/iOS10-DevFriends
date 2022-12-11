@@ -18,12 +18,20 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
         return DefaultUserRepository()
     }
     
+    func makeCategoryRepository() -> CategoryRepository {
+        return DefaultCategoryRepository()
+    }
+    
     private func makeCheckUserUseCase() -> CheckUserUseCase {
         return DefaultCheckUserUseCase(userRepository: makeUserRepository())
     }
     
     private func makeCreateUserUseCase() -> CreateUserUseCase {
         return DefaultCreateUserUseCase(userRepository: makeUserRepository())
+    }
+    
+    func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
+        return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
     }
     
     private func makeLoginViewModel(actions: LoginViewModelActions) -> LoginViewModel {
@@ -40,6 +48,14 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
         )
     }
     
+    private func makeChooseCategoryViewModel(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewModel {
+        return DefaultChooseCategoryViewModel(
+            fetchCategoryUseCase: makeLoadCategoryUseCase(),
+            actions: actions,
+            initFilter: initFilter
+        )
+    }
+    
     func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController {
         return LoginViewController(loginViewModel: makeLoginViewModel(actions: actions))
     }
@@ -51,5 +67,9 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
             email: email,
             name: name
         ))
+    }
+    
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewController {
+        return ChooseCategoryViewController(viewModel: makeChooseCategoryViewModel(actions: actions, initFilter: initFilter))
     }
 }

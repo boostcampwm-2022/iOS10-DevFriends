@@ -30,6 +30,7 @@ extension DefaultNotificationRepository: NotificationRepository {
             .collection(FirestorePath.user.rawValue)
             .document(uid)
             .collection(FirestorePath.notification.rawValue)
+            .order(by: "time", descending: true)
             .getDocuments()
         
         let notifications = try snapshot.documents
@@ -81,7 +82,8 @@ extension DefaultNotificationRepository {
             commentID: notification.commentID,
             comment: notification.comment,
             type: notification.type.rawValue,
-            isAccepted: notification.isAccepted
+            isAccepted: notification.isAccepted,
+            time: notification.time
         )
     }
 }
