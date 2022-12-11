@@ -48,6 +48,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localJoinedGroupIDs: [String]
     private let actions: PostDetailViewModelActions
     private var group: Group
+    private let fetchGroupUseCase: LoadGroupUseCase
     private let fetchUserUseCase: LoadUserUseCase
     private let fetchCategoryUseCase: LoadCategoryUseCase
     private let fetchCommentsUseCase: LoadCommentsUseCase
@@ -89,6 +90,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     init(
         actions: PostDetailViewModelActions,
         group: Group,
+        fetchGroupUseCase: LoadGroupUseCase,
         fetchUserUseCase: LoadUserUseCase,
         fetchCategoryUseCase: LoadCategoryUseCase,
         fetchCommentsUseCase: LoadCommentsUseCase,
@@ -102,6 +104,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     ) {
         self.actions = actions
         self.group = group
+        self.fetchGroupUseCase = fetchGroupUseCase
         self.fetchUserUseCase = fetchUserUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.fetchCommentsUseCase = fetchCommentsUseCase
@@ -143,6 +146,17 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         } else {
             groupApplyButtonStateSubject.value = .available
         }
+    }
+    
+    private func loadGroup() async -> Group? {
+        var resultGroup: Group?
+        do {
+            resultGroup = try await fetchGroupUseCase.execute(id: self.group.id)
+        } catch {
+            print(error)
+        }
+        
+        return resultGroup
     }
     
     private func loadUser(id: String) async -> User? {
@@ -197,6 +211,9 @@ extension DefaultPostDetailViewModel {
     func didLoadGroup() {
         updateHitUseCase.execute(groupID: group.id)
         Task {
+            if let loadedGroup = await loadGroup() {
+                self.group = loadedGroup
+            }
             guard let user = await loadUser(id: group.managerID) else { return }
             let image = await loadProfile(path: user.id)
             postWriterInfoSubject.value = .init(name: user.nickname, job: user.job, image: image)
@@ -209,6 +226,13 @@ extension DefaultPostDetailViewModel {
                 time: group.time.toKoreanString(),
                 likeCount: group.like,
                 hitsCount: group.hit
+            )
+            
+            postAttentionInfoSubject.value = .init(
+                likeOrNot: localUser.likeGroupIDs.contains(group.id),
+                commentsCount: group.commentNumber,
+                maxParticipantCount: group.limitedNumberPeople,
+                currentParticipantCount: group.participantIDs.count
             )
             
             let comments = await loadComments()

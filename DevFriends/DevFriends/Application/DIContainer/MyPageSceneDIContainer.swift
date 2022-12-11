@@ -142,6 +142,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultPostDetailViewModel(
             actions: actions,
             group: group,
+            fetchGroupUseCase: makeLoadGroupUseCase(),
             fetchUserUseCase: makeLoadUserUseCase(),
             fetchCategoryUseCase: makeLoadCategoryUseCase(),
             fetchCommentsUseCase: makeLoadCommentsUseCase(),
