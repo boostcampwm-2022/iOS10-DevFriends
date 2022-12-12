@@ -45,7 +45,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
     
     private let distanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "0m"
+        label.text = ""
         label.font = .systemFont(ofSize: 12, weight: .bold)
         label.textColor = .devFriendsBase
         return label
@@ -131,6 +131,7 @@ final class GroupCollectionViewCell: UICollectionViewCell, ReusableType {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.top).offset(8)
             make.leading.equalTo(imageView.snp.trailing).offset(20)
+            make.trailing.equalToSuperview().offset(-8)
         }
         
         self.contentView.addSubview(tagStackView)

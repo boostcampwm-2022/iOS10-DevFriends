@@ -28,6 +28,7 @@ final class PostDetailContentsView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.font = .boldSystemFont(ofSize: 25)
+        label.numberOfLines = 0
         label.sizeToFit()
         return label
     }()
