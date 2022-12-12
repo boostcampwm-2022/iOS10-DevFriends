@@ -62,18 +62,6 @@ final class GroupFilterViewController: UIViewController {
         self.bind()
     }
     
-    // viewWillAppear, viewDidAppear 뭔 차이일까
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        self.collectionView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.collectionView.reloadData()
-    }
-    
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         let filter = Filter(
@@ -217,7 +205,6 @@ extension GroupFilterViewController: UICollectionViewDelegate {
             break
         }
         guard let cell = collectionView.cellForItem(at: indexPath) as? GroupFilterCollectionViewCell else { return }
-//        cell.isSelected = true
     }
     
     // 셀 선택 해제
@@ -233,7 +220,6 @@ extension GroupFilterViewController: UICollectionViewDelegate {
             break
         }
         guard let cell = collectionView.cellForItem(at: indexPath) as? GroupFilterCollectionViewCell else { return }
-//        cell.isSelected = false
     }
 }
 

@@ -26,37 +26,23 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
             if isSelected {
                 self.contentView.backgroundColor = .systemOrange
                 self.contentView.layer.borderColor = UIColor.systemOrange.cgColor
-                print("isSelected True: ", label.text)
             } else {
                 self.contentView.backgroundColor = .devFriendsCellColor
                 self.contentView.layer.borderColor = UIColor.devFriendsBase.cgColor
-                print("isSelected False: ", label.text)
             }
-        }
-    }
-    
-    func setSelectionUI(_ select: Bool) {
-        if select {
-            self.contentView.backgroundColor = .systemOrange
-            self.contentView.layer.borderColor = UIColor.systemOrange.cgColor
-            print("setSelectionUI True: ", label.text)
-        } else {
-            self.contentView.backgroundColor = .devFriendsCellColor
-            self.contentView.layer.borderColor = UIColor.devFriendsBase.cgColor
-            print("setSelectionUI False: ", label.text)
         }
     }
     
     func configure(_ tag: String) {
         label.text = tag
         label.sizeToFit()
+        configureUI()
     }
     
     // MARK: - Configure UI
     
     override func didMoveToSuperview() {
         layout()
-        configureUI()
     }
     
     func layout() {
