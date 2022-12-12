@@ -17,7 +17,7 @@ struct ChooseLocationViewActions {
 final class ChooseLocationViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "모각코할 장소를 선택해주세요."
+        label.text = "장소를 선택해주세요."
         label.font = UIFont.boldSystemFont(ofSize: 24)
         return label
     }()
