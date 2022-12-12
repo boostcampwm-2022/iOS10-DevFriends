@@ -104,18 +104,8 @@ final class GroupFilterViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
-                self?.setCellSelectionUI()
             }
             .store(in: &cancellables)
-    }
-    
-    private func setCellSelectionUI() {
-        print(viewModel.categoryFilter)
-        let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0))
-        print(cell)
-//        cell?.setSelectionUI(true)
-//        let categories = viewModel.categoryFilter.map { viewModel.categoryType. }
-        
     }
 }
 
