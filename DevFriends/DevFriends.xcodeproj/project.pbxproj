@@ -137,6 +137,7 @@
 		E33A20E82927BADE00887EC9 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E72927BADE00887EC9 /* UserRepository.swift */; };
 		E33A20EA2927BB1000887EC9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E92927BB1000887EC9 /* User.swift */; };
 		E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */; };
+		E361801A2947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36180192947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift */; };
 		E3752EA9292F53BE003C8E17 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA3292F53BE003C8E17 /* NotificationViewModel.swift */; };
 		E3752EAA292F53BE003C8E17 /* NotificationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA5292F53BE003C8E17 /* NotificationTypes.swift */; };
 		E3752EAB292F53BE003C8E17 /* NotificationDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA6292F53BE003C8E17 /* NotificationDiffableDataSource.swift */; };
@@ -381,6 +382,7 @@
 		E33A20E72927BADE00887EC9 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		E33A20E92927BB1000887EC9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
+		E36180192947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAcceptedGroupWithServerUseCase.swift; sourceTree = "<group>"; };
 		E3752EA3292F53BE003C8E17 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		E3752EA5292F53BE003C8E17 /* NotificationTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTypes.swift; sourceTree = "<group>"; };
 		E3752EA6292F53BE003C8E17 /* NotificationDiffableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDiffableDataSource.swift; sourceTree = "<group>"; };
@@ -850,6 +852,7 @@
 				0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */,
 				E32C53592944631500FB58BC /* UpdateUserGroupUseCase.swift */,
 				05CFF1D32946173D0018B154 /* WithdrawUseCase.swift */,
+				E36180192947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1533,6 +1536,7 @@
 				E3752EB8292F5449003C8E17 /* UpdateUserGroupsToAddGroupUseCase.swift in Sources */,
 				A66C7BD7292E1A9B0008B6FD /* GroupListViewController.swift in Sources */,
 				E33A20CE2926665E00887EC9 /* SnapShotSection.swift in Sources */,
+				E361801A2947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift in Sources */,
 				E31B3541293B7EC6000386BD /* UITableView+RegisterCell.swift in Sources */,
 				E3752EAC292F53BE003C8E17 /* NotificationTableViewCell.swift in Sources */,
 				E3752EBB292F5467003C8E17 /* NotificationRepository.swift in Sources */,

@@ -27,6 +27,7 @@ protocol ChatViewModel: ChatViewModelInput, ChatViewModelOutput {}
 
 final class DefaultChatViewModel: ChatViewModel {
     private let loadChatGroupsUseCase: LoadChatGroupsUseCase
+    private let syncAcceptedGroupWithServerUseCase: SyncAcceptedGroupWithServerUseCase
     private let actions: ChatViewModelActions
     
     private var groupID: String?
@@ -35,32 +36,41 @@ final class DefaultChatViewModel: ChatViewModel {
     var groupsSubject = CurrentValueSubject<[AcceptedGroup], Never>([])
     
     // MARK: Init
-    init(loadChatGroupsUseCase: LoadChatGroupsUseCase, actions: ChatViewModelActions) {
+    init(
+        loadChatGroupsUseCase: LoadChatGroupsUseCase,
+        syncAcceptedGroupWithServerUseCase: SyncAcceptedGroupWithServerUseCase,
+        actions: ChatViewModelActions
+    ) {
         self.loadChatGroupsUseCase = loadChatGroupsUseCase
+        self.syncAcceptedGroupWithServerUseCase = syncAcceptedGroupWithServerUseCase
         self.actions = actions
     }
     
     // MARK: Private
     private func loadGroupsWithListener() {
-        let localAcceptedGroups = loadChatGroupsUseCase.executeFromLocal()
-        self.groupsSubject.send(localAcceptedGroups)
-        
-        loadChatGroupsUseCase.execute { group in
-            // SW: 업데이트된 그룹이 중복될 수 있어서 같은 것이 있으면 이전에 있던 걸 지우는 방식으로 진행함
-            var groups = self.groupsSubject.value
-            if let index = groups.firstIndex(where: { acceptedGroup in
-                if acceptedGroup.group.id == group.group.id {
-                    return true
-                }
-                return false
-            }) {
-                groups.remove(at: index)
-                groups.insert(group, at: 0)
-            } else {
-                groups.insert(group, at: 0)
-            }
+        Task {
+            await syncAcceptedGroupWithServerUseCase.execute()
             
-            self.groupsSubject.send(groups)
+            let localAcceptedGroups = loadChatGroupsUseCase.executeFromLocal()
+            self.groupsSubject.send(localAcceptedGroups)
+            
+            loadChatGroupsUseCase.execute { group in
+                // SW: 업데이트된 그룹이 중복될 수 있어서 같은 것이 있으면 이전에 있던 걸 지우는 방식으로 진행함
+                var groups = self.groupsSubject.value
+                if let index = groups.firstIndex(where: { acceptedGroup in
+                    if acceptedGroup.group.id == group.group.id {
+                        return true
+                    }
+                    return false
+                }) {
+                    groups.remove(at: index)
+                    groups.insert(group, at: 0)
+                } else {
+                    groups.insert(group, at: 0)
+                }
+                
+                self.groupsSubject.send(groups)
+            }
         }
     }
     
