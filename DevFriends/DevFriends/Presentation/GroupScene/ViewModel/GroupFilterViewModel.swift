@@ -15,7 +15,6 @@ struct GroupFilterViewModelActions {
 protocol GroupFilterViewModelInput {
     func loadCategories()
     func sendFilter(filter: Filter)
-    func initFilter(filter: Filter)
     func setAlignFilter(type: AlignType)
     func setGroupFilter(type: GroupType)
     func removeAllGroupFilter()
@@ -40,16 +39,19 @@ final class DefaultGroupFilterViewModel: GroupFilterViewModel {
     var alignType: [AlignType] = [.newest, .closest]
     var groupType: [GroupType] = [.project, .study]
     var categoryType: [Category] = []
-    var alignFilter: AlignType = .newest
+    var alignFilter: AlignType
     var groupFilter: GroupType?
-    var categoryFilter: [String] = []
+    var categoryFilter: [String]
     
     private let fetchCategoryUseCase: LoadCategoryUseCase
     private let actions: GroupFilterViewModelActions
     
-    init(fetchCategoryUseCase: LoadCategoryUseCase, actions: GroupFilterViewModelActions) {
+    init(fetchCategoryUseCase: LoadCategoryUseCase, actions: GroupFilterViewModelActions, initialFilter: Filter) {
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.actions = actions
+        self.alignFilter = initialFilter.alignFilter
+        self.groupFilter = initialFilter.groupFilter
+        self.categoryFilter = initialFilter.categoryFilter
     }
     
     // MARK: OUTPUT
@@ -67,13 +69,6 @@ extension DefaultGroupFilterViewModel {
     
     func sendFilter(filter: Filter) {
         actions.didDisappearFilterView(filter)
-    }
-    
-    func initFilter(filter: Filter) {
-        self.alignFilter = filter.alignFilter
-        self.groupFilter = filter.groupFilter
-        self.categoryFilter = filter.categoryFilter
-        didUpdateFilterSubject.send()
     }
     
     func setAlignFilter(type: AlignType) {

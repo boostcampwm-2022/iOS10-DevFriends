@@ -15,8 +15,6 @@ final class GroupFilterViewController: UIViewController {
         case group = 1
         case category = 2
     }
-
-    var initialFilter: Filter?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -64,11 +62,20 @@ final class GroupFilterViewController: UIViewController {
         self.bind()
     }
     
+<<<<<<< Updated upstream
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.collectionView.reloadData()
+=======
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let initialFilter = initialFilter {
-            self.viewModel.initFilter(filter: initialFilter)
-        }
+        self.collectionView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        self.collectionView.reloadData()
+>>>>>>> Stashed changes
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -101,8 +108,18 @@ final class GroupFilterViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
+                self?.setCellSelectionUI()
             }
             .store(in: &cancellables)
+    }
+    
+    private func setCellSelectionUI() {
+        print(viewModel.categoryFilter)
+        let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0))
+        print(cell)
+//        cell?.setSelectionUI(true)
+//        let categories = viewModel.categoryFilter.map { viewModel.categoryType. }
+        
     }
 }
 
@@ -157,17 +174,20 @@ extension GroupFilterViewController: UICollectionViewDataSource {
             cell.configure(viewModel.alignType[indexPath.item].rawValue)
             if viewModel.alignType[indexPath.item] == viewModel.alignFilter {
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+                cell.isSelected = true
             }
         case SectionType.group.rawValue: // 모임 종류
             cell.configure(viewModel.groupType[indexPath.item].rawValue)
             if let groupFilter = viewModel.groupFilter,
                groupFilter == viewModel.groupType[indexPath.item] {
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+                cell.isSelected = true
             }
         case SectionType.category.rawValue: // 태그 종류
             cell.configure(viewModel.categoryType[indexPath.item].name)
             if viewModel.categoryFilter.contains(viewModel.categoryType[indexPath.item].id) {
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+                cell.isSelected = true
             }
         default:
             break
@@ -193,11 +213,11 @@ extension GroupFilterViewController: UICollectionViewDelegate {
     // 셀이 선택 해제되기 전
     func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
         if indexPath.section != SectionType.align.rawValue { return true }
-        
+
         guard let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems else { return false }
         return !indexPathsForSelectedItems.filter { $0.section == indexPath.section }.contains(indexPath)
     }
-    
+
     // 셀 선택
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
@@ -211,7 +231,7 @@ extension GroupFilterViewController: UICollectionViewDelegate {
             break
         }
         guard let cell = collectionView.cellForItem(at: indexPath) as? GroupFilterCollectionViewCell else { return }
-        cell.isSelected = true
+//        cell.isSelected = true
     }
     
     // 셀 선택 해제
@@ -227,7 +247,7 @@ extension GroupFilterViewController: UICollectionViewDelegate {
             break
         }
         guard let cell = collectionView.cellForItem(at: indexPath) as? GroupFilterCollectionViewCell else { return }
-        cell.isSelected = false
+//        cell.isSelected = false
     }
 }
 

@@ -114,13 +114,12 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     
     // MARK: GroupFilterView
     func makeGroupFilterViewController(filter: Filter, actions: GroupFilterViewModelActions) -> GroupFilterViewController {
-        let groupFilterViewController = GroupFilterViewController(viewModel: makeGroupFilterViewModel(actions: actions))
-        groupFilterViewController.initialFilter = filter
+        let groupFilterViewController = GroupFilterViewController(viewModel: makeGroupFilterViewModel(actions: actions, filter: filter))
         return groupFilterViewController
     }
     
-    func makeGroupFilterViewModel(actions: GroupFilterViewModelActions) -> GroupFilterViewModel {
-        return DefaultGroupFilterViewModel(fetchCategoryUseCase: makeFetchCategoryUseCase(), actions: actions)
+    func makeGroupFilterViewModel(actions: GroupFilterViewModelActions, filter: Filter) -> GroupFilterViewModel {
+        return DefaultGroupFilterViewModel(fetchCategoryUseCase: makeFetchCategoryUseCase(), actions: actions, initialFilter: filter)
     }
     
     // MARK: AddGroupScene
