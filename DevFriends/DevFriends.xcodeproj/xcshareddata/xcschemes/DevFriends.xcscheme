@@ -28,6 +28,27 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E361801E294751B8008000FD"
+               BuildableName = "ChatTest.xctest"
+               BlueprintName = "ChatTest"
+               ReferencedContainer = "container:DevFriends.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FCD8AEF2291CCE9600CCE5D3"
+               BuildableName = "DevFriendsUITests.xctest"
+               BlueprintName = "DevFriendsUITests"
+               ReferencedContainer = "container:DevFriends.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

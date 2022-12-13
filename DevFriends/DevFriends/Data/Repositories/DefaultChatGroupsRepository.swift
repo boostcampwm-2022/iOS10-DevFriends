@@ -32,6 +32,25 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
         return localAcceptedGroups
     }
     
+    func sync() async throws {
+        // 파이어스토어에 있는 그룹을 싹 가져와서 AcceptedGroup으로 바꾸고 realm에 저장된걸 싹 갈아치운다
+        let localAcceptedGroups = groupStorage.fetch()
+        
+        await withThrowingTaskGroup(of: Void.self) { taskGroup in
+            localAcceptedGroups.forEach { acceptedGroup in
+                taskGroup.addTask {
+                    let group = try await self.fetchGroup(uid: acceptedGroup.group.id)
+                    
+                    if acceptedGroup.group.participantIDs.count != group.participantIDs.count {
+                        var acceptedGroup = acceptedGroup
+                        acceptedGroup.group = group
+                        try self.groupStorage.save(acceptedGroup: acceptedGroup)
+                    }
+                }
+            }
+        }
+    }
+    
     func fetch(userID: String, completion: @escaping (_ group: AcceptedGroup) -> Void) {
         let localAcceptedGroups = groupStorage.fetch()
         
