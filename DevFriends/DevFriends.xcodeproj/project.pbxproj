@@ -138,6 +138,7 @@
 		E33A20EA2927BB1000887EC9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33A20E92927BB1000887EC9 /* User.swift */; };
 		E359EC7F292C6B4900CE5775 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */; };
 		E361801A2947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36180192947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift */; };
+		E3618029294751F7008000FD /* ChatTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3618028294751F7008000FD /* ChatTest.swift */; };
 		E3752EA9292F53BE003C8E17 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA3292F53BE003C8E17 /* NotificationViewModel.swift */; };
 		E3752EAA292F53BE003C8E17 /* NotificationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA5292F53BE003C8E17 /* NotificationTypes.swift */; };
 		E3752EAB292F53BE003C8E17 /* NotificationDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3752EA6292F53BE003C8E17 /* NotificationDiffableDataSource.swift */; };
@@ -383,6 +384,7 @@
 		E33A20E92927BB1000887EC9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E359EC7E292C6B4900CE5775 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		E36180192947488C008000FD /* SyncAcceptedGroupWithServerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAcceptedGroupWithServerUseCase.swift; sourceTree = "<group>"; };
+		E3618028294751F7008000FD /* ChatTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTest.swift; sourceTree = "<group>"; };
 		E3752EA3292F53BE003C8E17 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		E3752EA5292F53BE003C8E17 /* NotificationTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTypes.swift; sourceTree = "<group>"; };
 		E3752EA6292F53BE003C8E17 /* NotificationDiffableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDiffableDataSource.swift; sourceTree = "<group>"; };
@@ -1202,6 +1204,7 @@
 			isa = PBXGroup;
 			children = (
 				FCD8AEED291CCE9600CCE5D3 /* DevFriendsTests.swift */,
+				E3618028294751F7008000FD /* ChatTest.swift */,
 			);
 			path = DevFriendsTests;
 			sourceTree = "<group>";
@@ -1284,7 +1287,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					FCD8AED2291CCE9300CCE5D3 = {
@@ -1679,6 +1682,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCD8AEEE291CCE9600CCE5D3 /* DevFriendsTests.swift in Sources */,
+				E3618029294751F7008000FD /* ChatTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
