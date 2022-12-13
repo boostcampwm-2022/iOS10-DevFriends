@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct PostAttentionInfo {
+struct PostAttentionInfo: Equatable {
     var likeOrNot: Bool
     var commentsCount: Int
     let maxParticipantCount: Int

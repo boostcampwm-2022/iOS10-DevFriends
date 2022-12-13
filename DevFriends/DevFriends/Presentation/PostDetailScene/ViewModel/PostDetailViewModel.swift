@@ -46,7 +46,7 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localUser: User
     private var localJoinedGroupIDs: [String]
-    private let actions: PostDetailViewModelActions
+    private let actions: PostDetailViewModelActions?
     private var group: Group
     private let fetchGroupUseCase: LoadGroupUseCase
     private let fetchUserUseCase: LoadUserUseCase
@@ -88,7 +88,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     var groupApplyButtonStateSubject = CurrentValueSubject<GroupApplyButtonState, Never>(.closed)
     
     init(
-        actions: PostDetailViewModelActions,
+        actions: PostDetailViewModelActions?,
         group: Group,
         fetchGroupUseCase: LoadGroupUseCase,
         fetchUserUseCase: LoadUserUseCase,
@@ -170,7 +170,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         if !path.isEmpty {
             do {
                 let data = try await loadProfileImageUseCase.execute(path: path + "_th")
-                image = UIImage(data: data)
+                if let data = data { image = UIImage(data: data) }
             } catch {
                 print(error)
             }
@@ -338,10 +338,10 @@ extension DefaultPostDetailViewModel {
     }
     
     func didTouchedBackButton() {
-        actions.backToPrevViewController()
+        actions?.backToPrevViewController()
     }
     
     func didTouchedReportButton() {
-        actions.report()
+        actions?.report()
     }
 }
