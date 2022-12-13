@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoadProfileImageUseCase {
-    func execute(path: String) async throws -> Data
+    func execute(path: String) async throws -> Data?
 }
 
 final class DefaultLoadProfileImageUseCase: LoadProfileImageUseCase {
@@ -18,7 +18,7 @@ final class DefaultLoadProfileImageUseCase: LoadProfileImageUseCase {
         self.imageRepository = imageRepository
     }
     
-    func execute(path: String) async throws -> Data {
+    func execute(path: String) async throws -> Data? {
         return try await imageRepository.fetch(.profile, path: path)
     }
 }

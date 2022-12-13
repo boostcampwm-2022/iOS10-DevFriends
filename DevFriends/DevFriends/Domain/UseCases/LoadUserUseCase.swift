@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoadUserUseCase {
-    func execute(userId: String) async throws -> User
+    func execute(userId: String) async throws -> User?
 }
 
 final class DefaultLoadUserUseCase: LoadUserUseCase {
@@ -18,7 +18,7 @@ final class DefaultLoadUserUseCase: LoadUserUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(userId: String) async throws -> User {
+    func execute(userId: String) async throws -> User? {
         return try await self.userRepository.fetch(uid: userId)
     }
 }

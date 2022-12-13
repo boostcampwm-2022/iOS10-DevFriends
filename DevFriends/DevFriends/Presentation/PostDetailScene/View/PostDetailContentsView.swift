@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-struct PostDetailContents {
+struct PostDetailContents: Equatable {
     let title: String
     let description: String
     let interests: [String]
