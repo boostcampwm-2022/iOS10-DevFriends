@@ -40,9 +40,9 @@ final class MogakcoViewModel: MogakcoViewModelType {
     private var nowMogakcoIndex: Int = -1
     
     private let fetchGroupUseCase: LoadGroupUseCase
-    private let actions: MogakcoViewModelActions
+    private let actions: MogakcoViewModelActions?
     
-    init(fetchGroupUseCase: LoadGroupUseCase, actions: MogakcoViewModelActions) {
+    init(fetchGroupUseCase: LoadGroupUseCase, actions: MogakcoViewModelActions?) {
         self.fetchGroupUseCase = fetchGroupUseCase
         self.actions = actions
     }
@@ -83,7 +83,7 @@ final class MogakcoViewModel: MogakcoViewModelType {
             nowMogakcoList = groups
             mogakcosSubject.send(groups)
             await MainActor.run {
-                actions.showMogakcoModal(nowMogakcoList)
+                actions?.showMogakcoModal(nowMogakcoList)
             }
         }
     }
@@ -92,15 +92,15 @@ final class MogakcoViewModel: MogakcoViewModelType {
         if index < nowMogakcoList.count {
             nowMogakco = nowMogakcoList[index]
             nowMogakcoIndex = index
-            actions.showGroupDetail(nowMogakcoList[index])
+            actions?.showGroupDetail(nowMogakcoList[index])
         }
     }
     
     func didSelectAddMogakco() {
-        actions.showAddMogakcoScene()
+        actions?.showAddMogakcoScene()
     }
     
     func didSelectNotifications() {
-        actions.showNotifications()
+        actions?.showNotifications()
     }
 }
