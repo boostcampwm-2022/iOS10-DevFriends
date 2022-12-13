@@ -20,6 +20,7 @@
 		0596696B294097BD00628DB3 /* LeaveGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696A294097BD00628DB3 /* LeaveGroupUseCase.swift */; };
 		0596696D29409B1300628DB3 /* UserGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696C29409B1300628DB3 /* UserGroup.swift */; };
 		0596696F2940E49D00628DB3 /* UpdateHitUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0596696E2940E49D00628DB3 /* UpdateHitUseCase.swift */; };
+		05BD7029294721B900891CD8 /* PostDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BD7028294721B900891CD8 /* PostDetailTests.swift */; };
 		05CB4A27292DF11E00A97531 /* CategoryResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */; };
 		05CB4A28292DF11E00A97531 /* CommentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A26292DF11E00A97531 /* CommentResponseDTO+Mapping.swift */; };
 		05CB4A2C292DF13500A97531 /* DefaultCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CB4A29292DF13500A97531 /* DefaultCategoryRepository.swift */; };
@@ -254,6 +255,7 @@
 		05A8DEC6292BBF7B00497902 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		05A8DECC292BDFEA00497902 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		05A8DED0292BF0EA00497902 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		05BD7028294721B900891CD8 /* PostDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTests.swift; sourceTree = "<group>"; };
 		05C4B3A8293F851D00FE5FC8 /* LoadUserGroupIDsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadUserGroupIDsUseCase.swift; sourceTree = "<group>"; };
 		05C4B3AA293F9AEB00FE5FC8 /* MyGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		05CB4A25292DF11D00A97531 /* CategoryResponseDTO+Mapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CategoryResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
@@ -1198,6 +1200,7 @@
 		FCD8AEEC291CCE9600CCE5D3 /* DevFriendsTests */ = {
 			isa = PBXGroup;
 			children = (
+				05BD7028294721B900891CD8 /* PostDetailTests.swift */,
 				FCD8AEED291CCE9600CCE5D3 /* DevFriendsTests.swift */,
 			);
 			path = DevFriendsTests;
@@ -1674,6 +1677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05BD7029294721B900891CD8 /* PostDetailTests.swift in Sources */,
 				FCD8AEEE291CCE9600CCE5D3 /* DevFriendsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
