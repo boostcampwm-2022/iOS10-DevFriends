@@ -69,6 +69,7 @@
 		A648BB63293795FE0018A654 /* ChatResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB62293795FE0018A654 /* ChatResponseDTO+Mapping.swift */; };
 		A648BB652937966D0018A654 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB642937966D0018A654 /* Chat.swift */; };
 		A648BB67293799060018A654 /* SaveChatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A648BB66293799060018A654 /* SaveChatUseCase.swift */; };
+		A65EB25A29484FB50010CC1A /* SortGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65EB25929484FB50010CC1A /* SortGroupTests.swift */; };
 		A66C7BB2292E180A0008B6FD /* MessageResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */; };
 		A66C7BB6292E18CF0008B6FD /* DefaultChatGroupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */; };
 		A66C7BB8292E18F30008B6FD /* DefaultChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */; };
@@ -318,6 +319,7 @@
 		A648BB62293795FE0018A654 /* ChatResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A648BB642937966D0018A654 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		A648BB66293799060018A654 /* SaveChatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveChatUseCase.swift; sourceTree = "<group>"; };
+		A65EB25929484FB50010CC1A /* SortGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortGroupTests.swift; sourceTree = "<group>"; };
 		A66C7BB1292E180A0008B6FD /* MessageResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		A66C7BB5292E18CF0008B6FD /* DefaultChatGroupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatGroupsRepository.swift; sourceTree = "<group>"; };
 		A66C7BB7292E18F30008B6FD /* DefaultChatMessagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatMessagesRepository.swift; sourceTree = "<group>"; };
@@ -1211,6 +1213,7 @@
 				FCD8AEED291CCE9600CCE5D3 /* DevFriendsTests.swift */,
 				E3618028294751F7008000FD /* ChatTest.swift */,
 				FC516B9C29470E1800C860DF /* MogakcoTests.swift */,
+				A65EB25929484FB50010CC1A /* SortGroupTests.swift */,
 			);
 			path = DevFriendsTests;
 			sourceTree = "<group>";
@@ -1691,6 +1694,7 @@
 				FCD8AEEE291CCE9600CCE5D3 /* DevFriendsTests.swift in Sources */,
 				E3618029294751F7008000FD /* ChatTest.swift in Sources */,
 				FC516B9D29470E1800C860DF /* MogakcoTests.swift in Sources */,
+				A65EB25A29484FB50010CC1A /* SortGroupTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,13 +36,13 @@ final class GroupFilterCollectionViewCell: UICollectionViewCell, ReusableType {
     func configure(_ tag: String) {
         label.text = tag
         label.sizeToFit()
+        configureUI()
     }
     
     // MARK: - Configure UI
     
     override func didMoveToSuperview() {
         layout()
-        configureUI()
     }
     
     func layout() {
