@@ -66,13 +66,24 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
         )
     }
     
+    func makeUpdateUserGroupUseCase(userRepository: UserRepository) -> UpdateUserGroupUseCase {
+        return DefaultUpdateUserGroupUseCase(userRepository: userRepository)
+    }
+    
+    func makeSyncAcceptedGroupWithServerUseCase() -> SyncAcceptedGroupWithServerUseCase {
+        return DefaultSyncAcceptedGroupWithServerUseCase(chatGroupsRepository: makeChatGroupsRepository())
+    }
+    
     // MARK: Chat
     func makeChatViewController(actions: ChatViewModelActions) -> ChatViewController {
         return ChatViewController(chatViewModel: makeChatViewModel(actions: actions))
     }
     
     func makeChatViewModel(actions: ChatViewModelActions) -> ChatViewModel {
-        return DefaultChatViewModel(loadChatGroupsUseCase: makeLoadGroupsUseCase(), actions: actions)
+        return DefaultChatViewModel(
+            loadChatGroupsUseCase: makeLoadGroupsUseCase(),
+            syncAcceptedGroupWithServerUseCase: makeSyncAcceptedGroupWithServerUseCase(),
+            actions: actions)
     }
     
     // MARK: Chat Content
@@ -84,6 +95,7 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
     
     func makeChatContentViewModel(group: Group, actions: ChatContentViewModelActions) -> ChatContentViewModel {
         let chatMessagesRepository = makeChatMessagesRepository()
+        let userRepository = makeUserRepository()
         return DefaultChatContentViewModel(
             group: group,
             loadChatMessagesUseCase: makeLoadChatMessagesUseCase(
@@ -93,6 +105,9 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
             sendChatMessagesUseCase: makeSendChatMessageUseCase(
                 chatUID: group.chatID,
                 chatMessagesRepository: chatMessagesRepository
+            ),
+            updateUserGroupUseCase: makeUpdateUserGroupUseCase(
+                userRepository: userRepository
             ),
             removeMessageListenerUseCase: makeRemoveMessageListenerUseCase(
                 chatMessagesRepository: chatMessagesRepository

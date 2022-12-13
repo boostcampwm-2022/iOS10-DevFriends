@@ -83,9 +83,8 @@ final class ChatViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] groups in
                 self?.populateSnapshot(data: groups)
-                if !groups.isEmpty {
-                    let indexPath = IndexPath(row: groups.count - 1, section: 0)
-                    self?.chatTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                if self?.chatTableView.numberOfRows(inSection: 0) ?? 0 > 0 {
+                    self?.chatTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 }
             }
             .store(in: &cancellables)
@@ -100,7 +99,7 @@ final class ChatViewController: UIViewController {
         self.chatTableViewSnapShot.deleteAllItems()
         self.chatTableViewSnapShot.appendSections([.main])
         self.chatTableViewSnapShot.appendItems(data)
-        self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: true)
+        self.chatTableViewDiffableDataSource.apply(chatTableViewSnapShot, animatingDifferences: false)
     }
     
     private func setupNavigation() {

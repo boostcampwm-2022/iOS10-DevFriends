@@ -39,14 +39,16 @@ protocol MyPageViewModel: MyPageViewModelInput, MyPageViewModelOutput {}
 final class DefaultMyPageViewModel: MyPageViewModel {
     let actions: MyPageViewModelActions
     private let loadCategoryUseCase: LoadCategoryUseCase
+    private let withdrawUseCase: WithdrawUseCase
     
     var userImageSubject = CurrentValueSubject<UIImage?, Never>(nil)
     var userNicknameSubject = CurrentValueSubject<String, Never>("사용자")
     var userCategoriesSubject = CurrentValueSubject<[Category], Never>([])
     
-    init(actions: MyPageViewModelActions, loadCategoryUseCase: LoadCategoryUseCase) {
+    init(actions: MyPageViewModelActions, loadCategoryUseCase: LoadCategoryUseCase, withdrawUseCase: WithdrawUseCase) {
         self.actions = actions
         self.loadCategoryUseCase = loadCategoryUseCase
+        self.withdrawUseCase = withdrawUseCase
         
         userImageSubject.value = UserManager.shared.profile
         userNicknameSubject.value = UserManager.shared.nickname ?? "사용자"
@@ -76,7 +78,19 @@ final class DefaultMyPageViewModel: MyPageViewModel {
     }
     
     private func withdrawalAction() {
+        guard
+            let userID = UserManager.shared.uid,
+            let joinedGroupIDs = UserManager.shared.joinedGroupIDs
+        else {
+            UserManager.shared.logout()
+            actions.showLoginView()
+            
+            return
+        }
+        
         UserManager.shared.logout()
+    
+        withdrawUseCase.execute(userID: userID, joinedGroupIDs: joinedGroupIDs)
         actions.showLoginView()
     }
 }

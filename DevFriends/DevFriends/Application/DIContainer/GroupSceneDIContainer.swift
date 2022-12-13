@@ -98,6 +98,10 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultUpdateHitUseCase(groupRepository: makeGroupRepository())
     }
     
+    func makeLoadGroupUseCase() -> LoadGroupUseCase {
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
+    }
+    
     // MARK: GroupList
     func makeGroupListViewController(actions: GroupListViewModelActions) -> GroupListViewController {
         return GroupListViewController(viewModel: makeGroupListViewModel(actions: actions))
@@ -133,6 +137,7 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultPostDetailViewModel(
             actions: actions,
             group: group,
+            fetchGroupUseCase: makeLoadGroupUseCase(),
             fetchUserUseCase: makeLoadUserUseCase(),
             fetchCategoryUseCase: makeLoadCategoryUseCase(),
             fetchCommentsUseCase: makeLoadCommentsUseCase(),

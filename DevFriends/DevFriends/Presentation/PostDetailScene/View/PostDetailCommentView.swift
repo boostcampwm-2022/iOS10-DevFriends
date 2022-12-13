@@ -16,14 +16,13 @@ final class PostDetailCommentView: UIView {
         stackView.spacing = 20
         return stackView
     }()
-    private let commentWriterInfoView: PostWriterInfoView = {
-        let commentWriterInfoView = PostWriterInfoView(
-            imageViewRadius: 22.0,
-            nameTextSize: 18.0,
-            jobTextSize: 14.0
-        )
-        return commentWriterInfoView
-    }()
+    
+    private let commentWriterInfoView = PostWriterInfoView(
+        imageViewRadius: 22.0,
+        nameTextSize: 18.0,
+        jobTextSize: 14.0
+    )
+    
     private let commentContentsLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18)

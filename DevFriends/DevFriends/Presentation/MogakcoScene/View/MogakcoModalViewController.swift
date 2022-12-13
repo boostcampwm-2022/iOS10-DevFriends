@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 struct MogakcoModalViewActions {
-    let didSelectMogakcoCell: (Int) -> Void
+    let didSelectMogakcoCell: (Location) -> Void
 }
 
 final class MogakcoModalViewController: UIViewController {
@@ -81,6 +81,9 @@ final class MogakcoModalViewController: UIViewController {
 
 extension MogakcoModalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        actions.didSelectMogakcoCell(indexPath.item)
+        if indexPath.row < mogakcoCollectionViewSnapShot.itemIdentifiers.count {
+            let group = mogakcoCollectionViewSnapShot.itemIdentifiers[indexPath.row]
+            actions.didSelectMogakcoCell(group.location)
+        }
     }
 }

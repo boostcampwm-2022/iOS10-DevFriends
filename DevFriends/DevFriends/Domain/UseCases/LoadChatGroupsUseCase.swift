@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 protocol LoadChatGroupsUseCase {
     func executeFromLocal() -> [AcceptedGroup]
-    func execute(groupListenersProcess: @escaping (_ groupListeners: [ListenerRegistration]) -> Void, groupProcess: @escaping (_ group: AcceptedGroup) -> Void) -> ListenerRegistration
+    func execute(completion: @escaping (_ group: AcceptedGroup) -> Void)
 }
 
 final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
@@ -24,14 +24,8 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
         return chatGroupsRepository.fetchFromLocal()
     }
     
-    func execute(groupListenersProcess: @escaping (_ groupListeners: [ListenerRegistration]) -> Void, groupProcess: @escaping (_ group: AcceptedGroup) -> Void) -> ListenerRegistration {
+    func execute(completion: @escaping (_ group: AcceptedGroup) -> Void) {
         guard let id = UserManager.shared.uid else { fatalError("LoadChatGroupsUseCase에서 UserManager에 uid가 없다고 함") }
-        let groupListListener = chatGroupsRepository.fetch(
-            userID: id,
-            messageListenersProcess: groupListenersProcess,
-            groupProcess: groupProcess
-        )
-        
-        return groupListListener
+        chatGroupsRepository.fetch(userID: id, completion: completion)
     }
 }

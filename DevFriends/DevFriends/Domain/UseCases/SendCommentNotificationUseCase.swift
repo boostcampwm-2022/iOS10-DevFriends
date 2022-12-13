@@ -28,7 +28,8 @@ final class DefaultSendCommentNotificationUseCase: SendCommentNotificationUseCas
                 senderNickname: sender.nickname,
                 commentID: commentID,
                 comment: comment.content,
-                type: .comment
+                type: .comment,
+                time: Date()
             )
         )
     }

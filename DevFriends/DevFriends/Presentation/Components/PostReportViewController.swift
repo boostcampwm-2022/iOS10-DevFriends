@@ -99,6 +99,7 @@ final class PostReportViewController: UIViewController {
     private func configureUI() {
         self.titleLabel.text = "신고하려는 이유가 무엇인가요?"
         self.navigationItem.leftBarButtonItem = backBarButtonItem
+        view.backgroundColor = .devFriendsReverseBase
     }
     
     private func bind() {

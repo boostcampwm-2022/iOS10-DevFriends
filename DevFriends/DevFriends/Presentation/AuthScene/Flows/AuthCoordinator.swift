@@ -10,6 +10,7 @@ import UIKit
 protocol AuthFlowCoordinatorDependencies {
     func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController
     func makeSignUpViewController(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewController
+    func makeCategoryViewController(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewController
 }
 
 protocol AuthCoordinatorDelegate: AnyObject {
@@ -48,7 +49,8 @@ final class AuthCoordinator: Coordinator {
         guard let showTabBarController = delegate?.showTabBar else { fatalError("Auth Delegate is not linked.") }
         let actions = SignUpViewModelActions(
             showTabBarController: showTabBarController,
-            moveBackToPrevViewController: moveBackToLoginViewController
+            moveBackToPrevViewController: moveBackToLoginViewController,
+            showCategoryView: showCategoryViewController
         )
         let signUpViewController = dependencies.makeSignUpViewController(
             actions: actions,
@@ -61,5 +63,17 @@ final class AuthCoordinator: Coordinator {
     
     func moveBackToLoginViewController() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func showCategoryViewController(initFilter: [Category]?) {
+        let actions = ChooseCategoryViewModelActions(didSubmitCategory: didSubmitCategorySelection)
+        let categoryViewController = dependencies.makeCategoryViewController(actions: actions, initFilter: initFilter)
+        navigationController?.pushViewController(categoryViewController, animated: true)
+    }
+    
+    func didSubmitCategorySelection(updatedCategories: [Category]) {
+        navigationController?.popViewController(animated: true)
+        guard let viewController = navigationController?.viewControllers.last as? SignUpViewController else { return }
+        viewController.updateCategories(categories: updatedCategories)
     }
 }

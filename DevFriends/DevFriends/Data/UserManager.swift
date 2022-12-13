@@ -5,6 +5,7 @@
 //  Created by 유승원 on 2022/11/30.
 //
 
+import FirebaseFirestore
 import UIKit
 
 final class UserManager {
@@ -161,13 +162,14 @@ final class UserManager {
     private let userRepository = DefaultUserRepository()
     private let imageRepository = DefaultImageRepository()
     private let categoryRepository = DefaultCategoryRepository()
+    private var listener: ListenerRegistration?
     
     private init() {}
 }
 
 extension UserManager {
     func login(uid: String) {
-        userRepository.fetch(uid: uid) { user in
+        listener = userRepository.fetch(uid: uid) { user in
             self.setUserInfo(of: user)
         }
         
@@ -177,6 +179,8 @@ extension UserManager {
     }
     
     func logout() {
+        listener?.remove()
+        
         let userDefaults = UserDefaults.standard
         userDefaults.removeObject(forKey: UserInfoKey.uid.rawValue)
         userDefaults.removeObject(forKey: UserInfoKey.email.rawValue)
@@ -201,7 +205,9 @@ extension UserManager {
         likeGroupIDs = user.likeGroupIDs
         
         Task {
-            self.profile = await fetchProfile(path: user.id)
+            if !user.profileImagePath.isEmpty {
+                self.profile = await fetchProfile(path: user.id)
+            }
         }
     }
     

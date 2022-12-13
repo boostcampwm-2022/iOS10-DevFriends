@@ -79,10 +79,10 @@ final class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.viewDidLoad()
         self.configureUI()
         self.layout()
         self.bind()
-        viewModel.viewDidLoad()
         self.setupNavigation()
     }
     
@@ -209,6 +209,19 @@ final class SignUpViewController: UIViewController {
         
         self.emailTextField.text = self.viewModel.email
         self.nicknameTextField.text = self.viewModel.name
+        
+        categorySelectionView.didTouchViewSubject
+            .sink { [weak self] _ in
+                self?.viewModel.didCategorySelect()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.didUpdateCategorySubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedCategories in
+                self?.categorySelectionView.set(categories: updatedCategories)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupNavigation() {
@@ -227,5 +240,9 @@ final class SignUpViewController: UIViewController {
 extension SignUpViewController {
     @objc func didTouchedBackButton() {
         viewModel.didTouchedBackButton()
+    }
+    
+    func updateCategories(categories: [Category]) {
+        self.viewModel.updateCategory(categories: categories)
     }
 }

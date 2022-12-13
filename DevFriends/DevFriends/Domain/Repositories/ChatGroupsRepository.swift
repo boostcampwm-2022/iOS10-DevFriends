@@ -8,9 +8,6 @@ import FirebaseFirestore
 
 protocol ChatGroupsRepository {
     func fetchFromLocal() -> [AcceptedGroup]
-    func fetch(
-        userID: String,
-        messageListenersProcess: @escaping (_ messageListeners: [ListenerRegistration]) -> Void,
-        groupProcess: @escaping (_ group: AcceptedGroup) -> Void
-    ) -> ListenerRegistration
+    func fetch(userID: String, completion: @escaping (_ group: AcceptedGroup) -> Void)
+    func sync() async throws
 }

@@ -45,7 +45,9 @@ extension DefaultCategoryRepository: CategoryRepository {
         for document in snapshot.documents {
             let categoryData = document.data()
             if let categoryString = categoryData["name"] as? String {
-                categories.append(Category(id: document.documentID, name: categoryString))
+                let category = Category(id: document.documentID, name: categoryString)
+                CategoryCacheManager.shared.save(category: category)
+                categories.append(category)
             }
         }
         return categories
@@ -55,8 +57,12 @@ extension DefaultCategoryRepository: CategoryRepository {
 // MARK: Private
 extension DefaultCategoryRepository {
     private func fetchCategory(_ id: String) async throws -> Category {
+        if let category = CategoryCacheManager.shared.fetch(id: id) {
+            return category
+        }
         let snapshot = try await firestore.collection(FirestorePath.category.rawValue).document(id).getDocument()
-        
-        return try snapshot.data(as: CategoryResponseDTO.self).toDomain()
+        let category = try snapshot.data(as: CategoryResponseDTO.self).toDomain()
+        CategoryCacheManager.shared.save(category: category)
+        return category
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-struct PostDetailContents {
+struct PostDetailContents: Equatable {
     let title: String
     let description: String
     let interests: [String]
@@ -28,6 +28,7 @@ final class PostDetailContentsView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.font = .boldSystemFont(ofSize: 25)
+        label.numberOfLines = 0
         label.sizeToFit()
         return label
     }()
@@ -56,14 +57,11 @@ final class PostDetailContentsView: UIView {
         stackView.axis = .horizontal
         return stackView
     }()
-    private let likeDisplayView: KeyValueDisplayView = {
-        let likeDisplayView = KeyValueDisplayView()
-        return likeDisplayView
-    }()
-    private let hitsDisplayView: KeyValueDisplayView = {
-        let hitsDisplayView = KeyValueDisplayView()
-        return hitsDisplayView
-    }()
+    
+    private let likeDisplayView = KeyValueDisplayView()
+    
+    private let hitsDisplayView = KeyValueDisplayView()
+    
     private let emptyView: UIView = {
         let view = UIView()
         return view
@@ -80,32 +78,39 @@ final class PostDetailContentsView: UIView {
     }
     
     private func layout() {
-        self.addSubview(mainStackView)
-        self.mainStackView.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
+        self.addSubview(postTitleLabel)
+        self.addSubview(postDescriptionLabel)
+        self.addSubview(interestsStackView)
+        self.addSubview(postCreationTimeLabel)
+        self.addSubview(additionalInfoStackView)
+        self.postTitleLabel.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.greaterThanOrEqualTo(15)
         }
-        self.mainStackView.addArrangedSubview(postTitleLabel)
-        self.mainStackView.addArrangedSubview(postDescriptionLabel)
-        self.mainStackView.addArrangedSubview(interestsStackView)
-        self.mainStackView.addArrangedSubview(postCreationTimeLabel)
-        self.mainStackView.addArrangedSubview(additionalInfoStackView)
-
-        self.mainStackView.setCustomSpacing(30, after: postTitleLabel)
-        self.mainStackView.setCustomSpacing(25, after: postDescriptionLabel)
-        self.mainStackView.setCustomSpacing(20, after: interestsStackView)
+        self.postDescriptionLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(postTitleLabel.snp.bottom).offset(10)
+            make.height.greaterThanOrEqualTo(15)
+        }
+        self.interestsStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(postDescriptionLabel.snp.bottom).offset(10)
+            make.height.equalTo(15)
+        }
         
+        self.postCreationTimeLabel.snp.makeConstraints { make in
+            make.top.equalTo(interestsStackView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        self.additionalInfoStackView.snp.makeConstraints { make in
+            make.top.equalTo(postCreationTimeLabel.snp.bottom).offset(10)
+            make.bottom.leading.trailing.equalToSuperview()
+            make.height.equalTo(12)
+        }
         self.additionalInfoStackView.addArrangedSubview(likeDisplayView)
         self.additionalInfoStackView.addArrangedSubview(emptyView)
         self.additionalInfoStackView.addArrangedSubview(hitsDisplayView)
-        self.mainStackView.setCustomSpacing(10, after: postCreationTimeLabel)
-        
-        self.additionalInfoStackView.snp.makeConstraints { make in
-            make.height.equalTo(12)
-        }
-        
-        self.snp.makeConstraints { make in
-            make.edges.equalTo(mainStackView)
-        }
     }
     
     func set(contents: PostDetailContents) {

@@ -18,6 +18,7 @@ struct NotificationResponseDTO: Codable {
     let comment: String?
     let type: String
     let isAccepted: Bool?
+    let time: Date?
 }
 
 extension NotificationResponseDTO {

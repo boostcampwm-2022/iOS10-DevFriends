@@ -16,8 +16,8 @@ extension DefaultUserRepository: UserRepository {
         return user.toDomain()
     }
     
-    func fetch(uid: String, completion: @escaping (_ user: User) -> Void) {
-        _ = firestore
+    func fetch(uid: String, completion: @escaping (_ user: User) -> Void) -> ListenerRegistration {
+        return firestore
             .collection(FirestorePath.user.rawValue)
             .document(uid)
             .addSnapshotListener { snapshot, error in
@@ -79,6 +79,31 @@ extension DefaultUserRepository: UserRepository {
                 }
         }
     }
+    
+    func delete(id: String) {
+        let snapshot = firestore.collection(FirestorePath.user.rawValue).document(id)
+        
+        snapshot.collection(FirestorePath.group.rawValue).getDocuments { snapshot, error in
+            if let error = error {
+                print(error)
+            } else {
+                snapshot?.documents.forEach({ snapshot in
+                    snapshot.reference.delete()
+                })
+            }
+        }
+        
+        snapshot.collection(FirestorePath.notification.rawValue).getDocuments { snapshot, error in
+            if let error = error {
+                print(error)
+            } else {
+                snapshot?.documents.forEach({ snapshot in
+                    snapshot.reference.delete()
+                })
+            }
+        }
+        snapshot.delete()
+    }
 }
 
 extension DefaultUserRepository {
@@ -128,6 +153,28 @@ extension DefaultUserRepository {
             }
     }
     
+    func updateUserGroup(userID: String, groupID: String, userGroup: UserGroup) async throws {
+        let userGroupID = try await firestore
+            .collection(FirestorePath.user.rawValue)
+            .document(userID)
+            .collection(FirestorePath.group.rawValue)
+            .whereField("groupID", in: [groupID])
+            .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: UserGroupResponseDTO.self) }
+            .first?.uid
+        
+        if let userGroupID = userGroupID {
+            do {
+                try firestore.collection(FirestorePath.user.rawValue)
+                    .document(userID)
+                    .collection(FirestorePath.group.rawValue)
+                    .document(userGroupID)
+                    .setData(from: makeUserGroupResponseDTO(userGroup: userGroup))
+            }
+        }
+    }
+    
     func deleteUserGroup(userID: String, groupID: String) {
         firestore
             .collection(FirestorePath.user.rawValue)
@@ -157,5 +204,9 @@ extension DefaultUserRepository {
             appliedGroups: user.appliedGroupIDs,
             likeGroups: user.likeGroupIDs
         )
+    }
+    
+    private func makeUserGroupResponseDTO(userGroup: UserGroup) -> UserGroupResponseDTO {
+        return UserGroupResponseDTO(groupID: userGroup.groupID, time: userGroup.time)
     }
 }

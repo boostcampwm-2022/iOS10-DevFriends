@@ -46,8 +46,9 @@ protocol PostDetailViewModel: PostDetailViewModelInput, PostDetailViewModelOutpu
 final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localUser: User
     private var localJoinedGroupIDs: [String]
-    private let actions: PostDetailViewModelActions
+    private let actions: PostDetailViewModelActions?
     private var group: Group
+    private let fetchGroupUseCase: LoadGroupUseCase
     private let fetchUserUseCase: LoadUserUseCase
     private let fetchCategoryUseCase: LoadCategoryUseCase
     private let fetchCommentsUseCase: LoadCommentsUseCase
@@ -87,8 +88,9 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     var groupApplyButtonStateSubject = CurrentValueSubject<GroupApplyButtonState, Never>(.closed)
     
     init(
-        actions: PostDetailViewModelActions,
+        actions: PostDetailViewModelActions?,
         group: Group,
+        fetchGroupUseCase: LoadGroupUseCase,
         fetchUserUseCase: LoadUserUseCase,
         fetchCategoryUseCase: LoadCategoryUseCase,
         fetchCommentsUseCase: LoadCommentsUseCase,
@@ -102,6 +104,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     ) {
         self.actions = actions
         self.group = group
+        self.fetchGroupUseCase = fetchGroupUseCase
         self.fetchUserUseCase = fetchUserUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
         self.fetchCommentsUseCase = fetchCommentsUseCase
@@ -145,6 +148,17 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         }
     }
     
+    private func loadGroup() async -> Group? {
+        var resultGroup: Group?
+        do {
+            resultGroup = try await fetchGroupUseCase.execute(id: self.group.id)
+        } catch {
+            print(error)
+        }
+        
+        return resultGroup
+    }
+    
     private func loadUser(id: String) async -> User? {
         return try? await Task {
             try await fetchUserUseCase.execute(userId: id)
@@ -156,7 +170,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         if !path.isEmpty {
             do {
                 let data = try await loadProfileImageUseCase.execute(path: path + "_th")
-                image = UIImage(data: data)
+                if let data = data { image = UIImage(data: data) }
             } catch {
                 print(error)
             }
@@ -197,8 +211,11 @@ extension DefaultPostDetailViewModel {
     func didLoadGroup() {
         updateHitUseCase.execute(groupID: group.id)
         Task {
+            if let loadedGroup = await loadGroup() {
+                self.group = loadedGroup
+            }
             guard let user = await loadUser(id: group.managerID) else { return }
-            let image = await loadProfile(path: user.id)
+            let image = user.profileImagePath.isEmpty ? nil : await loadProfile(path: user.id)
             postWriterInfoSubject.value = .init(name: user.nickname, job: user.job, image: image)
             
             let categories = await loadCategories()
@@ -211,6 +228,13 @@ extension DefaultPostDetailViewModel {
                 hitsCount: group.hit
             )
             
+            postAttentionInfoSubject.value = .init(
+                likeOrNot: localUser.likeGroupIDs.contains(group.id),
+                commentsCount: group.commentNumber,
+                maxParticipantCount: group.limitedNumberPeople,
+                currentParticipantCount: group.participantIDs.count
+            )
+            
             let comments = await loadComments()
             lastCommentLoadTime = comments.last?.time
             
@@ -218,15 +242,15 @@ extension DefaultPostDetailViewModel {
                 guard let user = await loadUser(id: comment.userID) else {
                     commentsSubject.value.append(CommentInfo(
                         id: UUID().uuidString,
-                        writerInfo: .init(name: "userNameError", job: "defaultJob", image: nil),
+                        writerInfo: .init(name: "존재하지 않는 사용자입니다", job: "", image: nil),
                         contents: comment.content
                     ))
                     continue
                 }
-                let profile = await loadProfile(path: user.id)
+                let image = user.profileImagePath.isEmpty ? nil : await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
                     id: comment.id ?? UUID().uuidString,
-                    writerInfo: .init(name: user.nickname, job: user.job, image: profile),
+                    writerInfo: .init(name: user.nickname, job: user.job, image: image),
                     contents: comment.content
                 ))
             }
@@ -271,10 +295,10 @@ extension DefaultPostDetailViewModel {
                     ))
                     continue
                 }
-                let profile = await loadProfile(path: user.id)
+                let image = user.profileImagePath.isEmpty ? nil : await loadProfile(path: user.id)
                 commentsSubject.value.append(CommentInfo(
                     id: comment.id ?? UUID().uuidString,
-                    writerInfo: .init(name: user.nickname, job: user.job, image: profile),
+                    writerInfo: .init(name: user.nickname, job: user.job, image: image),
                     contents: comment.content
                 ))
             }
@@ -314,10 +338,10 @@ extension DefaultPostDetailViewModel {
     }
     
     func didTouchedBackButton() {
-        actions.backToPrevViewController()
+        actions?.backToPrevViewController()
     }
     
     func didTouchedReportButton() {
-        actions.report()
+        actions?.report()
     }
 }

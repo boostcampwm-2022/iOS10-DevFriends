@@ -10,7 +10,7 @@ import RealmSwift
 protocol ContainsRealm {}
 
 extension ContainsRealm {
-    var realm: Realm? {
-        return try? Realm()
+    var realm: Realm {
+        return try! Realm()
     }
 }
