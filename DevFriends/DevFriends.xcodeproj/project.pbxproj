@@ -178,6 +178,7 @@
 		FC3C35992935F32700C5BFE3 /* ChatMessagesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C35982935F32700C5BFE3 /* ChatMessagesStorage.swift */; };
 		FC3C359B2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */; };
 		FC3C359D29361BA500C5BFE3 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C359C29361BA500C5BFE3 /* DateTableViewCell.swift */; };
+		FC516B9D29470E1800C860DF /* MogakcoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC516B9C29470E1800C860DF /* MogakcoTests.swift */; };
 		FC5C5939293F17F7000C3CE0 /* SettingBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C5938293F17F7000C3CE0 /* SettingBarButtonItem.swift */; };
 		FC5CC9E729445694007A2A52 /* CategoryCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */; };
 		FC5D0190292F4E2800292D33 /* TabBarSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */; };
@@ -424,6 +425,7 @@
 		FC3C35982935F32700C5BFE3 /* ChatMessagesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessagesStorage.swift; sourceTree = "<group>"; };
 		FC3C359A2935F52A00C5BFE3 /* MessageResponseEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageResponseEntity+Mapping.swift"; sourceTree = "<group>"; };
 		FC3C359C29361BA500C5BFE3 /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
+		FC516B9C29470E1800C860DF /* MogakcoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MogakcoTests.swift; sourceTree = "<group>"; };
 		FC5C5938293F17F7000C3CE0 /* SettingBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBarButtonItem.swift; sourceTree = "<group>"; };
 		FC5CC9E629445694007A2A52 /* CategoryCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCacheManager.swift; sourceTree = "<group>"; };
 		FC5D018F292F4E2800292D33 /* TabBarSceneDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarSceneDIContainer.swift; sourceTree = "<group>"; };
@@ -1199,6 +1201,7 @@
 			isa = PBXGroup;
 			children = (
 				FCD8AEED291CCE9600CCE5D3 /* DevFriendsTests.swift */,
+				FC516B9C29470E1800C860DF /* MogakcoTests.swift */,
 			);
 			path = DevFriendsTests;
 			sourceTree = "<group>";
@@ -1675,6 +1678,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCD8AEEE291CCE9600CCE5D3 /* DevFriendsTests.swift in Sources */,
+				FC516B9D29470E1800C860DF /* MogakcoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
