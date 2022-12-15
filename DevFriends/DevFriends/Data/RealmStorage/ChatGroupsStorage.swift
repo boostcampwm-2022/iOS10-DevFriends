@@ -9,6 +9,7 @@ import RealmSwift
 
 protocol ChatGroupsStorage {
     func fetch() -> [AcceptedGroup]
+    func fetch(groupID: String) -> AcceptedGroup?
     func save(acceptedGroups: [AcceptedGroup]) throws
     func save(acceptedGroup: AcceptedGroup) throws
 }
@@ -19,6 +20,28 @@ final class DefaultChatGroupsStorage: ChatGroupsStorage, ContainsRealm {
             .objects(AcceptedGroupResponseEntity.self)
             .sorted(byKeyPath: "acceptedTime", ascending: false)
         return groups.map { $0.toDomain() }
+    }
+    
+    func fetch(groupID: String) -> AcceptedGroup? {
+        let group = realm
+            .objects(AcceptedGroupResponseEntity.self)
+            .filter("id == '\(groupID)'")
+        
+        return group.first?.toDomain()
+    }
+    
+    func updateCurrentParticipants(groupID: String, participantsIDs: [String]) throws -> Bool {
+        let group = realm
+            .objects(AcceptedGroupResponseEntity.self)
+            .filter("id == \(groupID)")
+        
+        try realm.write {
+            group.first?.participantIDs.removeAll()
+            group.first?.participantIDs.append(objectsIn: participantsIDs)
+            return true
+        }
+        
+        return false
     }
     
     func save(acceptedGroups: [AcceptedGroup]) throws {

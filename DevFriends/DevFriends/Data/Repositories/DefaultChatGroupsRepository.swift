@@ -77,7 +77,18 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                     if messages.isEmpty && localAcceptedGroups.contains(where: { acceptedGroup in
                         return acceptedGroup.group.id == group.id
                     }) {
-                        return
+                        // 새로운 참여자가 추가될 경우 렘을 업데이트하고 화면 또한 업데이트해야 함
+                        if let loadedGroup = self.groupStorage.fetch(groupID: group.id), loadedGroup.group.participantIDs.count != group.participantIDs.count {
+                            acceptedGroup = loadedGroup
+                            acceptedGroup.group = group
+                            
+                            completion(acceptedGroup) // SW: 여기서 반복적으로 Diffable이 업데이트됨
+                            do {
+                                try self.groupStorage.save(acceptedGroup: acceptedGroup) // SW: realm에도 저장함
+                            } catch {
+                                print(error)
+                            }
+                        }
                     } else {
                         acceptedGroup = AcceptedGroup(
                             group: group,
@@ -85,12 +96,13 @@ extension DefaultChatGroupsRepository: ChatGroupsRepository {
                             lastMessageContent: messages.last?.content ?? "",
                             newMessageCount: messages.count
                         )
-                    }
-                    completion(acceptedGroup) // SW: 여기서 반복적으로 Diffable이 업데이트됨
-                    do {
-                        try self.groupStorage.save(acceptedGroup: acceptedGroup) // SW: realm에도 저장함
-                    } catch {
-                        print(error)
+                        
+                        completion(acceptedGroup) // SW: 여기서 반복적으로 Diffable이 업데이트됨
+                        do {
+                            try self.groupStorage.save(acceptedGroup: acceptedGroup) // SW: realm에도 저장함
+                        } catch {
+                            print(error)
+                        }
                     }
                 }
             }
