@@ -6,6 +6,9 @@
 <h1 align="center">
  :technologist:나만의 개발친구를 만들고 만들어봐요:technologist:
 </h1>
+<p align="left">
+ <a href="https://apps.apple.com/kr/app/%EA%B0%9C%EB%B0%9C%EC%B9%9C%EA%B5%AC/id6444737879"> <img src="https://user-images.githubusercontent.com/86254784/207810834-d72ca8c7-59fd-4d0e-82d1-76bd3f2ed7ac.png" height=70>
+</p>
 
 ## 프로젝트 소개 :fire:
 우리집 주변에 같이 개발 공부할 친구 없을까 :question:
