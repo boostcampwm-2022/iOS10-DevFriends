@@ -10,7 +10,7 @@ protocol GroupRepository: ContainsFirestore {
     func fetch(groupType: GroupType?, location: Location?, distance: Double?) async throws -> [Group]
     func fetch(groupID: String) async throws -> Group?
     func fetch(groupIDs: [String]) async throws -> [Group]
-    func fetch(filter: Filter) async throws -> [Group]
+    func fetch(filter: Filter, myUserID: String?) async throws -> [Group]
     func update(groupID: String, group: Group)
     func updateHit(groupID: String)
     func updateLike(groupID: String, increment: Bool)

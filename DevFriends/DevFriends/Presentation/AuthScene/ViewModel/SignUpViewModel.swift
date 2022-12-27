@@ -39,6 +39,7 @@ final class DefaultSignUpViewModel: SignUpViewModel {
     
     private let actions: SignUpViewModelActions
     private let createUserUseCase: CreateUserUseCase
+    private let myInfoRepository: MyInfoRepository
     
     var categorySelection: [Category]?
     private let uid: String
@@ -50,9 +51,10 @@ final class DefaultSignUpViewModel: SignUpViewModel {
     let isNicknameValidated = PassthroughSubject<Bool, Never>()
     var didUpdateCategorySubject = PassthroughSubject<[Category], Never>()
     
-    init(actions: SignUpViewModelActions, createUserUseCase: CreateUserUseCase, uid: String, email: String? = nil, name: String? = nil) {
+    init(actions: SignUpViewModelActions, createUserUseCase: CreateUserUseCase, myInfoRepository: MyInfoRepository, uid: String, email: String? = nil, name: String? = nil) {
         self.actions = actions
         self.createUserUseCase = createUserUseCase
+        self.myInfoRepository = myInfoRepository
         self.uid = uid
         self.email = email
         self.name = name
@@ -83,7 +85,7 @@ extension DefaultSignUpViewModel {
                 return
             }
             
-            UserManager.shared.login(uid: self.uid)
+            self.myInfoRepository.login(uid: self.uid)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                 self.actions.showTabBarController()
             }

@@ -23,13 +23,23 @@ extension NotificationSceneDIContainer {
         return DefaultGroupRepository()
     }
     
+    private func makeMyInfoRepository() -> MyInfoRepository {
+        return UserManager.shared
+    }
+    
     // MARK: UseCases
     private func makeLoadNotificationsUseCase() -> LoadNotificationsUseCase {
-        return DefaultLoadNotificationsUseCase(notificationRepository: makeNotificationRepository())
+        return DefaultLoadNotificationsUseCase(
+            notificationRepository: makeNotificationRepository(),
+            myInfoRepository: makeMyInfoRepository()
+        )
     }
     
     private func makeUpdateNotificationIsAcceptedToTrueUseCase() -> UpdateNotificationIsAcceptedToTrueUseCase {
-        return DefaultUpdateNotificationIsAcceptedToTrueUseCase(notificationRepository: makeNotificationRepository())
+        return DefaultUpdateNotificationIsAcceptedToTrueUseCase(
+            notificationRepository: makeNotificationRepository(),
+            myInfoRepository: makeMyInfoRepository()
+        )
     }
     
     private func makeSendNotificationToParticipantUseCase() -> SendNotificationToParticipantUseCase {
@@ -45,7 +55,10 @@ extension NotificationSceneDIContainer {
     }
     
     private func makeDeleteNotificationUseCase() -> DeleteNotificationUseCase {
-        return DefaultDeleteNotificationUseCase(notificationRepository: makeNotificationRepository())
+        return DefaultDeleteNotificationUseCase(
+            notificationRepository: makeNotificationRepository(),
+            myInfoRepository: makeMyInfoRepository()
+        )
     }
     
     // MARK: Notification

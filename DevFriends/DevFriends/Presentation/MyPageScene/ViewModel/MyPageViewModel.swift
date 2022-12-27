@@ -40,20 +40,22 @@ final class DefaultMyPageViewModel: MyPageViewModel {
     let actions: MyPageViewModelActions
     private let loadCategoryUseCase: LoadCategoryUseCase
     private let withdrawUseCase: WithdrawUseCase
+    private let myInfoRepository: MyInfoRepository
     
     var userImageSubject = CurrentValueSubject<UIImage?, Never>(nil)
     var userNicknameSubject = CurrentValueSubject<String, Never>("사용자")
     var userCategoriesSubject = CurrentValueSubject<[Category], Never>([])
     
-    init(actions: MyPageViewModelActions, loadCategoryUseCase: LoadCategoryUseCase, withdrawUseCase: WithdrawUseCase) {
+    init(actions: MyPageViewModelActions, loadCategoryUseCase: LoadCategoryUseCase, withdrawUseCase: WithdrawUseCase, myInfoRepository: MyInfoRepository) {
         self.actions = actions
         self.loadCategoryUseCase = loadCategoryUseCase
         self.withdrawUseCase = withdrawUseCase
+        self.myInfoRepository = myInfoRepository
         
-        userImageSubject.value = UserManager.shared.profile
-        userNicknameSubject.value = UserManager.shared.nickname ?? "사용자"
+        userImageSubject.value = myInfoRepository.profile
+        userNicknameSubject.value = myInfoRepository.nickname ?? "사용자"
         Task {
-            if let ids = UserManager.shared.categoryIDs {
+            if let ids = myInfoRepository.categoryIDs {
                 userCategoriesSubject.value = await loadCategories(categoryIds: ids)
             }
         }
@@ -73,22 +75,22 @@ final class DefaultMyPageViewModel: MyPageViewModel {
     }
     
     private func logoutAction() {
-        UserManager.shared.logout()
+        myInfoRepository.logout()
         actions.showLoginView()
     }
     
     private func withdrawalAction() {
         guard
-            let userID = UserManager.shared.uid,
-            let joinedGroupIDs = UserManager.shared.joinedGroupIDs
+            let userID = myInfoRepository.uid,
+            let joinedGroupIDs = myInfoRepository.joinedGroupIDs
         else {
-            UserManager.shared.logout()
+            myInfoRepository.logout()
             actions.showLoginView()
             
             return
         }
         
-        UserManager.shared.logout()
+        myInfoRepository.logout()
     
         withdrawUseCase.execute(userID: userID, joinedGroupIDs: joinedGroupIDs)
         actions.showLoginView()
@@ -112,7 +114,7 @@ extension DefaultMyPageViewModel {
         let image = userImageSubject.value == UIImage(named: "Image") ? nil : userImageSubject.value
         actions.showFixMyInfo(
             FixMyInfoStruct(
-                user: UserManager.shared.user,
+                user: myInfoRepository.user,
                 image: image,
                 categories: userCategoriesSubject.value
             )

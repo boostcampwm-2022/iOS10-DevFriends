@@ -13,13 +13,15 @@ protocol LoadNotificationsUseCase {
 
 final class DefaultLoadNotificationsUseCase: LoadNotificationsUseCase {
     private let notificationRepository: NotificationRepository
+    private let myInfoRepository: MyInfoRepository
     
-    init(notificationRepository: NotificationRepository) {
+    init(notificationRepository: NotificationRepository, myInfoRepository: MyInfoRepository) {
         self.notificationRepository = notificationRepository
+        self.myInfoRepository = myInfoRepository
     }
     
     func execute() async throws -> [Notification] {
-        guard let uid = UserManager.shared.uid else { fatalError("UID was not stored!!") }
+        guard let uid = myInfoRepository.uid else { fatalError("UID was not stored!!") }
 
         let notifications = try await notificationRepository.fetch(uid: uid)
         return notifications

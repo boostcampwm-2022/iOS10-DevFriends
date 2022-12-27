@@ -50,6 +50,7 @@ final class DefaultAddGroupViewModel: AddGroupViewModel {
     private let saveGroupUseCase: SaveGroupUseCase
     private let loadUserUseCase: LoadUserUseCase
     private let saveUserGroupIDUseCase: SaveUserGroupIDUseCase
+    private let myInfoRepository: MyInfoRepository
     var groupType: GroupType
     var categorySelection: [Category]?
     var locationSelection: Location?
@@ -63,7 +64,8 @@ final class DefaultAddGroupViewModel: AddGroupViewModel {
         saveChatUseCase: SaveChatUseCase,
         saveGroupUseCase: SaveGroupUseCase,
         loadUserUseCase: LoadUserUseCase,
-        saveUserGroupIDUseCase: SaveUserGroupIDUseCase
+        saveUserGroupIDUseCase: SaveUserGroupIDUseCase,
+        myInfoRepository: MyInfoRepository
     ) {
         self.groupType = groupType
         self.actions = actions
@@ -71,6 +73,7 @@ final class DefaultAddGroupViewModel: AddGroupViewModel {
         self.saveGroupUseCase = saveGroupUseCase
         self.loadUserUseCase = loadUserUseCase
         self.saveUserGroupIDUseCase = saveUserGroupIDUseCase
+        self.myInfoRepository = myInfoRepository
     }
     
     // MARK: OUTPUT
@@ -117,7 +120,7 @@ extension DefaultAddGroupViewModel {
     }
     
     func didSendGroupInfo() {
-        let user = UserManager.shared.user
+        let user = myInfoRepository.user
         guard let title = self.title,
               let categories = self.categorySelection,
               let location = self.locationSelection,

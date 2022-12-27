@@ -37,7 +37,7 @@ final class LoginViewController: UIViewController {
         button.tintColor = .devFriendsGray
         button.setBackgroundImage(.box, for: .normal)
         button.setBackgroundImage(.checkBox, for: .selected)
-        button.isSelected = UserManager.shared.isEnabledAutoLogin
+        button.isSelected = myInfoRepository.isEnabledAutoLogin
         return button
     }()
     private let appleLoginButton: ASAuthorizationAppleIDButton = {
@@ -56,9 +56,11 @@ final class LoginViewController: UIViewController {
     
     private var cancellables = Set<AnyCancellable>()
     private let viewModel: LoginViewModel
+    private var myInfoRepository: MyInfoRepository
     
-    init(loginViewModel: LoginViewModel) {
+    init(loginViewModel: LoginViewModel, myInfoRepository: MyInfoRepository) {
         self.viewModel = loginViewModel
+        self.myInfoRepository = myInfoRepository
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -138,10 +140,10 @@ final class LoginViewController: UIViewController {
             .sink {
                 if self.autoLoginCheckButton.isSelected {
                     self.autoLoginCheckButton.isSelected = false
-                    UserManager.shared.isEnabledAutoLogin = false
+                    self.myInfoRepository.isEnabledAutoLogin = false
                 } else {
                     self.autoLoginCheckButton.isSelected = true
-                    UserManager.shared.isEnabledAutoLogin = true
+                    self.myInfoRepository.isEnabledAutoLogin = true
                 }
             }
             .store(in: &cancellables)

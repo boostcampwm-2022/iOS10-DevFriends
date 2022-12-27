@@ -39,10 +39,14 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
     private func makeImageRepository() -> ImageRepository {
         return DefaultImageRepository()
     }
+    
+    private func makeMyInfoRepository() -> MyInfoRepository {
+        return UserManager.shared
+    }
 
     // MARK: UseCases
     private func makeLoadGroupUseCase() -> LoadGroupUseCase {
-        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository(), myInfoRepository: makeMyInfoRepository())
     }
     
     private func makeLoadUserUseCase() -> LoadUserUseCase {
@@ -106,6 +110,7 @@ extension MogakcoSceneDIContainer: MogakcoCoordinatorDependencies {
         return DefaultPostDetailViewModel(
             actions: actions,
             group: group,
+            myInfoRepository: makeMyInfoRepository(),
             fetchGroupUseCase: makeLoadGroupUseCase(),
             fetchUserUseCase: makeLoadUserUseCase(),
             fetchCategoryUseCase: makeLoadCategoryUseCase(),

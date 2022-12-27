@@ -38,20 +38,23 @@ protocol GroupListViewModel: GroupListViewModelInput, GroupListViewModelOutput {
 }
 
 final class DefaultGroupListViewModel: GroupListViewModel {
+    private let myInfoRepository: MyInfoRepository
     private let fetchGroupUseCase: LoadGroupUseCase
-    private let actions: GroupListViewModelActions
     private let sortGroupUseCase: SortGroupUseCase
     private let loadCategoryUseCase: LoadCategoryUseCase
+    private let actions: GroupListViewModelActions
     private var userLocation: Location?
     var recommandFilter = Filter(alignFilter: .closest, categoryFilter: [])
     var groupFilter = Filter(alignFilter: .newest, categoryFilter: [])
 
     init(
+        myInfoRepository: MyInfoRepository,
         fetchGroupUseCase: LoadGroupUseCase,
         sortGroupUseCase: SortGroupUseCase,
         fetchCategoryUseCase: LoadCategoryUseCase,
         actions: GroupListViewModelActions
     ) {
+        self.myInfoRepository = myInfoRepository
         self.fetchGroupUseCase = fetchGroupUseCase
         self.sortGroupUseCase = sortGroupUseCase
         self.loadCategoryUseCase = fetchCategoryUseCase
@@ -68,7 +71,7 @@ final class DefaultGroupListViewModel: GroupListViewModel {
 extension DefaultGroupListViewModel {
     func loadUserRecommand() {
         Task {
-            if let userCategoryIDs = UserManager.shared.categoryIDs {
+            if let userCategoryIDs = myInfoRepository.categoryIDs {
                 self.recommandFilter.categoryFilter = userCategoryIDs
             }
         }

@@ -40,6 +40,10 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultNotificationRepository()
     }
     
+    func makeMyInfoRepository() -> MyInfoRepository {
+        return UserManager.shared
+    }
+    
     // MARK: UseCase
     func makeUploadProfileImageUseCase() -> UploadProfileImageUseCase {
         return DefaultUploadProfileImageUseCase(imageRepository: makeImageRepository())
@@ -58,7 +62,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
     }
     
     func makeLoadGroupUseCase() -> LoadGroupUseCase {
-        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository(), myInfoRepository: makeMyInfoRepository())
     }
     
     func makeLoadUserUseCase() -> LoadUserUseCase {
@@ -112,7 +116,8 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultMyPageViewModel(
             actions: actions,
             loadCategoryUseCase: makeLoadCategoryUseCase(),
-            withdrawUseCase: makeWithdrawUseCase()
+            withdrawUseCase: makeWithdrawUseCase(),
+            myInfoRepository: makeMyInfoRepository()
         )
     }
     
@@ -127,7 +132,8 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
             actions: actions,
             loadUserGroupIDsUseCase: makeLoadUserGroupIDsUseCase(),
             loadGroupUseCase: makeLoadGroupUseCase(),
-            leaveGroupUseCase: makeLeaveGroupUseCase()
+            leaveGroupUseCase: makeLeaveGroupUseCase(),
+            myInfoRepository: makeMyInfoRepository()
         )
     }
     
@@ -150,6 +156,7 @@ extension MyPageSceneDIContainer: MyPageFlowCoordinatorDependencies {
         return DefaultPostDetailViewModel(
             actions: actions,
             group: group,
+            myInfoRepository: makeMyInfoRepository(),
             fetchGroupUseCase: makeLoadGroupUseCase(),
             fetchUserUseCase: makeLoadUserUseCase(),
             fetchCategoryUseCase: makeLoadCategoryUseCase(),

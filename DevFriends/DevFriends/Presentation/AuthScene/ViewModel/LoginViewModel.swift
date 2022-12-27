@@ -23,10 +23,12 @@ protocol LoginViewModel: LoginViewModelInput, LoginViewModelOutput {}
 final class DefaultLoginViewModel: LoginViewModel {
     private let checkUserUseCase: CheckUserUseCase
     private let actions: LoginViewModelActions
+    private let myInfoRepository: MyInfoRepository
     
-    init(actions: LoginViewModelActions, checkUserUseCase: CheckUserUseCase) {
+    init(actions: LoginViewModelActions, checkUserUseCase: CheckUserUseCase, myInfoRepository: MyInfoRepository) {
         self.actions = actions
         self.checkUserUseCase = checkUserUseCase
+        self.myInfoRepository = myInfoRepository
     }
 }
 
@@ -43,7 +45,7 @@ extension DefaultLoginViewModel {
         do {
             let isExist = try result.get()
             if isExist {
-                UserManager.shared.login(uid: uid)
+                myInfoRepository.login(uid: uid)
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                     self.actions.showTabBarController() // 2. 있으면 -> 탭 바로 이동
                 }

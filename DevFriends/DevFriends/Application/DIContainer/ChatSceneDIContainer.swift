@@ -38,11 +38,16 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
         return DefaultChatMessagesRepository(storage: makeChatMessagesStorage())
     }
     
+    func makeMyInfoRepository() -> MyInfoRepository {
+        return UserManager.shared
+    }
+    
     // MARK: UseCases
     func makeLoadGroupsUseCase() -> LoadChatGroupsUseCase {
         return DefaultLoadChatGroupsUseCase(
             userRepository: makeUserRepository(),
-            chatGroupsRepository: makeChatGroupsRepository()
+            chatGroupsRepository: makeChatGroupsRepository(),
+            myInfoRepository: makeMyInfoRepository()
         )
     }
     
@@ -67,7 +72,7 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
     }
     
     func makeUpdateUserGroupUseCase(userRepository: UserRepository) -> UpdateUserGroupUseCase {
-        return DefaultUpdateUserGroupUseCase(userRepository: userRepository)
+        return DefaultUpdateUserGroupUseCase(userRepository: userRepository, myInfoRepository: makeMyInfoRepository())
     }
     
     func makeSyncAcceptedGroupWithServerUseCase() -> SyncAcceptedGroupWithServerUseCase {
@@ -89,7 +94,8 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
     // MARK: Chat Content
     func makeChatContentViewController(group: Group, actions: ChatContentViewModelActions) -> ChatContentViewController {
         return ChatContentViewController(
-            chatContentViewModel: makeChatContentViewModel(group: group, actions: actions)
+            chatContentViewModel: makeChatContentViewModel(group: group, actions: actions),
+            myInfoRepository: makeMyInfoRepository()
         )
     }
     
@@ -98,6 +104,7 @@ extension ChatSceneDIContainer: ChatFlowCoordinatorDependencies {
         let userRepository = makeUserRepository()
         return DefaultChatContentViewModel(
             group: group,
+            myInfoRepository: makeMyInfoRepository(),
             loadChatMessagesUseCase: makeLoadChatMessagesUseCase(
                 chatUID: group.chatID,
                 chatMessagesRepository: chatMessagesRepository

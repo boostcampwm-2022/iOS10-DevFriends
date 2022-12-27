@@ -26,7 +26,7 @@ class ChatContentViewController: UIViewController {
             tableView: messageTableView
         ) { [weak self] tableView, indexPath, data -> UITableViewCell in
             if let data = data as? Message {
-                if data.userID == UserManager.shared.uid {
+                if data.userID == self?.myInfoRepository.uid {
                     let cell = self?.createMyMessageTableViewCell(
                         tableView: tableView,
                         indexPath: indexPath,
@@ -60,9 +60,11 @@ class ChatContentViewController: UIViewController {
     private lazy var messageTableViewSnapShot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
     
     private let viewModel: ChatContentViewModel
+    private let myInfoRepository: MyInfoRepository
     
-    init(chatContentViewModel: ChatContentViewModel) {
+    init(chatContentViewModel: ChatContentViewModel, myInfoRepository: MyInfoRepository) {
         self.viewModel = chatContentViewModel
+        self.myInfoRepository = myInfoRepository
         
         super.init(nibName: nil, bundle: nil)
     }

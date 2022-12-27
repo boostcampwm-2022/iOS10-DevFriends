@@ -93,7 +93,7 @@ final class DefaultGroupRepository: GroupRepository {
     }
     
     // Refactor: wherefield로 카테고리 필터링
-    func fetch(filter: Filter) async throws -> [Group] {
+    func fetch(filter: Filter, myUserID: String?) async throws -> [Group] {
         var groups: [Group] = []
         let snapshot: QuerySnapshot
         let start = CFAbsoluteTimeGetCurrent()
@@ -116,7 +116,10 @@ final class DefaultGroupRepository: GroupRepository {
                 groups.append(group)
             }
         }
-        groups = groups.filter { $0.managerID != UserManager.shared.user.id } // 자신이 쓴 글은 제외
+        
+        guard let myUserID = myUserID else { return groups }
+        
+        groups = groups.filter { $0.managerID != myUserID } // 자신이 쓴 글은 제외
         return groups
     }
     

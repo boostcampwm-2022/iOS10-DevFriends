@@ -8,7 +8,7 @@
 import FirebaseFirestore
 import UIKit
 
-final class UserManager {
+final class UserManager: MyInfoRepository {
     static let shared = UserManager()
     
     var user: User {

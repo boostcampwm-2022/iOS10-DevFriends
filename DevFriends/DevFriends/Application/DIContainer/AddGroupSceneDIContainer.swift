@@ -32,6 +32,10 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
         return DefaultUserRepository()
     }
     
+    func makeMyInfoRepository() -> MyInfoRepository {
+        return UserManager.shared
+    }
+    
     // MARK: UseCases
     func makeLoadCategoryUseCase() -> LoadCategoryUseCase {
         return DefaultLoadCategoryUseCase(categoryRepository: makeCategoryRepository())
@@ -65,7 +69,8 @@ extension AddGroupSceneDIContainer: AddGroupFlowCoordinatorDependencies {
             saveChatUseCase: makeSaveChatUseCase(),
             saveGroupUseCase: makeSaveGroupUseCase(),
             loadUserUseCase: makeLoadUserUseCase(),
-            saveUserGroupIDUseCase: makeSaveUserGroupIDUseCase()
+            saveUserGroupIDUseCase: makeSaveUserGroupIDUseCase(),
+            myInfoRepository: makeMyInfoRepository()
         )
     }
     

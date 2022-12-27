@@ -33,6 +33,7 @@ final class DefaultMyGroupsViewModel: MyGroupsViewModel {
     private let loadUserGroupIDsUseCase: LoadUserGroupIDsUseCase
     private let loadGroupUseCase: LoadGroupUseCase
     private let leaveGroupUseCase: LeaveGroupUseCase
+    private let myInfoRepository: MyInfoRepository
     
     private var groupIDs: [String] = []
     var groupsSubject = CurrentValueSubject<[Group], Never>([])
@@ -42,17 +43,19 @@ final class DefaultMyGroupsViewModel: MyGroupsViewModel {
         actions: MyGroupsViewModelActions,
         loadUserGroupIDsUseCase: LoadUserGroupIDsUseCase,
         loadGroupUseCase: LoadGroupUseCase,
-        leaveGroupUseCase: LeaveGroupUseCase
+        leaveGroupUseCase: LeaveGroupUseCase,
+        myInfoRepository: MyInfoRepository
     ) {
         self.type = type
         self.actions = actions
         self.loadUserGroupIDsUseCase = loadUserGroupIDsUseCase
         self.loadGroupUseCase = loadGroupUseCase
         self.leaveGroupUseCase = leaveGroupUseCase
+        self.myInfoRepository = myInfoRepository
     }
     
     private func loadGroupIDs() async -> [String] {
-        guard let userID = UserManager.shared.uid else { return [] }
+        guard let userID = myInfoRepository.uid else { return [] }
         var result: [String] = []
         do {
             result = try await Task {
@@ -79,7 +82,7 @@ final class DefaultMyGroupsViewModel: MyGroupsViewModel {
     }
     
     private func leaveGroup(group: Group) {
-        guard let userID = UserManager.shared.uid else { return }
+        guard let userID = myInfoRepository.uid else { return }
         leaveGroupUseCase.execute(userID: userID, group: group)
         groupsSubject.value.removeAll { $0.id == group.id }
     }
@@ -92,13 +95,13 @@ extension DefaultMyGroupsViewModel {
             case .makedGroup:
                 groupIDs = await loadGroupIDs()
                 let groups = await loadGroups()
-                groupsSubject.value = groups.filter { $0.managerID == UserManager.shared.uid }
+                groupsSubject.value = groups.filter { $0.managerID == myInfoRepository.uid }
             case .participatedGroup:
                 groupIDs = await loadGroupIDs()
                 let groups = await loadGroups()
-                groupsSubject.value = groups.filter { $0.managerID != UserManager.shared.uid }
+                groupsSubject.value = groups.filter { $0.managerID != myInfoRepository.uid }
             case .likedGroup:
-                groupIDs = UserManager.shared.likeGroupIDs ?? []
+                groupIDs = myInfoRepository.likeGroupIDs ?? []
                 groupsSubject.value = await loadGroups()
             }
         }

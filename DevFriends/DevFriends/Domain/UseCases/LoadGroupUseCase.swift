@@ -15,10 +15,12 @@ protocol LoadGroupUseCase {
 }
 
 final class DefaultLoadGroupUseCase: LoadGroupUseCase {
-    let groupRepository: GroupRepository
+    private let groupRepository: GroupRepository
+    private let myInfoRepository: MyInfoRepository
     
-    init(groupRepository: GroupRepository) {
+    init(groupRepository: GroupRepository, myInfoRepository: MyInfoRepository) {
         self.groupRepository = groupRepository
+        self.myInfoRepository = myInfoRepository
     }
     
     func execute(id: String) async throws -> Group? {
@@ -30,7 +32,7 @@ final class DefaultLoadGroupUseCase: LoadGroupUseCase {
     }
     
     func execute(filter: Filter) async throws -> [Group] {
-        return try await groupRepository.fetch(filter: filter)
+        return try await groupRepository.fetch(filter: filter, myUserID: myInfoRepository.uid)
     }
     
     func execute(ids: [String]) async throws -> [Group] {

@@ -48,6 +48,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     private var localJoinedGroupIDs: [String]
     private let actions: PostDetailViewModelActions?
     private var group: Group
+    private let myInfoRepository: MyInfoRepository
     private let fetchGroupUseCase: LoadGroupUseCase
     private let fetchUserUseCase: LoadUserUseCase
     private let fetchCategoryUseCase: LoadCategoryUseCase
@@ -90,6 +91,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     init(
         actions: PostDetailViewModelActions?,
         group: Group,
+        myInfoRepository: MyInfoRepository,
         fetchGroupUseCase: LoadGroupUseCase,
         fetchUserUseCase: LoadUserUseCase,
         fetchCategoryUseCase: LoadCategoryUseCase,
@@ -104,6 +106,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
     ) {
         self.actions = actions
         self.group = group
+        self.myInfoRepository = myInfoRepository
         self.fetchGroupUseCase = fetchGroupUseCase
         self.fetchUserUseCase = fetchUserUseCase
         self.fetchCategoryUseCase = fetchCategoryUseCase
@@ -116,8 +119,8 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
         self.loadProfileImageUseCase = loadProfileImageUseCase
         self.updateHitUseCase = updateHitUseCase
         
-        localUser = UserManager.shared.user
-        localJoinedGroupIDs = UserManager.shared.joinedGroupIDs ?? []
+        localUser = myInfoRepository.user
+        localJoinedGroupIDs = myInfoRepository.joinedGroupIDs ?? []
         
         postDetailContentsSubject.value = .init(
             title: group.title,
@@ -135,7 +138,7 @@ final class DefaultPostDetailViewModel: PostDetailViewModel {
             currentParticipantCount: group.participantIDs.count
         )
         
-        if group.managerID == UserManager.shared.uid {
+        if group.managerID == myInfoRepository.uid {
             groupApplyButtonStateSubject.value = .manager
         } else if localJoinedGroupIDs.contains(group.id) {
             groupApplyButtonStateSubject.value = .joined
@@ -329,7 +332,7 @@ extension DefaultPostDetailViewModel {
                 writerInfo: .init(
                     name: localUser.nickname,
                     job: localUser.job,
-                    image: UserManager.shared.profile
+                    image: myInfoRepository.profile
                 ),
                 contents: comment.content
             )

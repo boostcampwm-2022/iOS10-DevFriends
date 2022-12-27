@@ -22,6 +22,10 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
         return DefaultCategoryRepository()
     }
     
+    func makeMyInfoRepository() -> MyInfoRepository {
+        return UserManager.shared
+    }
+    
     private func makeCheckUserUseCase() -> CheckUserUseCase {
         return DefaultCheckUserUseCase(userRepository: makeUserRepository())
     }
@@ -35,13 +39,18 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
     }
     
     private func makeLoginViewModel(actions: LoginViewModelActions) -> LoginViewModel {
-        return DefaultLoginViewModel(actions: actions, checkUserUseCase: makeCheckUserUseCase())
+        return DefaultLoginViewModel(
+            actions: actions,
+            checkUserUseCase: makeCheckUserUseCase(),
+            myInfoRepository: makeMyInfoRepository()
+        )
     }
     
     private func makeSignUpViewModel(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewModel {
         return DefaultSignUpViewModel(
             actions: actions,
             createUserUseCase: makeCreateUserUseCase(),
+            myInfoRepository: makeMyInfoRepository(),
             uid: uid,
             email: email,
             name: name
@@ -57,7 +66,10 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
     }
     
     func makeLoginViewController(actions: LoginViewModelActions) -> LoginViewController {
-        return LoginViewController(loginViewModel: makeLoginViewModel(actions: actions))
+        return LoginViewController(
+            loginViewModel: makeLoginViewModel(actions: actions),
+            myInfoRepository: makeMyInfoRepository()
+        )
     }
     
     func makeSignUpViewController(actions: SignUpViewModelActions, uid: String, email: String?, name: String?) -> SignUpViewController {
@@ -70,6 +82,8 @@ extension AuthSceneDIContainer: AuthFlowCoordinatorDependencies {
     }
     
     func makeCategoryViewController(actions: ChooseCategoryViewModelActions, initFilter: [Category]?) -> ChooseCategoryViewController {
-        return ChooseCategoryViewController(viewModel: makeChooseCategoryViewModel(actions: actions, initFilter: initFilter))
+        return ChooseCategoryViewController(
+            viewModel: makeChooseCategoryViewModel(actions: actions, initFilter: initFilter)
+        )
     }
 }

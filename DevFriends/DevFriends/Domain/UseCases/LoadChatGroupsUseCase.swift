@@ -15,9 +15,11 @@ protocol LoadChatGroupsUseCase {
 
 final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
     private let chatGroupsRepository: ChatGroupsRepository
+    private let myInfoRepository: MyInfoRepository
     
-    init(userRepository: UserRepository, chatGroupsRepository: ChatGroupsRepository) {
+    init(userRepository: UserRepository, chatGroupsRepository: ChatGroupsRepository, myInfoRepository: MyInfoRepository) {
         self.chatGroupsRepository = chatGroupsRepository
+        self.myInfoRepository = myInfoRepository
     }
     
     func executeFromLocal() -> [AcceptedGroup] {
@@ -25,7 +27,7 @@ final class DefaultLoadChatGroupsUseCase: LoadChatGroupsUseCase {
     }
     
     func execute(completion: @escaping (_ group: AcceptedGroup) -> Void) {
-        guard let id = UserManager.shared.uid else { fatalError("LoadChatGroupsUseCase에서 UserManager에 uid가 없다고 함") }
+        guard let id = myInfoRepository.uid else { fatalError("LoadChatGroupsUseCase에서 uid가 없다고 함") }
         chatGroupsRepository.fetch(userID: id, completion: completion)
     }
 }

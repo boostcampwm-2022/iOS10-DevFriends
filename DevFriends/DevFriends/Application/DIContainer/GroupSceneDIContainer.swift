@@ -39,10 +39,14 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     func makeImageRepository() -> ImageRepository {
         return DefaultImageRepository()
     }
+    
+    func makeMyInfoRepository() -> MyInfoRepository {
+        return UserManager.shared
+    }
         
     // MARK: UseCases
     func makeFetchGroupUseCase() -> LoadGroupUseCase {
-        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository(), myInfoRepository: makeMyInfoRepository())
     }
     
     func makeFetchCategoryUseCase() -> LoadCategoryUseCase {
@@ -99,7 +103,7 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     }
     
     func makeLoadGroupUseCase() -> LoadGroupUseCase {
-        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository())
+        return DefaultLoadGroupUseCase(groupRepository: makeGroupRepository(), myInfoRepository: makeMyInfoRepository())
     }
     
     // MARK: GroupList
@@ -109,6 +113,7 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
     
     func makeGroupListViewModel(actions: GroupListViewModelActions) -> GroupListViewModel {
         return DefaultGroupListViewModel(
+            myInfoRepository: makeMyInfoRepository(),
             fetchGroupUseCase: makeFetchGroupUseCase(),
             sortGroupUseCase: makeSortGroupUseCase(),
             fetchCategoryUseCase: makeFetchCategoryUseCase(),
@@ -137,6 +142,7 @@ extension GroupSceneDIContainer: GroupFlowCoordinatorDependencies {
         return DefaultPostDetailViewModel(
             actions: actions,
             group: group,
+            myInfoRepository: makeMyInfoRepository(),
             fetchGroupUseCase: makeLoadGroupUseCase(),
             fetchUserUseCase: makeLoadUserUseCase(),
             fetchCategoryUseCase: makeLoadCategoryUseCase(),

@@ -31,6 +31,7 @@ struct ChatContentViewModelActions {
 
 final class DefaultChatContentViewModel: ChatContentViewModel {
     let group: Group
+    private let myInfoRepository: MyInfoRepository
     private let loadChatMessagesUseCase: LoadChatMessagesUseCase
     private let sendChatMessagesUseCase: SendChatMessagesUseCase
     private let updateUserGroupUseCase: UpdateUserGroupUseCase
@@ -39,6 +40,7 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
     
     init(
         group: Group,
+        myInfoRepository: MyInfoRepository,
         loadChatMessagesUseCase: LoadChatMessagesUseCase,
         sendChatMessagesUseCase: SendChatMessagesUseCase,
         updateUserGroupUseCase: UpdateUserGroupUseCase,
@@ -46,6 +48,7 @@ final class DefaultChatContentViewModel: ChatContentViewModel {
         actions: ChatContentViewModelActions
     ) {
         self.group = group
+        self.myInfoRepository = myInfoRepository
         self.loadChatMessagesUseCase = loadChatMessagesUseCase
         self.sendChatMessagesUseCase = sendChatMessagesUseCase
         self.updateUserGroupUseCase = updateUserGroupUseCase
@@ -112,7 +115,7 @@ extension DefaultChatContentViewModel {
     }
     
     func didSendMessage(text: String) {
-        guard let userID = UserManager.shared.uid, let nickname = UserManager.shared.nickname
+        guard let userID = myInfoRepository.uid, let nickname = myInfoRepository.nickname
         else { fatalError("UserDefaults doesn't have values.") }
         let message = Message(id: "", content: text, time: Date(), userID: userID, userNickname: nickname)
         sendMessage(message: message)
