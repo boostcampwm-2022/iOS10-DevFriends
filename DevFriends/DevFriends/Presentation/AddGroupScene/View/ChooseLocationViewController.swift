@@ -176,6 +176,20 @@ final class ChooseLocationViewController: UIViewController {
 
 // MARK: MapView, Location Delegate Methods
 extension ChooseLocationViewController: CLLocationManagerDelegate, MKMapViewDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+        case .restricted, .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .denied:
+            break
+            // requirePermission.accept(.location)
+        @unknown default:
+            return
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             manager.stopUpdatingLocation()
