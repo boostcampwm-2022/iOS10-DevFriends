@@ -150,19 +150,6 @@ extension DefaultGroupListViewModel {
         }
         print("Filter loadCategories: ", CFAbsoluteTimeGetCurrent() - filterLoadCategories)
         filteredGroupsSubject.send(filteredGroupCellInfos)
-        
-    }
-    
-    private func loadCategories(categoryIDs: [String]) async -> [Category] {
-        var result: [Category] = []
-        do {
-            result = try await Task {
-                try await loadCategoryUseCase.execute(categoryIds: categoryIDs)
-            }.result.get()
-        } catch {
-            print(error)
-        }
-        return result
     }
     
     func didSelectFilter() {
@@ -190,7 +177,6 @@ extension DefaultGroupListViewModel {
             let group = filteredGroupsSubject.value[indexPath.row]
             actions.showPostDetailScene(group.group)
         }
-        
     }
     
     func didUpdateUserLocation(location: Location) {
